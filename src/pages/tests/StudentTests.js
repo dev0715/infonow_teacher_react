@@ -14,11 +14,19 @@ export const StudentTests = (props) => {
     const fetchStudentTests = () => {
         props.getStudentTests(studentId)
     }
+
+    const onSelectTest = (test) => {
+        if (props.onSelect) {
+            props.onSelect(test);
+        }
+    }
+
     useEffect(fetchStudentTests, [])
+
     return (
         <>
             {Object.keys(props.tests).length > 0 &&
-                <TestList tests={props.tests} onSelect={props.onSelect} onBack={props.onBack} />
+                <TestList tests={props.tests} onSelect={onSelectTest} onBack={props.onBack} />
             }
         </>
     )

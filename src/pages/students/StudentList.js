@@ -28,7 +28,6 @@ const StudentList = (props) => {
     }, []);
 
     const onStudentSelect = (student) => {
-        // alert(JSON.stringify(student));
         props.history.push(`/students/${student.user.userId}`)
     }
 

@@ -19,3 +19,6 @@ export * from "./../pages/students/store/actions"
 //Tests
 export * from "./../pages/tests/store/actions"
 
+//Attempts
+export * from "./../pages/attempts/store/actions"
+

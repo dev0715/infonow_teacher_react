@@ -24,7 +24,8 @@ export const GET_STUDENT_TEST = (studentId) => `${BASE_API_URL}/students/${stude
 
 
 //ATTEMPTS
-export const GET_STUDENT_ATTEMPTS = studentId => `${BASE_API_URL}/students/${studentId}/attempts`
+export const GET_STUDENT_ATTEMPTS = (studentId, testId) => `${BASE_API_URL}/students/${studentId}/tests/${testId}/attempts`
+export const GET_ATTEMPT_DETAIL = id => `${BASE_API_URL}/attempts/${id}`
 export const PUT_SUBJECTIVE_ATTEMPT_MARKS = id => `${BASE_API_URL}/attempts/${id}/subjective-marks`
 
 // Chats

@@ -1,21 +1,13 @@
 import React from 'react';
 
 import {
-    CardBody,
-    CardTitle,
-    Table,
-    Badge,
     Row,
     Col
 } from 'reactstrap';
 
-import CardReload from '../../@core/components/card-reload';
 
-import Avatar from '@components/avatar'
-import { getAllStudents } from '@store/actions';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
 import StudentProfile from './StudentProfile';
 import StudentTests from '../tests/StudentTests';
 
@@ -23,13 +15,20 @@ const StudentHome = (props) => {
 
     const studentId = props.match.params.studentId;
 
+    const onSelectTest = (test) => {
+        props.history.push({
+            pathname: `/attempts/${test.testId}`,
+            state: { studentId: studentId }
+        })
+    }
+
     return (
         <Row>
             <Col lg={12}>
                 <StudentProfile studentId={studentId} />
             </Col>
             <Col lg={12}>
-                <StudentTests studentId={studentId} />
+                <StudentTests studentId={studentId} onSelect={onSelectTest} />
             </Col>
         </Row>
     );

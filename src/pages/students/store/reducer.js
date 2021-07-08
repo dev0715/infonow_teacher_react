@@ -48,7 +48,6 @@ export default (state = initialState, action) => {
             }
             break;
         case GET_STUDENT_BY_ID_SUCCESS:
-            console.log("GET_STUDENT_BY_ID_SUCCESS", action.payload);
             state = {
                 ...state,
                 studentProfile: action.payload,

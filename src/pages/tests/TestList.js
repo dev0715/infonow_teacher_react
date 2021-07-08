@@ -10,38 +10,42 @@ import CardReload from '../../@core/components/card-reload';
 const TestList = (props) => {
 
     const { tests } = props;
+
     const onSelectTests = (test) => {
         if (props.onSelect) {
-            props.onSelect(test);
+            props.onSelect(test.test);
         }
     }
 
     return (
         <CardReload
             title='Tests'>
+
             <CardBody>
                 <Table responsive hover >
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Title</th>
-                            <th>Date</th>
+                            <th>Start Time</th>
+                            <th>End Time</th>
                             <th>Time Limit</th>
                             <th>Total Marks</th>
                         </tr>
                     </thead>
                     <tbody>
                         {tests && tests.map((t, i) =>
-                            <tr key={t.testId} onClick={() => onSelectTests(t)}>
+                            <tr key={t.test.testId} onClick={() => onSelectTests(t)}>
                                 <td>{i + 1}</td>
                                 <td>
                                     <span className='align-middle font-weight-bold'>
-                                        {t.title}
+                                        {t.test.title}
                                     </span>
                                 </td>
-                                <td><DateTime dateTime={t.createdAt} type="date" /></td>
-                                <td>{t.timeLimit / 60 / 60} mins</td>
-                                <td>{t.totalMarks}</td>
+                                <td><DateTime dateTime={t.startTime} type="dateTime" /></td>
+                                <td><DateTime dateTime={t.endTime} type="dateTime" /></td>
+                                <td>{t.test.timeLimit / 60 / 60} mins</td>
+                                <td>{t.test.totalMarks}</td>
                             </tr>
                         )}
                     </tbody>

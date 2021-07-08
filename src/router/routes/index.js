@@ -34,6 +34,17 @@ const Routes = [
     component: lazy(() => import('../../pages/tests/TeacherTests'))
   },
   {
+    path: '/attempts/:testId',
+    exact: true,
+    component: lazy(() => import('../../pages/attempts/AttemptHome'))
+  },
+
+  {
+    path: '/attemptDetail/:attemptId',
+    exact: true,
+    component: lazy(() => import('../../pages/attempts/AttemptDetail'))
+  },
+  {
     appLayout: true,
     className: 'chat-application',
     path: '/chat',

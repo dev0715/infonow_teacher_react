@@ -35,7 +35,6 @@ const StudentProfile = (props) => {
         <>
             {Object.keys(studentProfile).length > 0 && (
                 <Card>
-
                     <CardHeader>
                         <div>
                             <Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
