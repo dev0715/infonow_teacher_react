@@ -1,0 +1,36 @@
+@import "../../@core/scss/base/bootstrap-extended/variables";
+
+.question-control{
+    .option-text{
+        border:none;
+        margin-top: -9px;
+    }
+    .question-text{
+        color: #FFFF00;
+    }
+    .single-option:hover .btn-delete-option{
+        display:unset!important;
+    }
+    .question-marks{
+        border: none;
+        padding: 0px;
+        margin-top: 8px;
+        width: 50px;
+    }
+
+    .single-option:hover .btn-icon{
+        display: unset;
+    }
+
+    .single-option .btn-icon{
+        display: none;
+    }
+
+    .dropdown-option:hover .btn-icon{
+        display: unset;
+    }
+
+    .dropdown-option .btn-icon{
+        display: none;
+    }
+}

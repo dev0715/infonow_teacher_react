@@ -12,6 +12,8 @@ const initialState = {
     tests: [],
     studentTestsLoading: false,
     studentTestsError: null,
+    teacherTestsLoading: false,
+    teacherTestsError: null,
 }
 
 export default (state = initialState, action) => {
@@ -42,10 +44,27 @@ export default (state = initialState, action) => {
         case GET_TEACHER_TESTS:
             state = {
                 ...state,
-                studentTestsLoading: true,
-                studentTestsError: null
+                teacherTestsLoading: true,
+                teacherTestsError: null
             }
             break;
+        case GET_TEACHER_TESTS_SUCCESS:
+            console.log("GET_TEACHER_TESTS_SUCCESS", action.payload);
+            state = {
+                ...state,
+                tests: action.payload,
+                teacherTestsLoading: false,
+                teacherTestsError: null,
+            }
+            break;
+        case GET_TEACHER_TESTS_FAILURE:
+            state = {
+                ...state,
+                teacherTestsLoading: false,
+                teacherTestsError: action.payload,
+            }
+            break;
+
         default:
             state = { ...state }
     }

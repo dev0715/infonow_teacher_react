@@ -13,13 +13,25 @@ export const TeacherTests = (props) => {
         props.getTeacherTests();
     }
 
+    const onSelectTest = (test) => {
+        if (props.onSelect) {
+            props.onSelect(test);
+        }
+    }
+
+    const addNewTest = () => {
+        props.history.push({
+            pathname: `addNewTest`
+        })
+    }
+
     useEffect(() => {
         fetchTeacherTests();
     }, [])
 
     return (
         <div>
-            <TestList tests={props.tests} onSelect={props.onSelect} onBack={props.onBack} />
+            <TestList tests={props.tests} isTeacher={true} onSelect={onSelectTest} onNewTest={addNewTest} onBack={props.onBack} />
         </div>
     )
 }

@@ -40,3 +40,5 @@ export const getStudentTestAttempts = (studentId, testId) => get(url.GET_STUDENT
 export const getAttemptDetail = (attemptId) => get(url.GET_ATTEMPT_DETAIL(attemptId));
 
 export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
+
+export const getTests = () => get(url.GET_TESTS);

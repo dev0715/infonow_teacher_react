@@ -13,7 +13,7 @@ export const POST_TEACHER_LOGIN = `${BASE_URL}/authenticate/teacher`
 
 //Tests
 export const POST_TEST = `${BASE_API_URL}/tests`
-export const GET_TEST = `${BASE_API_URL}/tests`
+export const GET_TESTS = `${BASE_API_URL}/tests`
 export const GET_TEST_BY_ID = testId => `${BASE_API_URL}/tests/${testId}`
 export const POST_ASSIGN_TEST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/assign`
 
@@ -30,7 +30,6 @@ export const PUT_SUBJECTIVE_ATTEMPT_MARKS = id => `${BASE_API_URL}/attempts/${id
 
 // Chats
 export const GET_CHATS_CONTACTS = id => `${CHAT_API_URL}/users/${id}/chats`
-
 
 // Meetings
 export const GET_ALL_MEETINGS = id => `${MEETING_API_URL}/users/${id}/meetings`

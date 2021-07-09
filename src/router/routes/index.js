@@ -34,6 +34,11 @@ const Routes = [
     component: lazy(() => import('../../pages/tests/TeacherTests'))
   },
   {
+    path: '/addNewTest',
+    exact: true,
+    component: lazy(() => import('../../pages/tests/NewTest'))
+  },
+  {
     path: '/attempts/:testId',
     exact: true,
     component: lazy(() => import('../../pages/attempts/AttemptHome'))

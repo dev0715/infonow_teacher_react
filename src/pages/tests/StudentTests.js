@@ -26,7 +26,7 @@ export const StudentTests = (props) => {
     return (
         <>
             {Object.keys(props.tests).length > 0 &&
-                <TestList tests={props.tests} onSelect={onSelectTest} onBack={props.onBack} />
+                <TestList tests={props.tests} isTeacher={false} onSelect={onSelectTest} onBack={props.onBack} />
             }
         </>
     )
