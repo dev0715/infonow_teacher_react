@@ -42,3 +42,5 @@ export const getAttemptDetail = (attemptId) => get(url.GET_ATTEMPT_DETAIL(attemp
 export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
 
 export const getTests = () => get(url.GET_TESTS);
+
+export const postTest = data => postForm(url.POST_TEST, data);

@@ -9,20 +9,18 @@ import { connect } from 'react-redux'
 import { useEffect } from 'react';
 import { getAttemptDetail, getTestDetail } from '@store/actions';
 import { withRouter } from 'react-router-dom';
-import TestDetail from './TestDetail';
-import Questions from '../questions/questions';
+import TestDetail from '../tests/TestDetail';
+import Questions from '../questions/attempt/Question'
 import '../../assets/scss/custom/components/_card.scss'
 
 const AttemptDetail = (props) => {
 
     const attemptId = props.match.params.attemptId;
-    //  const testId = props.testId || props.location.state.testId;
     const { attemptDetail } = props;
     const test = attemptDetail.test
 
     const getAttemptAndTestDetail = () => {
         props.getAttemptDetail(attemptId)
-        //props.getTestDetail(testId)
     }
 
     useEffect(getAttemptAndTestDetail, []);
@@ -35,7 +33,7 @@ const AttemptDetail = (props) => {
                 attemptDetail.subjectiveAttempt && (
                     <Row>
                         <Col lg={12}>
-                            <TestDetail attempts={props.attemptDetail} />
+                            <TestDetail test={props.attemptDetail.test} />
                         </Col>
                         {
                             attemptDetail.objectiveAttempt.map(

@@ -34,6 +34,13 @@ const Routes = [
     component: lazy(() => import('../../pages/tests/TeacherTests'))
   },
   {
+    path: '/tests/:testd',
+    component: lazy(() => import('../../pages/tests/ViewOrEdit')),
+    meta: {
+      navLink: '/tests/:testId'
+    }
+  },
+  {
     path: '/addNewTest',
     exact: true,
     component: lazy(() => import('../../pages/tests/NewTest'))

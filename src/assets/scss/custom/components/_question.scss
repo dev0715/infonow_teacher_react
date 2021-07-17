@@ -26,11 +26,19 @@
         display: none;
     }
 
-    .dropdown-option:hover .btn-icon{
+    :hover .dropdown-option{
         display: unset;
     }
 
-    .dropdown-option .btn-icon{
+    .dropdown-option{
         display: none;
     }
+    
+    .custom-file-container .remove-file-icon{
+        position: absolute;
+        right: 90px;
+        z-index: 2;
+        top: 26px;
+    }
+    
 }

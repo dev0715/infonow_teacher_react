@@ -1,18 +1,20 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import {
-	Card, CardBody, CardTitle, Row, Col, Container
+	Card, CardBody, CardTitle, Row, Col, Container, Button
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Swal from 'sweetalert2';
-import Questions from "../createTest/Questions"
+import Questions from "../testQuestions/Questions"
+import { postTest } from '@store/actions'
+import { ArrowLeft } from 'react-feather'
 import '../../assets/scss/custom/components/_question.scss'
+
 const NewTest = (props) => {
 
 	const loading = false;
-	const [questionFiles, setQuestionFiles] = useState(null);
 	const [newTest, setNewTest] = useState({
 		"title": "",
 		"totalMarks": 0,
@@ -20,22 +22,53 @@ const NewTest = (props) => {
 		questions: []
 	});
 
+	const updateQuestions = (index, deleteCount, newItem = undefined) => {
+
+		let updatedQuestionArray = newTest.questions;
+		if (newItem) {
+			updatedQuestionArray.splice(index + 1, deleteCount, newItem)
+		}
+		else {
+			updatedQuestionArray.splice(index, deleteCount)
+		}
+
+		setNewTest({
+			...newTest,
+			questions: updatedQuestionArray,
+			totalMarks: updatedQuestionArray.reduce((acc, q) => acc + Number(q.marks), 0)
+		})
+	}
+
+	const onFileChanged = (file, index) => {
+
+		setNewTest(newTest => {
+			file ? newTest.questions[index].file = file
+				: delete newTest.questions[index].file;
+			let test = {
+				...newTest,
+				questions: [...newTest.questions]
+			}
+			return test
+		})
+	}
 
 	const handleValidSubmit = (events, values) => {
 		// Converting minutes to seconds
 		let timeLimit = newTest.timeLimit * 60;
 		let completeTest = { ...newTest, timeLimit };
+
 		const fd = new FormData();
+
+		completeTest.questions.forEach((q, i) => {
+			if (q.file) fd.append(`question-file-${i}`, q.file, q.file.name);
+			delete q.file
+		})
+
 		fd.append('test', JSON.stringify(completeTest));
-		for (let file in questionFiles) {
-			fd.append(`question-${file}`, questionFiles[file], questionFiles[file].name);
-		}
-		//	props.postTest(fd);
+
+		props.postTest(fd);
 	}
 
-	const showFiles = () => {
-		console.log(questionFiles);
-	}
 
 
 	const onTitleChange = (e) => {
@@ -46,10 +79,6 @@ const NewTest = (props) => {
 		setNewTest({ ...newTest, timeLimit: e.target.value })
 	}
 
-	const updateQuestionsAndMarks = (questions) => {
-		let totalMarks = questions.reduce((acc, q) => acc += Number(q.marks), 0);
-		setNewTest({ ...newTest, questions: questions, totalMarks })
-	}
 
 	const onBack = () => {
 		//	props.postTestFailed(null)
@@ -82,9 +111,6 @@ const NewTest = (props) => {
 	}, [props.newTestSuccess])
 
 
-
-
-
 	return (
 		<React.Fragment>
 			{!loading && (
@@ -96,7 +122,7 @@ const NewTest = (props) => {
 								<Card>
 									<CardBody>
 										<CardTitle className='h4'>
-											{/* <BackButton onBack={onBack} /> */}
+											<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
 											New Test
 										</CardTitle>
 										<AvForm
@@ -155,14 +181,22 @@ const NewTest = (props) => {
 													</div>
 												</Col>
 
-												<Questions onUpdate={updateQuestionsAndMarks} />
+												<>
+													{
+														<Questions
+															questions={newTest.questions}
+															onChangeQuestion={updateQuestions}
+															onFileChanged={onFileChanged}
+														/>
+													}
+												</>
 
 												<Col lg={12}>
 													<div className='mt-3'>
 														<button
 															className='btn btn-primary waves-effect waves-light'
-															type='submit'
-															disabled={props.newTestLoading}>
+															type='submit'>
+															{/* disabled={props.newTestLoading}> */}
 															{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
 															Create Test
 														</button>
@@ -185,20 +219,18 @@ const mapStateToProps = (state) => {
 	const {
 		newTest,
 		newTestLoading,
-		newTestSuccess,
 		newTestError,
 	} = state.Tests;
 
 	return {
 		newTest,
 		newTestLoading,
-		newTestSuccess,
 		newTestError,
 	}
 }
 
 const mapDispatchToProps = {
-	//postTest,
+	postTest,
 	//postTestFailed,
 }
 

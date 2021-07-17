@@ -21,7 +21,7 @@ import { getTestAttempts } from '@store/actions';
 import { getProfileImageUrl } from '../../helpers/url_helper'
 import { withRouter } from 'react-router-dom';
 import { DateTime } from '../../components/date-time';
-import TestDetail from './TestDetail';
+import TestDetail from '../tests/TestDetail';
 import AttemptList from './AttemptList';
 
 const Attempts = (props) => {
@@ -37,7 +37,6 @@ const Attempts = (props) => {
     useEffect(getAttempts, []);
 
     const onSelectAttempt = (attempt) => {
-        // alert("SELECTED ATTEMPT")
         props.history.push({
             pathname: `/attemptDetail/${attempt.attemptId}`,
             state: { testId: testId }
@@ -45,14 +44,20 @@ const Attempts = (props) => {
     }
 
     return (
-        <Row>
-            <Col lg={12}>
-                <TestDetail attempts={attempts} />
-            </Col>
-            <Col lg={12}>
-                <AttemptList attempts={attempts} onSelect={onSelectAttempt} />
-            </Col>
-        </Row>
+        <>
+            {Object.keys(attempts).length > 0 && (
+                <Row>
+                    <Col lg={12}>
+                        <TestDetail test={attempts[0].test} />
+                    </Col>
+                    <Col lg={12}>
+                        <AttemptList attempts={attempts} onSelect={onSelectAttempt} />
+                    </Col>
+                </Row>
+            )
+
+            }
+        </>
     );
 };
 

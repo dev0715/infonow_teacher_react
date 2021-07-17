@@ -8,14 +8,11 @@ import PropTypes from 'prop-types';
 import CardReload from '../../@core/components/card-reload';
 
 import { Button } from 'reactstrap'
-import { Home, Star, Check, Plus } from 'react-feather'
+import { Plus } from 'react-feather'
 
 const TestList = (props) => {
 
-    const { tests } = props;
-    const { isTeacher } = props;
-
-    console.log("TESTS HERE ==>", tests);
+    const { tests, isTeacher } = props;
 
     const onSelectTests = (test) => {
         if (props.onSelect) {
@@ -41,7 +38,6 @@ const TestList = (props) => {
                     </Button.Ripple>
                 </div>
             }
-
 
             <CardBody>
                 <Table responsive hover >

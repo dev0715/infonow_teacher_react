@@ -1,20 +1,19 @@
 
 import React from 'react';
-import Objective from './objective';
-import Subjective from './subjective';
+import Objective from './Objective';
+import Subjective from './Subjective';
 
 export const Questions = props => {
-    const question = props.question;
-    const answer = props.answer;
-    const number = props.number || '';
-
-    // console.log("QUESTIONS ==>", question);
-    // console.log("ATTEMPT ==>", answer);
+    const { question,
+        answer,
+        number
+    } = props;
 
     return (
         <>  {
             question.type == 1 ?
-                <Objective question={question}
+                <Objective
+                    question={question}
                     answer={answer}
                     number={number} />
                 :

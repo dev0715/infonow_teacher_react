@@ -5,6 +5,9 @@ import {
     GET_TEACHER_TESTS,
     GET_TEACHER_TESTS_SUCCESS,
     GET_TEACHER_TESTS_FAILURE,
+    POST_TEST,
+    POST_TEST_SUCCESS,
+    POST_TEST_FAILURE,
 } from './actionTypes'
 
 export const getStudentTests = (studentId) => {
@@ -42,6 +45,27 @@ export const getTeacherTestsSuccess = (tests) => {
 }
 
 export const getTeacherTestsFailure = (error) => {
+    return {
+        type: GET_TEACHER_TESTS_FAILURE,
+        payload: error
+    }
+}
+
+export const postTest = (test) => {
+    return {
+        type: POST_TEST,
+        payload: { test }
+    }
+}
+
+export const postTestSuccess = (tests) => {
+    return {
+        type: GET_TEACHER_TESTS_SUCCESS,
+        payload: tests
+    }
+}
+
+export const postTestFailure = (error) => {
     return {
         type: GET_TEACHER_TESTS_FAILURE,
         payload: error

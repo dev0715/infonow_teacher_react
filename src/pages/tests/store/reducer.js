@@ -5,6 +5,9 @@ import {
     GET_TEACHER_TESTS,
     GET_TEACHER_TESTS_SUCCESS,
     GET_TEACHER_TESTS_FAILURE,
+    POST_TEST,
+    POST_TEST_SUCCESS,
+    POST_TEST_FAILURE,
 
 } from './actionTypes'
 
@@ -14,6 +17,9 @@ const initialState = {
     studentTestsError: null,
     teacherTestsLoading: false,
     teacherTestsError: null,
+    newTest: {},
+    newTestLoading: false,
+    newTestError: null,
 }
 
 export default (state = initialState, action) => {
@@ -49,7 +55,6 @@ export default (state = initialState, action) => {
             }
             break;
         case GET_TEACHER_TESTS_SUCCESS:
-            console.log("GET_TEACHER_TESTS_SUCCESS", action.payload);
             state = {
                 ...state,
                 tests: action.payload,
@@ -62,6 +67,28 @@ export default (state = initialState, action) => {
                 ...state,
                 teacherTestsLoading: false,
                 teacherTestsError: action.payload,
+            }
+            break;
+        case POST_TEST:
+            state = {
+                ...state,
+                newTestLoading: true,
+                newTestError: null
+            }
+            break;
+        case POST_TEST_SUCCESS:
+            state = {
+                ...state,
+                newTest: action.payload,
+                newTestLoading: false,
+                newTestError: null,
+            }
+            break;
+        case POST_TEST_FAILURE:
+            state = {
+                ...state,
+                newTestLoading: false,
+                newTestError: action.payload,
             }
             break;
 
