@@ -13,7 +13,8 @@ const AttemptList = (props) => {
 
     const onSelectAttempt = (attempt) => {
         if (props.onSelect) {
-            props.onSelect(attempt);
+            if (attempt.submittedAt)
+                props.onSelect(attempt);
         }
     }
 
@@ -34,7 +35,7 @@ const AttemptList = (props) => {
                             <tr key={a.attemptId} onClick={() => onSelectAttempt(a)}>
                                 <td>{i + 1}</td>
                                 <td><DateTime dateTime={a.createdAt} type="datetime" /></td>
-                                <td><DateTime dateTime={a.submittedAt} type="datetime" /></td>
+                                <td><DateTime dateTime={a.submittedAt} invalidValueText="N/A" type="datetime" /></td>
                             </tr>
                         )}
                     </tbody>

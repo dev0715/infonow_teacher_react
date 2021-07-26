@@ -38,7 +38,7 @@ const Attempts = (props) => {
 
     const onSelectAttempt = (attempt) => {
         props.history.push({
-            pathname: `/attemptDetail/${attempt.attemptId}`,
+            pathname: `/attempt-detail/${attempt.attemptId}`,
             state: { testId: testId }
         })
     }

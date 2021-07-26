@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody } from 'reactstrap';
-import { BASE_URL } from '../../../helpers/url_helper';
+import { IMAGES_BASE_URL } from '../../../helpers/url_helper';
 
 export const Subjective = (props) => {
 
@@ -13,7 +13,7 @@ export const Subjective = (props) => {
         <Card className="question-test-detail">
             <CardBody>
                 <p className="text-muted">Marks: {question.marks}</p>
-                {question.image && <img src={`${BASE_URL}/${question.image}`} />}
+                {question.image && <img src={`${IMAGES_BASE_URL}/${question.image}`} />}
                 <h6 >
                     {`${number}. ${question.text}`}
                 </h6>

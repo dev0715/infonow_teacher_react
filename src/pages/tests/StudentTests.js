@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 import TestList from './TestList'
 import { getStudentTests } from '@store/actions'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { withRouter } from 'react-router-dom'
 
 export const StudentTests = (props) => {
 
-    const { studentId } = props;
-
+    const [mapTests, setMapTests] = useState()
+    const { studentId, tests } = props;
     const fetchStudentTests = () => {
         props.getStudentTests(studentId)
     }
@@ -23,10 +23,26 @@ export const StudentTests = (props) => {
 
     useEffect(fetchStudentTests, [])
 
+    const filteredTestsData = () => {
+        let testMap = new Map();
+        for (let t of tests) {
+            if (t.test && !testMap.has(t.test.testId)) {
+                testMap.set(t.test.testId, t.test);
+            }
+        }
+        setMapTests(Array.from(testMap.values()));
+    }
+
+    useEffect(filteredTestsData, [tests])
+
     return (
         <>
-            {Object.keys(props.tests).length > 0 &&
-                <TestList tests={props.tests} isTeacher={false} onSelect={onSelectTest} onBack={props.onBack} />
+            {
+                Object.keys(tests).length > 0 &&
+                <TestList tests={mapTests}
+                    isTeacher={false}
+                    onSelect={onSelectTest}
+                    onBack={props.onBack} />
             }
         </>
     )

@@ -8,6 +8,9 @@ import {
     POST_TEST,
     POST_TEST_SUCCESS,
     POST_TEST_FAILURE,
+    PUT_TEST,
+    PUT_TEST_SUCCESS,
+    PUT_TEST_FAILURE,
 
 } from './actionTypes'
 
@@ -20,6 +23,9 @@ const initialState = {
     newTest: {},
     newTestLoading: false,
     newTestError: null,
+    updateTest: {},
+    updateTestLoading: false,
+    updateTestTestError: null,
 }
 
 export default (state = initialState, action) => {
@@ -89,6 +95,28 @@ export default (state = initialState, action) => {
                 ...state,
                 newTestLoading: false,
                 newTestError: action.payload,
+            }
+            break;
+        case PUT_TEST:
+            state = {
+                ...state,
+                updateTestLoading: true,
+                updateTestError: null
+            }
+            break;
+        case PUT_TEST_SUCCESS:
+            state = {
+                ...state,
+                updateTest: action.payload,
+                updateTestLoading: false,
+                updateTestError: null,
+            }
+            break;
+        case PUT_TEST_FAILURE:
+            state = {
+                ...state,
+                updateTestError: false,
+                updateTestError: action.payload,
             }
             break;
 

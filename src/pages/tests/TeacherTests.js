@@ -22,7 +22,7 @@ export const TeacherTests = (props) => {
 
     const addNewTest = () => {
         props.history.push({
-            pathname: `addNewTest`
+            pathname: `add-new-test`
         })
     }
 

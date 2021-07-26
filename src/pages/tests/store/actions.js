@@ -8,6 +8,9 @@ import {
     POST_TEST,
     POST_TEST_SUCCESS,
     POST_TEST_FAILURE,
+    PUT_TEST,
+    PUT_TEST_SUCCESS,
+    PUT_TEST_FAILURE,
 } from './actionTypes'
 
 export const getStudentTests = (studentId) => {
@@ -60,17 +63,37 @@ export const postTest = (test) => {
 
 export const postTestSuccess = (tests) => {
     return {
-        type: GET_TEACHER_TESTS_SUCCESS,
+        type: POST_TEST_SUCCESS,
         payload: tests
     }
 }
 
 export const postTestFailure = (error) => {
     return {
-        type: GET_TEACHER_TESTS_FAILURE,
+        type: POST_TEST_FAILURE,
         payload: error
     }
 }
 
+export const putTest = (test) => {
+    return {
+        type: PUT_TEST,
+        payload: { test }
+    }
+}
+
+export const putTestSuccess = (tests) => {
+    return {
+        type: PUT_TEST_SUCCESS,
+        payload: tests
+    }
+}
+
+export const putTestFailure = (error) => {
+    return {
+        type: PUT_TEST_FAILURE,
+        payload: error
+    }
+}
 
 

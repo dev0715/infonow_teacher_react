@@ -65,6 +65,7 @@ const NewSubjective = (props) => {
                             htmlId={`file-${index}`}
                             htmlName={`question-${index}`}
                             label={`Image`}
+                            question={question}
                             onFileChanged={onFileChanged}
                         />
                     </Col>

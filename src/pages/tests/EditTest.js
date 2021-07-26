@@ -10,15 +10,15 @@ import Swal from 'sweetalert2';
 import Questions from "../testQuestions/Questions"
 import { ArrowLeft, Eye } from 'react-feather'
 import { useState } from 'react'
-// import { postTest } from '@store/actions'
+import { putTest } from '@store/actions'
 import '../../assets/scss/custom/components/_question.scss'
 
 const EditTest = (props) => {
 
 	const loading = false;
 	const { onChangeView } = props
+	props.test.timeLimit = props.test.timeLimit / 60
 	const [test, setTest] = useState(props.test)
-
 
 	const updateQuestions = (index, deleteCount, newItem = undefined) => {
 
@@ -46,10 +46,8 @@ const EditTest = (props) => {
 				...t,
 				questions: [...t.questions]
 			}
-			return t
+			return test
 		})
-		// file ? test.questions[index].file = file
-		// 	: delete test.questions[index].file;
 	}
 
 	const handleValidSubmit = (events, values) => {
@@ -65,26 +63,26 @@ const EditTest = (props) => {
 		})
 
 		fd.append('test', JSON.stringify(completeTest));
-
-		props.postTest(fd);
+		// console.log("COMPLETE TEST ==>", completeTest);
+		props.putTest(fd);
 	}
 
-
-
 	const onTitleChange = (e) => {
-		// setNewTest({ ...test, title: e.target.value })
-		test.title = e.target.value
+		setTest({ ...test, title: e.target.value })
 	}
 
 	const onTimeLimitChange = (e) => {
-		// setNewTest({ ...test, timeLimit: e.target.value })
-		test.timeLimit = e.target.value
+		setTest({ ...test, timeLimit: e.target.value })
 	}
 
 
 	const onBack = () => {
 		//	props.postTestFailed(null)
 		props.history.push('/tests')
+	}
+
+	const defaultValues = {
+		'option-radio': 0
 	}
 
 	useEffect(() => {
@@ -133,6 +131,7 @@ const EditTest = (props) => {
 								</CardTitle>
 								<AvForm
 									className='form-horizontal mt-3'
+									model={defaultValues}
 									onValidSubmit={(e, v) => {
 										handleValidSubmit(e, v);
 									}}
@@ -221,11 +220,13 @@ const EditTest = (props) => {
 };
 
 const mapStateToProps = (state) => {
+	const { updateTest, updateTestLoading, updateTestError } = state.Tests
+	return { updateTest, updateTestLoading, updateTestError }
 
 }
 
 const mapDispatchToProps = {
-	// postTest,
+	putTest,
 	//postTestFailed,
 }
 

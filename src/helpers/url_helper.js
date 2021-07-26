@@ -13,6 +13,7 @@ export const POST_TEACHER_LOGIN = `${BASE_URL}/authenticate/teacher`
 
 //Tests
 export const POST_TEST = `${BASE_API_URL}/tests`
+export const PUT_TEST = `${BASE_API_URL}/tests`
 export const GET_TESTS = `${BASE_API_URL}/tests`
 export const GET_TEST_BY_ID = testId => `${BASE_API_URL}/tests/${testId}`
 export const POST_ASSIGN_TEST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/assign`

@@ -6,6 +6,8 @@ import {
     Table,
     Badge,
 } from 'reactstrap';
+import { MoreVertical, Edit, FileText, Archive, Trash } from 'react-feather'
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 import CardReload from '../../@core/components/card-reload';
 
@@ -19,6 +21,9 @@ import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
 
 const StudentList = (props) => {
+    const { isAssignTest,
+        onAssignTest } = props
+
     const fetchStudents = () => {
         props.getAllStudents();
     }
@@ -41,6 +46,10 @@ const StudentList = (props) => {
         }
     }
 
+    const AssignTest = (student) => {
+        onAssignTest(student.studentId)
+    }
+
     return (
 
         <CardReload
@@ -57,19 +66,23 @@ const StudentList = (props) => {
                             <th>Email</th>
                             <th>Created At</th>
                             <th>Status</th>
+                            {
+                                isAssignTest &&
+                                <th>Action</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
                         {props.students && props.students.map((s, i) =>
-                            <tr key={s.userId} onClick={() => onStudentSelect(s)}>
+                            <tr key={s.userId} >
                                 <td>{i + 1}</td>
-                                <td>
+                                <td onClick={() => onStudentSelect(s)}>
                                     <Avatar
                                         className='cursor-pointer'
                                         img={getProfileImageUrl(s.user.profilePicture)}
                                     />
                                     <span className='align-middle font-weight-bold ml-1'>
-                                        {s.user.name}
+                                        <u> {s.user.name}</u>
                                     </span>
                                 </td>
                                 <td>{s.user.email}</td>
@@ -83,6 +96,27 @@ const StudentList = (props) => {
                                         {titleCase(s.status)}
                                     </Badge>
                                 </td>
+                                {
+                                    isAssignTest &&
+                                    <td>
+                                        <div className='d-flex'>
+                                            <UncontrolledDropdown>
+                                                <DropdownToggle className='pr-1' tag='span'>
+                                                    <MoreVertical size={15} />
+                                                </DropdownToggle>
+                                                <DropdownMenu right>
+                                                    <DropdownItem tag='a' href='/' className='w-100' onClick={AssignTest(s)}>
+                                                        <FileText size={15} />
+                                                        <span className='align-middle ml-50'>Assign</span>
+                                                    </DropdownItem>
+
+                                                </DropdownMenu>
+                                            </UncontrolledDropdown>
+                                            <Edit size={15} />
+                                        </div>
+                                    </td>
+                                }
+
                             </tr>
                         )}
                     </tbody>
@@ -94,8 +128,14 @@ const StudentList = (props) => {
 
 
 const mapStateToProps = (state) => {
-    const { students, studentsError, studentsLoading } = state.Students;
-    return { students, studentsError, studentsLoading };
+    const { students,
+        studentsError,
+        studentsLoading } = state.Students;
+    return {
+        students,
+        studentsError,
+        studentsLoading
+    };
 };
 
 export default withRouter(

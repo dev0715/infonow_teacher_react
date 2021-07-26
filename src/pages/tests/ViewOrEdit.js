@@ -16,14 +16,10 @@ const ViewOrEdit = (props) => {
     const [isView, setIsView] = useState(true)
 
     const onChangeView = () => {
-        // props.onEditTest(test)
-        console.log("EDIT CLICK isView", isView)
         setIsView(!isView)
     }
 
-    useEffect(() => {
-
-    }, [isView])
+    useEffect(() => { }, [isView])
 
     return (
         <>

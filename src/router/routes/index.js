@@ -41,9 +41,14 @@ const Routes = [
     }
   },
   {
-    path: '/addNewTest',
+    path: '/add-new-test',
     exact: true,
     component: lazy(() => import('../../pages/tests/NewTest'))
+  },
+  {
+    path: '/assign-test/:testId',
+    exact: true,
+    component: lazy(() => import('../../pages/tests/AssignTest'))
   },
   {
     path: '/attempts/:testId',
@@ -52,10 +57,11 @@ const Routes = [
   },
 
   {
-    path: '/attemptDetail/:attemptId',
+    path: '/attempt-detail/:attemptId',
     exact: true,
     component: lazy(() => import('../../pages/attempts/AttemptDetail'))
   },
+
   {
     appLayout: true,
     className: 'chat-application',

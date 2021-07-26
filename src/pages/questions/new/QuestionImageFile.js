@@ -7,8 +7,16 @@ import Swal from 'sweetalert2';
 
 export const QuestionImageFile = (props) => {
 
-    const { index, label, onFileChanged, htmlId, htmlName, maxSizeInBytes } = props;
-    const [fileName, setFileName] = useState(null)
+    let imageUrl = null
+
+    const { question, index, label, onFileChanged, htmlId, htmlName, maxSizeInBytes } = props;
+
+    if (question.image) {
+        let file = question.image.split("/")
+        imageUrl = file[2]
+    }
+
+    const [fileName, setFileName] = useState(imageUrl)
 
     const onRemoveFile = () => {
         if (fileInputRef && fileInputRef.current) fileInputRef.current.value = ""

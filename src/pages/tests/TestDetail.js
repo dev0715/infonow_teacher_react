@@ -17,6 +17,15 @@ import { withRouter } from 'react-router-dom'
 const TestDetail = (props) => {
 
     const { test, isEdit, onChangeView } = props;
+
+    const onAssignTest = () => {
+
+        props.history.push({
+            pathname: `/assign-test/${test.testId}`,
+            state: { test: test }
+        })
+    }
+
     return (
         <>
             {
@@ -31,11 +40,19 @@ const TestDetail = (props) => {
                                 {
                                     isEdit &&
                                     <div className='mr-2 text-right'>
+
+                                        <Button.Ripple className="mr-1" outline color='primary' onClick={onAssignTest}  >
+                                            {/* <Edit size={14} /> */}
+                                            <span className='align-middle ml-25'>Assign</span>
+                                        </Button.Ripple>
+
                                         <Button.Ripple outline color='primary' onClick={onChangeView} >
                                             <Edit size={14} />
                                             <span className='align-middle ml-25'>Edit</span>
                                         </Button.Ripple>
+
                                     </div>
+
                                 }
 
                             </CardHeader>
@@ -55,7 +72,7 @@ const TestDetail = (props) => {
                                                         </Row>
                                                         <Row>
                                                             <CardText tag='span' className='ml-1'>
-                                                                Duration: {test.timeLimit / 60 / 60} mins
+                                                                Duration: {test.timeLimit / 60} mins
                                                             </CardText>
                                                         </Row>
 

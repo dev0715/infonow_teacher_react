@@ -26,6 +26,8 @@ const TestList = (props) => {
         }
     }
 
+
+
     return (
         <CardReload
             title='Tests'>
@@ -45,39 +47,14 @@ const TestList = (props) => {
                         <tr>
                             <th>#</th>
                             <th>Title</th>
-                            {
-                                isTeacher &&
-                                <th>Created At</th>
-                            }
-                            {
-                                !isTeacher &&
-                                <th>Start Time</th>
-                            }
-                            {
-                                !isTeacher &&
-                                <th>End Time</th>
-                            }
+                            <th>Created At</th>
                             <th>Time Limit</th>
                             <th>Total Marks</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {!isTeacher && tests && tests.map((t, i) =>
-                            t.test &&
-                            <tr key={t.test.testId} onClick={() => onSelectTests(t.test)}>
-                                <td>{i + 1}</td>
-                                <td>
-                                    <span className='align-middle font-weight-bold'>
-                                        {t.test.title}
-                                    </span>
-                                </td>
-                                <td><DateTime dateTime={t.startTime} type="dateTime" /></td>
-                                <td><DateTime dateTime={t.endTime} type="dateTime" /></td>
-                                <td>{t.test.timeLimit / 60 / 60} mins</td>
-                                <td>{t.test.totalMarks}</td>
-                            </tr>
-                        )}
-                        {isTeacher && tests && tests.map((t, i) =>
+
+                        {tests && tests.map((t, i) =>
 
                             <tr key={t.testId} onClick={() => onSelectTests(t)}>
                                 <td>{i + 1}</td>
@@ -87,7 +64,7 @@ const TestList = (props) => {
                                     </span>
                                 </td>
                                 <td><DateTime dateTime={t.createdAt} type="dateTime" /></td>
-                                <td>{t.timeLimit / 60 / 60} mins</td>
+                                <td>{t.timeLimit / 60} mins</td>
                                 <td>{t.totalMarks}</td>
                             </tr>
                         )}

@@ -4,19 +4,22 @@ import { call, put, takeEvery } from "redux-saga/effects"
 import {
     GET_STUDENT_TESTS,
     GET_TEACHER_TESTS,
-    POST_TEST
+    POST_TEST,
+    PUT_TEST
 } from "./actionTypes"
 
 import {
     getStudentTestsSuccess, getStudentTestsFailure,
     getTeacherTestsSuccess, getTeacherTestsFailure,
-    postTestSuccess, postTestFailure
+    postTestSuccess, postTestFailure,
+    putTestSuccess, putTestFailure
 } from "./actions"
 
 import {
     getAllStudentTest,
     getTests,
-    postTest
+    postTest,
+    putTest
 } from '@helpers/backend-helpers'
 
 function* getStudentTestsHttp({ payload: studentId }) {
@@ -46,10 +49,20 @@ function* postTestHttp({ payload: { test } }) {
     }
 }
 
+function* putTestHttp({ payload: { test } }) {
+    try {
+        const response = yield call(putTest, test);
+        yield put(putTestSuccess(response))
+    } catch (error) {
+        yield put(putTestFailure(error))
+    }
+}
+
 function* TestsSaga() {
     yield takeEvery(GET_STUDENT_TESTS, getStudentTestsHttp)
     yield takeEvery(GET_TEACHER_TESTS, getTeacherTestsHttp)
     yield takeEvery(POST_TEST, postTestHttp)
+    yield takeEvery(PUT_TEST, putTestHttp)
 }
 
 export default TestsSaga

@@ -1,4 +1,4 @@
-import { post, del, get, put, postForm } from "./api_helper"
+import { post, del, get, put, postForm, putForm } from "./api_helper"
 import * as  url from "./url_helper"
 
 
@@ -44,3 +44,5 @@ export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
 export const getTests = () => get(url.GET_TESTS);
 
 export const postTest = data => postForm(url.POST_TEST, data);
+
+export const putTest = data => putForm(url.PUT_TEST, data);

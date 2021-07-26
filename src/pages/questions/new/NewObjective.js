@@ -1,19 +1,24 @@
 import React from 'react';
+import { useState } from 'react'
 import {
     Card, CardBody, Row, Col, Button,
-    UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle,
-    FormGroup, Label, CustomInput, InputGroup, InputGroupAddon, Input, InputGroupText,
 } from 'reactstrap';
-import { Plus, Trash, X } from 'react-feather'
+import { Plus, Trash } from 'react-feather'
 import { AvField, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
 import { useRef } from 'react';
 import QuestionFooter from './QuestionFooter';
 import QuestionImageFile from './QuestionImageFile';
 
 const NewObjective = (props) => {
+    let selectedOptionId = null
     const { question, index, isEdit } = props
 
-    const fileInputRef = useRef(null)
+    if (question.options) {
+        let selectedOptionIndex = question.options.findIndex(opt => opt.isRight)
+        selectedOptionId = selectedOptionIndex > -1 ? selectedOptionIndex : null;
+    }
+
+    const [selectedOption, setSelectedOption] = useState(String(selectedOptionId))
 
     const updateQuestions = (index, deleteCount, newItem = undefined) => {
         props.onChangeQuestion(index, deleteCount, newItem)
@@ -51,6 +56,7 @@ const NewObjective = (props) => {
     const onChangeOptionRadio = (optionIndex) => {
         question.options.forEach(e => e.isRight = false)
         question.options[optionIndex].isRight = true;
+        setSelectedOption(optionIndex)
         updateQuestions(index - 1, 1, question);
     }
 
@@ -65,12 +71,6 @@ const NewObjective = (props) => {
             question.options.splice(optionIndex, 1);
             updateQuestions(index - 1, 1, question);
         }
-    }
-
-    const onRemoveFile = () => {
-        fileInputRef.current.value = "";
-        delete question.file
-        updateQuestions(index - 1, 1, question);
     }
 
     return (
@@ -97,16 +97,17 @@ const NewObjective = (props) => {
                 </Row>
                 <Row>
                     <Col lg={6}>
-                        <AvRadioGroup name={`question${index}radio`} label="" required errorMessage="Atleast one must be selected">
+                        <AvRadioGroup name={`question${index}radio`} label="" required
+                            errorMessage="Atleast one must be selected"
+                            value={String(selectedOption)}>
                             {question.options.map((option, optionIndex) =>
                                 <div className='mb-2 single-option'>
                                     <Row>
                                         <Col sm={1}>
                                             <AvRadio
                                                 customInput
-                                                checked={option.isRight === true}
                                                 onClick={() => onChangeOptionRadio(optionIndex)}
-                                                className="option-radio" label="" value={optionIndex} />
+                                                className="option-radio" label="" value={String(optionIndex)} />
                                         </Col>
                                         <Col sm={8}>
                                             <input
@@ -127,11 +128,14 @@ const NewObjective = (props) => {
                                                 className='btn-icon float-right' size="sm" color='success' outline >
                                                 <Plus size={14} />
                                             </Button.Ripple>
-                                            <Button.Ripple
-                                                onClick={() => onRemoveOption(optionIndex)}
-                                                className='btn-icon float-right mr-1' size="sm" color='danger' outline >
-                                                <Trash size={14} />
-                                            </Button.Ripple>
+                                            {
+                                                !isEdit &&
+                                                <Button.Ripple
+                                                    onClick={() => onRemoveOption(optionIndex)}
+                                                    className='btn-icon float-right mr-1' size="sm" color='danger' outline >
+                                                    <Trash size={14} />
+                                                </Button.Ripple>
+                                            }
                                         </Col>
                                     </Row>
                                 </div>
@@ -145,6 +149,7 @@ const NewObjective = (props) => {
                                         htmlId={`file-${index}`}
                                         htmlName={`question-${index}`}
                                         label={`Image`}
+                                        question={question}
                                         onFileChanged={onFileChanged}
                                     />
                                 </Col>
