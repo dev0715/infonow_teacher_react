@@ -43,7 +43,7 @@ const TestDetail = (props) => {
 
                                         <Button.Ripple className="mr-1" outline color='primary' onClick={onAssignTest}  >
                                             {/* <Edit size={14} /> */}
-                                            <span className='align-middle ml-25'>Assign</span>
+                                            <span className='align-middle ml-25'>Test Dashboard</span>
                                         </Button.Ripple>
 
                                         <Button.Ripple outline color='primary' onClick={onChangeView} >

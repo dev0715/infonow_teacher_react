@@ -46,3 +46,9 @@ export const getTests = () => get(url.GET_TESTS);
 export const postTest = data => postForm(url.POST_TEST, data);
 
 export const putTest = data => putForm(url.PUT_TEST, data);
+
+export const assignTest = (testId, data) => post(url.POST_ASSIGN_TEST(testId), data);
+
+export const getTestPastStudent = (testId) => get(url.GET_TEST_PAST_STUDENT(testId));
+
+export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUDENT(testId));

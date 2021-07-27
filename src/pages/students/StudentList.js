@@ -5,6 +5,7 @@ import {
     CardTitle,
     Table,
     Badge,
+    Button
 } from 'reactstrap';
 import { MoreVertical, Edit, FileText, Archive, Trash } from 'react-feather'
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
@@ -19,10 +20,22 @@ import { getAllStudents, getStudentById } from '@store/actions';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
+import StudentListModal from '../tests/StudentListModal';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { ThumbsUp, ThumbsDown } from 'react-feather'
+import TestDurationModal from '../tests/TestDurationModal';
+import { mergeDateTime } from '../../helpers/HelperFunctions';
 
 const StudentList = (props) => {
     const { isAssignTest,
         onAssignTest } = props
+
+    const { students } = props
+    const [studentModalState, setStudentModalState] = useState(false)
+    const [testModalState, setTestModalState] = useState(false)
+    const [selectedStudent, setSelectedStudent] = useState(null)
+
 
     const fetchStudents = () => {
         props.getAllStudents();
@@ -33,7 +46,8 @@ const StudentList = (props) => {
     }, []);
 
     const onStudentSelect = (student) => {
-        props.history.push(`/students/${student.user.userId}`)
+        if (!isAssignTest)
+            props.history.push(`/students/${student.user.userId}`)
     }
 
     const getStudentStatusColor = (studentStatus) => {
@@ -46,9 +60,36 @@ const StudentList = (props) => {
         }
     }
 
-    const AssignTest = (student) => {
-        onAssignTest(student.studentId)
+    const setTestDuration = (data) => {
+        setTestModalState(!testModalState)
+        let testData = {
+            startTime: mergeDateTime(data.startDate, data.startTime),
+            endTime: mergeDateTime(data.endDate, data.endTime),
+            student: selectedStudent
+        }
+        onAssignTest(testData)
     }
+
+    const selectedStudentAssign = (student) => {
+        setSelectedStudent(student)
+        setStudentModalState(!studentModalState)
+        setTestModalState(!testModalState)
+    }
+
+    const UnassignTest = (e, student) => {
+        e.preventDefault()
+        // if (student)
+        //   onAssignTest(student.studentId)
+    }
+
+    const toggleStudentModalState = () => {
+        setStudentModalState(!studentModalState)
+    }
+
+    const toggleTestModalState = () => {
+        setTestModalState(!testModalState)
+    }
+
 
     return (
 
@@ -57,7 +98,16 @@ const StudentList = (props) => {
             onReload={fetchStudents}
             isReloading={props.studentsLoading}
         >
-            <CardBody>
+            {
+                isAssignTest &&
+                <div className='mr-35 text-right'>
+                    <Button.Ripple outline color='primary' onClick={() => toggleStudentModalState()} >
+                        <span className='align-middle ml-25'>Assign Test</span>
+                    </Button.Ripple>
+                </div>
+            }
+            < CardBody >
+
                 <Table responsive hover >
                     <thead>
                         <tr>
@@ -68,8 +118,9 @@ const StudentList = (props) => {
                             <th>Status</th>
                             {
                                 isAssignTest &&
-                                <th>Action</th>
+                                <th>Status</th>
                             }
+
                         </tr>
                     </thead>
                     <tbody>
@@ -105,9 +156,9 @@ const StudentList = (props) => {
                                                     <MoreVertical size={15} />
                                                 </DropdownToggle>
                                                 <DropdownMenu right>
-                                                    <DropdownItem tag='a' href='/' className='w-100' onClick={AssignTest(s)}>
+                                                    <DropdownItem tag='a' href='/' className='w-100' onClick={e => UnassignTest(e, s)}>
                                                         <FileText size={15} />
-                                                        <span className='align-middle ml-50'>Assign</span>
+                                                        <span className='align-middle ml-50'>Unassign</span>
                                                     </DropdownItem>
 
                                                 </DropdownMenu>
@@ -116,13 +167,28 @@ const StudentList = (props) => {
                                         </div>
                                     </td>
                                 }
-
                             </tr>
                         )}
                     </tbody>
                 </Table>
-            </CardBody>
-        </CardReload>
+                {
+                    studentModalState &&
+                    <StudentListModal
+                        students={students}
+                        isOpen={studentModalState}
+                        onSelectedStudent={selectedStudentAssign}
+                        toggleModalState={toggleStudentModalState} />
+                }
+
+                {
+                    testModalState &&
+                    <TestDurationModal
+                        isOpen={testModalState}
+                        setTestDuration={setTestDuration}
+                        toggleModalState={toggleTestModalState} />
+                }
+            </CardBody >
+        </CardReload >
     );
 };
 

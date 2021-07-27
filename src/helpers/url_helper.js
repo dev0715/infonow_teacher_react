@@ -16,7 +16,9 @@ export const POST_TEST = `${BASE_API_URL}/tests`
 export const PUT_TEST = `${BASE_API_URL}/tests`
 export const GET_TESTS = `${BASE_API_URL}/tests`
 export const GET_TEST_BY_ID = testId => `${BASE_API_URL}/tests/${testId}`
-export const POST_ASSIGN_TEST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/assign`
+export const GET_TEST_PAST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/past-test`
+export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/upcoming-test`
+export const POST_ASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/assign`
 
 //STUDENTS
 export const GET_STUDENTS = `${BASE_API_URL}/students`

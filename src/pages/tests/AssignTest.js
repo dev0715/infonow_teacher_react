@@ -5,33 +5,28 @@ import {
     Col,
 } from 'reactstrap';
 
-import { connect } from 'react-redux'
-import { getTestAttempts } from '@store/actions';
-import { withRouter } from 'react-router-dom';
 import TestDetail from '../tests/TestDetail';
-import StudentList from '../students/StudentList';
+import TestsTabContainer from './TestTabContainer';
+
 
 const AssignTestHome = (props) => {
 
     const { test } = props.location.state;
 
-    const assignTest = () => {
-
-    }
-
     return (
         <>
-            {Object.keys(test).length > 0 && (
-                <Row>
-                    <Col lg={12}>
-                        <TestDetail test={test} />
-                    </Col>
-                    <Col lg={12}>
-                        <StudentList isAssignTest={true} onAssignTest={assignTest} />
-                    </Col>
-                </Row>
-            )
+            {
+                Object.keys(test).length > 0 && (
+                    <Row>
+                        <Col lg={12}>
+                            <TestDetail test={test} />
+                        </Col>
 
+                        <Col lg={12}>
+                            <TestsTabContainer test={test} />
+                        </Col>
+                    </Row>
+                )
             }
         </>
     );
