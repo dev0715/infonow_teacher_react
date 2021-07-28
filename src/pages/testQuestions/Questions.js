@@ -59,8 +59,9 @@ const Questions = (props) => {
                 <Col lg={12}>
                     <div className='demo-inline-spacing'>
                         <UncontrolledButtonDropdown>
-                            <DropdownToggle className='btn-icon float-right mr-1' color='success' outline caret>
-                                Add New Question															</DropdownToggle>
+                            <DropdownToggle color='success' outline caret>
+                                Add New Question
+                            </DropdownToggle>
                             <DropdownMenu >
                                 <DropdownItem onClick={() => { addQuestion(1, 0) }}>Objective Question</DropdownItem>
                                 <DropdownItem onClick={() => { addQuestion(2, 0) }}>Subjective Question</DropdownItem>

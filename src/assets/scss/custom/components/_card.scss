@@ -1,4 +1,5 @@
 @import "../../@core/scss/base/bootstrap-extended/variables";
+
 .question-test-detail{
     img{
       width: auto;
@@ -33,19 +34,14 @@
       list-style-type: none;
       padding: 0rem 1rem;
       li{
-        // border: 1px solid #e0e0e0;
         padding: 1rem;
       }
       li.selected-option{
         color: #fff;
-        // background: $primary;
-        // border: 1px solid $primary;
         font-weight: 500;
       }
       li.correct-option{
         color: #fff;
-        // background: $primary;
-        // border: 1px solid $primary;
         font-weight: 500;
       }
       li .check-icon{
@@ -57,4 +53,20 @@
       
     }
   
+  }
+
+  .test-list{
+    .btn-header  {
+      position: absolute;
+      top: 16px;
+      right: 64px;
+    }
+  }
+
+  .past-and-upcoming-test-student{
+    .btn-header  {
+      position: absolute;
+      top: 16px;
+      right: 64px;
+    }
   }

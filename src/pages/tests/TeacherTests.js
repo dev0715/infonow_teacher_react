@@ -9,6 +9,8 @@ import { getTeacherTests } from '@store/actions'
 
 export const TeacherTests = (props) => {
 
+    const { teacherTestsLoading } = props
+
     const fetchTeacherTests = () => {
         props.getTeacherTests();
     }
@@ -42,9 +44,11 @@ export const TeacherTests = (props) => {
         <div>
             <TestList tests={props.tests}
                 isTeacher={true}
+                fetchTests={fetchTeacherTests}
                 onSelect={onSelectTest}
                 onNewTest={addNewTest}
                 onEditTest={onEditTest}
+                isReloading={teacherTestsLoading}
                 onBack={props.onBack} />
         </div>
     )

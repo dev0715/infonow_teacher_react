@@ -17,7 +17,6 @@ const EditTest = (props) => {
 
 	const loading = false;
 	const { onChangeView } = props
-	props.test.timeLimit = props.test.timeLimit / 60
 	const [test, setTest] = useState(props.test)
 
 	const updateQuestions = (index, deleteCount, newItem = undefined) => {
@@ -114,106 +113,109 @@ const EditTest = (props) => {
 	return (
 		<React.Fragment>
 			{!loading && (
+				<>
+					<Row className="mb-2">
+						<Col md="6">
+							<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
+							<h3 className='ml-2 d-inline m-0'>Edit Test</h3>
+						</Col>
+						<Col className="text-right" md="6">
+							<Button.Ripple color='primary' onClick={onChangeView} >
+								<Eye size={14} />
+								<span className='align-middle ml-25'>View</span>
+							</Button.Ripple>
+						</Col>
+					</Row>
+					<Row>
+						<Col lg={12}>
+							<Card>
+								<CardBody>
+									<AvForm
+										className='form-horizontal mt-3'
+										model={defaultValues}
+										onValidSubmit={(e, v) => {
+											handleValidSubmit(e, v);
+										}}
+									>
+										<Row>
+											<Col lg={4}>
+												<div className='mb-3'>
+													<AvField
+														name='title'
+														label={'Test Title *'}
+														value={test.title}
+														onChange={onTitleChange}
+														className='form-control'
+														placeholder={'Enter test title'}
+														type='text'
+														required
+													/>
+												</div>
+											</Col>
 
-				<Row>
-					<Col lg={12}>
-						<Card>
-							<CardBody>
-								<CardTitle className='h4'>
-									<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-									Edit Test
-									<div className='mr-2 text-right'>
-										<Button.Ripple outline color='primary' onClick={onChangeView} >
-											<Eye size={14} />
-											<span className='align-middle ml-25'>View</span>
-										</Button.Ripple>
-									</div>
-								</CardTitle>
-								<AvForm
-									className='form-horizontal mt-3'
-									model={defaultValues}
-									onValidSubmit={(e, v) => {
-										handleValidSubmit(e, v);
-									}}
-								>
-									<Row>
-										<Col lg={4}>
-											<div className='mb-3'>
-												<AvField
-													name='title'
-													label={'Test Title *'}
-													value={test.title}
-													onChange={onTitleChange}
-													className='form-control'
-													placeholder={'Enter test title'}
-													type='text'
-													required
-												/>
-											</div>
-										</Col>
+											<Col lg={4}>
+												<div className='mb-3'>
+													<AvField
+														name='timeLimit'
+														label={'Time Limit *'}
+														value={test.timeLimit / 60}
+														onChange={onTimeLimitChange}
+														className='form-control'
+														placeholder={
+															'Time limit in Minutes'
+														}
+														type='number'
+														min={10}
+														max={600}
+														required
+													/>
+												</div>
+											</Col>
+											<Col lg={4}>
+												<div className='mb-3'>
+													<AvField
+														name='totalMarks'
+														label={'Total Marks *'}
+														value={`${test.totalMarks}`}
+														className='form-control'
+														placeholder={
+															'Total Marks'
+														}
+														type='number'
+														disabled
+													/>
+												</div>
+											</Col>
 
-										<Col lg={4}>
-											<div className='mb-3'>
-												<AvField
-													name='timeLimit'
-													label={'Time Limit *'}
-													value={test.timeLimit}
-													onChange={onTimeLimitChange}
-													className='form-control'
-													placeholder={
-														'Time limit in Minutes'
-													}
-													type='number'
-													min={10}
-													max={600}
-													required
-												/>
-											</div>
-										</Col>
-										<Col lg={4}>
-											<div className='mb-3'>
-												<AvField
-													name='totalMarks'
-													label={'Total Marks *'}
-													value={`${test.totalMarks}`}
-													className='form-control'
-													placeholder={
-														'Total Marks'
-													}
-													type='number'
-													disabled
-												/>
-											</div>
-										</Col>
+											<>
+												{
+													<Questions
+														questions={test.questions}
+														onChangeQuestion={updateQuestions}
+														onFileChanged={onFileChanged}
+														isEdit={true}
+													/>
+												}
+											</>
 
-										<>
-											{
-												<Questions
-													questions={test.questions}
-													onChangeQuestion={updateQuestions}
-													onFileChanged={onFileChanged}
-													isEdit={true}
-												/>
-											}
-										</>
-
-										<Col lg={12}>
-											<div className='mt-3'>
-												<button
-													className='btn btn-primary waves-effect waves-light'
-													type='submit'>
-													{/* disabled={props.newTestLoading}> */}
-													{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
-													Edit Test
-												</button>
-											</div>
-										</Col>
-									</Row>
-								</AvForm>
-							</CardBody>
-						</Card>
-					</Col>
-				</Row>
+											<Col lg={12}>
+												<div className='mt-3'>
+													<button
+														className='btn btn-primary waves-effect waves-light'
+														type='submit'>
+														{/* disabled={props.newTestLoading}> */}
+														{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
+														Edit Test
+													</button>
+												</div>
+											</Col>
+										</Row>
+									</AvForm>
+								</CardBody>
+							</Card>
+						</Col>
+					</Row>
+				</>
 			)}
 		</React.Fragment>
 	);
@@ -227,7 +229,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
 	putTest,
-	//postTestFailed,
 }
 
 export default withRouter(

@@ -10,9 +10,10 @@ import CardReload from '../../@core/components/card-reload';
 import { Button } from 'reactstrap'
 import { Plus } from 'react-feather'
 
+import '../../assets/scss/custom/components/_card.scss'
 const TestList = (props) => {
 
-    const { tests, isTeacher } = props;
+    const { tests, isTeacher, fetchTests, isReloading } = props;
 
     const onSelectTests = (test) => {
         if (props.onSelect) {
@@ -29,12 +30,14 @@ const TestList = (props) => {
 
 
     return (
-        <CardReload
-            title='Tests'>
+        <CardReload className="p-0 test-list"
+            title='Tests'
+            onReload={fetchTests}
+            isReloading={isReloading}>
             {
                 isTeacher &&
-                <div className='mr-2 text-right'>
-                    <Button.Ripple outline color='primary' onClick={onNewTest}>
+                <div className="text-right">
+                    <Button.Ripple className='btn-header' outline color='primary' onClick={onNewTest}>
                         <Plus size={14} />
                         <span className='align-middle ml-25'>Add New Test</span>
                     </Button.Ripple>

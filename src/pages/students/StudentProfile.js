@@ -7,7 +7,8 @@ import {
     Row,
     Col,
     CardHeader,
-    Button
+    Button,
+    CardTitle
 } from 'reactstrap';
 
 import { ArrowLeft } from 'react-feather'
@@ -35,13 +36,6 @@ const StudentProfile = (props) => {
         <>
             {Object.keys(studentProfile).length > 0 && (
                 <Card>
-                    <CardHeader>
-                        <div>
-                            <Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-                            <h4 className='ml-2 d-inline'>Student Profile</h4>
-                        </div>
-
-                    </CardHeader>
                     <CardBody>
                         <Row >
                             <Col>

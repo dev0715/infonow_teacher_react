@@ -2,7 +2,8 @@ import React from 'react';
 
 import {
     Row,
-    Col
+    Col,
+    Button
 } from 'reactstrap';
 
 
@@ -10,6 +11,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import StudentProfile from './StudentProfile';
 import StudentTests from '../tests/StudentTests';
+import { Fragment } from 'react';
+import { ArrowLeft } from 'react-feather'
 
 const StudentHome = (props) => {
 
@@ -23,14 +26,20 @@ const StudentHome = (props) => {
     }
 
     return (
-        <Row>
-            <Col lg={12}>
-                <StudentProfile studentId={studentId} />
-            </Col>
-            <Col lg={12}>
-                <StudentTests studentId={studentId} onSelect={onSelectTest} />
-            </Col>
-        </Row>
+        <Fragment>
+            <div className="mb-2">
+                <Button.Ripple className="btn-icon mr-2" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
+                <h4 className="d-inline m-0">Student Profile</h4>
+            </div>
+            <Row>
+                <Col lg={12}>
+                    <StudentProfile studentId={studentId} />
+                </Col>
+                <Col lg={12}>
+                    <StudentTests studentId={studentId} onSelect={onSelectTest} />
+                </Col>
+            </Row>
+        </Fragment>
     );
 };
 

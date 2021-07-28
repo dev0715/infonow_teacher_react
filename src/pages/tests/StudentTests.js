@@ -10,7 +10,8 @@ import { withRouter } from 'react-router-dom'
 export const StudentTests = (props) => {
 
     const [mapTests, setMapTests] = useState()
-    const { studentId, tests } = props;
+    const { studentId, tests, studentTestsLoading, embeded } = props;
+
     const fetchStudentTests = () => {
         props.getStudentTests(studentId)
     }
@@ -40,8 +41,10 @@ export const StudentTests = (props) => {
             {
                 Object.keys(tests).length > 0 &&
                 <TestList tests={mapTests}
+                    fetchTests={fetchStudentTests}
                     isTeacher={false}
                     onSelect={onSelectTest}
+                    isReloading={studentTestsLoading}
                     onBack={props.onBack} />
             }
         </>

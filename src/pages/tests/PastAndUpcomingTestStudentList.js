@@ -89,16 +89,15 @@ const PastAndUpcomingTestStudentList = (props) => {
     return (
 
         <CardReload
+            className="past-and-upcoming-test-student"
             title='Students'
             onReload={fetchStudents}
             isReloading={isReloading}>
             {
                 isUpcoming &&
-                <div className='mr-35 text-right'>
-                    <Button.Ripple outline color='primary' onClick={() => toggleStudentModalState()} >
-                        <span className='align-middle ml-25'>Assign Test</span>
-                    </Button.Ripple>
-                </div>
+                <Button.Ripple className='btn-header' size="sm" color='primary' onClick={() => toggleStudentModalState()} >
+                    <span className='align-middle ml-25'>Schedule Test</span>
+                </Button.Ripple>
             }
             <CardBody className="p-0">
                 <Table responsive hover >

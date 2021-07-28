@@ -31,48 +31,43 @@ const TestDetail = (props) => {
             {
                 Object.keys(test).length > 0 && (
                     <div>
+                        <Row className="mb-2">
+                            <Col md="6">
+                                <Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
+                                <h3 className='ml-2 d-inline m-0'>Test</h3>
+                            </Col>
+                            {
+                                isEdit &&
+                                <Col md="6" className="text-right">
+                                    <Button.Ripple className="mr-1" color='secondary' onClick={onChangeView} >
+                                        <Edit size={14} />
+                                        <span className='align-middle ml-25'>Edit</span>
+                                    </Button.Ripple>
+
+                                    <Button.Ripple color='primary' onClick={onAssignTest}  >
+                                        <span className='align-middle ml-25'>Test Dashboard</span>
+                                    </Button.Ripple>
+                                </Col>
+                            }
+                        </Row>
                         <Card>
-                            <CardHeader>
-                                <div>
-                                    <Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-                                    <h4 className='ml-2 d-inline'>Test</h4>
-                                </div>
-                                {
-                                    isEdit &&
-                                    <div className='mr-2 text-right'>
-
-                                        <Button.Ripple className="mr-1" outline color='primary' onClick={onAssignTest}  >
-                                            {/* <Edit size={14} /> */}
-                                            <span className='align-middle ml-25'>Test Dashboard</span>
-                                        </Button.Ripple>
-
-                                        <Button.Ripple outline color='primary' onClick={onChangeView} >
-                                            <Edit size={14} />
-                                            <span className='align-middle ml-25'>Edit</span>
-                                        </Button.Ripple>
-
-                                    </div>
-
-                                }
-
-                            </CardHeader>
                             <CardBody>
                                 <Row >
                                     <Col>
                                         <div className='user-avatar-section'>
                                             <div className='d-flex justify-content-start'>
 
-                                                <div className='d-flex flex-column ml-2 '>
+                                                <div className='d-flex flex-column'>
                                                     <div className='user-info '>
-                                                        <h4 className='mb-0'>{test.title}</h4>
+                                                        <h4 className=''>{test.title}</h4>
                                                         <Row>
                                                             <CardText tag='span' className='ml-1'>
-                                                                Created At: {<DateTime dateTime={test.createdAt} type="datetime" />}
+                                                                Created At: <strong>{<DateTime dateTime={test.createdAt} type="datetime" />}</strong>
                                                             </CardText>
                                                         </Row>
                                                         <Row>
                                                             <CardText tag='span' className='ml-1'>
-                                                                Duration: {test.timeLimit / 60} mins
+                                                                Duration: <strong>{test.timeLimit / 60} mins</strong>
                                                             </CardText>
                                                         </Row>
 

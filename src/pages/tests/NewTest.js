@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import {
-	Card, CardBody, CardTitle, Row, Col, Container, Button
+	Card, CardBody, CardTitle, Row, Col, Container, Button, CardHeader
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { withRouter } from 'react-router-dom';
@@ -110,23 +110,19 @@ const NewTest = (props) => {
 	}
 
 
-
-
 	return (
 		<UILoader blocking={newTestLoading}>
 			<React.Fragment>
 				{!loading && (
 					<div className='page-content'>
 						<Container fluid>
-							<h3 className="mb-2">Create a New Test</h3>
 							<Row>
 								<Col lg={12}>
 									<Card>
+										<CardHeader>
+											<CardTitle><Button.Ripple className="btn-icon mr-2" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>Create a New Test</CardTitle>
+										</CardHeader>
 										<CardBody>
-											<CardTitle className='h4'>
-												<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-												New Test
-											</CardTitle>
 											<AvForm
 												className='form-horizontal mt-3'
 												onValidSubmit={(e, v) => {
