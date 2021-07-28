@@ -22,3 +22,12 @@ export * from "./../pages/tests/store/actions"
 //Attempts
 export * from "./../pages/attempts/store/actions"
 
+
+//Documents 
+export * from './../pages/documents/store/actions'
+
+//Blogs
+export * from './../pages/blog/store/actions'
+
+//Lessons
+export * from './../pages/lessons/store/actions'

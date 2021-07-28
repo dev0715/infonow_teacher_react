@@ -18,14 +18,21 @@ import {
   CustomInput, Button
 } from 'reactstrap'
 
-import { getProfileImageUrl, IMAGES_BASE_URL } from './../../helpers/url_helper';
+
+import UILoader from '../../@core/components/ui-loader';
+
+import { GET_IMAGE_URL } from './../../helpers/url_helper';
 
 import { getPreviousMessages } from './socket/events'
 const SidebarLeft = props => {
   // ** Props & Store
-  const { sidebar, handleSidebar, userSidebarLeft,
-    handleUserSidebarLeft, selectChat, selectedChat,
-    user, chats, socket } = props
+  const { sidebar, handleUserSidebarLeft, handleSidebar, userSidebarLeft, socket, store } = props
+
+  const {
+    setNotificationEnabled,
+    isNotificationEnabled, selectChat, selectedChat,
+    user, chats, chatLoading, updateAbout
+  } = store
 
   // ** State
   const [about, setAbout] = useState('')
@@ -42,6 +49,7 @@ const SidebarLeft = props => {
 
   // ** Renders Chat
   const renderChats = () => {
+
     if (chats && chats.length) {
       if (query.length && !filteredChat.length) {
         return (
@@ -62,7 +70,7 @@ const SidebarLeft = props => {
               onClick={() => handleUserClick(item, socket)}
             >
               <Avatar
-                img={getProfileImageUrl(item.type == 'group'
+                img={GET_IMAGE_URL(item.type == 'group'
                   ? item.groupPicture || null
                   : item.chatParticipants.find(u => u.user.userId != user.userId).user.profilePicture)
                 }
@@ -96,17 +104,28 @@ const SidebarLeft = props => {
 
   // ** Handles Filter
   const handleFilter = e => {
-    // setQuery(e.target.value)
-    // const searchFilterFunction = chats => chats.find(c =>
-    //   c.chatParticipants.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
-    //   c.groupName.toLowerCase().includes(e.target.value.toLowerCase())
-    // )
-    // // contact.fullName.toLowerCase().includes(e.target.value.toLowerCase())
-    // const filteredChatsArr = chats.filter(searchFilterFunction)
-    // setFilteredChat([...filteredChatsArr])
+    setQuery(e.target.value)
+    let val = e.target.value || "";
+    const searchFilterFunction = chat => chat.chatParticipants.find(p => p.user.name.toLowerCase().includes(val.toLowerCase())) ||
+      (chat.groupName || "").toLowerCase().includes(val.toLowerCase())
+
+    const filteredChatsArr = chats.filter(searchFilterFunction)
+    setFilteredChat([...filteredChatsArr])
   }
 
-  return chats.length ? (
+  const onNotificationChange = (e) => {
+    console.log(e.target.checked)
+    setNotificationEnabled(e.target.checked)
+  }
+
+  const saveAbout = (e) => {
+    e.preventDefault()
+    console.log("ABOUT___", e.target.value)
+    updateAbout({ about: e.target.value })
+  }
+
+
+  return (
     <div className='sidebar-left'>
       <div className='sidebar'>
         <div
@@ -119,7 +138,10 @@ const SidebarLeft = props => {
               <X size={14} />
             </div>
             <div className='header-profile-sidebar'>
-              <Avatar className='box-shadow-1 avatar-border' img={getProfileImageUrl(user.profilePicture)} status={status} size='xl' />
+              <Avatar className='box-shadow-1 avatar-border'
+                img={GET_IMAGE_URL(user.profilePicture)}
+                status={status}
+                size='xl' />
               <h4 className='chat-user-name'>{user.name}</h4>
               {/* <span className='user-post'>{user.role}</span> */}
             </div>
@@ -129,8 +151,9 @@ const SidebarLeft = props => {
             <div className='about-user'>
               <Input
                 rows='5'
-                // defaultValue={user.about}
+                defaultValue={user.about}
                 type='textarea'
+                onBlur={e => saveAbout(e)}
                 onChange={e => setAbout(e.target.value)}
                 className={classnames('char-textarea', {
                   'text-danger': about && about.length > 120
@@ -187,30 +210,18 @@ const SidebarLeft = props => {
             <ul className='list-unstyled'>
               <li className='d-flex justify-content-between align-items-center mb-1'>
                 <div className='d-flex align-items-center'>
-                  <CheckSquare className='mr-75' size='18' />
-                  <span className='align-middle'>Two-step Verification</span>
-                </div>
-                <CustomInput type='switch' id='verification' name='verification' label='' defaultChecked />
-              </li>
-              <li className='d-flex justify-content-between align-items-center mb-1'>
-                <div className='d-flex align-items-center'>
                   <Bell className='mr-75' size='18' />
                   <span className='align-middle'>Notification</span>
                 </div>
-                <CustomInput type='switch' id='notifications' name='notifications' label='' />
-              </li>
-              <li className='d-flex align-items-center cursor-pointer mb-1'>
-                <User className='mr-75' size='18' />
-                <span className='align-middle'>Invite Friends</span>
-              </li>
-              <li className='d-flex align-items-center cursor-pointer'>
-                <Trash className='mr-75' size='18' />
-                <span className='align-middle'>Delete Account</span>
+                <CustomInput
+                  type='switch'
+                  defaultChecked={isNotificationEnabled}
+                  id='notifications'
+                  name='notifications'
+                  label=''
+                  onChange={onNotificationChange} />
               </li>
             </ul>
-            <div className='mt-3'>
-              <Button color='primary'>Logout</Button>
-            </div>
           </PerfectScrollbar>
         </div>
         <div
@@ -227,7 +238,7 @@ const SidebarLeft = props => {
                 {Object.keys(user).length ? (
                   <Avatar
                     className='avatar-border'
-                    img={getProfileImageUrl(user.profilePicture)}
+                    img={GET_IMAGE_URL(user.profilePicture || null)}
                     status={status}
                     imgHeight='42'
                     imgWidth='42'
@@ -251,12 +262,17 @@ const SidebarLeft = props => {
           </div>
           <PerfectScrollbar className='chat-user-list-wrapper list-group' options={{ wheelPropagation: false }}>
             <h4 className='chat-list-title'>Chats</h4>
-            <ul className='chat-users-list chat-list media-list'>{renderChats()}</ul>
+            <ul className='chat-users-list chat-list media-list'>
+              <UILoader blocking={chatLoading}>
+                {renderChats()}
+              </UILoader>
+            </ul>
           </PerfectScrollbar>
+
         </div>
       </div>
     </div>
-  ) : null
+  )
 }
 
 export default SidebarLeft

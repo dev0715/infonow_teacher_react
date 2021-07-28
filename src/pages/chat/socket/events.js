@@ -4,8 +4,6 @@ import { getLoggedInUser } from '../../../helpers/backend-helpers'
 import authHeader from "../../../helpers/jwt-token-access/auth-token-header";
 
 
-
-
 /**
  * 
  * @param {string} event 
@@ -30,6 +28,8 @@ const UpDateChatsAndSelectedChat = (event, res, props) => {
     if (res.success) {
         UpDateChatParticipants(event, res, props)
         props.updateSelectChat(res.data)
+    } else {
+        console.log(event, res.error)
     }
 }
 
@@ -42,6 +42,7 @@ const UpDateChatsAndSelectedChat = (event, res, props) => {
  */
 const StoreNewMessage = (event, res, props) => {
     console.log(event, res);
+    props.playNotificationSound(res)
     props.saveNewMessage(res)
 }
 
@@ -54,13 +55,10 @@ const StoreNewMessage = (event, res, props) => {
  */
 export function attachEvents(socket, props) {
 
-    console.log("CHECk props ==>", props);
-
     socket.on(IOEvents.CONNECT, () => {
         console.log(IOEvents.CONNECT);
         socket.emit(IOEvents.SET_LANGUAGE, { locale: 'en' })
         let authorization = authHeader()['Authorization']
-        console.log("Auth===>>>", authorization)
         socket.emit(IOEvents.AUTHORIZATION, { authorization })
     })
 
@@ -68,7 +66,6 @@ export function attachEvents(socket, props) {
         console.log(IOEvents.AUTHORIZATION, res);
         if (res.success) {
             let user = getLoggedInUser() || {}
-            console.log("CHECK USER", user);
             props.getChatContacts(user.userId)
             props.authorizedSuccess()
         }
@@ -125,8 +122,8 @@ export function getPreviousMessages(socket, chatId, timeStamp = moment().utc()) 
  * @param {Moment} timeStamp 
  */
 
-export function sendMessage(socket, chatId, message, messageId) {
-    socket.emit(IOEvents.NEW_MESSAGE, { chatId, message: message, messageId })
+export function sendMessage({ socket, chatId, message, messageId, documentId }) {
+    socket.emit(IOEvents.NEW_MESSAGE, { chatId, message: message, messageId, documentId })
 }
 
 /**
@@ -157,4 +154,5 @@ export function userBlockChat(socket, chatId,) {
 
 export function userUnBlockChat(socket, chatId,) {
     socket.emit(IOEvents.UNBLOCK_CHAT, { chatId })
+    console.log("Unblock")
 }

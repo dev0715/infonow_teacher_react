@@ -8,6 +8,9 @@ import MeetingsSaga from "./../pages/meetings/store/saga"
 import StudentsSaga from "./../pages/students/store/saga"
 import TestsSaga from "./../pages/tests/store/saga"
 import AttemptsSaga from "./../pages/attempts/store/saga"
+import DocumentSaga from "./../pages/documents/store/saga"
+import BlogSaga from "./../pages/blog/store/saga"
+import LessonsSaga from "./../pages/lessons/store/saga"
 
 export default function* rootSaga() {
   yield all([
@@ -17,6 +20,9 @@ export default function* rootSaga() {
     MeetingsSaga(),
     StudentsSaga(),
     TestsSaga(),
-    AttemptsSaga()
+    AttemptsSaga(),
+    DocumentSaga(),
+    BlogSaga(),
+    LessonsSaga(),
   ])
 }

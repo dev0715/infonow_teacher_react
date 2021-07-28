@@ -69,6 +69,42 @@ const Routes = [
     component: lazy(() => import('../../pages/chat'))
   },
   {
+    appLayout: true,
+    path: '/documents',
+    component: lazy(() => import('../../pages/documents'))
+  },
+  {
+    path: '/blog',
+    exact: true,
+    component: lazy(() => import('../../pages/blog/list'))
+  },
+  {
+    path: '/blog/:id',
+    exact: true,
+    component: lazy(() => import('../../pages/blog/details')),
+    meta: {
+      navLink: '/blog/:id'
+    }
+  },
+  {
+    path: '/lessons',
+    exact: true,
+    className: 'lesson-list-application',
+    component: lazy(() => import('../../pages/lessons'))
+  },
+  {
+    path: '/topic-lessons',
+    exact: true,
+    className: 'lesson-application',
+    component: lazy(() => import('../../pages/lessons/topic-lessons'))
+  },
+  {
+    path: '/new-lesson',
+    exact: true,
+    className: 'new-lesson-application',
+    component: lazy(() => import('../../pages/lessons/new-lesson'))
+  },
+  {
     path: '/login',
     component: lazy(() => import('../../pages/auth/login')),
     layout: 'BlankLayout',

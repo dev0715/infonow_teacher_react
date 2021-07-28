@@ -89,6 +89,7 @@ export default (state = initialState, action) => {
                 testDetailLoading: false,
                 testDetailError: action.payload,
             }
+            break;
         default:
             state = { ...state }
     }

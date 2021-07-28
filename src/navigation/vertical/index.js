@@ -31,7 +31,7 @@ export default [
     id: 'lessons',
     title: 'Lessons',
     icon: <i className="la la-book" />,
-    navLink: '/apps/todo'
+    navLink: '/lessons'
   },
   {
     id: 'tests',
@@ -43,13 +43,13 @@ export default [
     id: 'documents',
     title: 'Documents',
     icon: <i className="la la-folder-open" />,
-    navLink: '/apps/calendar'
+    navLink: '/documents'
   },
   {
     id: 'blog',
     title: 'Blog',
     icon: <i className="la la-newspaper" />,
-    navLink: '/apps/calendar'
+    navLink: '/blog'
   },
   {
     id: 'feedback',

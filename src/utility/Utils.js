@@ -1,3 +1,48 @@
+
+
+export let videoFiles = Object.freeze(["webm", "mpg", "mp2", "mpeg", "mpe", "mpv", "ogg",
+  "mp4", , "m4p", 'm4v', 'avi', 'wmv', 'mov', 'qt', "flv", 'swf', 'avchd'])
+
+export let imageFiles = Object.freeze(["jpg", "jpeg", "jpe", "jif", "jfif", "jfi",
+  "png", "gif", "webp", "tiff", "tif", "bmp", "dib",
+  "jp2", "j2k", "jpf", "jpx", "jpm", "mj2", "svg", "svgz"])
+
+export let audioFiles = Object.freeze(["wav", "wave", "aiff", "aif", "aifc", "pcm", "au", "l16", "flac", "m4a", "caf",
+  "wma", "wmv", "mp3", "ogg", "oga", "mogg", "aac", "3gp", "m4r"])
+
+export let zipFiles = Object.freeze([
+  "zip", "zipx", "tar", "gz", "z", "cab", "rar", "bz2", "lzh", "7z", "img", "iso", "xz", "vhd", "vmdk"
+])
+
+export let documentFiles = Object.freeze([
+  "doc", "docx", "odt", "pdf", "xls", "xlsx", "ods", "ppt", "pptx", "txt", "csv", "tsv", "pages", "numbers",
+])
+
+export let codeFiles = Object.freeze(["html", "htm", "php", "aspx", "asp", "jsp",
+  "js", "jsx", "ts", "json", "c", "cgi", "pl", "class", "cpp",
+  "cs", "h", "java", "php", "py", "sh", "swift", "vb"])
+
+/**
+* 
+* @param {string} ext 
+* @returns { 'video' | 'image' | 'audio' | 'archive' | 'code' | 'document'  | 'file'}
+*/
+export const getFileType = (ext) => {
+  if (videoFiles.find(ex => ex == ext)) return 'video'
+  if (imageFiles.find(ex => ex == ext)) return 'image'
+  if (audioFiles.find(ex => ex == ext)) return 'audio'
+  if (zipFiles.find(ex => ex == ext)) return 'archive'
+  if (documentFiles.find(ex => ex == ext)) return 'document'
+  if (codeFiles.find(ex => ex == ext)) return 'code'
+
+  return 'file'
+}
+
+export const getShortNameForDocument = (name) => {
+  if (name.length < 30) return name
+  return name.substring(0, 8) + "..." + name.substring(name.length - 8);
+}
+
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = obj => Object.keys(obj).length === 0
 

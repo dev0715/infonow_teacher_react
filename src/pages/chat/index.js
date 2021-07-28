@@ -10,8 +10,11 @@ import Chat from './Chat'
 import Sidebar from './SidebarLeft'
 import UserProfileSidebar from './UserProfileSidebar'
 
+import './style.scss';
 // ** Third Party Components
 import classnames from 'classnames'
+
+
 
 // ** Store & Actions
 import { connect, useSelector } from 'react-redux'
@@ -20,22 +23,38 @@ import {
   getChatContacts, authorizedSuccess, authorizedFailure,
   setRoomJoined, selectChat, updateSelectChat,
   getPreviousMessagesSuccess, getPreviousMessagesFailure,
-  newMessage, saveNewMessage,
+  newMessage, saveNewMessage, deleteMessages,
   updateChatHeadMessage, updateChatParticipants,
-  deleteMessages
+  playNotificationSound, stopNotificationSound, setNotificationEnabled,
+  setNotificationIds, muteChatNotification, unmuteChatNotification,
+  uploadDocument,
+  addDocumentToQueue,
+  cancelDocumentUpload,
+  updateDocumentProgress,
+  removeDocument,
+  getSelectChatDocuments,
+  getSelectChatDocumentsSuccess,
+  getSelectChatDocumentsFailure,
+  updateAbout,
+  updateAboutSuccess,
+  updateAboutFailure,
+  setPreviousMessagesLoading
+
 } from './store/actions'
 
 import '@styles/base/pages/app-chat.scss'
 import '@styles/base/pages/app-chat-list.scss'
 import { withRouter } from 'react-router';
 import { IOEvents } from './socket/eventTypes.js';
-import { attachEvents } from './socket/events';
-import { getLoggedInUser } from '../../helpers/backend-helpers'
+import { attachEvents, sendMessage } from './socket/events';
+import { getLoggedInUser } from './../../helpers/backend-helpers';
+import { getChatNotificationIds } from './utility';
+
+const notificationSound = require("./sounds/notification.mp3")
 
 const AppChat = (props) => {
   // ** Store Vars
   const store = useSelector(state => state.Chat)
-
 
   // ** States
   const [user, setUser] = useState({})
@@ -63,6 +82,7 @@ const AppChat = (props) => {
   useEffect(() => {
     props.setLoggedUser(getLoggedInUser() || {})
     attachEvents(socket, props)
+    props.setNotificationIds(getChatNotificationIds())
   }, [])
 
   useEffect(() => {
@@ -75,14 +95,35 @@ const AppChat = (props) => {
   }, [props.chats])
 
 
+  useEffect(() => {
+    if (props.isNotification) {
+      setTimeout(() => {
+        props.stopNotificationSound()
+      }, 1000);
+    }
+  }, [props.isNotification])
+
+
+  useEffect(() => {
+    for (const doc of props.uploadedDocuments) {
+      if (doc.data) {
+        props.removeDocument({ documentId: doc.documentId })
+        sendMessage({
+          socket,
+          message: doc.name,
+          chatId: doc.chatId,
+          documentId: doc.data.documentId
+        })
+      }
+    }
+  }, [props.uploadedDocuments])
+
+
   return (
     <Fragment>
       <Sidebar
         socket={socket}
-        user={props.user}
-        chats={props.chats}
-        selectedChat={props.selectedChat}
-        selectChat={props.selectChat}
+        store={props}
         sidebar={sidebar}
         handleSidebar={handleSidebar}
         userSidebarLeft={userSidebarLeft}
@@ -99,24 +140,30 @@ const AppChat = (props) => {
             ></div>
             <Chat
               socket={socket}
-              messages={props.messages}
-              selectedChat={props.selectedChat}
-              selectedUser={props.selectedUser}
-              user={props.user}
-              newMessage={props.newMessage}
+              store={props}
               handleUser={handleUser}
               handleSidebar={handleSidebar}
               userSidebarLeft={userSidebarLeft}
               handleUserSidebarRight={handleUserSidebarRight}
             />
             <UserProfileSidebar
-              user={user}
+              store={props}
               userSidebarRight={userSidebarRight}
               handleUserSidebarRight={handleUserSidebarRight}
             />
           </div>
         </div>
       </div>
+      {
+        props.isNotification &&
+        <audio
+          src={notificationSound}
+          autoPlay
+          style={{
+            visibility: 'hidden'
+          }}
+        />
+      }
     </Fragment>
   )
 }
@@ -133,7 +180,19 @@ const mapStateToProps = (state) => {
     isRoomJoined,
     selectedChat,
     selectedUser,
-    messages
+    messages,
+    isNotification,
+    isEndOfMessages,
+    mutedNotificationIds,
+    isNotificationEnabled,
+    documentList,
+    uploadedDocuments,
+    chatDocuments,
+    chatDocumentsLoading,
+    chatLoading,
+    aboutUpdating,
+    messagesLoading
+
   } = state.Chat;
   return {
     error,
@@ -145,7 +204,18 @@ const mapStateToProps = (state) => {
     isRoomJoined,
     selectedChat,
     selectedUser,
-    messages
+    messages,
+    isNotification,
+    isEndOfMessages,
+    mutedNotificationIds,
+    isNotificationEnabled,
+    documentList,
+    uploadedDocuments,
+    chatDocuments,
+    chatDocumentsLoading,
+    chatLoading,
+    aboutUpdating,
+    messagesLoading
   }
 }
 
@@ -157,6 +227,20 @@ export default withRouter(
     getPreviousMessagesSuccess, getPreviousMessagesFailure,
     newMessage,
     updateChatHeadMessage, updateChatParticipants,
-    deleteMessages
+    deleteMessages,
+    playNotificationSound, stopNotificationSound, setNotificationEnabled,
+    setNotificationIds, muteChatNotification, unmuteChatNotification,
+    uploadDocument,
+    addDocumentToQueue,
+    cancelDocumentUpload,
+    updateDocumentProgress,
+    removeDocument,
+    getSelectChatDocuments,
+    getSelectChatDocumentsSuccess,
+    getSelectChatDocumentsFailure,
+    updateAbout,
+    updateAboutSuccess,
+    updateAboutFailure,
+    setPreviousMessagesLoading
   })(AppChat)
 )
