@@ -76,7 +76,7 @@ function* assignTestHttp({ payload: { data } }) {
     }
 }
 
-function* getPastStudentHttp({ payload: { testId } }) {
+function* getPastStudentHttp({ payload: testId }) {
     try {
         const response = yield call(getTestPastStudent, testId);
         yield put(getPastStudentSuccess(response))
@@ -85,7 +85,7 @@ function* getPastStudentHttp({ payload: { testId } }) {
     }
 }
 
-function* getUpcomingStudentHttp({ payload: { testId } }) {
+function* getUpcomingStudentHttp({ payload: testId }) {
     try {
         const response = yield call(getTestUpcomingStudent, testId);
         yield put(getUpcomingStudentSuccess(response))

@@ -1,14 +1,10 @@
 
 import React from 'react'
 import {
-    Button, Modal, ModalHeader, ModalBody, ModalFooter,
-    Table, Badge, DropdownMenu, DropdownItem,
-    UncontrolledDropdown, DropdownToggle
+    Button, Modal, ModalHeader, ModalBody, Table
 } from 'reactstrap'
 
-import { MoreVertical, Edit, FileText } from 'react-feather'
 import Avatar from '@components/avatar'
-import { titleCase } from '@utils';
 import { DateTime } from '../../components/date-time';
 import { useState } from 'react';
 import { getProfileImageUrl } from '../../helpers/url_helper'
@@ -49,9 +45,9 @@ const StudentListModal = (props) => {
                                 <td><DateTime dateTime={s.user.createdAt} type="date" /></td>
 
                                 <td>
-                                    <Button color='primary' onClick={e => { e.preventDefault(); onSelectedStudent(s) }}>
+                                    <Button.Ripple color='flat-primary' onClick={e => { e.preventDefault(); onSelectedStudent(s) }}>
                                         Assign
-                                    </Button>
+                                    </Button.Ripple>
                                 </td>
 
 

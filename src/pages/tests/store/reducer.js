@@ -49,7 +49,7 @@ const initialState = {
     updateTestTestError: null,
 
     assignTest: {},
-    assignTestSuccessMessage: string,
+    assignTestSuccess: false,
     assignTestLoading: false,
     assignTestError: null,
 
@@ -156,6 +156,7 @@ export default (state = initialState, action) => {
         case ASSIGN_TEST:
             state = {
                 ...state,
+                assignTestSuccess: false,
                 assignTestLoading: true,
                 assignTestError: null
             }
@@ -164,7 +165,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 assignTest: action.payload,
-                assignTestSuccessMessage: action.payload,
+                assignTestSuccess: true,
                 assignTestLoading: false,
                 assignTestError: null,
             }

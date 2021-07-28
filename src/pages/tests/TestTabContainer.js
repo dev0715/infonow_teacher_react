@@ -1,8 +1,6 @@
 import React from 'react';
 
 import {
-    Row,
-    Col,
     Card,
     CardBody
 } from 'reactstrap';
@@ -11,24 +9,47 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import '../../assets/scss/custom/components/_card.scss'
-
+import UILoader from '../../@core/components/ui-loader';
 import {
     assignTest,
     getPastStudent,
-    getUpcomingStudent
+    getUpcomingStudent,
 } from '@store/actions'
-import StudentList from '../students/StudentList';
+import PastAndUpcomingTestStudentList from './PastAndUpcomingTestStudentList';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
+
 
 const TestsTabContainer = (props) => {
 
+    const MySwal = withReactContent(Swal)
     const [active, setActive] = useState('1')
-    const { test, pastStudents, upcomingStudents } = props
+    const { test, pastStudents, upcomingStudents,
+        assignTestLoading,
+        pastStudentsLoading,
+        upcomingStudentsLoading } = props
 
     const toggle = tab => {
         if (active !== tab) {
             setActive(tab)
         }
     }
+
+    const fetchStudents = () => {
+        props.getPastStudent(test.testId);
+        props.getUpcomingStudent(test.testId);
+    }
+
+    useEffect(() => {
+        fetchStudents();
+    }, []);
+
+
+    useEffect(() => {
+        if (props.assignTestError) assignTestAlert(props.assignTestError, 'error');
+        if (props.assignTestSuccess) assignTestAlert('Test has been assigned successfully', 'success');
+    }, [props.assignTestError, props.assignTestSuccess]);
 
     const assignTest = (testData) => {
         let data = {
@@ -40,45 +61,70 @@ const TestsTabContainer = (props) => {
         props.assignTest(data)
     }
 
+    const assignTestAlert = (msg, icon) => {
+        return MySwal.fire({
+            title: msg,
+            icon: icon,
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        })
+    }
+
     return (
         <>
-            <Card>
-                <CardBody>
-                    <Nav tabs fill>
-                        <NavItem>
-                            <NavLink
-                                active={active === '1'}
-                                onClick={() => {
-                                    toggle('1')
-                                }}
-                            >
-                                Past Test
-                            </NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink
-                                active={active === '2'}
-                                onClick={() => {
-                                    toggle('2')
-                                }}
-                            >
-                                Upcoming Test
-                            </NavLink>
-                        </NavItem>
+            <UILoader blocking={assignTestLoading}>
+                <Card>
+                    <CardBody >
+                        <Nav tabs fill>
+                            <NavItem>
+                                <NavLink
+                                    active={active === '1'}
+                                    onClick={() => {
+                                        toggle('1')
+                                    }}
+                                >
+                                    Past Test
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    active={active === '2'}
+                                    onClick={() => {
+                                        toggle('2')
+                                    }}
+                                >
+                                    Upcoming Test
+                                </NavLink>
+                            </NavItem>
 
-                    </Nav>
+                        </Nav>
 
-                    <TabContent className='py-50' activeTab={active}>
-                        <TabPane tabId='1'>
-                            <StudentList students={pastStudents} isAssignTest={false} onAssignTest={assignTest} />
-                        </TabPane>
+                        <TabContent className='py-50' activeTab={active}>
+                            <TabPane tabId='1'>
+                                <PastAndUpcomingTestStudentList
+                                    studentTests={pastStudents}
+                                    isUpcoming={false}
+                                    fetchStudents={fetchStudents}
+                                    onAssignTest={assignTest}
+                                    isReloading={pastStudentsLoading}
+                                />
+                            </TabPane>
 
-                        <TabPane tabId='2'>
-                            <StudentList students={upcomingStudents} isAssignTest={true} onAssignTest={assignTest} />
-                        </TabPane>
-                    </TabContent>
-                </CardBody>
-            </Card>
+                            <TabPane tabId='2'>
+                                <PastAndUpcomingTestStudentList
+                                    studentTests={upcomingStudents}
+                                    isUpcoming={true}
+                                    fetchStudents={fetchStudents}
+                                    onAssignTest={assignTest}
+                                    isReloading={upcomingStudentsLoading}
+                                />
+                            </TabPane>
+                        </TabContent>
+                    </CardBody>
+                </Card>
+            </UILoader>
         </>
     )
 
@@ -87,14 +133,15 @@ const TestsTabContainer = (props) => {
 
 
 const mapStateToProps = (state) => {
-    const { assignTest, assignTestLoading,
-        assignTestError, assignTestSuccessMessage,
+    const {
+        assignTest, assignTestLoading,
+        assignTestError, assignTestSuccess,
         pastStudents, pastStudentsLoading, pastStudentsError,
         upcomingStudents, upcomingStudentsLoading, upcomingStudentsError,
     } = state.Tests
     return {
         assignTest, assignTestLoading,
-        assignTestError, assignTestSuccessMessage,
+        assignTestError, assignTestSuccess,
         pastStudents, pastStudentsLoading, pastStudentsError,
         upcomingStudents, upcomingStudentsLoading, upcomingStudentsError,
     }
@@ -104,7 +151,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     assignTest,
     getPastStudent,
-    getUpcomingStudent,
+    getUpcomingStudent
 }
 
 export default withRouter(

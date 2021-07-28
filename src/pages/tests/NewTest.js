@@ -12,9 +12,18 @@ import { postTest } from '@store/actions'
 import { ArrowLeft } from 'react-feather'
 import '../../assets/scss/custom/components/_question.scss'
 
+import '../../assets/scss/custom/components/_card.scss'
+import UILoader from '../../@core/components/ui-loader';
+import withReactContent from 'sweetalert2-react-content'
+import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 const NewTest = (props) => {
 
+	const { newTestLoading, newTestError } = props
+
+	const MySwal = withReactContent(Swal)
+
 	const loading = false;
+
 	const [newTest, setNewTest] = useState({
 		"title": "",
 		"totalMarks": 0,
@@ -69,7 +78,22 @@ const NewTest = (props) => {
 		props.postTest(fd);
 	}
 
+	useEffect(() => {
+		if (props.newTestError) newTestCreatedAlert(props.newTestError, 'error');
+		if (props.newTestSuccess) newTestCreatedAlert('Test has been created successfully', 'success');
+	}, [props.newTestError, props.newTestSuccess]);
 
+
+	const newTestCreatedAlert = (msg, icon) => {
+		return MySwal.fire({
+			title: msg,
+			icon: icon,
+			customClass: {
+				confirmButton: 'btn btn-primary'
+			},
+			buttonsStyling: false
+		})
+	}
 
 	const onTitleChange = (e) => {
 		setNewTest({ ...newTest, title: e.target.value })
@@ -85,133 +109,112 @@ const NewTest = (props) => {
 		props.history.push('/tests')
 	}
 
-	useEffect(() => {
-		if (props.newTestError && typeof props.newTestError === 'string') {
-			Swal.fire({
-				icon: 'error',
-				title: 'Error',
-				html: props.newTestError
-			}).then((result) => {
-				//props.postTestFailed(null)
-			})
-		}
-	}, [props.newTestError])
 
-	useEffect(() => {
-		if (props.newTestSuccess && typeof props.newTestSuccess === 'string') {
-			Swal.fire({
-				icon: 'success',
-				title: 'Success',
-				html: props.newTestSuccess
-			}).then((result) => {
-				//	props.postTestFailed(null)
-				props.history.push('/tests')
-			})
-		}
-	}, [props.newTestSuccess])
 
 
 	return (
-		<React.Fragment>
-			{!loading && (
-				<div className='page-content'>
-					<Container fluid>
-						<h3 className="mb-2">Create a New Test</h3>
-						<Row>
-							<Col lg={12}>
-								<Card>
-									<CardBody>
-										<CardTitle className='h4'>
-											<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-											New Test
-										</CardTitle>
-										<AvForm
-											className='form-horizontal mt-3'
-											onValidSubmit={(e, v) => {
-												handleValidSubmit(e, v);
-											}}
-										>
-											<Row>
-												<Col lg={4}>
-													<div className='mb-3'>
-														<AvField
-															name='title'
-															label={'Test Title *'}
-															value={newTest.title}
-															onChange={onTitleChange}
-															className='form-control'
-															placeholder={'Enter test title'}
-															type='text'
-															required
-														/>
-													</div>
-												</Col>
+		<UILoader blocking={newTestLoading}>
+			<React.Fragment>
+				{!loading && (
+					<div className='page-content'>
+						<Container fluid>
+							<h3 className="mb-2">Create a New Test</h3>
+							<Row>
+								<Col lg={12}>
+									<Card>
+										<CardBody>
+											<CardTitle className='h4'>
+												<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
+												New Test
+											</CardTitle>
+											<AvForm
+												className='form-horizontal mt-3'
+												onValidSubmit={(e, v) => {
+													handleValidSubmit(e, v);
+												}}
+											>
+												<Row>
+													<Col lg={4}>
+														<div className='mb-3'>
+															<AvField
+																name='title'
+																label={'Test Title *'}
+																value={newTest.title}
+																onChange={onTitleChange}
+																className='form-control'
+																placeholder={'Enter test title'}
+																type='text'
+																required
+															/>
+														</div>
+													</Col>
 
-												<Col lg={4}>
-													<div className='mb-3'>
-														<AvField
-															name='timeLimit'
-															label={'Time Limit *'}
-															value={newTest.timeLimit}
-															onChange={onTimeLimitChange}
-															className='form-control'
-															placeholder={
-																'Time limit in Minutes'
-															}
-															type='number'
-															min={10}
-															max={600}
-															required
-														/>
-													</div>
-												</Col>
-												<Col lg={4}>
-													<div className='mb-3'>
-														<AvField
-															name='totalMarks'
-															label={'Total Marks *'}
-															value={`${newTest.totalMarks}`}
-															className='form-control'
-															placeholder={
-																'Total Marks'
-															}
-															type='number'
-															disabled
-														/>
-													</div>
-												</Col>
+													<Col lg={4}>
+														<div className='mb-3'>
+															<AvField
+																name='timeLimit'
+																label={'Time Limit *'}
+																value={newTest.timeLimit}
+																onChange={onTimeLimitChange}
+																className='form-control'
+																placeholder={
+																	'Time limit in Minutes'
+																}
+																type='number'
+																min={10}
+																max={600}
+																required
+															/>
+														</div>
+													</Col>
+													<Col lg={4}>
+														<div className='mb-3'>
+															<AvField
+																name='totalMarks'
+																label={'Total Marks *'}
+																value={`${newTest.totalMarks}`}
+																className='form-control'
+																placeholder={
+																	'Total Marks'
+																}
+																type='number'
+																disabled
+															/>
+														</div>
+													</Col>
 
-												<>
-													{
-														<Questions
-															questions={newTest.questions}
-															onChangeQuestion={updateQuestions}
-															onFileChanged={onFileChanged}
-														/>
-													}
-												</>
+													<>
+														{
+															<Questions
+																questions={newTest.questions}
+																onChangeQuestion={updateQuestions}
+																onFileChanged={onFileChanged}
+															/>
+														}
+													</>
 
-												<Col lg={12}>
-													<div className='mt-3'>
-														<button
-															className='btn btn-primary waves-effect waves-light'
-															type='submit'>
-															{/* disabled={props.newTestLoading}> */}
-															{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
-															Create Test
-														</button>
-													</div>
-												</Col>
-											</Row>
-										</AvForm>
-									</CardBody>
-								</Card>
-							</Col>
-						</Row>
-					</Container>
-				</div>
-			)}
-		</React.Fragment>
+													<Col lg={12}>
+														<div className='mt-3'>
+															<button
+																className='btn btn-primary waves-effect waves-light'
+																type='submit'>
+																{/* disabled={props.newTestLoading}> */}
+																{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
+																Create Test
+															</button>
+														</div>
+													</Col>
+												</Row>
+											</AvForm>
+										</CardBody>
+									</Card>
+								</Col>
+							</Row>
+						</Container>
+					</div>
+				)}
+			</React.Fragment>
+		</UILoader>
 	);
 };
 
@@ -219,19 +222,20 @@ const mapStateToProps = (state) => {
 	const {
 		newTest,
 		newTestLoading,
+		newTestSuccess,
 		newTestError,
 	} = state.Tests;
 
 	return {
 		newTest,
 		newTestLoading,
+		newTestSuccess,
 		newTestError,
 	}
 }
 
 const mapDispatchToProps = {
-	postTest,
-	//postTestFailed,
+	postTest
 }
 
 export default withRouter(

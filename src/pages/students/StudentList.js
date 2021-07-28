@@ -7,35 +7,20 @@ import {
     Badge,
     Button
 } from 'reactstrap';
-import { MoreVertical, Edit, FileText, Archive, Trash } from 'react-feather'
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 import CardReload from '../../@core/components/card-reload';
 
 import Avatar from '@components/avatar'
 import { titleCase } from '@utils';
 import { DateTime } from '../../components/date-time';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getAllStudents, getStudentById } from '@store/actions';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
-import StudentListModal from '../tests/StudentListModal';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-import { ThumbsUp, ThumbsDown } from 'react-feather'
-import TestDurationModal from '../tests/TestDurationModal';
-import { mergeDateTime } from '../../helpers/HelperFunctions';
-
 const StudentList = (props) => {
-    const { isAssignTest,
-        onAssignTest } = props
 
     const { students } = props
-    const [studentModalState, setStudentModalState] = useState(false)
-    const [testModalState, setTestModalState] = useState(false)
-    const [selectedStudent, setSelectedStudent] = useState(null)
-
 
     const fetchStudents = () => {
         props.getAllStudents();
@@ -46,8 +31,7 @@ const StudentList = (props) => {
     }, []);
 
     const onStudentSelect = (student) => {
-        if (!isAssignTest)
-            props.history.push(`/students/${student.user.userId}`)
+        props.history.push(`/students/${student.user.userId}`)
     }
 
     const getStudentStatusColor = (studentStatus) => {
@@ -60,54 +44,13 @@ const StudentList = (props) => {
         }
     }
 
-    const setTestDuration = (data) => {
-        setTestModalState(!testModalState)
-        let testData = {
-            startTime: mergeDateTime(data.startDate, data.startTime),
-            endTime: mergeDateTime(data.endDate, data.endTime),
-            student: selectedStudent
-        }
-        onAssignTest(testData)
-    }
-
-    const selectedStudentAssign = (student) => {
-        setSelectedStudent(student)
-        setStudentModalState(!studentModalState)
-        setTestModalState(!testModalState)
-    }
-
-    const UnassignTest = (e, student) => {
-        e.preventDefault()
-        // if (student)
-        //   onAssignTest(student.studentId)
-    }
-
-    const toggleStudentModalState = () => {
-        setStudentModalState(!studentModalState)
-    }
-
-    const toggleTestModalState = () => {
-        setTestModalState(!testModalState)
-    }
-
-
     return (
 
         <CardReload
             title='Students'
             onReload={fetchStudents}
-            isReloading={props.studentsLoading}
-        >
-            {
-                isAssignTest &&
-                <div className='mr-35 text-right'>
-                    <Button.Ripple outline color='primary' onClick={() => toggleStudentModalState()} >
-                        <span className='align-middle ml-25'>Assign Test</span>
-                    </Button.Ripple>
-                </div>
-            }
+            isReloading={props.studentsLoading} >
             < CardBody >
-
                 <Table responsive hover >
                     <thead>
                         <tr>
@@ -116,15 +59,11 @@ const StudentList = (props) => {
                             <th>Email</th>
                             <th>Created At</th>
                             <th>Status</th>
-                            {
-                                isAssignTest &&
-                                <th>Status</th>
-                            }
 
                         </tr>
                     </thead>
                     <tbody>
-                        {props.students && props.students.map((s, i) =>
+                        {students && students.map((s, i) =>
                             <tr key={s.userId} >
                                 <td>{i + 1}</td>
                                 <td onClick={() => onStudentSelect(s)}>
@@ -147,46 +86,10 @@ const StudentList = (props) => {
                                         {titleCase(s.status)}
                                     </Badge>
                                 </td>
-                                {
-                                    isAssignTest &&
-                                    <td>
-                                        <div className='d-flex'>
-                                            <UncontrolledDropdown>
-                                                <DropdownToggle className='pr-1' tag='span'>
-                                                    <MoreVertical size={15} />
-                                                </DropdownToggle>
-                                                <DropdownMenu right>
-                                                    <DropdownItem tag='a' href='/' className='w-100' onClick={e => UnassignTest(e, s)}>
-                                                        <FileText size={15} />
-                                                        <span className='align-middle ml-50'>Unassign</span>
-                                                    </DropdownItem>
-
-                                                </DropdownMenu>
-                                            </UncontrolledDropdown>
-                                            <Edit size={15} />
-                                        </div>
-                                    </td>
-                                }
                             </tr>
                         )}
                     </tbody>
                 </Table>
-                {
-                    studentModalState &&
-                    <StudentListModal
-                        students={students}
-                        isOpen={studentModalState}
-                        onSelectedStudent={selectedStudentAssign}
-                        toggleModalState={toggleStudentModalState} />
-                }
-
-                {
-                    testModalState &&
-                    <TestDurationModal
-                        isOpen={testModalState}
-                        setTestDuration={setTestDuration}
-                        toggleModalState={toggleTestModalState} />
-                }
             </CardBody >
         </CardReload >
     );

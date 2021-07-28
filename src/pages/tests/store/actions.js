@@ -138,7 +138,7 @@ export const assignTestFailure = (error) => {
 export const getPastStudent = (testId) => {
     return {
         type: GET_PAST_STUDENT,
-        payload: { testId }
+        payload: testId
     }
 }
 
@@ -160,7 +160,7 @@ export const getPastStudentFailure = (error) => {
 export const getUpcomingStudent = (testId) => {
     return {
         type: GET_UPCOMING_STUDENT,
-        payload: { testId }
+        payload: testId
     }
 }
 
