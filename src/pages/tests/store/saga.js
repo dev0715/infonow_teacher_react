@@ -5,21 +5,30 @@ import {
     GET_STUDENT_TESTS,
     GET_TEACHER_TESTS,
     POST_TEST,
-    PUT_TEST
+    PUT_TEST,
+    ASSIGN_TEST,
+    GET_PAST_STUDENT,
+    GET_UPCOMING_STUDENT,
 } from "./actionTypes"
 
 import {
     getStudentTestsSuccess, getStudentTestsFailure,
     getTeacherTestsSuccess, getTeacherTestsFailure,
     postTestSuccess, postTestFailure,
-    putTestSuccess, putTestFailure
+    putTestSuccess, putTestFailure,
+    assignTestSuccess, assignTestFailure,
+    getPastStudentSuccess, getPastStudentFailure,
+    getUpcomingStudentSuccess, getUpcomingStudentFailure,
 } from "./actions"
 
 import {
     getAllStudentTest,
     getTests,
     postTest,
-    putTest
+    putTest,
+    assignTest,
+    getTestPastStudent,
+    getTestUpcomingStudent
 } from '@helpers/backend-helpers'
 
 function* getStudentTestsHttp({ payload: studentId }) {
@@ -58,11 +67,41 @@ function* putTestHttp({ payload: { test } }) {
     }
 }
 
+function* assignTestHttp({ payload: { data } }) {
+    try {
+        const response = yield call(assignTest, data.testId, data);
+        yield put(assignTestSuccess(response))
+    } catch (error) {
+        yield put(assignTestFailure(error))
+    }
+}
+
+function* getPastStudentHttp({ payload: testId }) {
+    try {
+        const response = yield call(getTestPastStudent, testId);
+        yield put(getPastStudentSuccess(response))
+    } catch (error) {
+        yield put(getPastStudentFailure(error))
+    }
+}
+
+function* getUpcomingStudentHttp({ payload: testId }) {
+    try {
+        const response = yield call(getTestUpcomingStudent, testId);
+        yield put(getUpcomingStudentSuccess(response))
+    } catch (error) {
+        yield put(getUpcomingStudentFailure(error))
+    }
+}
+
 function* TestsSaga() {
     yield takeEvery(GET_STUDENT_TESTS, getStudentTestsHttp)
     yield takeEvery(GET_TEACHER_TESTS, getTeacherTestsHttp)
     yield takeEvery(POST_TEST, postTestHttp)
     yield takeEvery(PUT_TEST, putTestHttp)
+    yield takeEvery(ASSIGN_TEST, assignTestHttp)
+    yield takeEvery(GET_PAST_STUDENT, getPastStudentHttp)
+    yield takeEvery(GET_UPCOMING_STUDENT, getUpcomingStudentHttp)
 }
 
 export default TestsSaga

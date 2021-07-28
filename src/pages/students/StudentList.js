@@ -5,24 +5,22 @@ import {
     CardTitle,
     Table,
     Badge,
+    Button
 } from 'reactstrap';
-import { MoreVertical, Edit, FileText, Archive, Trash } from 'react-feather'
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 
 import CardReload from '../../@core/components/card-reload';
 
 import Avatar from '@components/avatar'
 import { titleCase } from '@utils';
 import { DateTime } from '../../components/date-time';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getAllStudents, getStudentById } from '@store/actions';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter, } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
-
 const StudentList = (props) => {
-    const { isAssignTest,
-        onAssignTest } = props
+
+    const { students } = props
 
     const fetchStudents = () => {
         props.getAllStudents();
@@ -46,18 +44,13 @@ const StudentList = (props) => {
         }
     }
 
-    const AssignTest = (student) => {
-        onAssignTest(student.studentId)
-    }
-
     return (
 
         <CardReload
             title='Students'
             onReload={fetchStudents}
-            isReloading={props.studentsLoading}
-        >
-            <CardBody>
+            isReloading={props.studentsLoading} >
+            < CardBody >
                 <Table responsive hover >
                     <thead>
                         <tr>
@@ -66,14 +59,11 @@ const StudentList = (props) => {
                             <th>Email</th>
                             <th>Created At</th>
                             <th>Status</th>
-                            {
-                                isAssignTest &&
-                                <th>Action</th>
-                            }
+
                         </tr>
                     </thead>
                     <tbody>
-                        {props.students && props.students.map((s, i) =>
+                        {students && students.map((s, i) =>
                             <tr key={s.userId} >
                                 <td>{i + 1}</td>
                                 <td onClick={() => onStudentSelect(s)}>
@@ -96,33 +86,12 @@ const StudentList = (props) => {
                                         {titleCase(s.status)}
                                     </Badge>
                                 </td>
-                                {
-                                    isAssignTest &&
-                                    <td>
-                                        <div className='d-flex'>
-                                            <UncontrolledDropdown>
-                                                <DropdownToggle className='pr-1' tag='span'>
-                                                    <MoreVertical size={15} />
-                                                </DropdownToggle>
-                                                <DropdownMenu right>
-                                                    <DropdownItem tag='a' href='/' className='w-100' onClick={AssignTest(s)}>
-                                                        <FileText size={15} />
-                                                        <span className='align-middle ml-50'>Assign</span>
-                                                    </DropdownItem>
-
-                                                </DropdownMenu>
-                                            </UncontrolledDropdown>
-                                            <Edit size={15} />
-                                        </div>
-                                    </td>
-                                }
-
                             </tr>
                         )}
                     </tbody>
                 </Table>
-            </CardBody>
-        </CardReload>
+            </CardBody >
+        </CardReload >
     );
 };
 
