@@ -42,6 +42,7 @@ const initialState = {
 
     newTest: {},
     newTestLoading: false,
+    newTestSuccess: false,
     newTestError: null,
 
     updateTest: {},
@@ -113,6 +114,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 newTestLoading: true,
+                newTestSuccess: false,
                 newTestError: null
             }
             break;
@@ -120,6 +122,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 newTest: action.payload,
+                newTestSuccess: true,
                 newTestLoading: false,
                 newTestError: null,
             }
@@ -128,6 +131,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 newTestLoading: false,
+                newTestSuccess: false,
                 newTestError: action.payload,
             }
             break;
