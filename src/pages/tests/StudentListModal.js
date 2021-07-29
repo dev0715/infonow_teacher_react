@@ -11,10 +11,10 @@ import { getProfileImageUrl } from '../../helpers/url_helper'
 const StudentListModal = (props) => {
 
     const { students, isOpen, toggleModalState, onSelectedStudent } = props
-    const [scrollInnerModal, setScrollInnerModal] = useState(isOpen)
+
 
     return (
-        < Modal className="modal-lg" scrollable isOpen={scrollInnerModal} toggle={toggleModalState}>
+        < Modal className="modal-lg" scrollable isOpen={isOpen} toggle={toggleModalState}>
             <ModalHeader toggle={toggleModalState}>Assign test to student</ModalHeader>
             <ModalBody>
 

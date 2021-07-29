@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSkin } from '@hooks/useSkin'
 import { Link, Redirect, useParams } from 'react-router-dom'
 import { Facebook, Twitter, Mail, GitHub, Key } from 'react-feather'
@@ -12,12 +13,12 @@ const Login = () => {
 
   const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
     source = require(`@src/assets/images/pages/${illustration}`).default
-  
+
   return (
     <div className='auth-wrapper auth-v2'>
       <Row className='auth-inner m-0'>
         <Link className='brand-logo' to='/'>
-          <BrandLogo/>
+          <BrandLogo />
           <h2 className='brand-text text-primary ml-1'>InfoNow</h2>
         </Link>
         <Col className='d-none d-lg-flex align-items-center p-5' lg='8' sm='12'>
@@ -51,11 +52,11 @@ const Login = () => {
               </FormGroup>
               <FormGroup>
                 <CustomInput type='checkbox' className='custom-control-Primary' id='remember-me' label='Remember Me' />
-              </FormGroup>              
+              </FormGroup>
               <Button.Ripple tag={Link} to='/' color='primary' block>
                 Sign in
               </Button.Ripple>
-            </Form>            
+            </Form>
             <p className='text-center mt-2'>
               <span className='mr-25'>New on our platform?</span>
               <Link to='/'>

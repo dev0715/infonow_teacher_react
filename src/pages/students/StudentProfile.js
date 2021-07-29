@@ -5,15 +5,10 @@ import {
     Card,
     CardText,
     Row,
-    Col,
-    CardHeader,
-    Button,
-    CardTitle
+    Col
 } from 'reactstrap';
 
-import { ArrowLeft } from 'react-feather'
 
-import CardReload from '../../@core/components/card-reload';
 import { connect } from 'react-redux'
 import { useEffect } from 'react';
 import Avatar from '@components/avatar'

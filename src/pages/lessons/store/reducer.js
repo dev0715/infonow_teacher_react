@@ -125,7 +125,7 @@ const teacherLessonReducer = (state = initialState, action) => {
 
     case GET_LESSON_SUCCESS:
       for (const index in state.lessons) {
-        if (state.lessons[index].id == action.payload.id) {
+        if (state.lessons[index].id === action.payload.id) {
           state.lessons[index] = action.payload
           state.lessons[index].isFull = true
           break
@@ -150,7 +150,7 @@ const teacherLessonReducer = (state = initialState, action) => {
 
     case ASSIGN_LESSON_TO_STUDENTS_SUCCESS:
       for (const index in state.lessons) {
-        if (state.lessons[index].id == state.selectedLesson) {
+        if (state.lessons[index].id === state.selectedLesson) {
           state.lessons[index].studentLessons = action.payload
           break;
         }
@@ -165,7 +165,7 @@ const teacherLessonReducer = (state = initialState, action) => {
 
     case UNASSIGN_LESSON_TO_STUDENTS_SUCCESS:
       for (const index in state.lessons) {
-        if (state.lessons[index].id == state.selectedLesson) {
+        if (state.lessons[index].id === state.selectedLesson) {
           state.lessons[index].studentLessons = action.payload
           break;
         }

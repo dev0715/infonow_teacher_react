@@ -9,6 +9,7 @@ import {
     ASSIGN_TEST,
     GET_PAST_STUDENT,
     GET_UPCOMING_STUDENT,
+    UNASSIGN_TEST
 } from "./actionTypes"
 
 import {
@@ -19,6 +20,7 @@ import {
     assignTestSuccess, assignTestFailure,
     getPastStudentSuccess, getPastStudentFailure,
     getUpcomingStudentSuccess, getUpcomingStudentFailure,
+    unassignTestSuccess, unassignTestFailure
 } from "./actions"
 
 import {
@@ -28,7 +30,8 @@ import {
     putTest,
     assignTest,
     getTestPastStudent,
-    getTestUpcomingStudent
+    getTestUpcomingStudent,
+    unassignTest
 } from '@helpers/backend-helpers'
 
 function* getStudentTestsHttp({ payload: studentId }) {
@@ -94,6 +97,15 @@ function* getUpcomingStudentHttp({ payload: testId }) {
     }
 }
 
+function* unassignStudentTestHttp({ payload: { data } }) {
+    try {
+        const response = yield call(unassignTest, data.testId, data.studentTestId);
+        yield put(unassignTestSuccess(response))
+    } catch (error) {
+        yield put(unassignTestFailure(error))
+    }
+}
+
 function* TestsSaga() {
     yield takeEvery(GET_STUDENT_TESTS, getStudentTestsHttp)
     yield takeEvery(GET_TEACHER_TESTS, getTeacherTestsHttp)
@@ -102,6 +114,7 @@ function* TestsSaga() {
     yield takeEvery(ASSIGN_TEST, assignTestHttp)
     yield takeEvery(GET_PAST_STUDENT, getPastStudentHttp)
     yield takeEvery(GET_UPCOMING_STUDENT, getUpcomingStudentHttp)
+    yield takeEvery(UNASSIGN_TEST, unassignStudentTestHttp)
 }
 
 export default TestsSaga

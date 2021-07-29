@@ -12,6 +12,7 @@ import '../../assets/scss/custom/components/_card.scss'
 import UILoader from '../../@core/components/ui-loader';
 import {
     assignTest,
+    unassignTest,
     getPastStudent,
     getUpcomingStudent,
 } from '@store/actions'
@@ -25,10 +26,12 @@ const TestsTabContainer = (props) => {
 
     const MySwal = withReactContent(Swal)
     const [active, setActive] = useState('1')
+    const [isLoading, setIsLoading] = useState(false)
     const { test, pastStudents, upcomingStudents,
         assignTestLoading,
         pastStudentsLoading,
-        upcomingStudentsLoading } = props
+        upcomingStudentsLoading,
+        unassignTestLoading } = props
 
     const toggle = tab => {
         if (active !== tab) {
@@ -45,11 +48,36 @@ const TestsTabContainer = (props) => {
         fetchStudents();
     }, []);
 
+    useEffect(() => {
+        setIsLoading(assignTestLoading)
+    }, [assignTestLoading]);
 
     useEffect(() => {
-        if (props.assignTestError) assignTestAlert(props.assignTestError, 'error');
-        if (props.assignTestSuccess) assignTestAlert('Test has been assigned successfully', 'success');
+        setIsLoading(unassignTestLoading)
+    }, [unassignTestLoading]);
+
+    useEffect(() => {
+        if (props.assignTestError) ApiResponseAlert(props.assignTestError, 'error');
+        if (props.assignTestSuccess) ApiResponseAlert('Test has been assigned successfully', 'success');
+        fetchStudents()
     }, [props.assignTestError, props.assignTestSuccess]);
+
+    useEffect(() => {
+        if (props.unassignTestError) ApiResponseAlert(props.unassignTestError, 'error');
+        if (props.unassignTestSuccess) ApiResponseAlert('Test has been unassigned successfully', 'success');
+        fetchStudents()
+    }, [props.unassignTestError, props.unassignTestSuccess]);
+
+    const ApiResponseAlert = (msg, icon) => {
+        return MySwal.fire({
+            title: msg,
+            icon: icon,
+            customClass: {
+                confirmButton: 'btn btn-primary'
+            },
+            buttonsStyling: false
+        })
+    }
 
     const assignTest = (testData) => {
         let data = {
@@ -61,20 +89,17 @@ const TestsTabContainer = (props) => {
         props.assignTest(data)
     }
 
-    const assignTestAlert = (msg, icon) => {
-        return MySwal.fire({
-            title: msg,
-            icon: icon,
-            customClass: {
-                confirmButton: 'btn btn-primary'
-            },
-            buttonsStyling: false
-        })
+    const unAssignTest = (studentTestId) => {
+        let data = {
+            studentId: studentTestId,
+            testId: test.testId
+        }
+        props.unassignTest(data)
     }
 
     return (
         <>
-            <UILoader blocking={assignTestLoading}>
+            <UILoader blocking={isLoading}>
                 <Card>
                     <CardBody >
                         <Nav tabs fill>
@@ -107,7 +132,6 @@ const TestsTabContainer = (props) => {
                                     studentTests={pastStudents}
                                     isUpcoming={false}
                                     fetchStudents={fetchStudents}
-                                    onAssignTest={assignTest}
                                     isReloading={pastStudentsLoading}
                                 />
                             </TabPane>
@@ -118,6 +142,7 @@ const TestsTabContainer = (props) => {
                                     isUpcoming={true}
                                     fetchStudents={fetchStudents}
                                     onAssignTest={assignTest}
+                                    onUnassignTest={unAssignTest}
                                     isReloading={upcomingStudentsLoading}
                                 />
                             </TabPane>
@@ -134,10 +159,12 @@ const TestsTabContainer = (props) => {
 
 const mapStateToProps = (state) => {
     const {
+
         assignTest, assignTestLoading,
         assignTestError, assignTestSuccess,
         pastStudents, pastStudentsLoading, pastStudentsError,
         upcomingStudents, upcomingStudentsLoading, upcomingStudentsError,
+        unassignTestLoading, unassignTestError, unassignTestSuccess,
     } = state.Tests
     return {
         assignTest, assignTestLoading,
@@ -149,6 +176,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
+    unassignTest,
     assignTest,
     getPastStudent,
     getUpcomingStudent

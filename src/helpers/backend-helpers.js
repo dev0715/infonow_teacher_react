@@ -52,6 +52,14 @@ export const postTest = data => postForm(url.POST_TEST, data);
 
 export const putTest = data => putForm(url.PUT_TEST, data);
 
+export const assignTest = (testId, data) => post(url.POST_ASSIGN_TEST(testId), data);
+
+export const getTestPastStudent = (testId) => get(url.GET_TEST_PAST_STUDENT(testId));
+
+export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUDENT(testId));
+
+export const unassignTest = (testId, studentTestId) => delete (url.UNASSIGN_TEST(testId), studentTestId);
+
 //Lessons
 
 export const getTopics = () => get(url.TOPICS);
@@ -76,8 +84,6 @@ export const postCommentOnBlog = (data) => post(url.COMMENT_ON_BLOG, data)
 export const getUserDocuments = () => get(url.GET_USER_DOCUMENTS)
 export const deleteUserDocument = (id) => del(url.DELETE_USER_DOCUMENTS(id))
 export const uploadDocument = (data, options) => postForm(url.UPLOAD_DOCUMENT_URL, data, options);
-export const assignTest = (testId, data) => post(url.POST_ASSIGN_TEST(testId), data);
 
-export const getTestPastStudent = (testId) => get(url.GET_TEST_PAST_STUDENT(testId));
 
-export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUDENT(testId));
+

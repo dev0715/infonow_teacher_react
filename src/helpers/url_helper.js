@@ -27,6 +27,7 @@ export const GET_TEST_BY_ID = testId => `${BASE_API_URL}/tests/${testId}`
 export const GET_TEST_PAST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/past-test`
 export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/upcoming-test`
 export const POST_ASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/assign`
+export const UNASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/unassign`
 
 //STUDENTS
 export const GET_STUDENTS = `${BASE_API_URL}/students`

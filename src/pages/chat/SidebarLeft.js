@@ -11,11 +11,10 @@ import { formatDateToMonthShort } from '@utils'
 // ** Third Party Components
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { X, Search, CheckSquare, Bell, User, Trash } from 'react-feather'
+import { X, Search, Bell } from 'react-feather'
 import {
   CardText, InputGroup, InputGroupAddon,
-  Input, InputGroupText, Badge,
-  CustomInput, Button
+  Input, InputGroupText, CustomInput
 } from 'reactstrap'
 
 

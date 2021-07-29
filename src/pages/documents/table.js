@@ -7,17 +7,14 @@ import React, { Fragment, useState, forwardRef, useEffect } from 'react'
 import ReactPaginate from 'react-paginate'
 import DataTable from 'react-data-table-component'
 import {
-    ChevronDown, Share, Printer, FileText,
-    File, Grid, Copy, Plus, Trash,
-    Archive, MoreVertical, RefreshCcw, Download
+    ChevronDown, Copy, Plus, Trash,
+    MoreVertical, RefreshCcw, Download
 } from 'react-feather'
 import {
     Card,
     CardHeader,
-    CardTitle,
     Button,
     UncontrolledDropdown,
-    UncontrolledButtonDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,

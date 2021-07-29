@@ -29,6 +29,10 @@ import {
     GET_UPCOMING_STUDENT_SUCCESS,
     GET_UPCOMING_STUDENT_FAILURE,
 
+    UNASSIGN_TEST,
+    UNASSIGN_TEST_SUCCESS,
+    UNASSIGN_TEST_FAILURE,
+
 
 } from './actionTypes'
 
@@ -61,6 +65,10 @@ const initialState = {
     upcomingStudents: [],
     upcomingStudentsLoading: false,
     upcomingStudentsError: null,
+
+    unassignTestSuccess: false,
+    unassignTestLoading: false,
+    unassignTestError: string,
 }
 
 export default (state = initialState, action) => {
@@ -223,6 +231,30 @@ export default (state = initialState, action) => {
                 ...state,
                 upcomingStudentsLoading: false,
                 upcomingStudentsError: action.payload,
+            }
+            break;
+        case UNASSIGN_TEST:
+            state = {
+                ...state,
+                unassignTestSuccess: false,
+                unassignTestLoading: true,
+                unassignTestError: null
+            }
+            break;
+        case UNASSIGN_TEST_SUCCESS:
+            state = {
+                ...state,
+                unassignTestSuccess: true,
+                unassignTestLoading: false,
+                unassignTestError: null,
+            }
+            break;
+        case UNASSIGN_TEST_FAILURE:
+            state = {
+                ...state,
+                unassignTestSuccess: false,
+                unassignTestLoading: false,
+                unassignTestError: action.payload,
             }
             break;
         default:

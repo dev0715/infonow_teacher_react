@@ -26,6 +26,7 @@ const PastAndUpcomingTestStudentList = (props) => {
     const {
         isUpcoming,
         onAssignTest,
+        onUnassignTest,
         studentTests,
         fetchStudents,
         isReloading,
@@ -55,6 +56,12 @@ const PastAndUpcomingTestStudentList = (props) => {
         }
     }
 
+    const selectedStudentAssign = (student) => {
+        setSelectedStudent(student)
+        setStudentModalState(!studentModalState)
+        setTestModalState(!testModalState)
+    }
+
     const setTestDuration = (data) => {
         setTestModalState(!testModalState)
         let testData = {
@@ -62,19 +69,14 @@ const PastAndUpcomingTestStudentList = (props) => {
             endTime: mergeDateTime(data.endDate, data.endTime),
             student: selectedStudent
         }
-        onAssignTest(testData)
-    }
-
-    const selectedStudentAssign = (student) => {
-        setSelectedStudent(student)
-        setStudentModalState(!studentModalState)
-        setTestModalState(!testModalState)
+        if (props.onAssignTest)
+            onAssignTest(testData)
     }
 
     const UnassignTest = (e, student) => {
         e.preventDefault()
-        // if (student)
-        //   onAssignTest(student.studentId)
+        if (props.onUnassignTest)
+            onUnassignTest(student.studentTestId)
     }
 
     const toggleStudentModalState = () => {
@@ -84,7 +86,6 @@ const PastAndUpcomingTestStudentList = (props) => {
     const toggleTestModalState = () => {
         setTestModalState(!testModalState)
     }
-
 
     return (
 

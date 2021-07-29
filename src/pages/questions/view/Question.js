@@ -11,7 +11,7 @@ export const Questions = props => {
 
     return (
         <>  {
-            question.type == 1 ?
+            question.type === 1 ?
                 <Objective
                     question={question}
                     number={number} />

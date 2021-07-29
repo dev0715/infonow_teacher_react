@@ -15,7 +15,7 @@ const Error = () => {
   return (
     <div className='misc-wrapper'>
       <a className='brand-logo' href='/'>
-        <BrandLogo/>
+        <BrandLogo />
         <h2 className='brand-text text-primary ml-1'>InfoNow</h2>
       </a>
       <div className='misc-inner p-2 p-sm-3'>

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, CardHeader, CardBody, CardTitle, CardText, CardLink } from 'reactstrap'
 
 const SecondPage = () => {

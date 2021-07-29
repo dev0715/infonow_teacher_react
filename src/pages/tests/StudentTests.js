@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom'
 export const StudentTests = (props) => {
 
     const [mapTests, setMapTests] = useState()
-    const { studentId, tests, studentTestsLoading, embeded } = props;
+    const { studentId, tests, studentTestsLoading } = props;
 
     const fetchStudentTests = () => {
         props.getStudentTests(studentId)

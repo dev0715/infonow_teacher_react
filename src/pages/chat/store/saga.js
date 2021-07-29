@@ -10,7 +10,13 @@ import {
 import { v4 } from 'uuid';
 import axios from 'axios';
 
-import { addDocumentToQueue, apiError, cancelDocumentUpload, getChatContactsFailure, getChatContactsSuccess, getSelectChatDocumentsFailure, getSelectChatDocumentsSuccess, updateAboutFailure, updateAboutSuccess, updateDocumentProgress, } from "./actions"
+import {
+  addDocumentToQueue, cancelDocumentUpload,
+  getChatContactsFailure, getChatContactsSuccess,
+  getSelectChatDocumentsFailure, getSelectChatDocumentsSuccess,
+  updateAboutFailure, updateAboutSuccess,
+  updateDocumentProgress,
+} from "./actions"
 
 //Include Both Helper File with needed methods
 import { getChatContactsRequest, getChatDocuments, getLoggedInUser, updateUser, uploadDocument } from "../../../helpers/backend-helpers"

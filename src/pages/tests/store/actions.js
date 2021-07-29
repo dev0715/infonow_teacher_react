@@ -26,6 +26,10 @@ import {
     GET_UPCOMING_STUDENT,
     GET_UPCOMING_STUDENT_SUCCESS,
     GET_UPCOMING_STUDENT_FAILURE,
+
+    UNASSIGN_TEST,
+    UNASSIGN_TEST_SUCCESS,
+    UNASSIGN_TEST_FAILURE,
 } from './actionTypes'
 
 export const getStudentTests = (studentId) => {
@@ -177,6 +181,30 @@ export const getUpcomingStudentFailure = (error) => {
         payload: error
     }
 }
+
+
+export const unassignTest = (data) => {
+    return {
+        type: UNASSIGN_TEST,
+        payload: { data }
+    }
+}
+
+export const unassignTestSuccess = (msg) => {
+    return {
+        type: UNASSIGN_TEST_SUCCESS,
+        payload: msg
+    }
+}
+
+export const unassignTestFailure = (error) => {
+    return {
+        type: UNASSIGN_TEST_FAILURE,
+        payload: error
+    }
+}
+
+
 
 
 
