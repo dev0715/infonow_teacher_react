@@ -99,6 +99,7 @@ function* getUpcomingStudentHttp({ payload: testId }) {
 
 function* unassignStudentTestHttp({ payload: { data } }) {
     try {
+        alert("STORE SAGA UNASSIGN")
         const response = yield call(unassignTest, data.testId, data.studentTestId);
         yield put(unassignTestSuccess(response))
     } catch (error) {
