@@ -33,6 +33,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { notifyError, notifySuccess } from '../../utility/toast'
 import { ArrowLeft } from 'react-feather'
 
+import { BLOG_API_URL } from '../../helpers/url_helper'
+
 const newLesson = (props) => {
 
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty(),);
@@ -104,7 +106,7 @@ const newLesson = (props) => {
     const renderLesson = () => {
         let content = getMarkDownContent()
         if (content) {
-            let uploadPath = "http://192.168.10.102:1337/uploads/";
+            let uploadPath = `${BLOG_API_URL}/uploads/`;
             let markdown = String(content).replaceAll("/uploads/", uploadPath);
             let fun = () => {
                 if (lessonContentRef.current) {

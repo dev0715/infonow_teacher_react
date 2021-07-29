@@ -36,6 +36,7 @@ import { render } from 'react-dom'
 
 import Avatar from '@components/avatar'
 
+import { BLOG_API_URL } from '../../helpers/url_helper';
 import { PlayCircle, Menu, X, ChevronUp, ChevronDown, Plus, Search, MoreVertical, Minus, CheckCircle, Circle, ArrowLeft } from 'react-feather'
 
 import UILoader from '../../@core/components/ui-loader';
@@ -171,7 +172,7 @@ const AppLessons = (props) => {
 
     const renderLesson = (content) => {
         if (content) {
-            let uploadPath = "http://192.168.10.102:1337/uploads/";
+            let uploadPath = `${BLOG_API_URL}/uploads/`;
             let markdown = String(content).replaceAll("/uploads/", uploadPath);
             let fun = () => {
                 if (lessonContentRef.current) {
