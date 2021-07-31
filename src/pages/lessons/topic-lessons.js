@@ -41,7 +41,7 @@ import { Trash2, Menu, X, ChevronUp, ChevronDown, Plus, Search, ArrowLeft } from
 
 import UILoader from '../../@core/components/ui-loader';
 
-import { GET_IMAGE_URL } from '../../helpers/url_helper';
+import { GET_IMAGE_URL, BLOG_API_URL } from '../../helpers/url_helper';
 
 import { DateTime } from '../../components/date-time';
 
@@ -186,7 +186,7 @@ const AppLessons = (props) => {
 
     const renderLesson = (content) => {
         if (content) {
-            let uploadPath = "http://192.168.10.102:1337/uploads/";
+            let uploadPath = `${BLOG_API_URL}/uploads/`;
             let markdown = String(content).replaceAll("/uploads/", uploadPath);
             let fun = () => {
                 if (lessonContentRef.current) {

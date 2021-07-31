@@ -70,7 +70,7 @@ import {
 import '@styles/base/pages/page-blog.scss'
 import '../style.scss'
 
-import { GET_BLOG_IMAGE_URL, GET_IMAGE_URL } from '../../../helpers/url_helper';
+import { GET_BLOG_IMAGE_URL, GET_IMAGE_URL, BLOG_API_URL } from '../../../helpers/url_helper';
 import moment from 'moment'
 
 import ReactMarkdown from 'react-markdown'
@@ -94,7 +94,7 @@ const BlogDetails = (props) => {
 
 
     if (selectedBlog.id) {
-      let uploadPath = "http://192.168.10.102:1337/uploads/";
+      let uploadPath = `${BLOG_API_URL}/uploads/`;
       let markdown = String(selectedBlog.content).replaceAll("/uploads/", uploadPath);
 
       render(<ReactMarkdown>{markdown}</ReactMarkdown>, document.getElementById("blog-content-container"))

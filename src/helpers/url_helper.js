@@ -1,13 +1,19 @@
 
-export const BASE_URL = `http://192.168.10.102:3600`
-// export const BASE_URL = `https://api.meditati.ro/main`
+// export const BASE_URL = `http://192.168.10.102:3600`
+// export const MEETING_API_URL = `http://192.168.10.104:3900`
+// export const CHAT_API_URL = `http://192.168.10.104:3700`
+// export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
+// export const BLOG_API_URL = `http://192.168.10.102:1337`
+
+export const BASE_URL = `https://api.meditati.ro/main`
+export const MEETING_API_URL = `https://meeting.meditati.ro/api`
+export const CHAT_API_URL = `https://api.meditati.ro/chat`
+export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/`
+export const BLOG_API_URL = `https://api.meditati.ro/blog`
+
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
-export const MEETING_API_URL = `http://localhost:3900`
-export const CHAT_API_URL = `http://localhost:3700`
-export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
 export const DOCUMENT_BASE_URL = `${BASE_URL}/public`
-export const BLOG_API_URL = `http://192.168.10.102:1337`
 
 
 export const GET_IMAGE_URL = url => url ? DOCUMENT_BASE_URL + url : DOCUMENT_BASE_URL + "/profile-pictures/default.png"
@@ -59,13 +65,13 @@ export const GET_USER_DOCUMENTS = `${BASE_URL}/documents`
 export const DELETE_USER_DOCUMENTS = id => `${BASE_URL}/documents/${id}`
 
 //Blog
-export const GET_BLOG_LIST = `${BASE_URL}/api/v1/strapi/blogs`
-export const GET_BLOG = id => `${BASE_URL}/api/v1/strapi/blogs/${id}`
-export const GET_BLOG_CATEGORIES = `${BASE_URL}/api/v1/strapi/categories`
-export const GET_BLOG_COMMENTS = id => `${BASE_URL}/api/v1/strapi/blogs/${id}/comments`
-export const COMMENT_ON_BLOG = `${BASE_URL}/api/v1/strapi/comments`
+export const GET_BLOG_LIST = `${BASE_API_URL}/strapi/blogs`
+export const GET_BLOG = id => `${BASE_API_URL}/strapi/blogs/${id}`
+export const GET_BLOG_CATEGORIES = `${BASE_API_URL}/strapi/categories`
+export const GET_BLOG_COMMENTS = id => `${BASE_API_URL}/strapi/blogs/${id}/comments`
+export const COMMENT_ON_BLOG = `${BASE_API_URL}/strapi/comments`
 
-export const UPLOAD_BLOG_IMAGE_URL = `${BASE_URL}/api/v1/strapi/uploads`;
+export const UPLOAD_BLOG_IMAGE_URL = `${BASE_API_URL}/strapi/uploads`;
 
 //Lessons
 
