@@ -119,6 +119,7 @@ const AppLessons = (props) => {
     useEffect(() => {
         setStudentIdsAccessRequest([])
         setStudentIdsAccessRemove([])
+        setIsLessonEditing(false)
         setIsOpenLessons(false)
         if (props.selectedLesson) {
             let lesson = props.lessons.find(l => l.id == props.selectedLesson)
@@ -537,13 +538,13 @@ const AppLessons = (props) => {
                                         }
                                         {
                                             isLessonEditing &&
-                                            <div>
+                                            <div className="text-center mt-5">
                                                 <Button.Ripple
                                                     color="primary"
                                                     outline
                                                     onClick={() => setIsLessonEditing(false)}
                                                 >
-                                                    Cancel
+                                                    Cancel Edit
                                                 </Button.Ripple>
                                             </div>
                                         }
