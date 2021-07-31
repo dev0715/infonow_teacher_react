@@ -20,6 +20,10 @@ import { Link } from 'react-router-dom';
 const UpcomingMeeting = ({meeting}) => {
 	const [skin, setSkin] = useSkin();
 
+	const data = [{
+		title: 'Hello',
+		img: 'https://pv-magazine-usa.com/wp-content/uploads/sites/2/2019/10/FordEV-1200x800.jpeg'
+	}]
 	const illus =
 		skin === 'dark' ? 'upcoming-meeting-dark.svg' : 'upcoming-meeting.svg';
 	const illustration = require(`@src/assets/images/illustrations/${illus}`);

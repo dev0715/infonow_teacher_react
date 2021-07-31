@@ -21,6 +21,11 @@ export const isUserAuthenticated = () => {
   return getAuthentication() !== null
 }
 
+//Meeting
+export const newMeeting = data => post(url.NEW_MEETING, data);
+export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
+export const getMeetingDates = userId => get(url.GET_MEETING_DATES(userId));
+export const updateMeeting = (id, action, data) => put(url.UPDATE_MEETING(id, action), data);
 
 
 
@@ -31,8 +36,6 @@ export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
 
 // Student Actions
 export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);
-
-export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
 
 export const getAllStudents = () => get(url.GET_STUDENTS);
 

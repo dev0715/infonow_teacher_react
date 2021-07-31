@@ -5,7 +5,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { withRouter } from 'react-router';
 
 // ** Store & Actions
-import { connect, useSelector } from 'react-redux'
+import { connect, } from 'react-redux'
 import {
   getBlogList,
   getBlogListSuccess,
@@ -22,8 +22,6 @@ import {
 
 } from '../store/actions'
 
-import axios from 'axios'
-import classnames from 'classnames'
 import Avatar from '@components/avatar'
 import { Link } from 'react-router-dom'
 import { MessageSquare } from 'react-feather'

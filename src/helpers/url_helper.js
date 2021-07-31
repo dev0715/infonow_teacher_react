@@ -55,7 +55,11 @@ export const GET_CHAT_DOCUMENTS = id => `${BASE_URL}/documents?chatId=${id}`
 export const UPDATE_USER = id => `${BASE_URL}/api/v1/teacher/${id}/profile`
 
 // Meetings
+export const NEW_MEETING = `${MEETING_API_URL}/meetings`
+export const UPDATE_MEETING = (id, action) => `${MEETING_API_URL}/meetings/${id}/${action}`
 export const GET_ALL_MEETINGS = id => `${MEETING_API_URL}/users/${id}/meetings`
+export const GET_MEETING_DATES = id => `${MEETING_API_URL}/meetings/check-dates/${id}`
+
 
 
 //Document
