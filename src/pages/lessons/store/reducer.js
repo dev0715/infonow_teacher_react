@@ -33,6 +33,12 @@ import {
   UNASSIGN_LESSON_TO_STUDENTS,
   UNASSIGN_LESSON_TO_STUDENTS_SUCCESS,
   UNASSIGN_LESSON_TO_STUDENTS_FAILURE,
+  DELETE_TOPIC,
+  DELETE_TOPIC_SUCCESS,
+  DELETE_TOPIC_FAILURE,
+  DELETE_LESSON,
+  DELETE_LESSON_SUCCESS,
+  DELETE_LESSON_FAILURE,
 
 } from './actionTypes'
 
@@ -60,7 +66,11 @@ const initialState = {
   studentsLessonAssignLoading: false,
   studentsLessonAssignError: null,
   studentsLessonUnassignLoading: false,
-  studentsLessonUnassignError: null
+  studentsLessonUnassignError: null,
+  topicDeleting: false,
+  topicDeleteError: null,
+  lessonDeleting: false,
+  lessonDeleteError: null
 }
 
 
@@ -174,6 +184,34 @@ const teacherLessonReducer = (state = initialState, action) => {
 
     case UNASSIGN_LESSON_TO_STUDENTS_FAILURE:
       return { ...state, studentsLessonUnassignLoading: false, studentsLessonUnassignError: action.payload }
+
+    case DELETE_TOPIC:
+      return { ...state, topicDeleting: true }
+
+    case DELETE_TOPIC_SUCCESS:
+      return {
+        ...state,
+        topics: state.topics.filter(t => t.id != action.payload),
+        recentLessons: state.recentLessons.filter(l => l.topic.id != action.payload),
+        topicDeleting: false, topicDeleteError: null
+      }
+
+    case DELETE_TOPIC_FAILURE:
+      return { ...state, topicDeleting: false, topicDeleteError: action.payload }
+
+    case DELETE_LESSON:
+      return { ...state, lessonDeleting: true }
+
+    case DELETE_LESSON_SUCCESS:
+      return {
+        ...state,
+        lessons: state.lessons.filter(l => l.id != action.payload),
+        recentLessons: state.recentLessons.filter(l => l.id != action.payload),
+        lessonDeleting: false, lessonsError: null
+      }
+
+    case DELETE_LESSON_FAILURE:
+      return { ...state, lessonDeleting: false, lessonDeleteError: action.payload }
 
     default:
       return state

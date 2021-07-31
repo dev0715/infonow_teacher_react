@@ -1,12 +1,13 @@
 
-// export const BASE_URL = `http://192.168.10.102:3600`
-export const BASE_URL = `https://api.meditati.ro/main`
+export const BASE_URL = `http://192.168.10.102:3600`
+// export const BASE_URL = `https://api.meditati.ro/main`
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
-export const MEETING_API_URL = `https://meeting.meditati.ro/api`
-export const CHAT_API_URL = `https://api.meditati.ro/chat`
+export const MEETING_API_URL = `http://localhost:3900`
+export const CHAT_API_URL = `http://localhost:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
 export const DOCUMENT_BASE_URL = `${BASE_URL}/public`
-export const BLOG_API_URL = `https://api.meditati.ro/blog`
+export const BLOG_API_URL = `http://192.168.10.102:1337`
 
 
 export const GET_IMAGE_URL = url => url ? DOCUMENT_BASE_URL + url : DOCUMENT_BASE_URL + "/profile-pictures/default.png"
@@ -69,8 +70,9 @@ export const UPLOAD_BLOG_IMAGE_URL = `${BASE_URL}/api/v1/strapi/uploads`;
 //Lessons
 
 export const TOPICS = `${BASE_URL}/api/v1/strapi/topics`
+export const TOPIC = (id) => `${BASE_URL}/api/v1/strapi/topics/${id}`
 export const GET_TOPIC_LESSONS = id => `${BASE_URL}/api/v1/strapi/topics/${id}/lessons`
 export const LESSONS = `${BASE_URL}/api/v1/strapi/lessons`
-export const GET_LESSON = id => `${BASE_URL}/api/v1/strapi/lessons/${id}`
+export const LESSON = id => `${BASE_URL}/api/v1/strapi/lessons/${id}`
 export const GET_RECENT_LESSONS = `${BASE_URL}/api/v1/strapi/recent-lessons`
 export const ASSIGN_LESSON_TO_STUDENTS = `${BASE_URL}/api/v1/strapi/student-lessons`

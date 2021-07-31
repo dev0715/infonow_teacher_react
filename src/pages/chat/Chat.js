@@ -13,7 +13,7 @@ import { getShortNameForDocument } from '@utils';
 // ** Third Party Components
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { MessageSquare, Menu, Search, MoreVertical, Send, Calendar, FileText, X, } from 'react-feather'
+import { MessageSquare, Menu, Search, MoreVertical, Send, Calendar, FileText, X, Info } from 'react-feather'
 import {
   UncontrolledDropdown,
   DropdownToggle,
@@ -59,6 +59,9 @@ const ChatLog = props => {
     isEndOfMessages, documentList, cancelDocumentUpload, updateDocumentProgress,
     user, messages, messagesLoading, setPreviousMessagesLoading } = store
 
+
+
+
   // ** Refs & Dispatch
   const chatArea = useRef(null)
 
@@ -71,6 +74,7 @@ const ChatLog = props => {
   const [emojiSelectorShowing, setEmojiSelectorShowing] = useState(false)
   const [dropZoneVisible, setDropZoneVisible] = useState(false)
   const [query, setQuery] = useState("")
+
 
   useEffect(() => {
     setQuery("")
@@ -213,6 +217,12 @@ const ChatLog = props => {
                 }
               </div>
             </div>
+            {
+              item.error &&
+              <div className="text-right">
+                <Info size={14} className="text-danger mr-1" />
+              </div>
+            }
             {
               index < msgs.length - 1 && index > -1 ?
                 <>

@@ -1,2 +1,3 @@
 import io from 'socket.io-client';
-export default io('http://192.168.10.104:3701', { transports: ['websocket', 'polling', 'flashsocket'] })
+import { CHAT_SOCKET_API_URL } from '../../../helpers/url_helper'
+export default io(CHAT_SOCKET_API_URL, { transports: ['websocket', 'polling', 'flashsocket'] })

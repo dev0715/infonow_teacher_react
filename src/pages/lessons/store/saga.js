@@ -12,6 +12,8 @@ import {
   GET_STUDENTS_FOR_LESSON,
   ASSIGN_LESSON_TO_STUDENTS,
   UNASSIGN_LESSON_TO_STUDENTS,
+  DELETE_LESSON,
+  DELETE_TOPIC
 } from "./actionTypes"
 
 
@@ -33,7 +35,11 @@ import {
   assignLessonToStudentsFailure,
   assignLessonToStudentsSuccess,
   unassignLessonToStudentsSuccess,
-  unassignLessonToStudentsFailure
+  unassignLessonToStudentsFailure,
+  deleteTopicSuccess,
+  deleteTopicFailure,
+  deleteLessonSuccess,
+  deleteLessonFailure
 } from "./actions"
 
 //Include Both Helper File with needed methods
@@ -46,7 +52,9 @@ import {
   getRecentLessons,
   getAllStudents,
   assignLessonToStudents,
-  unassignLessonToStudents
+  unassignLessonToStudents,
+  deleteLesson,
+  deleteTopic
 } from "../../../helpers/backend-helpers"
 
 function* getTopicsHttp() {
@@ -156,7 +164,6 @@ function* getStudentsForLessonHttp() {
   }
 }
 
-
 function* assignLessonToStudentsHttp({ payload }) {
   try {
 
@@ -171,7 +178,6 @@ function* assignLessonToStudentsHttp({ payload }) {
     yield put(assignLessonToStudentsFailure(error.message ? error.message : error))
   }
 }
-
 
 function* unassignLessonToStudentsHttp({ payload }) {
   try {
@@ -188,6 +194,35 @@ function* unassignLessonToStudentsHttp({ payload }) {
 }
 
 
+function* deleteTopicHttp({ payload }) {
+  try {
+    const response = yield call(deleteTopic, payload);
+    if (response) {
+      yield put(deleteTopicSuccess(payload))
+      return;
+    }
+    throw "Unknown response received from Server";
+
+  } catch (error) {
+    yield put(deleteTopicFailure(error.message ? error.message : error))
+  }
+}
+
+function* deleteLessonHttp({ payload }) {
+  try {
+    const response = yield call(deleteLesson, payload);
+    if (response) {
+      yield put(deleteLessonSuccess(payload))
+      return;
+    }
+    throw "Unknown response received from Server";
+
+  } catch (error) {
+    yield put(deleteLessonFailure(error.message ? error.message : error))
+  }
+}
+
+
 function* teacherLessonSaga() {
   yield takeEvery(GET_TEACHER_TOPICS, getTopicsHttp)
   yield takeEvery(GET_TEACHER_TOPIC_LESSONS, getTeacherTopicLessonsHttp)
@@ -198,6 +233,8 @@ function* teacherLessonSaga() {
   yield takeEvery(GET_STUDENTS_FOR_LESSON, getStudentsForLessonHttp)
   yield takeEvery(ASSIGN_LESSON_TO_STUDENTS, assignLessonToStudentsHttp)
   yield takeEvery(UNASSIGN_LESSON_TO_STUDENTS, unassignLessonToStudentsHttp)
+  yield takeEvery(DELETE_TOPIC, deleteTopicHttp)
+  yield takeEvery(DELETE_LESSON, deleteLessonHttp)
 }
 
 export default teacherLessonSaga

@@ -39,14 +39,14 @@ function* getDocs() {
 }
 
 function* uploadUserDoc({ payload: { file, callback } }) {
-  try {
+  let document = {
+    documentId: v4(),
+    name: file.name,
+    progress: 0,
+    request: axios.CancelToken.source(),
+  }
 
-    let document = {
-      documentId: v4(),
-      name: file.name,
-      progress: 0,
-      request: axios.CancelToken.source(),
-    }
+  try {
 
     yield put(addUserDocumentToQueue(document))
 

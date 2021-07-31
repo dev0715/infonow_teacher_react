@@ -63,7 +63,9 @@ export const unassignTest = (testId, studentTestId) => delete (url.UNASSIGN_TEST
 //Lessons
 
 export const getTopics = () => get(url.TOPICS);
-export const getLesson = (id) => get(url.GET_LESSON(id));
+export const deleteTopic = (id) => del(url.TOPIC(id));
+export const getLesson = (id) => get(url.LESSON(id));
+export const deleteLesson = (id) => del(url.LESSON(id));
 export const getRecentLessons = (id) => get(url.GET_RECENT_LESSONS);
 export const getTopicLessons = id => get(url.GET_TOPIC_LESSONS(id));
 export const uploadNewTopic = data => postForm(url.TOPICS, data);
