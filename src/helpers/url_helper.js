@@ -1,14 +1,14 @@
 
-// export const BASE_URL = `http://192.168.10.102:3600`
-// export const MEETING_API_URL = `http://192.168.10.104:3900`
-// export const CHAT_API_URL = `http://192.168.10.104:3700`
-// export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
+export const BASE_URL = `http://192.168.10.102:3600`
+export const MEETING_API_URL = `http://192.168.10.104:3900`
+export const CHAT_API_URL = `http://192.168.10.104:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
 // export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.meditati.ro/main`
-export const MEETING_API_URL = `https://meeting.meditati.ro/api`
-export const CHAT_API_URL = `https://api.meditati.ro/chat`
-export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
+// export const BASE_URL = `https://api.meditati.ro/main`
+// export const MEETING_API_URL = `https://meeting.meditati.ro/api`
+// export const CHAT_API_URL = `https://api.meditati.ro/chat`
+// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
 export const BLOG_API_URL = `https://api.meditati.ro/blog`
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
@@ -32,21 +32,20 @@ export const POST_TEST = `${BASE_API_URL}/tests`
 export const PUT_TEST = `${BASE_API_URL}/tests`
 export const GET_TESTS = `${BASE_API_URL}/tests`
 export const GET_TEST_BY_ID = testId => `${BASE_API_URL}/tests/${testId}`
-export const GET_TEST_PAST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/past-test`
-export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/upcoming-test`
+export const GET_TEST_PAST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/past-tests`
+export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/upcoming-tests`
 export const POST_ASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/assign`
 export const UNASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/unassign`
 
 //STUDENTS
 export const GET_STUDENTS = `${BASE_API_URL}/students`
-export const GET_STUDENT_BY_ID = id => `${BASE_API_URL}/students/${id}`
+export const GET_STUDENT_BY_ID = studentId => `${BASE_API_URL}/students/${studentId}`
 export const GET_STUDENT_TEST = (studentId) => `${BASE_API_URL}/students/${studentId}/tests`
-
 
 //ATTEMPTS
 export const GET_STUDENT_ATTEMPTS = (studentId, testId) => `${BASE_API_URL}/students/${studentId}/tests/${testId}/attempts`
-export const GET_ATTEMPT_DETAIL = id => `${BASE_API_URL}/attempts/${id}`
-export const PUT_SUBJECTIVE_ATTEMPT_MARKS = id => `${BASE_API_URL}/attempts/${id}/subjective-marks`
+export const GET_ATTEMPT_DETAIL = attemptId => `${BASE_API_URL}/attempts/${attemptId}`
+export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attempts/${attemptId}/subjective-marks`
 
 
 // Chats

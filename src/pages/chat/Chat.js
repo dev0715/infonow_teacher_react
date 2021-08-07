@@ -314,7 +314,6 @@ const ChatLog = props => {
 
     let count = 0;
     files.forEach(file => {
-      console.log("DROPZONE FILE", file)
       if (count < 5) uploadFile(file)
       count++
     });
@@ -327,7 +326,6 @@ const ChatLog = props => {
     let count = 0;
     for (let key in e.target.files) {
       if (e.target.files.hasOwnProperty(key)) {
-        console.log("SELECTED FILE ", e.target.files[key])
         uploadFile(e.target.files[key])
         if (count == 5) {
           break;
@@ -340,12 +338,10 @@ const ChatLog = props => {
 
 
   const captureDragOver = (e) => {
-    console.log("DRAG", e)
     setDropZoneVisible(true)
 
   }
   const captureDragLeave = (e) => {
-    console.log("RELEASE", e)
     setDropZoneVisible(false)
 
   }

@@ -16,7 +16,7 @@ import { withRouter } from 'react-router-dom'
 
 const TestDetail = (props) => {
 
-    const { test, isEdit, onChangeView } = props;
+    const { test, isEdit, onChangeView, isUpdateMarks, onUpdateMarks } = props;
 
     const onAssignTest = () => {
 
@@ -46,6 +46,15 @@ const TestDetail = (props) => {
 
                                     <Button.Ripple color='primary' onClick={onAssignTest}  >
                                         <span className='align-middle ml-25'>Test Dashboard</span>
+                                    </Button.Ripple>
+                                </Col>
+                            }
+                            {
+
+                                isUpdateMarks &&
+                                <Col md="6" className="text-right">
+                                    <Button.Ripple color='primary' onClick={onUpdateMarks}  >
+                                        <span className='align-middle ml-25'>Add Marks</span>
                                     </Button.Ripple>
                                 </Col>
                             }

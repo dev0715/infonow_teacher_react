@@ -6,7 +6,8 @@ import Subjective from './Subjective';
 export const Questions = props => {
     const { question,
         answer,
-        number
+        number,
+        updateQuestions
     } = props;
 
     return (
@@ -19,7 +20,8 @@ export const Questions = props => {
                 :
                 <Subjective question={question}
                     answer={answer}
-                    number={number} />
+                    number={number}
+                    updateQuestions={updateQuestions} />
 
         }
 

@@ -44,6 +44,8 @@ export const getStudentTestAttempts = (studentId, testId) => get(url.GET_STUDENT
 
 export const getAttemptDetail = (attemptId) => get(url.GET_ATTEMPT_DETAIL(attemptId));
 
+export const putAttemptSubjectiveMarks = (attemptId, data) => putForm(url.PUT_SUBJECTIVE_ATTEMPT_MARKS(attemptId), data);
+
 export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
 
 export const getTests = () => get(url.GET_TESTS);
@@ -58,7 +60,7 @@ export const getTestPastStudent = (testId) => get(url.GET_TEST_PAST_STUDENT(test
 
 export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUDENT(testId));
 
-export const unassignTest = (testId, studentTestId) => delete (url.UNASSIGN_TEST(testId), studentTestId);
+export const unassignTest = (testId, studentTestId) => del(url.UNASSIGN_TEST(testId), studentTestId);
 
 //Lessons
 
