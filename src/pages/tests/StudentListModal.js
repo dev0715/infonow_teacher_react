@@ -6,7 +6,6 @@ import {
 
 import Avatar from '@components/avatar'
 import { DateTime } from '../../components/date-time';
-import { useState } from 'react';
 import { getProfileImageUrl } from '../../helpers/url_helper'
 const StudentListModal = (props) => {
 

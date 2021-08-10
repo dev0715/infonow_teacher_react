@@ -5,15 +5,14 @@
 import React, { Fragment, useEffect, useState } from 'react';
 
 // ** Third Party Components
-import classnames from 'classnames'
 import {
-    Card, CardBody, CardHeader, CardTitle, FormGroup, Input, Form, Label, Button, InputGroup
+    Card, CardBody, FormGroup, Input, Form, Label, Button, InputGroup
 } from 'reactstrap'
 
 
 
 // ** Store & Actions
-import { connect, useSelector } from 'react-redux'
+import { connect, } from 'react-redux'
 import { addNewLesson } from './store/actions'
 
 import { withRouter } from 'react-router';

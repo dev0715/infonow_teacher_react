@@ -26,7 +26,8 @@ import {
     getLesson,
     getStudentsForLesson,
     assignLessonToStudents,
-    unassignLessonToStudents
+    unassignLessonToStudents,
+    deleteLesson
 } from './store/actions'
 
 import { withRouter } from 'react-router';
@@ -36,12 +37,11 @@ import { render } from 'react-dom'
 
 import Avatar from '@components/avatar'
 
-import { BLOG_API_URL } from '../../helpers/url_helper';
-import { PlayCircle, Menu, X, ChevronUp, ChevronDown, Plus, Search, MoreVertical, Minus, CheckCircle, Circle, ArrowLeft } from 'react-feather'
+import { Trash2, Menu, X, ChevronUp, ChevronDown, Plus, Search, ArrowLeft } from 'react-feather'
 
 import UILoader from '../../@core/components/ui-loader';
 
-import { GET_IMAGE_URL } from '../../helpers/url_helper';
+import { GET_IMAGE_URL, BLOG_API_URL } from '../../helpers/url_helper';
 
 import { DateTime } from '../../components/date-time';
 
@@ -50,12 +50,15 @@ import NoNetwork from '../../components/no-network';
 
 import { notifyError, notifySuccess } from '../../utility/toast'
 
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const AppLessons = (props) => {
 
     const lessonRef = React.createRef()
     const lessonContentRef = React.createRef()
-    const [isFullScreen, setFullScreen] = useState(false)
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenLessons, setIsOpenLessons] = useState(false);
     const [isAssignModelOpen, setIsAssignModelOpen] = useState(false)
@@ -63,6 +66,8 @@ const AppLessons = (props) => {
     const [query, setQuery] = useState("")
     const [studentIdsAccessRequest, setStudentIdsAccessRequest] = useState([])
     const [studentIdsAccessRemove, setStudentIdsAccessRemove] = useState([])
+    const [isLessonDeleting, setIsLessonDeleting] = useState(false)
+    const [isLessonEditing, setIsLessonEditing] = useState(false)
 
     const toggleLessons = () => setIsOpenLessons(!isOpenLessons);
 
@@ -78,6 +83,16 @@ const AppLessons = (props) => {
             props.history.goBack()
         }
     }, [props.selectedTopic])
+
+    useEffect(() => {
+        if (isLessonDeleting && !props.lessonDeleting && props.lessonDeleteError) {
+            setIsLessonDeleting(false)
+            notifyError("Delete Lesson", props.lessonDeleteError)
+        } else if (isLessonDeleting && !props.lessonDeleting && !props.lessonDeleteError) {
+            setIsLessonDeleting(false)
+            notifySuccess("Delete Lesson", "Lesson deleted successfully")
+        }
+    }, [props.lessonDeleting])
 
     useEffect(() => {
         if (isAssignModelOpen && !props.studentsLessonAssignLoading && !props.studentsLessonAssignError) {
@@ -104,6 +119,7 @@ const AppLessons = (props) => {
     useEffect(() => {
         setStudentIdsAccessRequest([])
         setStudentIdsAccessRemove([])
+        setIsLessonEditing(false)
         setIsOpenLessons(false)
         if (props.selectedLesson) {
             let lesson = props.lessons.find(l => l.id == props.selectedLesson)
@@ -112,7 +128,6 @@ const AppLessons = (props) => {
             }
         }
     }, [props.selectedLesson])
-
 
     useEffect(() => {
         if (props.lessons.length > 0 && !props.selectedLesson) {
@@ -203,10 +218,19 @@ const AppLessons = (props) => {
             {
                 lesson &&
                 <Card
-                    className={`active-lesson-container ${isOpenLessons ? 'hide' : ''} ${isFullScreen ? 'active' : ''}`}
+                    className={`active-lesson-container ${isOpenLessons ? 'hide' : ''} `}
                 >
                     <CardHeader>
                         <CardTitle>{lesson.title}</CardTitle>
+                        <div className="text-right">
+                            <Button.Ripple
+                                color="primary"
+                                outline
+                                onClick={() => setIsLessonEditing(true)}
+                            >
+                                Edit
+                            </Button.Ripple>
+                        </div>
                     </CardHeader>
                     <CardBody>
                         <div
@@ -370,10 +394,31 @@ const AppLessons = (props) => {
         </UILoader>
     }
 
+    const handleLessonDelete = (id) => {
+        return MySwal.fire({
+            icon: 'question',
+            title: "Confirm",
+            text: `Are you sure to delete this lesson?`,
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary ml-1'
+            },
+            confirmButtonText: "Yes",
+            buttonsStyling: false,
+            showCancelButton: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                props.deleteLesson(id)
+            }
+        })
+    }
+
     return <>
         {
             props.selectedTopic && <Fragment>
-                <UILoader blocking={props.lessonsLoading || props.studentsLessonUnassignLoading} >
+                <UILoader
+                    blocking={props.lessonsLoading || props.studentsLessonUnassignLoading}
+                >
                     <Card className="full-height">
                         <CardBody className="p-0">
                             {
@@ -387,117 +432,121 @@ const AppLessons = (props) => {
                             {
                                 !props.lessonsLoading &&
                                 !props.lessonsError &&
-                                <Row >
-                                    {
-                                        !isFullScreen &&
-                                        <Col lg={3} sm='12' md='12'
-                                            className={`pr-lg-0 topic-list-shadow`}
-                                        >
+                                <Row>
+                                    <Col lg={3} sm='12' md='12'
+                                        className={`pr-lg-0 topic-list-shadow`}
+                                    >
+                                        <Navbar expand="lg" className="p-0">
                                             {
-                                                isFullScreen ?
-                                                    <Menu
-                                                        className="ml-2 mt-2"
-                                                        width={20}
-                                                        height={20}
-                                                        onClick={() => setFullScreen(false)}
-                                                    />
-                                                    :
-                                                    <Navbar expand="lg" className="p-0">
-                                                        {
-                                                            !isOpen &&
-                                                            <Menu
-                                                                className="m-2 d-md-block d-lg-none"
-                                                                width={20}
-                                                                height={20}
-                                                                onClick={toggle}
-                                                            />
-                                                        }
-                                                        {
-                                                            isOpen &&
-                                                            <X
-                                                                className="m-2 d-md-block d-lg-none"
-                                                                width={20}
-                                                                height={20}
-                                                                onClick={toggle}
-                                                            />
-                                                        }
-                                                        <Collapse isOpen={isOpen || isFullScreen} navbar>
-                                                            <Card className='full-width'>
-                                                                <CardHeader>
-                                                                    <div className="d-flex align-items-center mb-1">
-                                                                        <div className="d-none d-lg-inline d-xl-inline">
-                                                                            <Button.Ripple
-                                                                                className='btn-block btn-icon'
-                                                                                color='flat-primary'
-                                                                                onClick={() => {
-                                                                                    props.history.goBack()
-                                                                                }}
-                                                                            >
-                                                                                <ArrowLeft size={14} />
-                                                                            </Button.Ripple>
-                                                                        </div>
-                                                                        <h6 className="ml-25 mb-0">
-                                                                            {
-                                                                                props.topics.find(t => t.id == props.selectedTopic).title
-                                                                            }
-                                                                        </h6>
-                                                                    </div>
-                                                                    <div className="d-flex w-100 align-items-center justify-content-between">
-                                                                        <h4 className="text-primary ml-25 mb-0">
-                                                                            Lessons
-                                                                        </h4>
-                                                                        <div >
-                                                                            <Button.Ripple
-                                                                                className='btn-block btn-icon'
-                                                                                color='primary'
-                                                                                onClick={() => {
-                                                                                    props.history.push('/new-lesson')
-                                                                                }}
-                                                                            >
-                                                                                <Plus size={14} />
-                                                                            </Button.Ripple>
-                                                                        </div>
-                                                                    </div>
-                                                                </CardHeader>
-                                                                <CardBody className="p-0">
-                                                                    {
-                                                                        props.lessons.length == 0 &&
-                                                                        !props.lessonsLoading &&
-                                                                        !props.lessonsError &&
-                                                                        <NotFound message="Add new Lesson" width={100} height={100} />
-                                                                    }
-                                                                    {
-                                                                        props.lessons.length > 0 &&
-                                                                        <div className="lesson-list">
-                                                                            {
-                                                                                props.lessons.map((l, index) =>
-                                                                                    <div
-                                                                                        key={'lesson-key-' + index}
-                                                                                        className={`lesson-container ${l.id == props.selectedLesson ? 'active' : ""}`}
-                                                                                        onClick={() => {
-                                                                                            props.selectLesson(l.id)
-                                                                                            if (isOpen)
-                                                                                                setIsOpen(false)
-                                                                                        }}
-                                                                                    >
-                                                                                        <div className="lesson-content">
-                                                                                            {l.title}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                )
-                                                                            }
-                                                                        </div>
-                                                                    }
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Collapse>
-                                                    </Navbar>
+                                                !isOpen &&
+                                                <Menu
+                                                    className="m-2 d-md-block d-lg-none"
+                                                    width={20}
+                                                    height={20}
+                                                    onClick={toggle}
+                                                />
                                             }
-                                        </Col>
-                                    }
+                                            {
+                                                isOpen &&
+                                                <X
+                                                    className="m-2 d-md-block d-lg-none"
+                                                    width={20}
+                                                    height={20}
+                                                    onClick={toggle}
+                                                />
+                                            }
+                                            <Collapse isOpen={isOpen} navbar>
+                                                <Card className='full-width'>
+                                                    <CardHeader>
+                                                        <div className="d-flex align-items-center mb-1">
+                                                            <div className="d-none d-lg-inline d-xl-inline">
+                                                                <Button.Ripple
+                                                                    className='btn-block btn-icon'
+                                                                    color='flat-primary'
+                                                                    onClick={() => {
+                                                                        props.history.goBack()
+                                                                    }}
+                                                                >
+                                                                    <ArrowLeft size={14} />
+                                                                </Button.Ripple>
+                                                            </div>
+                                                            <h6 className="ml-25 mb-0">
+                                                                {
+                                                                    props.topics.find(t => t.id == props.selectedTopic).title
+                                                                }
+                                                            </h6>
+                                                        </div>
+                                                        <div className="d-flex w-100 align-items-center justify-content-between">
+                                                            <h4 className="text-primary ml-25 mb-0">
+                                                                Lessons
+                                                            </h4>
+                                                            <div >
+                                                                <Button.Ripple
+                                                                    className='btn-block btn-icon'
+                                                                    color='primary'
+                                                                    onClick={() => {
+                                                                        props.history.push('/new-lesson')
+                                                                    }}
+                                                                >
+                                                                    <Plus size={14} />
+                                                                </Button.Ripple>
+                                                            </div>
+                                                        </div>
+                                                    </CardHeader>
+                                                    <CardBody className="p-0">
+                                                        {
+                                                            props.lessons.length == 0 &&
+                                                            !props.lessonsLoading &&
+                                                            !props.lessonsError &&
+                                                            <NotFound message="Add new Lesson" width={100} height={100} />
+                                                        }
+                                                        {
+                                                            props.lessons.length > 0 &&
+                                                            <div className="lesson-list">
+                                                                {
+                                                                    props.lessons.map((l, index) =>
+                                                                        <div
+                                                                            key={'lesson-key-' + index}
+                                                                            className={`lesson-container ${l.id == props.selectedLesson ? 'active' : ""}`}
+                                                                        >
+                                                                            <div className="lesson-content"
+                                                                                onClick={() => {
+                                                                                    props.selectLesson(l.id)
+                                                                                    if (isOpen)
+                                                                                        setIsOpen(false)
+                                                                                }}
+                                                                            >
+                                                                                {l.title}
+                                                                            </div>
+                                                                            <div className="lesson-action">
+                                                                                <Trash2 size={14} onClick={() => handleLessonDelete(l.id)} />
+                                                                            </div>
+                                                                        </div>
+                                                                    )
+                                                                }
+                                                            </div>
+                                                        }
+                                                    </CardBody>
+                                                </Card>
+                                            </Collapse>
+                                        </Navbar>
+                                    </Col>
                                     <Col lg='9' md='12' sm='12'>
                                         {
+                                            !isLessonEditing &&
                                             activeLesson()
+                                        }
+                                        {
+                                            isLessonEditing &&
+                                            <div className="text-center mt-5">
+                                                <Button.Ripple
+                                                    color="primary"
+                                                    outline
+                                                    onClick={() => setIsLessonEditing(false)}
+                                                >
+                                                    Cancel Edit
+                                                </Button.Ripple>
+                                            </div>
                                         }
                                     </Col>
                                 </Row>
@@ -599,7 +648,9 @@ const mapStateToProps = (state) => {
         studentsLessonAssignLoading,
         studentsLessonAssignError,
         studentsLessonUnassignLoading,
-        studentsLessonUnassignError
+        studentsLessonUnassignError,
+        lessonDeleting,
+        lessonDeleteError
 
     } = state.Lessons;
     return {
@@ -619,7 +670,9 @@ const mapStateToProps = (state) => {
         studentsLessonAssignLoading,
         studentsLessonAssignError,
         studentsLessonUnassignLoading,
-        studentsLessonUnassignError
+        studentsLessonUnassignError,
+        lessonDeleting,
+        lessonDeleteError
     }
 }
 
@@ -628,6 +681,6 @@ export default withRouter(
         getTeacherTopicLessons, getTeacherTopics,
         selectTopic, selectLesson, getLesson,
         getStudentsForLesson, assignLessonToStudents,
-        unassignLessonToStudents
+        unassignLessonToStudents, deleteLesson
     })(AppLessons)
 )

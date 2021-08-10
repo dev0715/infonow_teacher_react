@@ -12,7 +12,7 @@ import { Card, CardHeader, CardTitle, Collapse, Spinner } from 'reactstrap'
 const CardReload = props => {
     // ** Props
     const { title, isReloading, onReload, children } = props
-    console.log(props);
+    // console.log(props);
     // ** If user passes reload action then return <BlockUi> as Wrapper else return <Fragment>
     const BlockUiWrapper = isReloading ? UiLoader : Fragment
 

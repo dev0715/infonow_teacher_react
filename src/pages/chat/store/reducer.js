@@ -71,31 +71,33 @@ const initialState = {
 }
 
 
-const saveNewMessage = (state, { success, chatId, data, messageId }) => {
+const saveNewMessage = (state, { success, chatId, data, messageId, error }) => {
 
   state = updateChatHeadMessage(state, { success, chatId, data })
 
   //Sent message fail
   if (!success && messageId && chatId == state.selectedChat.chatId) {
-    let msg = state.messages.find(m => m.messageId == messageId)
-    if (msg) {
-      msg.error = true;
-      console.log("MESSAGE ERROR", state.messages)
-    }
+    state.messages.forEach(m => {
+      if (m.messageId == messageId) {
+        m.error = true;
+        console.log("MESSAGE ERROR", error)
+      }
+    })
   }
   else if (success && messageId && chatId == state.selectedChat.chatId) {
-    let msg = state.messages.find(m => m.messageId == messageId)
-    if (msg) {
-      msg = data;
-      console.log("MESSAGE REPLACED", state.messages)
-    }
+    state.messages.forEach(m => {
+      if (m.messageId == messageId) {
+        m = data;
+        console.log("MESSAGE REPLACED", state.messages)
+      }
+    })
   }
   else if (success && !messageId && chatId == state.selectedChat.chatId) {
     state.messages.push(data)
     console.log("MESSAGE PUSHED", state.messages)
   }
 
-  return state
+  return { ...state, messages: [...state.messages] }
 }
 
 const updateChatHeadMessage = (state, { success, chatId, data }) => {

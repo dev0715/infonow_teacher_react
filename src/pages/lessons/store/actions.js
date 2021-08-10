@@ -28,6 +28,12 @@ import {
   UNASSIGN_LESSON_TO_STUDENTS,
   UNASSIGN_LESSON_TO_STUDENTS_SUCCESS,
   UNASSIGN_LESSON_TO_STUDENTS_FAILURE,
+  DELETE_TOPIC,
+  DELETE_TOPIC_SUCCESS,
+  DELETE_TOPIC_FAILURE,
+  DELETE_LESSON,
+  DELETE_LESSON_SUCCESS,
+  DELETE_LESSON_FAILURE,
 
 } from './actionTypes'
 
@@ -228,6 +234,49 @@ export const unassignLessonToStudentsSuccess = (data) => {
 export const unassignLessonToStudentsFailure = (error) => {
   return {
     type: UNASSIGN_LESSON_TO_STUDENTS_FAILURE,
+    payload: error
+  }
+}
+
+export const deleteTopic = (id) => {
+  return {
+    type: DELETE_TOPIC,
+    payload: id
+  }
+}
+
+export const deleteTopicSuccess = (data) => {
+  return {
+    type: DELETE_TOPIC_SUCCESS,
+    payload: data
+  }
+}
+
+export const deleteTopicFailure = (error) => {
+  return {
+    type: DELETE_TOPIC_FAILURE,
+    payload: error
+  }
+}
+
+
+export const deleteLesson = (id) => {
+  return {
+    type: DELETE_LESSON,
+    payload: id
+  }
+}
+
+export const deleteLessonSuccess = (id) => {
+  return {
+    type: DELETE_LESSON_SUCCESS,
+    payload: id
+  }
+}
+
+export const deleteLessonFailure = (error) => {
+  return {
+    type: DELETE_LESSON_FAILURE,
     payload: error
   }
 }
