@@ -69,7 +69,7 @@ const initialState = {
 
     unassignTestSuccess: false,
     unassignTestLoading: false,
-    unassignTestError: string,
+    unassignTestError: null,
 }
 
 export default (state = initialState, action) => {

@@ -36,7 +36,6 @@ export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
 
 // Student Actions
 export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);
-export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
 
 export const getAllStudents = () => get(url.GET_STUDENTS);
 export const getStudentProfile = studentId => get(url.GET_STUDENT_BY_ID(studentId));
@@ -63,8 +62,8 @@ export const unassignTest = (testId, studentTestId) => del(url.UNASSIGN_TEST(tes
 //Assignment
 export const getAssignmentDetail = (testId) => get(url.GET_ASSIGNMENT_BY_ID(testId));
 export const getAssignments = () => get(url.GET_ASSIGNMENTS);
-export const postAssignment = data => postForm(url.POST_ASSIGNMENT, data);
-export const putAssignment = data => putForm(url.PUT_ASSIGNMENT, data);
+export const postAssignment = data => post(url.POST_ASSIGNMENT, data);
+export const putAssignment = data => put(url.PUT_ASSIGNMENT, data);
 export const assignAssignment = (assignmentId, data) => post(url.POST_ASSIGN_ASSIGNMENT(assignmentId), data);
 export const getAssignmentPastStudent = (assignmentId) => get(url.GET_ASSIGNMENT_PAST_STUDENT(assignmentId));
 export const getAssignmentUpcomingStudent = (assignmentId) => get(url.GET_ASSIGNMENT_UPCOMING_STUDENT(assignmentId));

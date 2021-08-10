@@ -15,16 +15,16 @@ const AssignmentList = (props) => {
 
     const { assignments, isTeacher, fetchAssignments, isReloading } = props;
 
-    console.log("assignments ==>", assignments);
-    const onSelectTests = (assignment) => {
+
+    const onSelectAssignment = (assignment) => {
         if (props.onSelect) {
             props.onSelect(assignment);
         }
     }
 
     const onNewAssignments = () => {
-        if (props.onNewAssignments) {
-            props.onNewAssignments()
+        if (props.onNewAssignment) {
+            props.onNewAssignment()
         }
     }
 
@@ -38,9 +38,9 @@ const AssignmentList = (props) => {
             {
                 isTeacher &&
                 <div className="text-right">
-                    <Button.Ripple className='btn-header' outline color='primary' onClick={onNewAssignments}>
+                    <Button.Ripple className='btn-header' color='primary' onClick={onNewAssignments}>
                         <Plus size={14} />
-                        <span className='align-middle ml-25'>Add New Assignment</span>
+                        <span className='align-middle ml-25'>New Assignment</span>
                     </Button.Ripple>
                 </div>
             }
@@ -60,7 +60,7 @@ const AssignmentList = (props) => {
 
                         {assignments && assignments.map((a, i) =>
 
-                            <tr key={a.assignmentsId} onClick={() => onSelectTests(a)}>
+                            <tr key={a.assignmentsId} onClick={() => onSelectAssignment(a)}>
                                 <td>{i + 1}</td>
                                 <td>
                                     <span className='align-middle font-weight-bold'>

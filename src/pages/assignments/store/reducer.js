@@ -69,7 +69,7 @@ const initialState = {
 
     unassignAssignmentSuccess: false,
     unassignAssignmentLoading: false,
-    unassignAssignmentError: string,
+    unassignAssignmentError: null,
 }
 
 export default (state = initialState, action) => {
@@ -193,8 +193,8 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 assignAssignmentSuccess: false,
-                assignAssignmentLoading: true,
-                assignAssignmentError: null
+                assignAssignmentLoading: false,
+                assignAssignmentError: action.payload
             }
             break;
 

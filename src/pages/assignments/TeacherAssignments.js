@@ -46,10 +46,10 @@ export const TeacherAssignments = (props) => {
             <AssignmentList
                 assignments={assignments}
                 isTeacher={true}
-                fetchTests={fetchTeacherAssignment}
+                fetchAssignments={fetchTeacherAssignment}
                 onSelect={onSelectAssignment}
-                onNewTest={addNewAssignment}
-                onEditTest={onEditAssignment}
+                onNewAssignment={addNewAssignment}
+                onEditAssignment={onEditAssignment}
                 isReloading={teacherAssignmentsLoading}
                 onBack={props.onBack} />
         </div>

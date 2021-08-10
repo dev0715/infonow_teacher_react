@@ -37,9 +37,9 @@ const TestList = (props) => {
             {
                 isTeacher &&
                 <div className="text-right">
-                    <Button.Ripple className='btn-header' outline color='primary' onClick={onNewTest}>
+                    <Button.Ripple className='btn-header' color='primary' onClick={onNewTest}>
                         <Plus size={14} />
-                        <span className='align-middle ml-25'>Add New Test</span>
+                        <span className='align-middle ml-25'>Add Test</span>
                     </Button.Ripple>
                 </div>
             }
