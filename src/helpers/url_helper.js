@@ -37,10 +37,23 @@ export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${test
 export const POST_ASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/assign`
 export const UNASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/unassign`
 
+
+
+//Assignments
+export const POST_ASSIGNMENT = `${BASE_API_URL}/assignments`
+export const PUT_ASSIGNMENT = `${BASE_API_URL}/assignments`
+export const GET_ASSIGNMENTS = `${BASE_API_URL}/assignments`
+export const GET_ASSIGNMENT_BY_ID = assignmentId => `${BASE_API_URL}/assignments/${assignmentId}`
+export const GET_ASSIGNMENT_PAST_STUDENT = assignmentId => `${BASE_API_URL}/assignments/${assignmentId}/past-tests`
+export const GET_ASSIGNMENT_UPCOMING_STUDENT = assignmentId => `${BASE_API_URL}/assignments/${assignmentId}/upcoming-tests`
+export const POST_ASSIGN_ASSIGNMENT = (assignmentId) => `${BASE_API_URL}/assignments/${assignmentId}/assign`
+export const UNASSIGN_ASSIGNMENT = (assignmentId) => `${BASE_API_URL}/assignments/${assignmentId}/unassign`
+
 //STUDENTS
 export const GET_STUDENTS = `${BASE_API_URL}/students`
 export const GET_STUDENT_BY_ID = studentId => `${BASE_API_URL}/students/${studentId}`
 export const GET_STUDENT_TEST = (studentId) => `${BASE_API_URL}/students/${studentId}/tests`
+export const GET_STUDENT_ASSIGNMENTS = (studentId) => `${BASE_API_URL}/students/${studentId}/assignments`
 
 //ATTEMPTS
 export const GET_STUDENT_ATTEMPTS = (studentId, testId) => `${BASE_API_URL}/students/${studentId}/tests/${testId}/attempts`

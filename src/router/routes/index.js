@@ -63,6 +63,12 @@ const Routes = [
   },
 
   {
+    path: '/assignments',
+    exact: true,
+    component: lazy(() => import('../../pages/assignments/TeacherAssignments'))
+  },
+
+  {
     appLayout: true,
     className: 'chat-application',
     path: '/chat',
