@@ -46,9 +46,9 @@ const Routes = [
     component: lazy(() => import('../../pages/tests/NewTest'))
   },
   {
-    path: '/assign-test/:testId',
+    path: '/test-dashboard/:testId',
     exact: true,
-    component: lazy(() => import('../../pages/tests/AssignTest'))
+    component: lazy(() => import('../../pages/tests/TestDashboard'))
   },
   {
     path: '/attempts/:testId',
@@ -60,6 +60,27 @@ const Routes = [
     path: '/attempt-detail/:attemptId',
     exact: true,
     component: lazy(() => import('../../pages/attempts/AttemptDetail'))
+  },
+
+  {
+    path: '/assignments',
+    exact: true,
+    component: lazy(() => import('../../pages/assignments/TeacherAssignments'))
+  },
+  {
+    path: '/assignments/:assignmentId',
+    exact: true,
+    component: lazy(() => import('../../pages/assignments/ViewOrEditAssignment'))
+  },
+  {
+    path: '/add-new-assignment',
+    exact: true,
+    component: lazy(() => import('../../pages/assignments/NewAssignment'))
+  },
+  {
+    path: '/assignment-dashboard/:assignmentId',
+    exact: true,
+    component: lazy(() => import('../../pages/assignments/AssignmentDashboard'))
   },
 
   {

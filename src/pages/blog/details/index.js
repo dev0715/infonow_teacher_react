@@ -118,7 +118,6 @@ const BlogDetails = (props) => {
 
   const postComment = (e) => {
     e.preventDefault()
-    console.log("COMMENT ==> ", comment)
     props.commentOnBlog({ blogId: props.selectedBlog.id, text: comment })
     setComment("");
 

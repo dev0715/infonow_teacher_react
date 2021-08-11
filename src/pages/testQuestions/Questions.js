@@ -31,8 +31,6 @@ const Questions = (props) => {
         "type": 2
     }
 
-    console.log("CHECK QUESTIONS ==>", questions);
-
     const updateQuestions = (index, deleteCount, newItem = undefined) => {
         props.onChangeQuestion(index, deleteCount, newItem)
     }

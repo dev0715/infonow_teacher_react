@@ -31,3 +31,7 @@ export * from './../pages/blog/store/actions'
 
 //Lessons
 export * from './../pages/lessons/store/actions'
+
+
+//Assignments
+export * from "./../pages/assignments/store/actions"

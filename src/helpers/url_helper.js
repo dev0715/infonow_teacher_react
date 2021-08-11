@@ -8,7 +8,7 @@ export const BLOG_API_URL = `http://192.168.10.102:1337`
 // export const BASE_URL = `https://api.meditati.ro/main`
 // export const MEETING_API_URL = `https://meeting.meditati.ro/api`
 // export const CHAT_API_URL = `https://api.meditati.ro/chat`
-// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/`
+// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
 // export const BLOG_API_URL = `https://api.meditati.ro/blog`
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
@@ -17,11 +17,8 @@ export const DOCUMENT_BASE_URL = `${BASE_URL}/public`
 
 
 export const GET_IMAGE_URL = url => url ? DOCUMENT_BASE_URL + url : DOCUMENT_BASE_URL + "/profile-pictures/default.png"
-
 export const GET_BLOG_IMAGE_URL = url => BLOG_API_URL + url
-
 export const GET_DOCUMENT_URL = url => DOCUMENT_BASE_URL + url
-
 export const getProfileImageUrl = url => url ? IMAGES_BASE_URL + url : IMAGES_BASE_URL + "/profile-pictures/default.png"
 
 // Login
@@ -32,21 +29,33 @@ export const POST_TEST = `${BASE_API_URL}/tests`
 export const PUT_TEST = `${BASE_API_URL}/tests`
 export const GET_TESTS = `${BASE_API_URL}/tests`
 export const GET_TEST_BY_ID = testId => `${BASE_API_URL}/tests/${testId}`
-export const GET_TEST_PAST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/past-test`
-export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/upcoming-test`
+export const GET_TEST_PAST_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/past-tests`
+export const GET_TEST_UPCOMING_STUDENT = testId => `${BASE_API_URL}/tests/${testId}/upcoming-tests`
 export const POST_ASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/assign`
 export const UNASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/unassign`
 
+
+
+//Assignments
+export const POST_ASSIGNMENT = `${BASE_API_URL}/assignments`
+export const PUT_ASSIGNMENT = `${BASE_API_URL}/assignments`
+export const GET_ASSIGNMENTS = `${BASE_API_URL}/assignments`
+export const GET_ASSIGNMENT_BY_ID = assignmentId => `${BASE_API_URL}/assignments/${assignmentId}`
+export const GET_ASSIGNMENT_PAST_STUDENT = assignmentId => `${BASE_API_URL}/assignments/${assignmentId}/past-assignments`
+export const GET_ASSIGNMENT_UPCOMING_STUDENT = assignmentId => `${BASE_API_URL}/assignments/${assignmentId}/upcoming-assignments`
+export const POST_ASSIGN_ASSIGNMENT = (assignmentId) => `${BASE_API_URL}/assignments/${assignmentId}/assign`
+export const UNASSIGN_ASSIGNMENT = (assignmentId) => `${BASE_API_URL}/assignments/${assignmentId}/unassign`
+
 //STUDENTS
 export const GET_STUDENTS = `${BASE_API_URL}/students`
-export const GET_STUDENT_BY_ID = id => `${BASE_API_URL}/students/${id}`
+export const GET_STUDENT_BY_ID = studentId => `${BASE_API_URL}/students/${studentId}`
 export const GET_STUDENT_TEST = (studentId) => `${BASE_API_URL}/students/${studentId}/tests`
-
+export const GET_STUDENT_ASSIGNMENTS = (studentId) => `${BASE_API_URL}/students/${studentId}/assignments`
 
 //ATTEMPTS
 export const GET_STUDENT_ATTEMPTS = (studentId, testId) => `${BASE_API_URL}/students/${studentId}/tests/${testId}/attempts`
-export const GET_ATTEMPT_DETAIL = id => `${BASE_API_URL}/attempts/${id}`
-export const PUT_SUBJECTIVE_ATTEMPT_MARKS = id => `${BASE_API_URL}/attempts/${id}/subjective-marks`
+export const GET_ATTEMPT_DETAIL = attemptId => `${BASE_API_URL}/attempts/${attemptId}`
+export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attempts/${attemptId}/subjective-marks`
 
 
 // Chats

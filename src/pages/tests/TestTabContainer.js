@@ -17,21 +17,20 @@ import {
     getUpcomingStudent,
 } from '@store/actions'
 import PastAndUpcomingTestStudentList from './PastAndUpcomingTestStudentList';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
+import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
 
 
 const TestsTabContainer = (props) => {
 
-    const MySwal = withReactContent(Swal)
     const [active, setActive] = useState('1')
+
     const [isLoading, setIsLoading] = useState(false)
-    const { test, pastStudents, upcomingStudents,
-        assignTestLoading,
-        pastStudentsLoading,
-        upcomingStudentsLoading,
-        unassignTestLoading } = props
+
+    const { test, pastStudents, pastStudentsLoading,
+        upcomingStudents, upcomingStudentsLoading,
+        assignTestLoading, assignTestError, assignTestSuccess,
+        unassignTestLoading, unassignTestError, unassignTestSuccess } = props
 
     const toggle = tab => {
         if (active !== tab) {
@@ -57,27 +56,18 @@ const TestsTabContainer = (props) => {
     }, [unassignTestLoading]);
 
     useEffect(() => {
-        if (props.assignTestError) ApiResponseAlert(props.assignTestError, 'error');
-        if (props.assignTestSuccess) ApiResponseAlert('Test has been assigned successfully', 'success');
+        if (assignTestError) errorAlertDialog(assignTestError);
+        if (assignTestSuccess) successAlertDialog('Test has been assigned successfully');
         fetchStudents()
-    }, [props.assignTestError, props.assignTestSuccess]);
+    }, [assignTestError, assignTestSuccess]);
 
     useEffect(() => {
-        if (props.unassignTestError) ApiResponseAlert(props.unassignTestError, 'error');
-        if (props.unassignTestSuccess) ApiResponseAlert('Test has been unassigned successfully', 'success');
+        if (props.unassignTestError) errorAlertDialog(props.unassignTestError, 'error');
+        if (props.unassignTestSuccess) successAlertDialog('Test has been unassigned successfully');
         fetchStudents()
-    }, [props.unassignTestError, props.unassignTestSuccess]);
+    }, [unassignTestError, unassignTestSuccess]);
 
-    const ApiResponseAlert = (msg, icon) => {
-        return MySwal.fire({
-            title: msg,
-            icon: icon,
-            customClass: {
-                confirmButton: 'btn btn-primary'
-            },
-            buttonsStyling: false
-        })
-    }
+
 
     const assignTest = (testData) => {
         let data = {
@@ -91,7 +81,7 @@ const TestsTabContainer = (props) => {
 
     const unAssignTest = (studentTestId) => {
         let data = {
-            studentId: studentTestId,
+            studentTestId: studentTestId,
             testId: test.testId
         }
         props.unassignTest(data)

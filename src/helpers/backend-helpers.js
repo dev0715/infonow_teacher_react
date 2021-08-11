@@ -38,30 +38,36 @@ export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
 export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);
 
 export const getAllStudents = () => get(url.GET_STUDENTS);
-
 export const getStudentProfile = studentId => get(url.GET_STUDENT_BY_ID(studentId));
 
+//STUDENT => Student-test & test-attempts
 export const getAllStudentTest = studentId => get(url.GET_STUDENT_TEST(studentId));
-
 export const getStudentTestAttempts = (studentId, testId) => get(url.GET_STUDENT_ATTEMPTS(studentId, testId));
-
 export const getAttemptDetail = (attemptId) => get(url.GET_ATTEMPT_DETAIL(attemptId));
+export const putAttemptSubjectiveMarks = (attemptId, data) => putForm(url.PUT_SUBJECTIVE_ATTEMPT_MARKS(attemptId), data);
 
+//STUDENT => Student-assignment & assignment-attempts
+export const getAllStudentAssignment = studentId => get(url.GET_STUDENT_ASSIGNMENTS(studentId));
+
+//Tests
 export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
-
 export const getTests = () => get(url.GET_TESTS);
-
 export const postTest = data => postForm(url.POST_TEST, data);
-
 export const putTest = data => putForm(url.PUT_TEST, data);
-
 export const assignTest = (testId, data) => post(url.POST_ASSIGN_TEST(testId), data);
-
 export const getTestPastStudent = (testId) => get(url.GET_TEST_PAST_STUDENT(testId));
-
 export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUDENT(testId));
+export const unassignTest = (testId, studentTestId) => del(url.UNASSIGN_TEST(testId), studentTestId);
 
-export const unassignTest = (testId, studentTestId) => delete (url.UNASSIGN_TEST(testId), studentTestId);
+//Assignment
+export const getAssignmentDetail = (testId) => get(url.GET_ASSIGNMENT_BY_ID(testId));
+export const getAssignments = () => get(url.GET_ASSIGNMENTS);
+export const postAssignment = data => post(url.POST_ASSIGNMENT, data);
+export const putAssignment = data => put(url.PUT_ASSIGNMENT, data);
+export const assignAssignment = (assignmentId, data) => post(url.POST_ASSIGN_ASSIGNMENT(assignmentId), data);
+export const getAssignmentPastStudent = (assignmentId) => get(url.GET_ASSIGNMENT_PAST_STUDENT(assignmentId));
+export const getAssignmentUpcomingStudent = (assignmentId) => get(url.GET_ASSIGNMENT_UPCOMING_STUDENT(assignmentId));
+export const unassignAssignment = (assignmentId, studentAssignmentId) => del(url.UNASSIGN_TEST(assignmentId), studentAssignmentId);
 
 //Lessons
 

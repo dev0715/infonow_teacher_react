@@ -8,6 +8,9 @@ import {
     GET_TEST_DETAIL,
     GET_TEST_DETAIL_SUCCESS,
     GET_TEST_DETAIL_FAILURE,
+    PUT_SUBJECTIVE_ATTEMPT_MARKS,
+    PUT_SUBJECTIVE_ATTEMPT_MARKS_SUCCESS,
+    PUT_SUBJECTIVE_ATTEMPT_MARKS_FAILURE,
 } from './actionTypes'
 
 export const getTestAttempts = ({ studentId, testId }) => {
@@ -74,4 +77,28 @@ export const getTestDetailFailure = (error) => {
         payload: error
     }
 }
+
+export const putSubjectiveAttemptMarks = (attemptId, data) => {
+    return {
+        type: PUT_SUBJECTIVE_ATTEMPT_MARKS,
+        payload: { attemptId, data }
+    }
+}
+
+export const putSubjectiveAttemptMarksSuccess = (data) => {
+    return {
+        type: PUT_SUBJECTIVE_ATTEMPT_MARKS_SUCCESS,
+        payload: data
+    }
+}
+
+export const putSubjectiveAttemptMarksFailure = (error) => {
+    return {
+        type: PUT_SUBJECTIVE_ATTEMPT_MARKS_FAILURE,
+        payload: error
+    }
+}
+
+
+
 

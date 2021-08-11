@@ -6,24 +6,25 @@ import {
 import { DateTime } from '../../components/date-time';
 import PropTypes from 'prop-types';
 import CardReload from '../../@core/components/card-reload';
-
 import { Button } from 'reactstrap'
 import { Plus } from 'react-feather'
 
 import '../../assets/scss/custom/components/_card.scss'
-const TestList = (props) => {
 
-    const { tests, isTeacher, fetchTests, isReloading } = props;
+const AssignmentList = (props) => {
 
-    const onSelectTests = (test) => {
+    const { assignments, isTeacher, fetchAssignments, isReloading } = props;
+
+
+    const onSelectAssignment = (assignment) => {
         if (props.onSelect) {
-            props.onSelect(test);
+            props.onSelect(assignment);
         }
     }
 
-    const onNewTest = () => {
-        if (props.onNewTest) {
-            props.onNewTest()
+    const onNewAssignments = () => {
+        if (props.onNewAssignment) {
+            props.onNewAssignment()
         }
     }
 
@@ -31,15 +32,15 @@ const TestList = (props) => {
 
     return (
         <CardReload className="p-0 test-list"
-            title='Tests'
-            onReload={fetchTests}
+            title='Assignments'
+            onReload={fetchAssignments}
             isReloading={isReloading}>
             {
                 isTeacher &&
                 <div className="text-right">
-                    <Button.Ripple className='btn-header' color='primary' onClick={onNewTest}>
+                    <Button.Ripple className='btn-header' color='primary' onClick={onNewAssignments}>
                         <Plus size={14} />
-                        <span className='align-middle ml-25'>Add Test</span>
+                        <span className='align-middle ml-25'>New Assignment</span>
                     </Button.Ripple>
                 </div>
             }
@@ -49,26 +50,26 @@ const TestList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
+                            <th>title</th>
+                            <th>Type</th>
                             <th>Created At</th>
-                            <th>Time Limit</th>
                             <th>Total Marks</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        {tests && tests.map((t, i) =>
+                        {assignments && assignments.map((a, i) =>
 
-                            <tr key={t.testId} onClick={() => onSelectTests(t)}>
+                            <tr key={a.assignmentsId} onClick={() => onSelectAssignment(a)}>
                                 <td>{i + 1}</td>
                                 <td>
                                     <span className='align-middle font-weight-bold'>
-                                        {t.title}
+                                        {a.title}
                                     </span>
                                 </td>
-                                <td><DateTime dateTime={t.createdAt} type="dateTime" /></td>
-                                <td>{t.timeLimit / 60} mins</td>
-                                <td>{t.totalMarks}</td>
+                                <td>{a.type}</td>
+                                <td><DateTime dateTime={a.createdAt} type="dateTime" /></td>
+                                <td>{a.totalMarks}</td>
                             </tr>
                         )}
                     </tbody>
@@ -79,14 +80,14 @@ const TestList = (props) => {
 };
 
 
-TestList.propTypes = {
+AssignmentList.propTypes = {
     onSelect: PropTypes.func,
-    tests: PropTypes.array.isRequired,
+    assignments: PropTypes.array.isRequired,
     onBack: PropTypes.func
 }
 
 
-export default TestList;
+export default AssignmentList;
 
 
 

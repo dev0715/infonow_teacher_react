@@ -5,7 +5,7 @@ import {
     Col,
 } from 'reactstrap';
 
-import TestDetail from '../tests/TestDetail';
+import TestDetail from './TestDetail';
 import TestsTabContainer from './TestTabContainer';
 
 

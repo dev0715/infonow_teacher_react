@@ -51,6 +51,7 @@ const initialState = {
 
     updateTest: {},
     updateTestLoading: false,
+    updateTestSuccess: false,
     updateTestTestError: null,
 
     assignTest: {},
@@ -68,7 +69,7 @@ const initialState = {
 
     unassignTestSuccess: false,
     unassignTestLoading: false,
-    unassignTestError: string,
+    unassignTestError: null,
 }
 
 export default (state = initialState, action) => {
@@ -81,7 +82,6 @@ export default (state = initialState, action) => {
             }
             break;
         case GET_STUDENT_TESTS_SUCCESS:
-            console.log("GET_STUDENT_TESTS_SUCCESS", action.payload);
             state = {
                 ...state,
                 tests: action.payload,
@@ -146,6 +146,7 @@ export default (state = initialState, action) => {
         case PUT_TEST:
             state = {
                 ...state,
+                updateTestSuccess: false,
                 updateTestLoading: true,
                 updateTestError: null
             }
@@ -154,6 +155,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 updateTest: action.payload,
+                updateTestSuccess: true,
                 updateTestLoading: false,
                 updateTestError: null,
             }
@@ -161,6 +163,7 @@ export default (state = initialState, action) => {
         case PUT_TEST_FAILURE:
             state = {
                 ...state,
+                updateTestSuccess: false,
                 updateTestLoading: false,
                 updateTestError: action.payload,
             }

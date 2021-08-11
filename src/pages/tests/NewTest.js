@@ -6,7 +6,6 @@ import {
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
-import Swal from 'sweetalert2';
 import Questions from "../testQuestions/Questions"
 import { postTest } from '@store/actions'
 import { ArrowLeft } from 'react-feather'
@@ -14,13 +13,12 @@ import '../../assets/scss/custom/components/_question.scss'
 
 import '../../assets/scss/custom/components/_card.scss'
 import UILoader from '../../@core/components/ui-loader';
-import withReactContent from 'sweetalert2-react-content'
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
+import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
 const NewTest = (props) => {
 
 	const { newTestLoading, newTestError } = props
 
-	const MySwal = withReactContent(Swal)
 
 	const loading = false;
 
@@ -79,21 +77,10 @@ const NewTest = (props) => {
 	}
 
 	useEffect(() => {
-		if (props.newTestError) newTestCreatedAlert(props.newTestError, 'error');
-		if (props.newTestSuccess) newTestCreatedAlert('Test has been created successfully', 'success');
+		if (props.newTestError) errorAlertDialog(props.newTestError);
+		if (props.newTestSuccess) successAlertDialog('Test has been created successfully');
 	}, [props.newTestError, props.newTestSuccess]);
 
-
-	const newTestCreatedAlert = (msg, icon) => {
-		return MySwal.fire({
-			title: msg,
-			icon: icon,
-			customClass: {
-				confirmButton: 'btn btn-primary'
-			},
-			buttonsStyling: false
-		})
-	}
 
 	const onTitleChange = (e) => {
 		setNewTest({ ...newTest, title: e.target.value })

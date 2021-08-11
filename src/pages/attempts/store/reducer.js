@@ -1,3 +1,4 @@
+import { string } from 'prop-types';
 import {
     GET_TEST_ATTEMPTS,
     GET_TEST_ATTEMPTS_SUCCESS,
@@ -8,6 +9,10 @@ import {
     GET_TEST_DETAIL,
     GET_TEST_DETAIL_SUCCESS,
     GET_TEST_DETAIL_FAILURE,
+
+    PUT_SUBJECTIVE_ATTEMPT_MARKS,
+    PUT_SUBJECTIVE_ATTEMPT_MARKS_SUCCESS,
+    PUT_SUBJECTIVE_ATTEMPT_MARKS_FAILURE,
 } from './actionTypes'
 
 const initialState = {
@@ -20,6 +25,11 @@ const initialState = {
     testDetail: {},
     testDetailLoading: false,
     testDetailError: null,
+
+    updateAttempt: {},
+    updateAttemptSuccess: false,
+    updateAttemptLoading: false,
+    updateAttemptError: string,
 }
 
 export default (state = initialState, action) => {
@@ -88,6 +98,31 @@ export default (state = initialState, action) => {
                 ...state,
                 testDetailLoading: false,
                 testDetailError: action.payload,
+            }
+            break;
+        case PUT_SUBJECTIVE_ATTEMPT_MARKS:
+            state = {
+                ...state,
+                updateAttemptSuccess: false,
+                updateAttemptLoading: true,
+                updateAttemptError: null
+            }
+            break;
+        case PUT_SUBJECTIVE_ATTEMPT_MARKS_SUCCESS:
+            state = {
+                ...state,
+                updateAttempt: action.payload,
+                updateAttemptSuccess: true,
+                updateAttemptLoading: false,
+                updateAttemptError: null
+            }
+            break;
+        case PUT_SUBJECTIVE_ATTEMPT_MARKS_FAILURE:
+            state = {
+                ...state,
+                updateAttemptSuccess: false,
+                updateAttemptLoading: false,
+                updateAttemptError: action.payload
             }
             break;
         default:
