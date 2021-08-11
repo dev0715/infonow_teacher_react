@@ -245,10 +245,10 @@ export const deleteTopic = (id) => {
   }
 }
 
-export const deleteTopicSuccess = (data) => {
+export const deleteTopicSuccess = ({ id, data }) => {
   return {
     type: DELETE_TOPIC_SUCCESS,
-    payload: data
+    payload: { id, data }
   }
 }
 
@@ -267,10 +267,10 @@ export const deleteLesson = (id) => {
   }
 }
 
-export const deleteLessonSuccess = (id) => {
+export const deleteLessonSuccess = ({ id, data }) => {
   return {
     type: DELETE_LESSON_SUCCESS,
-    payload: id
+    payload: { id, data }
   }
 }
 

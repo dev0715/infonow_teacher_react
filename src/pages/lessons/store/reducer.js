@@ -191,8 +191,8 @@ const teacherLessonReducer = (state = initialState, action) => {
     case DELETE_TOPIC_SUCCESS:
       return {
         ...state,
-        topics: state.topics.filter(t => t.id != action.payload),
-        recentLessons: state.recentLessons.filter(l => l.topic.id != action.payload),
+        topics: action.payload.data,
+        recentLessons: state.recentLessons.filter(l => l.topic.id != action.payload.id),
         topicDeleting: false, topicDeleteError: null
       }
 
@@ -205,8 +205,8 @@ const teacherLessonReducer = (state = initialState, action) => {
     case DELETE_LESSON_SUCCESS:
       return {
         ...state,
-        lessons: state.lessons.filter(l => l.id != action.payload),
-        recentLessons: state.recentLessons.filter(l => l.id != action.payload),
+        lessons: action.payload.data,
+        recentLessons: state.recentLessons.filter(l => l.id != action.payload.id),
         lessonDeleting: false, lessonsError: null
       }
 

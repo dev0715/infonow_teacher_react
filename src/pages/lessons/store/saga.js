@@ -198,7 +198,7 @@ function* deleteTopicHttp({ payload }) {
   try {
     const response = yield call(deleteTopic, payload);
     if (response) {
-      yield put(deleteTopicSuccess(payload))
+      yield put(deleteTopicSuccess({ id: payload, data: response }))
       return;
     }
     throw "Unknown response received from Server";
@@ -212,7 +212,7 @@ function* deleteLessonHttp({ payload }) {
   try {
     const response = yield call(deleteLesson, payload);
     if (response) {
-      yield put(deleteLessonSuccess(payload))
+      yield put(deleteLessonSuccess({ id: payload, data: response }))
       return;
     }
     throw "Unknown response received from Server";
