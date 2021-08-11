@@ -42,7 +42,7 @@ export default [
   {
     id: 'assignments',
     title: 'Assignments',
-    icon: <i className="la la-laptop-code" />,
+    icon: <i className="la la-chalkboard" />,
     navLink: '/assignments'
   },
   {

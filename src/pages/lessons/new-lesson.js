@@ -27,10 +27,10 @@ import { render } from 'react-dom'
 import { draftToMarkdown } from 'markdown-draft-js';
 import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
 import { notifyError, notifySuccess } from '../../utility/toast'
 import { ArrowLeft } from 'react-feather'
+import { stateToMarkdown } from "draft-js-export-markdown";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import { BLOG_API_URL } from '../../helpers/url_helper'
 
@@ -80,11 +80,11 @@ const newLesson = (props) => {
         return `https://img.youtube.com/vi/${id}/hqdefault.jpg`
     }
 
-    const getMarkDownContent = () => {
-        const content = editorState.getCurrentContent();
-        const rawObject = convertToRaw(content);
-        return draftToMarkdown(rawObject)
-    }
+    // const getMarkDownContent = () => {
+    //     const content = editorState.getCurrentContent();
+    //     const rawObject = convertToRaw(content);
+    //     return draftToMarkdown(rawObject)
+    // }
 
     const getVideoLink = (url) => {
         return `https://youtube.com/embed/${youTubeParser(url)}`
@@ -97,13 +97,13 @@ const newLesson = (props) => {
             topic: props.selectedTopic,
             title,
             description,
-            content: getMarkDownContent(),
+            content: stateToMarkdown(editorState.getCurrentContent()),
             videoUrl: getVideoLink(videoUrl)
         })
     }
 
     const renderLesson = () => {
-        let content = getMarkDownContent()
+        let content = stateToMarkdown(editorState.getCurrentContent())
         if (content) {
             let uploadPath = `${BLOG_API_URL}/uploads/`;
             let markdown = String(content).replaceAll("/uploads/", uploadPath);

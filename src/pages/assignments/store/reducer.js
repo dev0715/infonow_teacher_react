@@ -134,14 +134,12 @@ export default (state = initialState, action) => {
                 newAssignment: action.payload,
                 newAssignmentSuccess: true,
                 newAssignmentLoading: false,
-                newAssignmentError: null,
             }
             break;
         case POST_ASSIGNMENT_FAILURE:
             state = {
                 ...state,
                 newAssignmentLoading: false,
-                newAssignmentSuccess: false,
                 newAssignmentError: action.payload,
             }
             break;

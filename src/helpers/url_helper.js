@@ -1,15 +1,15 @@
 
-// export const BASE_URL = `http://192.168.10.102:3600`
-// export const MEETING_API_URL = `http://192.168.10.104:3900`
-// export const CHAT_API_URL = `http://192.168.10.104:3700`
-// export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
-// export const BLOG_API_URL = `http://192.168.10.102:1337`
+export const BASE_URL = `http://192.168.10.102:3600`
+export const MEETING_API_URL = `http://192.168.10.104:3900`
+export const CHAT_API_URL = `http://192.168.10.104:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
+export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.meditati.ro/main`
-export const MEETING_API_URL = `https://meeting.meditati.ro/api`
-export const CHAT_API_URL = `https://api.meditati.ro/chat`
-export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
-export const BLOG_API_URL = `https://api.meditati.ro/blog`
+// export const BASE_URL = `https://api.meditati.ro/main`
+// export const MEETING_API_URL = `https://meeting.meditati.ro/api`
+// export const CHAT_API_URL = `https://api.meditati.ro/chat`
+// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
+// export const BLOG_API_URL = `https://api.meditati.ro/blog`
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`

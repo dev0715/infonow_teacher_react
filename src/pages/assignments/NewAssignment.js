@@ -10,26 +10,20 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { postAssignment } from '@store/actions'
 import { ArrowLeft } from 'react-feather'
-import { draftToMarkdown } from 'markdown-draft-js';
-import { EditorState, convertToRaw } from 'draft-js'
+import { EditorState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import UILoader from '../../@core/components/ui-loader';
-
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
-import draftToHtml from 'draftjs-to-html';
-import ReactMarkdown from 'react-markdown';
+import { stateToMarkdown } from "draft-js-export-markdown";
+
 import '../../assets/scss/custom/components/_card.scss'
 import '../../assets/scss/custom/components/_question.scss'
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
-
-
 import '@styles/react/libs/editor/editor.scss'
 const NewAssignment = (props) => {
 
 	const { newAssignmentLoading, newAssignmentError, newAssignmentSuccess } = props
-
 	const loading = false;
-
 	const [editorVal, setEditorVal] = useState(EditorState.createEmpty())
 
 	const [newAssignment, setNewAssignment] = useState({
@@ -39,28 +33,13 @@ const NewAssignment = (props) => {
 		"type": "coding"
 	});
 
-	const getMarkDownContent = (editorState) => {
-		const content = editorState.getCurrentContent();
-		const rawObject = convertToRaw(content);
-		return draftToMarkdown(rawObject)
-	}
-
-
-	const updateAssignment = (index, deleteCount, newItem = undefined) => {
-
-	}
-
-
-
 	const handleValidSubmit = (events, values) => {
-
-		let content = getMarkDownContent(editorVal)
-
+		let content = stateToMarkdown(editorVal.getCurrentContent())
 		setNewAssignment(newAssignment => {
 			let assignment = { ...newAssignment, content: content }
+			props.postAssignment(assignment);
 			return assignment
 		})
-		props.postAssignment(newAssignment);
 	}
 
 
@@ -76,11 +55,6 @@ const NewAssignment = (props) => {
 
 	const onContentChange = v => {
 		setEditorVal(v)
-		// const content = editorVal.getCurrentContent();
-		// const rawObject = convertToRaw(content);
-		// const html = draftToHtml(rawObject)
-		// const mark = draftToMarkdown(rawObject)
-
 	}
 
 	const onMarksChange = e => {
@@ -161,7 +135,6 @@ const NewAssignment = (props) => {
 															<Editor editorState={editorVal} onEditorStateChange={onContentChange} />
 														</CardBody>
 													</Card>
-
 
 													<Col lg={12}>
 														<div className='mt-3'>
