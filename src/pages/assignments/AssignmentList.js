@@ -9,6 +9,7 @@ import CardReload from '../../@core/components/card-reload';
 import { Button } from 'reactstrap'
 import { Plus } from 'react-feather'
 
+import { titleCase } from '../../helpers/HelperFunctions';
 import '../../assets/scss/custom/components/_card.scss'
 
 const AssignmentList = (props) => {
@@ -67,7 +68,7 @@ const AssignmentList = (props) => {
                                         {a.title}
                                     </span>
                                 </td>
-                                <td>{a.type}</td>
+                                <td>{titleCase(a.type)}</td>
                                 <td><DateTime dateTime={a.createdAt} type="dateTime" /></td>
                                 <td>{a.totalMarks}</td>
                             </tr>
