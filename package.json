@@ -33,11 +33,8 @@
     "draft-js": "^0.11.7",
     "draft-js-export-markdown": "^1.4.0",
     "draft-js-import-markdown": "^1.4.0",
-<<<<<<< HEAD
     "draft-js-utils": "^1.4.0",
     "draft-js-wysiwyg": "^1.2.0",
-=======
->>>>>>> d06ecf74158b5a44e1f519b5fb6f67d42b8af61c
     "draftjs-to-html": "0.9.1",
     "emoji-picker-react": "^3.4.8",
     "file-saver": "2.0.2",
