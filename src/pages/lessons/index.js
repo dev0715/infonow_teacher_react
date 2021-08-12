@@ -19,14 +19,13 @@ import {
     getTeacherTopics,
     selectTopic,
     selectLesson,
-    addNewTopic,
+    addNewTopic, updateTopic,
     getTeacherRecentLessons,
     deleteTopic
 } from './store/actions'
 
 import { withRouter } from 'react-router';
 import { GET_BLOG_IMAGE_URL } from '../../helpers/url_helper'
-import './style.scss'
 
 import { Plus, Trash2, X, Edit } from 'react-feather'
 
@@ -40,18 +39,51 @@ import { notifyError, notifySuccess } from '../../utility/toast'
 import NotFound from '../../components/not-found';
 import NoNetwork from '../../components/no-network';
 
+
+import Uppy from '@uppy/core'
+import thumbnailGenerator from '@uppy/thumbnail-generator'
+import { DragDrop } from '@uppy/react'
+
+import 'uppy/dist/uppy.css'
+import '@uppy/status-bar/dist/style.css'
+import '@styles/react/libs/file-uploader/file-uploader.scss'
+
+
+import './style.scss'
+
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+
+let placeHolder = require("../../assets/images/icons/image-placeholer.svg")
 
 const MySwal = withReactContent(Swal)
 
 const AppLessons = (props) => {
+
 
     const [isNewTopic, setIsNewTopic] = useState(false)
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [file, setFile] = useState(null)
     const [isTopicDeleting, setIsTopicDeleting] = useState(false)
+    const [url, setUrl] = useState("")
+    const [updateTopicId, setUpdateTopicId] = useState(null)
+
+    const uppy = new Uppy({
+        meta: { type: 'avatar' },
+        onBeforeFileAdded: (currentFile, files) => {
+            if (currentFile && currentFile.data)
+                setFile(currentFile.data);
+        },
+        restrictions: { maxNumberOfFiles: 1 },
+        autoProceed: true
+    })
+
+    uppy.use(thumbnailGenerator)
+
+    uppy.on('thumbnail:generated', (file, preview) => {
+        setUrl(preview)
+    })
 
     useEffect(() => {
         props.getTeacherTopics()
@@ -70,7 +102,7 @@ const AppLessons = (props) => {
 
     useEffect(() => {
         if (isNewTopic && !props.newTopicUploading && !props.newTopicError) {
-            closeNewTopic()
+            closeTopic()
             notifySuccess("New Topic", "Topic Added successfully")
         }
         else if (isNewTopic && !props.newTopicUploading && props.newTopicError) {
@@ -79,8 +111,29 @@ const AppLessons = (props) => {
 
     }, [props.newTopicUploading])
 
+    useEffect(() => {
+        if (updateTopicId && !props.updateTopicUploading && !props.updateTopicError) {
+            closeTopic()
+            notifySuccess("Update Topic", "Topic updated successfully")
+        }
+        else if (updateTopicId && !props.updateTopicUploading && props.updateTopicError) {
+            notifyError("Update Topic", props.updateTopicError)
+        }
+
+    }, [props.updateTopicUploading])
+
     const submitTopic = (e) => {
         e.preventDefault()
+        if (updateTopicId) {
+            let data = new FormData();
+            data.append("id", updateTopicId)
+            data.append("title", title)
+            data.append("description", description)
+            data.append("file", file)
+            props.updateTopic(data);
+            return
+        }
+        if (!file) return notifyError("New Topic", "Image is required for new topic")
         props.addNewTopic({
             title,
             description,
@@ -88,11 +141,13 @@ const AppLessons = (props) => {
         })
     }
 
-    const closeNewTopic = () => {
+    const closeTopic = () => {
         setTitle("")
         setDescription("")
         setFile(null);
         setIsNewTopic(false)
+        setUpdateTopicId(null)
+        setUrl(null)
     }
 
     const goToTopicDetails = (id) => {
@@ -120,6 +175,13 @@ const AppLessons = (props) => {
         })
     }
 
+    const editTopic = (t) => {
+        setUpdateTopicId(t.id);
+        setTitle(t.title);
+        setDescription(t.description);
+        setUrl(GET_BLOG_IMAGE_URL(t.image.formats.thumbnail.url));
+    }
+
     return (
         <Fragment >
             <UILoader
@@ -127,8 +189,7 @@ const AppLessons = (props) => {
                     props.topicsLoading ||
                     props.recentLessonsLoading ||
                     props.topicDeleting
-                }
-            >
+                }>
                 <Card >
                     <CardBody className='p-0'>
                         <Card>
@@ -191,7 +252,7 @@ const AppLessons = (props) => {
                                                             <div className="actions text-right">
                                                                 <Button.Ripple
                                                                     color='flat-secondary'
-                                                                    onClick={() => alert("Edit")}
+                                                                    onClick={() => editTopic(t)}
                                                                 >
                                                                     <Edit size={14} />
                                                                 </Button.Ripple>
@@ -271,22 +332,27 @@ const AppLessons = (props) => {
                     </CardBody>
                 </Card>
                 <Modal
-                    isOpen={isNewTopic}
+                    isOpen={isNewTopic || updateTopicId}
                     className='modal-dialog-centered'
                 >
                     <UILoader
-                        blocking={props.newTopicUploading}
+                        blocking={props.newTopicUploading ||
+                            props.updateTopicUploading}
                         className="model-loader"
                     >
                         <ModalBody className="pb-1">
                             <div className="text-right">
                                 <X
                                     size={16}
-                                    onClick={() => closeNewTopic()}
+                                    onClick={() => closeTopic()}
                                 />
                             </div>
                             <h6>
-                                New Topic
+                                {
+                                    updateTopicId ?
+                                        "Update Topic" :
+                                        "New Topic"
+                                }
                             </h6>
                             <Form
                                 className="mt-1 mb-2"
@@ -320,18 +386,30 @@ const AppLessons = (props) => {
                                         />
                                     </InputGroup>
                                 </FormGroup>
-                                <FormGroup>
-                                    <Label for='exampleCustomFileBrowser'>Image</Label>
-                                    <CustomInput
-                                        id='new_topic_image'
-                                        type='file' accept="image/*"
-                                        required
-                                        onChange={(e) => {
-                                            console.log("File", e)
-                                            setFile(e.target.files[0])
-                                        }} />
+                                <div className="topic-img">
+                                    <DragDrop uppy={uppy} />
+                                    {url &&
+                                        <div className="image-preview mt-2">
+                                            {file && <X
+                                                className="clear-icon text-primary"
+                                                size={20}
+                                                onClick={() => {
+                                                    setFile(null)
+                                                    setUrl("")
+                                                }}
+                                            />}
+                                            <img className='rounded ' src={url} alt='avatar' />
+                                        </div>
+                                    }
+                                </div>
+                                <FormGroup className="mt-2">
+                                    <Button.Ripple
+                                        type="submit"
+                                        color='primary'
+                                    >
+                                        Submit
+                                    </Button.Ripple>
                                 </FormGroup>
-                                <Button.Ripple type="submit" color='primary'>Submit</Button.Ripple>
                             </Form>
                         </ModalBody>
                     </UILoader>
@@ -358,7 +436,10 @@ const mapStateToProps = (state) => {
         newTopicUploading,
         newTopicError,
         topicDeleting,
-        topicDeleteError
+        topicDeleteError,
+        updateTopicUploading,
+        updateTopicError,
+
     } = state.Lessons;
     return {
         topics,
@@ -375,14 +456,16 @@ const mapStateToProps = (state) => {
         newTopicUploading,
         newTopicError,
         topicDeleting,
-        topicDeleteError
+        topicDeleteError,
+        updateTopicUploading,
+        updateTopicError,
     }
 }
 
 export default withRouter(
     connect(mapStateToProps, {
         getTeacherTopicLessons, getTeacherTopics,
-        selectTopic, selectLesson, addNewTopic,
+        selectTopic, selectLesson, addNewTopic, updateTopic,
         getTeacherRecentLessons, deleteTopic
     })(AppLessons)
 )

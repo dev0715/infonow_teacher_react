@@ -34,6 +34,12 @@ import {
   DELETE_LESSON,
   DELETE_LESSON_SUCCESS,
   DELETE_LESSON_FAILURE,
+  UPDATE_TOPIC,
+  UPDATE_TOPIC_SUCCESS,
+  UPDATE_TOPIC_FAILURE,
+  UPDATE_LESSON,
+  UPDATE_LESSON_SUCCESS,
+  UPDATE_LESSON_FAILURE,
 
 } from './actionTypes'
 
@@ -134,6 +140,27 @@ export const addNewTopicFailure = (error) => {
   }
 }
 
+export const updateTopic = (data) => {
+  return {
+    type: UPDATE_TOPIC,
+    payload: data
+  }
+}
+
+export const updateTopicSuccess = (data) => {
+  return {
+    type: UPDATE_TOPIC_SUCCESS,
+    payload: data
+  }
+}
+
+export const updateTopicFailure = (error) => {
+  return {
+    type: UPDATE_TOPIC_FAILURE,
+    payload: error
+  }
+}
+
 export const addNewLesson = (data) => {
   return {
     type: ADD_NEW_LESSON,
@@ -151,6 +178,27 @@ export const addNewLessonSuccess = (data) => {
 export const addNewLessonFailure = (error) => {
   return {
     type: ADD_NEW_LESSON_FAILURE,
+    payload: error
+  }
+}
+
+export const updateLesson = (data) => {
+  return {
+    type: UPDATE_LESSON,
+    payload: data
+  }
+}
+
+export const updateLessonSuccess = (data) => {
+  return {
+    type: UPDATE_LESSON_SUCCESS,
+    payload: data
+  }
+}
+
+export const updateLessonFailure = (error) => {
+  return {
+    type: UPDATE_LESSON_FAILURE,
     payload: error
   }
 }

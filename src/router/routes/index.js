@@ -126,6 +126,12 @@ const Routes = [
     component: lazy(() => import('../../pages/lessons/new-lesson'))
   },
   {
+    path: '/update-lesson',
+    exact: true,
+    className: 'new-lesson-application',
+    component: lazy(() => import('../../pages/lessons/new-lesson'))
+  },
+  {
     path: '/login',
     component: lazy(() => import('../../pages/auth/login')),
     layout: 'BlankLayout',

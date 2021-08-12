@@ -67,7 +67,6 @@ const AppLessons = (props) => {
     const [studentIdsAccessRequest, setStudentIdsAccessRequest] = useState([])
     const [studentIdsAccessRemove, setStudentIdsAccessRemove] = useState([])
     const [isLessonDeleting, setIsLessonDeleting] = useState(false)
-    const [isLessonEditing, setIsLessonEditing] = useState(false)
 
     const toggleLessons = () => setIsOpenLessons(!isOpenLessons);
 
@@ -119,7 +118,6 @@ const AppLessons = (props) => {
     useEffect(() => {
         setStudentIdsAccessRequest([])
         setStudentIdsAccessRemove([])
-        setIsLessonEditing(false)
         setIsOpenLessons(false)
         if (props.selectedLesson) {
             let lesson = props.lessons.find(l => l.id == props.selectedLesson)
@@ -210,6 +208,15 @@ const AppLessons = (props) => {
         })
     }
 
+    const handleLessonEdit = (lesson) => {
+        props.history.push(
+            {
+                pathname: '/update-lesson',
+                state: lesson
+            }
+        )
+    }
+
     const activeLesson = () => {
 
         let lesson = props.lessons.find(l => l.id == props.selectedLesson)
@@ -226,7 +233,7 @@ const AppLessons = (props) => {
                             <Button.Ripple
                                 color="primary"
                                 outline
-                                onClick={() => setIsLessonEditing(true)}
+                                onClick={() => handleLessonEdit(lesson)}
                             >
                                 Edit
                             </Button.Ripple>
@@ -419,7 +426,7 @@ const AppLessons = (props) => {
                 <UILoader
                     blocking={props.lessonsLoading || props.studentsLessonUnassignLoading}
                 >
-                    <Card className="full-height">
+                    <Card className="h-100 border-less-card">
                         <CardBody className="p-0">
                             {
                                 !props.lessonsLoading &&
@@ -432,11 +439,11 @@ const AppLessons = (props) => {
                             {
                                 !props.lessonsLoading &&
                                 !props.lessonsError &&
-                                <Row>
+                                <Row className="h-100">
                                     <Col lg={3} sm='12' md='12'
-                                        className={`pr-lg-0 topic-list-shadow`}
+                                        className={`pr-lg-0  topic-list-shadow`}
                                     >
-                                        <Navbar expand="lg" className="p-0">
+                                        <Navbar expand="lg" className="p-0 lesson-nav">
                                             {
                                                 !isOpen &&
                                                 <Menu
@@ -455,8 +462,10 @@ const AppLessons = (props) => {
                                                     onClick={toggle}
                                                 />
                                             }
-                                            <Collapse isOpen={isOpen} navbar>
-                                                <Card className='full-width'>
+                                            <Collapse isOpen={isOpen} navbar
+                                                className={"h-100"}
+                                            >
+                                                <Card className='w-100 h-100'>
                                                     <CardHeader>
                                                         <div className="d-flex align-items-center mb-1">
                                                             <div className="d-none d-lg-inline d-xl-inline">
@@ -493,7 +502,7 @@ const AppLessons = (props) => {
                                                             </div>
                                                         </div>
                                                     </CardHeader>
-                                                    <CardBody className="p-0">
+                                                    <CardBody className="p-0 h-100">
                                                         {
                                                             props.lessons.length == 0 &&
                                                             !props.lessonsLoading &&
@@ -502,7 +511,7 @@ const AppLessons = (props) => {
                                                         }
                                                         {
                                                             props.lessons.length > 0 &&
-                                                            <div className="lesson-list">
+                                                            <div className="h-100 lesson-list">
                                                                 {
                                                                     props.lessons.map((l, index) =>
                                                                         <div
@@ -531,22 +540,11 @@ const AppLessons = (props) => {
                                             </Collapse>
                                         </Navbar>
                                     </Col>
-                                    <Col lg='9' md='12' sm='12'>
+                                    <Col lg='9' md='12' sm='12'
+                                        className="h-100 active-lesson-col"
+                                    >
                                         {
-                                            !isLessonEditing &&
                                             activeLesson()
-                                        }
-                                        {
-                                            isLessonEditing &&
-                                            <div className="text-center mt-5">
-                                                <Button.Ripple
-                                                    color="primary"
-                                                    outline
-                                                    onClick={() => setIsLessonEditing(false)}
-                                                >
-                                                    Cancel Edit
-                                                </Button.Ripple>
-                                            </div>
                                         }
                                     </Col>
                                 </Row>

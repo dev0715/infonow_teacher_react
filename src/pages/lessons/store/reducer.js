@@ -39,6 +39,12 @@ import {
   DELETE_LESSON,
   DELETE_LESSON_SUCCESS,
   DELETE_LESSON_FAILURE,
+  UPDATE_TOPIC,
+  UPDATE_TOPIC_SUCCESS,
+  UPDATE_TOPIC_FAILURE,
+  UPDATE_LESSON,
+  UPDATE_LESSON_SUCCESS,
+  UPDATE_LESSON_FAILURE,
 
 } from './actionTypes'
 
@@ -70,11 +76,101 @@ const initialState = {
   topicDeleting: false,
   topicDeleteError: null,
   lessonDeleting: false,
-  lessonDeleteError: null
+  lessonDeleteError: null,
+  updateTopicUploading: false,
+  updateTopicError: null,
+  updateLessonLoading: false,
+  updateLessonError: null
 }
 
+const updateTopicSuccess = (state, payload) => {
+  for (const index in state.topics) {
+    if (state.topics[index].id === payload.id) {
+      state.topics[index] = payload
+      break;
+    }
+  }
+  return {
+    ...state,
+    topics: [...state.topics],
+    updateTopicUploading: false,
+    updateTopicError: null
+  }
+}
 
+const updateLessonSuccess = (state, payload) => {
+  for (const index in state.lessons) {
+    if (state.lessons[index].id === payload.id) {
+      state.lessons[index] = payload
+      break;
+    }
+  }
+  return {
+    ...state,
+    lessons: [...state.lessons],
+    updateLessonLoading: false,
+    updateLessonError: null
+  }
+}
 
+const getLessonSuccess = (state, payload) => {
+  for (const index in state.lessons) {
+    if (state.lessons[index].id === payload.id) {
+      state.lessons[index] = payload
+      state.lessons[index].isFull = true
+      break
+    }
+  }
+  return { ...state, oneLessonLoading: false, oneLessonError: null }
+}
+
+const assignLessonToStudentsSuccess = (state, payload) => {
+  for (const index in state.lessons) {
+    if (state.lessons[index].id === state.selectedLesson) {
+      state.lessons[index].studentLessons = payload
+      break;
+    }
+  }
+  return {
+    ...state,
+    studentsLessonAssignLoading: false,
+    studentsLessonAssignError: null
+  }
+
+}
+
+const unassignLessonToStudentsSuccess = (state, payload) => {
+  for (const index in state.lessons) {
+    if (state.lessons[index].id === state.selectedLesson) {
+      state.lessons[index].studentLessons = payload
+      break;
+    }
+  }
+  return {
+    ...state,
+    studentsLessonUnassignLoading: false,
+    studentsLessonUnassignError: null
+  }
+
+}
+
+const deleteTopicSuccess = (state, payload) => {
+  return {
+    ...state,
+    topics: state.topics.filter(t => t.id != payload.id),
+    recentLessons: state.recentLessons.filter(l => l.topic.id != payload.id),
+    topicDeleting: false, topicDeleteError: null
+  }
+}
+
+const deleteLessonSuccess = (state, payload) => {
+  return {
+    ...state,
+    lessons: payload.data,
+    recentLessons: state.recentLessons.filter(l => l.id != payload.id),
+    lessonDeleting: false, lessonsError: null
+  }
+}
 
 const teacherLessonReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -121,6 +217,15 @@ const teacherLessonReducer = (state = initialState, action) => {
     case ADD_NEW_TOPIC_FAILURE:
       return { ...state, newTopicUploading: false, newTopicError: action.payload }
 
+    case UPDATE_TOPIC:
+      return { ...state, updateTopicUploading: true }
+
+    case UPDATE_TOPIC_SUCCESS:
+      return updateTopicSuccess(state, action.payload)
+
+    case UPDATE_TOPIC_FAILURE:
+      return { ...state, updateTopicUploading: false, updateTopicError: action.payload }
+
     case ADD_NEW_LESSON:
       return { ...state, newLessonUploading: true }
 
@@ -130,18 +235,20 @@ const teacherLessonReducer = (state = initialState, action) => {
     case ADD_NEW_LESSON_FAILURE:
       return { ...state, newLessonUploading: false, newLessonError: action.payload }
 
+    case UPDATE_LESSON:
+      return { ...state, updateLessonLoading: true }
+
+    case UPDATE_LESSON_SUCCESS:
+      return updateLessonSuccess(state, action.payload)
+
+    case UPDATE_LESSON_FAILURE:
+      return { ...state, updateLessonLoading: false, updateLessonError: action.payload }
+
     case GET_LESSON:
       return { ...state, oneLessonLoading: true }
 
     case GET_LESSON_SUCCESS:
-      for (const index in state.lessons) {
-        if (state.lessons[index].id === action.payload.id) {
-          state.lessons[index] = action.payload
-          state.lessons[index].isFull = true
-          break
-        }
-      }
-      return { ...state, oneLessonLoading: false, oneLessonError: null }
+      return getLessonSuccess(state, action.payload)
 
     case GET_LESSON_FAILURE:
       return { ...state, oneLessonLoading: false, oneLessonError: action.payload }
@@ -159,13 +266,7 @@ const teacherLessonReducer = (state = initialState, action) => {
       return { ...state, studentsLessonAssignLoading: true }
 
     case ASSIGN_LESSON_TO_STUDENTS_SUCCESS:
-      for (const index in state.lessons) {
-        if (state.lessons[index].id === state.selectedLesson) {
-          state.lessons[index].studentLessons = action.payload
-          break;
-        }
-      }
-      return { ...state, studentsLessonAssignLoading: false, studentsLessonAssignError: null }
+      return assignLessonToStudentsSuccess(state, action.payload)
 
     case ASSIGN_LESSON_TO_STUDENTS_FAILURE:
       return { ...state, studentsLessonAssignLoading: false, studentsLessonAssignError: action.payload }
@@ -174,13 +275,7 @@ const teacherLessonReducer = (state = initialState, action) => {
       return { ...state, studentsLessonUnassignLoading: true }
 
     case UNASSIGN_LESSON_TO_STUDENTS_SUCCESS:
-      for (const index in state.lessons) {
-        if (state.lessons[index].id === state.selectedLesson) {
-          state.lessons[index].studentLessons = action.payload
-          break;
-        }
-      }
-      return { ...state, studentsLessonUnassignLoading: false, studentsLessonUnassignError: null }
+      return unassignLessonToStudentsSuccess(state, action.payload)
 
     case UNASSIGN_LESSON_TO_STUDENTS_FAILURE:
       return { ...state, studentsLessonUnassignLoading: false, studentsLessonUnassignError: action.payload }
@@ -189,12 +284,7 @@ const teacherLessonReducer = (state = initialState, action) => {
       return { ...state, topicDeleting: true }
 
     case DELETE_TOPIC_SUCCESS:
-      return {
-        ...state,
-        topics: action.payload.data,
-        recentLessons: state.recentLessons.filter(l => l.topic.id != action.payload.id),
-        topicDeleting: false, topicDeleteError: null
-      }
+      return deleteTopicSuccess(state, action.payload)
 
     case DELETE_TOPIC_FAILURE:
       return { ...state, topicDeleting: false, topicDeleteError: action.payload }
@@ -203,12 +293,7 @@ const teacherLessonReducer = (state = initialState, action) => {
       return { ...state, lessonDeleting: true }
 
     case DELETE_LESSON_SUCCESS:
-      return {
-        ...state,
-        lessons: action.payload.data,
-        recentLessons: state.recentLessons.filter(l => l.id != action.payload.id),
-        lessonDeleting: false, lessonsError: null
-      }
+      return deleteLessonSuccess(state, action.payload)
 
     case DELETE_LESSON_FAILURE:
       return { ...state, lessonDeleting: false, lessonDeleteError: action.payload }

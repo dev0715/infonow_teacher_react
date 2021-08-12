@@ -13,7 +13,9 @@ import {
   ASSIGN_LESSON_TO_STUDENTS,
   UNASSIGN_LESSON_TO_STUDENTS,
   DELETE_LESSON,
-  DELETE_TOPIC
+  DELETE_TOPIC,
+  UPDATE_TOPIC,
+  UPDATE_LESSON
 } from "./actionTypes"
 
 
@@ -39,7 +41,11 @@ import {
   deleteTopicSuccess,
   deleteTopicFailure,
   deleteLessonSuccess,
-  deleteLessonFailure
+  deleteLessonFailure,
+  updateTopicSuccess,
+  updateTopicFailure,
+  updateLessonSuccess,
+  updateLessonFailure
 } from "./actions"
 
 //Include Both Helper File with needed methods
@@ -54,7 +60,9 @@ import {
   assignLessonToStudents,
   unassignLessonToStudents,
   deleteLesson,
-  deleteTopic
+  deleteTopic,
+  updateTopic,
+  updateLesson
 } from "../../../helpers/backend-helpers"
 
 function* getTopicsHttp() {
@@ -89,11 +97,13 @@ function* addNewTopicHttp({ payload: { title, description, file } }) {
   try {
 
 
+    console.log(file);
     let formData = new FormData()
     formData.append("title", title)
     formData.append("description", description)
     formData.append("file", file)
 
+    console.log("dfsdfsd");
     const response = yield call(uploadNewTopic, formData);
     if (response) {
       yield put(addNewTopicSuccess(response))
@@ -103,7 +113,21 @@ function* addNewTopicHttp({ payload: { title, description, file } }) {
 
 
   } catch (error) {
+    console.log(error)
     yield put(addNewTopicFailure(error.message ? error.message : error))
+  }
+}
+
+function* updateTopicHttp({ payload }) {
+  try {
+    const response = yield call(updateTopic, payload);
+    if (response) {
+      yield put(updateTopicSuccess(response))
+      return;
+    }
+    throw "Unknown response received from Server";
+  } catch (error) {
+    yield put(updateTopicFailure(error.message ? error.message : error))
   }
 }
 
@@ -119,6 +143,21 @@ function* addNewLessonHttp({ payload }) {
 
   } catch (error) {
     yield put(addNewLessonFailure(error.message ? error.message : error))
+  }
+}
+
+function* updateLessonHttp({ payload }) {
+  try {
+
+    const response = yield call(updateLesson, payload);
+    if (response) {
+      yield put(updateLessonSuccess(response))
+      return;
+    }
+    throw "Unknown response received from Server";
+
+  } catch (error) {
+    yield put(updateLessonFailure(error.message ? error.message : error))
   }
 }
 
@@ -193,7 +232,6 @@ function* unassignLessonToStudentsHttp({ payload }) {
   }
 }
 
-
 function* deleteTopicHttp({ payload }) {
   try {
     const response = yield call(deleteTopic, payload);
@@ -235,6 +273,8 @@ function* teacherLessonSaga() {
   yield takeEvery(UNASSIGN_LESSON_TO_STUDENTS, unassignLessonToStudentsHttp)
   yield takeEvery(DELETE_TOPIC, deleteTopicHttp)
   yield takeEvery(DELETE_LESSON, deleteLessonHttp)
+  yield takeEvery(UPDATE_TOPIC, updateTopicHttp)
+  yield takeEvery(UPDATE_LESSON, updateLessonHttp)
 }
 
 export default teacherLessonSaga

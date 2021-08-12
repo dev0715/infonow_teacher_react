@@ -10,8 +10,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { postAssignment } from '@store/actions'
 import { ArrowLeft } from 'react-feather'
-import { EditorState } from 'draft-js'
-import { Editor } from 'react-draft-wysiwyg'
+import { Editor, EditorState } from 'draft-js'
 import UILoader from '../../@core/components/ui-loader';
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
 import { stateToMarkdown } from "draft-js-export-markdown";

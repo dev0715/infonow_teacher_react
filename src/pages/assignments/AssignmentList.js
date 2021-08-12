@@ -60,7 +60,7 @@ const AssignmentList = (props) => {
 
                         {assignments && assignments.map((a, i) =>
 
-                            <tr key={a.assignmentsId} onClick={() => onSelectAssignment(a)}>
+                            <tr key={"assignment-" + i} onClick={() => onSelectAssignment(a)}>
                                 <td>{i + 1}</td>
                                 <td>
                                     <span className='align-middle font-weight-bold'>

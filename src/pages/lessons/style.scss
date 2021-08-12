@@ -10,6 +10,25 @@
 	}
 }
 
+.image-preview {
+	height: 110px !important;
+	img {
+		height: inherit;
+		box-shadow: 0px 4px 24px 0px rgba(34, 41, 47, 0.363) !important;
+	}
+	.clear-icon {
+		position: absolute;
+		margin-top: 4px;
+		margin-left: 4px;
+	}
+}
+
+.topic-img {
+	.uppy-Root {
+		height: 140px !important;
+	}
+}
+
 .lesson-application {
 	.content-wrapper {
 		height: calc(
@@ -33,20 +52,38 @@
 				overflow-y: auto;
 			}
 		}
+		.card.border-less-card {
+			border-radius: 0px !important;
+		}
 	}
 
 	.card.full-width {
 		width: 98%;
 	}
 
-	.lesson-list {
-		// height: 60vh;
-		overflow-y: auto;
-	}
-	.topic-list-shadow {
-		border-right: 1px solid rgba(0, 0, 0, 0.096);
+	.lesson-nav {
+		height: auto;
 	}
 
+	.lesson-list {
+		overflow: hidden;
+		overflow-y: auto;
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+		scrollbar-width: none; /* Firefox */
+	}
+	.lesson-list::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
+
+	.topic-list-shadow {
+		border-right: none;
+		height: auto;
+	}
+
+	.active-lesson-col {
+		overflow: hidden;
+		overflow-y: auto;
+	}
 	.lesson-container {
 		width: 100%;
 		display: flex;
@@ -109,7 +146,6 @@
 	.active-lesson {
 		width: 100%;
 		padding: 10px 10px;
-		// height: 60vh;
 		overflow-y: auto;
 
 		.lesson-video {
@@ -244,5 +280,25 @@
 				pointer-events: unset;
 			}
 		}
+	}
+}
+
+@media (min-width: 768px) {
+	.lesson-nav {
+		height: 100% !important;
+	}
+	.topic-list-shadow {
+		border-right: 1px solid rgba(0, 0, 0, 0.096) !important;
+		height: 100% !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.lesson-nav {
+		height: auto !important;
+	}
+	.topic-list-shadow {
+		border-right: none;
+		height: auto !important;
 	}
 }

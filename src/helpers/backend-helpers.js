@@ -78,7 +78,9 @@ export const deleteLesson = (id) => del(url.LESSON(id));
 export const getRecentLessons = (id) => get(url.GET_RECENT_LESSONS);
 export const getTopicLessons = id => get(url.GET_TOPIC_LESSONS(id));
 export const uploadNewTopic = data => postForm(url.TOPICS, data);
+export const updateTopic = data => putForm(url.TOPICS, data);
 export const uploadNewLesson = data => post(url.LESSONS, data);
+export const updateLesson = data => put(url.LESSONS, data);
 export const assignLessonToStudents = data => post(url.ASSIGN_LESSON_TO_STUDENTS, data);
 export const unassignLessonToStudents = data => del(url.ASSIGN_LESSON_TO_STUDENTS, data);
 
