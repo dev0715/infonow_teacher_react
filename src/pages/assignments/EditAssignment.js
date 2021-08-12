@@ -1,7 +1,8 @@
 import React from 'react';
 import { useEffect } from 'react';
 import {
-    Card, CardBody, Row, Col, Button
+    Card, CardBody, Row, Col, Button,
+    FormGroup, Label, CustomInput, CardHeader, CardTitle
 } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { withRouter } from 'react-router-dom';
@@ -9,12 +10,14 @@ import { connect } from 'react-redux'
 import { ArrowLeft, Eye } from 'react-feather'
 import { useState } from 'react'
 import { putAssignment } from '@store/actions'
-import '../../assets/scss/custom/components/_question.scss'
-import { convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import UILoader from '../../@core/components/ui-loader';
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
-import { draftToMarkdown } from 'markdown-draft-js';
+
+import { stateToMarkdown } from "draft-js-export-markdown";
+import { stateFromMarkdown } from "draft-js-import-markdown";
+import '../../assets/scss/custom/components/_question.scss'
+
 const EditAssignment = (props) => {
 
     const loading = false;
@@ -24,17 +27,11 @@ const EditAssignment = (props) => {
         updateAssignmentSuccess } = props
 
     const [assignment, setAssignment] = useState(props.assignment)
-    const [editorVal, setEditorVal] = useState(assignment.content)
-
-
-    const getMarkDownContent = (editorState) => {
-        const content = editorState.getCurrentContent();
-        const rawObject = convertToRaw(content);
-        return draftToMarkdown(rawObject)
-    }
+    const [editorVal, setEditorVal] = useState()
 
     const handleValidSubmit = (events, values) => {
-        let content = getMarkDownContent(editorVal)
+
+        let content = stateToMarkdown(editorVal.getCurrentContent())
         setAssignment(Assignment => {
             let assignment = { ...Assignment, content: content }
             return assignment
@@ -121,26 +118,29 @@ const EditAssignment = (props) => {
                                                     </div>
                                                 </Col>
 
-                                                {/* <Col lg={4}>
+                                                <Col lg={4}>
                                                     <div className='mb-3'>
-                                                        <AvField
-                                                            name='assignmentType'
-                                                            label={'Assignment Type *'}
-                                                            value={assignment.type}
-                                                            onChange={onTypeChange}
-                                                            className='form-control'
-                                                            placeholder={
-                                                                'Time limit in Minutes'
-                                                            }
-                                                            type='number'
-                                                            min={10}
-                                                            required
-                                                        />
+
+                                                        <FormGroup>
+                                                            <Label for='select-custom'>Assignment Type</Label>
+                                                            <CustomInput type='select' value={assignment.type} name='select' id='select-custom' onChange={changeAssignmentType}>
+                                                                <option>coding</option>
+                                                                <option>theoretical</option>
+                                                            </CustomInput>
+                                                        </FormGroup>
                                                     </div>
-                                                </Col> */}
+                                                </Col>
+
+                                                {/* <Card>
+                                                    <CardHeader>
+                                                        <CardTitle tag='h4'>Assignment Content</CardTitle>
+                                                    </CardHeader>
+                                                    <CardBody>
+                                                        <Editor editorState={editorVal} onEditorStateChange={onContentChange} />
+                                                    </CardBody>
+                                                </Card> */}
 
 
-                                                {/* <Editor editorState={editorVal} onEditorStateChange={onContentChange} /> */}
 
                                                 <Col lg={12}>
                                                     <div className='mt-3'>

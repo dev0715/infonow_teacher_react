@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { ArrowLeft, Edit } from 'react-feather'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { titleCase } from '../../helpers/HelperFunctions';
 
 const AssignmentDetail = (props) => {
 
@@ -39,10 +40,10 @@ const AssignmentDetail = (props) => {
                             {
                                 isEdit &&
                                 <Col md="6" className="text-right">
-                                    <Button.Ripple className="mr-1" color='secondary' onClick={onChangeView} >
+                                    {/* <Button.Ripple className="mr-1" color='secondary' onClick={onChangeView} >
                                         <Edit size={14} />
                                         <span className='align-middle ml-25'>Edit</span>
-                                    </Button.Ripple>
+                                    </Button.Ripple> */}
 
                                     <Button.Ripple color='primary' onClick={onAssignAssignment}  >
                                         <span className='align-middle ml-25'>Assignment Dashboard</span>
@@ -74,10 +75,9 @@ const AssignmentDetail = (props) => {
                                                                 Created At: <strong>{<DateTime dateTime={assignment.createdAt} type="datetime" />}</strong>
                                                             </CardText>
                                                         </Row>
-                                                        <Row>
-                                                            <CardText tag='span' className='ml-1'>
-                                                                type: <strong>{assignment.type}</strong>
-                                                            </CardText>
+                                                        <Row>                                                            <CardText tag='span' className='ml-1'>
+                                                            type: <strong>{titleCase(assignment.type)}</strong>
+                                                        </CardText>
                                                         </Row>
 
                                                     </div>

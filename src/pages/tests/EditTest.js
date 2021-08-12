@@ -72,11 +72,6 @@ const EditTest = (props) => {
 	}
 
 
-	const onBack = () => {
-		//	props.postTestFailed(null)
-		props.history.push('/tests')
-	}
-
 	const defaultValues = {
 		'option-radio': 0
 	}

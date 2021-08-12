@@ -120,8 +120,8 @@ const NewAssignment = (props) => {
 														<FormGroup>
 															<Label for='select-custom'>Assignment Type</Label>
 															<CustomInput type='select' name='select' id='select-custom' onChange={changeAssignmentType}>
-																<option>coding</option>
-																<option>theoretical</option>
+																<option value="coding">Coding</option>
+																<option value="theoretical">Theoretical</option>
 															</CustomInput>
 														</FormGroup>
 													</Col>
