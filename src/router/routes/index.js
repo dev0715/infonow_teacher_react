@@ -34,7 +34,7 @@ const Routes = [
     component: lazy(() => import('../../pages/tests/TeacherTests'))
   },
   {
-    path: '/tests/:testd',
+    path: '/tests/:testId',
     component: lazy(() => import('../../pages/tests/ViewOrEdit')),
     meta: {
       navLink: '/tests/:testId'
@@ -81,6 +81,11 @@ const Routes = [
     path: '/assignment-dashboard/:assignmentId',
     exact: true,
     component: lazy(() => import('../../pages/assignments/AssignmentDashboard'))
+  },
+  {
+    path: '/assignment-attempts/:assignmentId',
+    exact: true,
+    component: lazy(() => import('../../pages/attempts/AttemptHome'))
   },
 
   {

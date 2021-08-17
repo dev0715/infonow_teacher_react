@@ -16,7 +16,6 @@ const AssignmentList = (props) => {
 
     const { assignments, isTeacher, fetchAssignments, isReloading } = props;
 
-
     const onSelectAssignment = (assignment) => {
         if (props.onSelect) {
             props.onSelect(assignment);

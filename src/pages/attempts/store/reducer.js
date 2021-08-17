@@ -29,7 +29,7 @@ const initialState = {
     updateAttempt: {},
     updateAttemptSuccess: false,
     updateAttemptLoading: false,
-    updateAttemptError: string,
+    updateAttemptError: null,
 }
 
 export default (state = initialState, action) => {
@@ -103,7 +103,6 @@ export default (state = initialState, action) => {
         case PUT_SUBJECTIVE_ATTEMPT_MARKS:
             state = {
                 ...state,
-                updateAttemptSuccess: false,
                 updateAttemptLoading: true,
                 updateAttemptError: null
             }
@@ -120,7 +119,6 @@ export default (state = initialState, action) => {
         case PUT_SUBJECTIVE_ATTEMPT_MARKS_FAILURE:
             state = {
                 ...state,
-                updateAttemptSuccess: false,
                 updateAttemptLoading: false,
                 updateAttemptError: action.payload
             }
