@@ -59,7 +59,7 @@ const AttemptDetail = (props) => {
 
     useEffect(() => {
         if (updateAttemptError && !updateAttemptSuccess) errorAlertDialog("Attempt marks could not be updated");
-    }, [props.updateAttemptError]);
+    }, [updateAttemptError]);
 
     return (
         <>
