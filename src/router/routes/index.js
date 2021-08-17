@@ -138,6 +138,21 @@ const Routes = [
     meta: {
       authRoute: true
     }
+  }, {
+    path: '/register',
+    component: lazy(() => import('../../pages/auth/register')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
+  },
+  {
+    path: '/setup-password',
+    component: lazy(() => import('../../pages/auth/setup-password')),
+    layout: 'BlankLayout',
+    meta: {
+      authRoute: true
+    }
   },
   {
     path: '/error',
