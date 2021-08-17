@@ -20,7 +20,6 @@ const AssignmentDetail = (props) => {
     const { assignment, isEdit, onChangeView, isUpdateMarks, onUpdateMarks } = props;
 
     const onAssignAssignment = () => {
-
         props.history.push({
             pathname: `/assignment-dashboard/${assignment.assignmentId}`,
             state: { assignment: assignment }

@@ -85,9 +85,13 @@ const Routes = [
   {
     path: '/assignment-attempts/:assignmentId',
     exact: true,
-    component: lazy(() => import('../../pages/attempts/AttemptHome'))
+    component: lazy(() => import('../../pages/assignmentAttempts/AssignmentAttemptHome'))
   },
-
+  {
+    path: '/assignment-attempt-detail/:assignmentAttemptId',
+    exact: true,
+    component: lazy(() => import('../../pages/assignmentAttempts/AssignmentAttemptDetail'))
+  },
   {
     appLayout: true,
     className: 'chat-application',

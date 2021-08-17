@@ -14,6 +14,8 @@ import Documents from "./../pages/documents/store/reducer"
 import Blogs from "./../pages/blog/store/reducer"
 import Lessons from "./../pages/lessons/store/reducer"
 import Assignments from "./../pages/assignments/store/reducer"
+import AssignmentAttempts from "./../pages/assignmentAttempts/store/reducer"
+
 
 const rootReducer = combineReducers({
   Register,
@@ -29,6 +31,7 @@ const rootReducer = combineReducers({
   Blogs,
   Lessons,
   Assignments,
+  AssignmentAttempts,
 })
 
 export default rootReducer

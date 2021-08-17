@@ -37,7 +37,7 @@ const AssignmentAttempts = (props) => {
             {Object.keys(assignmentAttempts).length > 0 && (
                 <Row>
                     <Col lg={12}>
-                        <AssignmentDetail test={assignmentAttempts[0].assignment} />
+                        <AssignmentDetail assignment={assignmentAttempts[0].assignment} />
                     </Col>
                     <Col lg={12}>
                         <AssignmentAttemptList assignmentAttempts={assignmentAttempts} onSelect={onSelectAttempt} />
