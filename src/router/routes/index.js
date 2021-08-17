@@ -82,6 +82,11 @@ const Routes = [
     exact: true,
     component: lazy(() => import('../../pages/assignments/AssignmentDashboard'))
   },
+  {
+    path: '/assignment-attempts/:assignmentId',
+    exact: true,
+    component: lazy(() => import('../../pages/attempts/AttemptHome'))
+  },
 
   {
     appLayout: true,

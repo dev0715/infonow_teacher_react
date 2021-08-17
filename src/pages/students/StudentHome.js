@@ -13,6 +13,7 @@ import StudentProfile from './StudentProfile';
 import StudentTests from '../tests/StudentTests';
 import { Fragment } from 'react';
 import { ArrowLeft } from 'react-feather'
+import StudentAssignments from '../assignments/StudentAssignments';
 
 const StudentHome = (props) => {
 
@@ -21,6 +22,13 @@ const StudentHome = (props) => {
     const onSelectTest = (test) => {
         props.history.push({
             pathname: `/attempts/${test.testId}`,
+            state: { studentId: studentId }
+        })
+    }
+
+    const onSelectAssignment = (assignment) => {
+        props.history.push({
+            pathname: `/assignment-attempts/${assignment.assignmentId}`,
             state: { studentId: studentId }
         })
     }
@@ -37,6 +45,9 @@ const StudentHome = (props) => {
                 </Col>
                 <Col lg={12}>
                     <StudentTests studentId={studentId} onSelect={onSelectTest} />
+                </Col>
+                <Col lg={12}>
+                    <StudentAssignments studentId={studentId} onSelectAssignment={onSelectAssignment} />
                 </Col>
             </Row>
         </Fragment>

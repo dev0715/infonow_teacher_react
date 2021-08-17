@@ -48,6 +48,8 @@ export const putAttemptSubjectiveMarks = (attemptId, data) => putForm(url.PUT_SU
 
 //STUDENT => Student-assignment & assignment-attempts
 export const getAllStudentAssignment = studentId => get(url.GET_STUDENT_ASSIGNMENTS(studentId));
+export const getStudentAssignmentAttempts = (studentId, assignmentId) => get(url.GET_STUDENT_ASSIGNMENT_ATTEMPTS(studentId, assignmentId));
+export const getAssignmentAttemptDetail = (assignmentAttemptId) => get(url.GET_ASSIGNMENT_ATTEMPT_DETAIL(assignmentAttemptId));
 
 //Tests
 export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
@@ -60,7 +62,7 @@ export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUD
 export const unassignTest = (testId, studentTestId) => del(url.UNASSIGN_TEST(testId), studentTestId);
 
 //Assignment
-export const getAssignmentDetail = (testId) => get(url.GET_ASSIGNMENT_BY_ID(testId));
+export const getAssignmentDetail = (assignmentId) => get(url.GET_ASSIGNMENT_BY_ID(assignmentId));
 export const getAssignments = () => get(url.GET_ASSIGNMENTS);
 export const postAssignment = data => post(url.POST_ASSIGNMENT, data);
 export const putAssignment = data => put(url.PUT_ASSIGNMENT, data);

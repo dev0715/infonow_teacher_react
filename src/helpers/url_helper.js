@@ -1,9 +1,9 @@
 
-export const BASE_URL = `http://192.168.1.100:3600`// `http://192.168.10.102:3600`
+export const BASE_URL = `http://192.168.1.101:3600`// `http://192.168.10.102:3600`
 export const MEETING_API_URL = `http://192.168.10.104:3900`
 export const CHAT_API_URL = `http://192.168.10.104:3700`
 export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
-export const BLOG_API_URL = `http://192.168.1.100:1337`//`http://192.168.10.102:1337`
+export const BLOG_API_URL = `http://192.168.1.101:1337`//`http://192.168.10.102:1337`
 
 // export const BASE_URL = `https://api.meditati.ro/main`
 // export const MEETING_API_URL = `https://meeting.meditati.ro/api`
@@ -52,11 +52,16 @@ export const GET_STUDENT_BY_ID = studentId => `${BASE_API_URL}/students/${studen
 export const GET_STUDENT_TEST = (studentId) => `${BASE_API_URL}/students/${studentId}/tests`
 export const GET_STUDENT_ASSIGNMENTS = (studentId) => `${BASE_API_URL}/students/${studentId}/assignments`
 
-//ATTEMPTS
+//TEST -ATTEMPTS
 export const GET_STUDENT_ATTEMPTS = (studentId, testId) => `${BASE_API_URL}/students/${studentId}/tests/${testId}/attempts`
 export const GET_ATTEMPT_DETAIL = attemptId => `${BASE_API_URL}/attempts/${attemptId}`
 export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attempts/${attemptId}/subjective-marks`
 
+
+//ASSIGNMENT -ATTEMPTS
+export const GET_STUDENT_ASSIGNMENT_ATTEMPTS = (studentId, assignment) => `${BASE_API_URL}/students/${studentId}/assignments/${assignment}/attempts`
+export const GET_ASSIGNMENT_ATTEMPT_DETAIL = assignmentAttemptId => `${BASE_API_URL}/assignment-attempts/${assignmentAttemptId}`
+// export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attempts/${attemptId}/subjective-marks`
 
 // Chats
 export const GET_CHATS_CONTACTS = id => `${CHAT_API_URL}/users/${id}/chats`

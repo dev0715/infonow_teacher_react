@@ -78,7 +78,6 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 studentAssignmentsLoading: true,
-                studentAssignmentsError: null
             }
             break;
         case GET_STUDENT_ASSIGNMENTS_SUCCESS:
@@ -86,7 +85,6 @@ export default (state = initialState, action) => {
                 ...state,
                 assignments: action.payload,
                 studentAssignmentsLoading: false,
-                studentAssignmentsError: null,
             }
             break;
         case GET_STUDENT_ASSIGNMENTS_FAILURE:
