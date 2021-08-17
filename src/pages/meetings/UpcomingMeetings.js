@@ -163,7 +163,9 @@ const UpcomingMeetings = props => {
 					>
 						<CardBody>
 							<div className='upcoming-meeting-list'>
-								{props.meetings.filter(m => m.status == 'accepted').map(meeting => <UpcomingMeetingItem key={meeting.meetingId} meeting={meeting} />)}
+								{props.meetings
+									.filter(m => m.status == 'accepted' && moment(m.scheduledAt).isSameOrAfter(moment()))
+									.map(meeting => <UpcomingMeetingItem key={meeting.meetingId} meeting={meeting} />)}
 							</div>
 							<Button.Ripple
 								className='btn-block btn-icon'

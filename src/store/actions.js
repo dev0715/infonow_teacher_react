@@ -39,3 +39,11 @@ export * from "./../pages/assignments/store/actions"
 //Assignment- Attempts
 export * from "./../pages/assignmentAttempts/store/actions"
 
+//GoogleSignIn
+export * from './../views/google-signin/store/actions'
+
+//Setup Password
+export * from './../pages/auth/setup-password/store/actions'
+
+//Register
+export * from './../pages/auth/register/store/actions'

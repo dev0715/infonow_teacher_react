@@ -10,7 +10,9 @@ import '@styles/base/pages/page-auth.scss'
 import BrandLogo from '../../../components/brand-logo'
 import { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
+import GoogleSignIn from '../../../views/google-signin';
 
 const ToastContent = ({ name, role }) => (
     <Fragment>
@@ -29,6 +31,8 @@ const ToastContent = ({ name, role }) => (
 const Login = (props) => {
     const [skin, setSkin] = useSkin()
     const history = useHistory()
+
+    const [isSigningIn, setIsSigningIn] = useState(false)
 
     const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
         source = require(`@src/assets/images/pages/${illustration}`)
@@ -136,18 +140,10 @@ const Login = (props) => {
                         </div>
 
                         <div className='auth-footer-btn d-flex justify-content-center'>
-                            <Button.Ripple color='facebook'>
-                                <Facebook size={14} />
-                            </Button.Ripple>
-                            <Button.Ripple color='twitter'>
-                                <Twitter size={14} />
-                            </Button.Ripple>
-                            <Button.Ripple color='google'>
-                                <Mail size={14} />
-                            </Button.Ripple>
-                            <Button.Ripple className='mr-0' color='github'>
-                                <GitHub size={14} />
-                            </Button.Ripple>
+                            <GoogleSignIn
+                                processing={isSigningIn}
+                                processingCallBack={() => setIsSigningIn(!isSigningIn)}
+                            />
                         </div>
                     </Col>
                 </Col>

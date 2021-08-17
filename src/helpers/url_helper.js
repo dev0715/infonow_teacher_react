@@ -23,7 +23,9 @@ export const getProfileImageUrl = url => url ? IMAGES_BASE_URL + url : IMAGES_BA
 
 // Login
 export const POST_TEACHER_LOGIN = `${BASE_URL}/authenticate/teacher`
-
+export const SIGN_IN_WITH_GOOGLE = `${BASE_URL}/authenticate-with-google/teacher`
+export const RESET_PASSWORD = `${BASE_URL}/reset-password`
+export const REGISTER = `${BASE_URL}/register`
 //Tests
 export const POST_TEST = `${BASE_API_URL}/tests`
 export const PUT_TEST = `${BASE_API_URL}/tests`

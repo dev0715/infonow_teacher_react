@@ -36,6 +36,9 @@ export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
 
 // Student Actions
 export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);
+export const signInWithGoogle = data => post(url.SIGN_IN_WITH_GOOGLE, data);
+export const setupAccountPassword = data => post(url.RESET_PASSWORD, data);
+export const registerUser = data => post(url.REGISTER, data);
 
 export const getAllStudents = () => get(url.GET_STUDENTS);
 export const getStudentProfile = studentId => get(url.GET_STUDENT_BY_ID(studentId));
