@@ -44,3 +44,17 @@ export * from './../pages/auth/setup-password/store/actions'
 
 //Register
 export * from './../pages/auth/register/store/actions'
+
+
+//Forgot Password
+export * from './../pages/auth/forgot-password/store/actions'
+
+//Reset Password
+export * from './../pages/auth/reset-password/store/actions'
+
+//Profile
+export * from './../pages/profile/store/actions'
+
+
+//GetStarted
+export * from './../pages/get-started/store/actions'

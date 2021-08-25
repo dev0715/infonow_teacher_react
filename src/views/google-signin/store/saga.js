@@ -17,8 +17,8 @@ function* signInWithGoogleHttp({ payload: { data, history } }) {
             setTimeout(() => {
                 response.user.isNotVerified ?
                     history.replace("/setup-password") :
-                    history.replace("/")
-            }, 100)
+                    window.location.reload()
+            }, 500)
             yield put(signInWithGoogleSuccess(response))
             return;
         }

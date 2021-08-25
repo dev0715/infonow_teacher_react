@@ -7,7 +7,15 @@ export default [
     id: 'dashboard',
     title: 'Dashboard',
     icon: <i className="la la-home" />,
-    navLink: '/home'
+    navLink: '/home',
+    newUserAccessible: true
+  },
+  {
+    id: 'Profile',
+    title: 'Profile',
+    icon: <i className="la la-user" />,
+    navLink: '/profile',
+    newUserAccessible: true
   },
   {
     id: 'students',
@@ -55,7 +63,8 @@ export default [
     id: 'blog',
     title: 'Blog',
     icon: <i className="la la-newspaper" />,
-    navLink: '/blog'
+    navLink: '/blog',
+    newUserAccessible: true
   },
   {
     id: 'feedback',

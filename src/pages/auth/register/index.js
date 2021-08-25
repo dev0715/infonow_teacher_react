@@ -23,7 +23,7 @@ const Register = (props) => {
     const [skin, setSkin] = useSkin()
 
     const illustration = skin === 'dark' ? 'register-dark.svg' : 'register-light.svg',
-        source = require(`@src/assets/images/pages/${illustration}`)
+        source = require(`@src/assets/images/illustrations/${illustration}`)
 
     const [processing, setProcessing] = useState(false)
     const [name, setName] = useState("")

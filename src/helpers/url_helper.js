@@ -1,15 +1,15 @@
 
-// export const BASE_URL = `http://192.168.1.101:3600`// `http://192.168.10.102:3600`
-// export const MEETING_API_URL = `http://192.168.10.104:3900`
-// export const CHAT_API_URL = `http://192.168.10.104:3700`
-// export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
-// export const BLOG_API_URL = `http://192.168.1.101:1337`//`http://192.168.10.102:1337`
+export const BASE_URL = `http://192.168.10.102:3600`
+export const MEETING_API_URL = `http://192.168.10.104:3900`
+export const CHAT_API_URL = `http://192.168.10.104:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
+export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.meditati.ro/main`
-export const MEETING_API_URL = `https://meeting.meditati.ro/api`
-export const CHAT_API_URL = `https://api.meditati.ro/chat`
-export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
-export const BLOG_API_URL = `https://api.meditati.ro/blog`
+// export const BASE_URL = `https://api.meditati.ro/main`
+// export const MEETING_API_URL = `https://meeting.meditati.ro/api`
+// export const CHAT_API_URL = `https://api.meditati.ro/chat`
+// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
+// export const BLOG_API_URL = `https://api.meditati.ro/blog`
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
@@ -21,11 +21,21 @@ export const GET_BLOG_IMAGE_URL = url => BLOG_API_URL + url
 export const GET_DOCUMENT_URL = url => DOCUMENT_BASE_URL + url
 export const getProfileImageUrl = url => url ? IMAGES_BASE_URL + url : IMAGES_BASE_URL + "/profile-pictures/default.png"
 
+
+//Get Started
+
+export const GET_STARTED_CONTENT = `${BASE_URL}/api/v1/strapi/content/student_content`
+
+
 // Login
 export const POST_TEACHER_LOGIN = `${BASE_URL}/authenticate/teacher`
 export const SIGN_IN_WITH_GOOGLE = `${BASE_URL}/authenticate-with-google/teacher`
+export const SETUP_PASSWORD = `${BASE_URL}/setup-password`
 export const RESET_PASSWORD = `${BASE_URL}/reset-password`
 export const REGISTER = `${BASE_URL}/register`
+export const FORGOT_PASSWORD = `${BASE_URL}/forget-password`
+
+
 //Tests
 export const POST_TEST = `${BASE_API_URL}/tests`
 export const PUT_TEST = `${BASE_API_URL}/tests`
@@ -75,6 +85,8 @@ export const NEW_MEETING = `${MEETING_API_URL}/meetings`
 export const UPDATE_MEETING = (id, action) => `${MEETING_API_URL}/meetings/${id}/${action}`
 export const GET_ALL_MEETINGS = id => `${MEETING_API_URL}/users/${id}/meetings`
 export const GET_MEETING_DATES = id => `${MEETING_API_URL}/meetings/check-dates/${id}`
+export const GET_ADMIN_MEETING = id => `${MEETING_API_URL}/users/${id}/admin-meeting`
+export const NEW_ADMIN_MEETING = `${MEETING_API_URL}/meetings/admin-meeting`
 
 
 
@@ -102,3 +114,8 @@ export const LESSONS = `${BASE_URL}/api/v1/strapi/lessons`
 export const LESSON = id => `${BASE_URL}/api/v1/strapi/lessons/${id}`
 export const GET_RECENT_LESSONS = `${BASE_URL}/api/v1/strapi/recent-lessons`
 export const ASSIGN_LESSON_TO_STUDENTS = `${BASE_URL}/api/v1/strapi/student-lessons`
+
+//Profile
+export const UPDATE_PROFILE_DATA = id => `${BASE_URL}/api/v1/teachers/${id}/profile`
+export const UPLOAD_PROFILE_PICTURE = id => `${BASE_URL}/api/v1/teachers/${id}/profile-picture`
+export const UPDATE_PASSWORD = id => `${BASE_URL}/api/v1/teachers/${id}/password`

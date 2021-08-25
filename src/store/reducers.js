@@ -16,6 +16,10 @@ import Assignments from "./../pages/assignments/store/reducer"
 import GoogleSignIn from './../views/google-signin/store/reducer'
 import SetupPassword from './../pages/auth/setup-password/store/reducer'
 import Register from './../pages/auth/register/store/reducer'
+import GetStarted from './../pages/get-started/store/reducer'
+import Profile from './../pages/profile/store/reducer'
+import ForgotPassword from './../pages/auth/forgot-password/store/reducer'
+import ResetPassword from './../pages/auth/reset-password/store/reducer'
 
 const rootReducer = combineReducers({
   Register,
@@ -32,7 +36,11 @@ const rootReducer = combineReducers({
   Lessons,
   Assignments,
   GoogleSignIn,
-  SetupPassword
+  SetupPassword,
+  GetStarted,
+  Profile,
+  ForgotPassword,
+  ResetPassword
 })
 
 export default rootReducer

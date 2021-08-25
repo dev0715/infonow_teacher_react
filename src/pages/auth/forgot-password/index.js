@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSkin } from '@hooks/useSkin'
 import { Link, withRouter } from 'react-router-dom'
-import { setupAccountPassword } from './store/actions'
+import { forgotAccountPassword } from './store/actions'
 import {
     Row, Col,
     CardTitle, FormGroup,
@@ -13,49 +13,36 @@ import '@styles/base/pages/page-auth.scss'
 import BrandLogo from '../../../components/brand-logo'
 import { connect } from 'react-redux'
 
-import { notifyError, notifySuccess, notifyWarning } from '../../../utility/toast'
+import { notifyError, notifySuccess, } from '../../../utility/toast'
 
-import { getLoggedInUser } from '../../../helpers/backend-helpers'
 
-const Login = (props) => {
+const ForgotPassword = (props) => {
     const [skin, setSkin] = useSkin()
 
-    const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
+    const illustration = skin === 'dark' ? 'forgot-password-dark.svg' : 'forgot-password.svg',
         source = require(`@src/assets/images/illustrations/${illustration}`)
 
     const [processing, setProcessing] = useState(false)
-    const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
+    const [email, setEmail] = useState("")
 
-
-    useEffect(() => {
-        let user = getLoggedInUser()
-        if (!user.isNotVerified) props.history.replace('/')
-    }, [])
 
     useEffect(() => {
         if (processing && !props.loading && props.error) {
             setProcessing(false)
-            notifyError("Setup Password", props.error)
+            notifyError("Forgot Password", props.error)
         }
         else if (processing && !props.loading && !props.error) {
             setProcessing(false)
-            notifySuccess("Setup Password", "Password setup successfully")
+            notifySuccess("Forgot Password", "Reset Link sent successfully")
         }
 
     }, [props.loading])
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (password != confirmPassword)
-            return notifyWarning("Setup Password", "Confirm password is not same")
         setProcessing(true)
-        props.setupAccountPassword({
-            data: {
-                password,
-                confirmPassword
-            },
-            history: props.history
+        props.forgotAccountPassword({
+            email
         })
     }
 
@@ -74,38 +61,25 @@ const Login = (props) => {
                 <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
                     <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                         <CardTitle tag='h2' className='font-weight-bold mb-1'>
-                            Setup Password
+                            Forgot Password?
                         </CardTitle>
-                        <CardText className='mb-2'>Please setup new password</CardText>
+                        <CardText className='mb-2'>
+                            Enter your email and we'll send you instructions to reset your password
+                        </CardText>
                         <Form
                             onSubmit={e => handleSubmit(e)}
                         >
                             <FormGroup>
                                 <Label className="ml-25">
-                                    Password
+                                    Email
                                 </Label>
                                 <InputGroup className='input-group-merge'>
                                     <Input
-                                        type="password"
-                                        placeholder='Enter Password'
-                                        value={password}
-                                        onChange={e => setPassword(e.target.value)}
+                                        type="email"
+                                        placeholder='Enter email'
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
                                         required />
-                                </InputGroup>
-                            </FormGroup>
-                            <FormGroup>
-                                <InputGroup className='input-group-merge'>
-                                    <Label className="ml-25">
-                                        Confirm Password
-                                    </Label>
-                                    <InputGroup>
-                                        <Input
-                                            type="password"
-                                            placeholder='Enter Password'
-                                            value={confirmPassword}
-                                            onChange={e => setConfirmPassword(e.target.value)}
-                                            required />
-                                    </InputGroup>
                                 </InputGroup>
                             </FormGroup>
                             <Button.Ripple
@@ -115,7 +89,17 @@ const Login = (props) => {
                                 disabled={props.loading}
                             >
                                 {props.loading && <><i className="las la-spinner la-spin"></i>&nbsp;&nbsp;</>}
-                                Submit
+                                Send Reset Link
+                            </Button.Ripple>
+                            <br />
+                            <Button.Ripple
+                                type="button"
+                                color='flat-primary'
+                                className="btn btn-block mt-2"
+                                disabled={props.loading}
+                                onClick={() => props.history.replace('/login')}
+                            >
+                                Back to Login
                             </Button.Ripple>
                         </Form>
                     </Col>
@@ -129,16 +113,18 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
     const {
         error,
-        loading
-    } = state.SetupPassword
+        loading,
+
+
+    } = state.ForgotPassword
     return {
         error,
-        loading
+        loading,
     }
 }
 
 export default withRouter(
     connect(mapStateToProps, {
-        setupAccountPassword
-    })(Login)
+        forgotAccountPassword
+    })(ForgotPassword)
 )

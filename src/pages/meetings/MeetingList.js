@@ -34,7 +34,7 @@ import { useState, useEffect } from 'react';
 import { getAllMeetings, updateMeeting } from '@store/actions';
 import { withRouter } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
-import { MeetingActions } from './util';
+import { MeetingActions, getMeetingStatusColor } from './util';
 import { getLoggedInUser } from '../../helpers/backend-helpers'
 
 import UILoader from '../../@core/components/ui-loader';
@@ -104,16 +104,6 @@ const MeetingList = (props) => {
 	}, [props.meetings])
 
 
-	const getMeetingStatusColor = (meetingStatus) => {
-		switch (meetingStatus) {
-			case 'accepted': return 'light-success';
-			case 'rejected': return 'light-danger';
-			case 'pending': return 'light-warning';
-			case 'cancelled': return 'light-danger';
-			case 'rescheduled': return 'light-warning';
-			default: return 'light-warning'
-		}
-	}
 
 	const onMeetingAction = (e, id, action, data = {}) => {
 		e.preventDefault();

@@ -21,11 +21,18 @@ export const isUserAuthenticated = () => {
   return getAuthentication() !== null
 }
 
+
+
+// Get started
+export const getStartedContent = () => get(url.GET_STARTED_CONTENT)
+
 //Meeting
 export const newMeeting = data => post(url.NEW_MEETING, data);
 export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
 export const getMeetingDates = userId => get(url.GET_MEETING_DATES(userId));
 export const updateMeeting = (id, action, data) => put(url.UPDATE_MEETING(id, action), data);
+export const getMeetingWithAdmin = userId => get(url.GET_ADMIN_MEETING(userId));
+export const newAdminMeeting = data => post(url.NEW_ADMIN_MEETING, data);
 
 
 
@@ -37,8 +44,10 @@ export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
 // Student Actions
 export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);
 export const signInWithGoogle = data => post(url.SIGN_IN_WITH_GOOGLE, data);
-export const setupAccountPassword = data => post(url.RESET_PASSWORD, data);
+export const setupAccountPassword = data => post(url.SETUP_PASSWORD, data);
 export const registerUser = data => post(url.REGISTER, data);
+export const forgotAccountPassword = data => post(url.FORGOT_PASSWORD, data);
+export const resetAccountPassword = data => post(url.RESET_PASSWORD, data);
 
 export const getAllStudents = () => get(url.GET_STUDENTS);
 export const getStudentProfile = studentId => get(url.GET_STUDENT_BY_ID(studentId));
@@ -103,5 +112,8 @@ export const getUserDocuments = () => get(url.GET_USER_DOCUMENTS)
 export const deleteUserDocument = (id) => del(url.DELETE_USER_DOCUMENTS(id))
 export const uploadDocument = (data, options) => postForm(url.UPLOAD_DOCUMENT_URL, data, options);
 
+//Profile
 
-
+export const updateProfileData = (id, data) => put(url.UPDATE_PROFILE_DATA(id), data);
+export const uploadProfilePicture = (id, data) => postForm(url.UPLOAD_PROFILE_PICTURE(id), data);
+export const updatePassword = (id, data) => put(url.UPDATE_PASSWORD(id), data);

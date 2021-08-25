@@ -18,7 +18,7 @@ function* registerAccountHttp({ payload: { data, history } }) {
             localStorage.setItem("authUser", JSON.stringify(response.user))
             localStorage.setItem("authToken", JSON.stringify({ token: response.token, tokenType: response.tokenType }))
             setTimeout(() => {
-                history.replace("/")
+                window.location.reload();
             }, 100)
             yield put(registerAccountSuccess(response))
             return;

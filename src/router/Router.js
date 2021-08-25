@@ -16,12 +16,13 @@ import LayoutWrapper from '@layouts/components/layout-wrapper'
 import { BrowserRouter as AppRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 // ** Routes & Default Routes
-import { DefaultRoute, Routes } from './routes'
+import { GetStartedRoute, DefaultRoute, Routes } from './routes'
 
 // ** Layouts
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
+import { getLoggedInUser } from '../helpers/backend-helpers';
 
 const Router = () => {
   // ** Hooks
@@ -88,13 +89,24 @@ const Router = () => {
        */
 
       return <Redirect to='/login' />
-    } else if (route.meta && route.meta.authRoute && isUserAuthenticated()) {
+    }
+    else if (isUserAuthenticated() && getLoggedInUser().teacher.status === 'new') {
+
+      return route.meta && route.meta.newUserAccessible
+        ? <route.component {...props} />
+        : <Redirect to="/" />
+
+    }
+    else if (route.meta && route.meta.authRoute && isUserAuthenticated()) {
       // ** If route has meta and authRole and user is Logged in then redirect user to home page (DefaultRoute)
       return <Redirect to='/' />
-    } else if (isUserAuthenticated() && !ability.can(action || 'read', resource)) {
-      // ** If user is Logged in and doesn't have ability to visit the page redirect the user to Not Authorized
-      return <Redirect to='/misc/not-authorized' />
-    } else {
+    }
+
+    //  else if (isUserAuthenticated() && !ability.can(action || 'read', resource)) {
+    //   // ** If user is Logged in and doesn't have ability to visit the page redirect the user to Not Authorized
+    //   return <Redirect to='/misc/not-authorized' />
+    // }
+    else {
       // ** If none of the above render component
       return <route.component {...props} />
     }
@@ -142,6 +154,8 @@ const Router = () => {
                         ...props,
                         meta: route.meta
                       })
+                      let publicPaths = ['/unauthorized', '/register', '/login']
+                      if (!isUserAuthenticated() && !publicPaths.find(p => p != route.path)) return <Redirect to='/unauthorized' />;
 
                       return (
                         <Suspense fallback={null}>
@@ -169,8 +183,8 @@ const Router = () => {
                               : {})}
                           /*eslint-enable */
                           >
-                            <route.component {...props} />
-                            {/* <FinalRoute route={route} {...props} /> */}
+                            {/* <route.component {...props} /> */}
+                            <FinalRoute route={route} {...props} />
                           </LayoutWrapper>
                         </Suspense>
                       )
@@ -186,6 +200,7 @@ const Router = () => {
   }
 
   return (
+
     <AppRouter>
       <Switch>
         {/* If user is logged in Redirect user to DefaultRoute else to login */}
@@ -193,7 +208,15 @@ const Router = () => {
           exact
           path='/'
           render={() => {
-            return isUserAuthenticated() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+            //  return isUserAuthenticated() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
+
+            let user = getLoggedInUser()
+
+            if (isUserAuthenticated()) {
+              return user.teacher.status != 'new' ? <Redirect to={DefaultRoute} /> : <Redirect to={GetStartedRoute} />
+            } else {
+              return <Redirect to='/login' />
+            }
           }}
         />
         {/* Not Auth Route */}

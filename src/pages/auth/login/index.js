@@ -43,7 +43,7 @@ const Login = (props) => {
 
     useEffect(() => {
         if (props.success) {
-            history.push('/')
+            window.location.reload();
         }
     }, [props.success])
 
@@ -102,7 +102,7 @@ const Login = (props) => {
                                 <Label className='form-label' for='password'>
                                     Password
                                 </Label>
-                                <Link to='/'>
+                                <Link to='/forgot-password'>
                                     <small>Forgot Password?</small>
                                 </Link>
                             </div>
@@ -130,7 +130,7 @@ const Login = (props) => {
                         </AvForm>
                         <p className='text-center mt-2'>
                             <span className='mr-25'>New on our platform?</span>
-                            <Link to='/'>
+                            <Link to='/register'>
                                 <span>Create an account</span>
                             </Link>
                         </p>
