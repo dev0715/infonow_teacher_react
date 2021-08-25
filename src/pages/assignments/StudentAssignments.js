@@ -9,7 +9,7 @@ import AssignmentList from './AssignmentList'
 const StudentAssignments = (props) => {
 
     const [mapAssignments, setMapAssignments] = useState()
-    const { studentId, assignments, studentAssignmentsLoading } = props;
+    const { studentId, studentAssignments, studentAssignmentsLoading } = props;
 
     const fetchStudentAssignments = () => {
         props.getStudentAssignments(studentId)
@@ -17,9 +17,9 @@ const StudentAssignments = (props) => {
     }
 
     const onSelectAssignment = (assignment) => {
-        // if (props.onSelectAssignment) {
-        //     props.onSelectAssignment(assignment);
-        // }
+        if (props.onSelectAssignment) {
+            props.onSelectAssignment(assignment);
+        }
         // alert("ASSIGNMENT")
     }
 
@@ -27,7 +27,7 @@ const StudentAssignments = (props) => {
 
     const filteredAssignmentsData = () => {
         let assignmentMap = new Map();
-        for (let a of assignments) {
+        for (let a of studentAssignments) {
             if (a.assignment && !assignmentMap.has(a.assignment.assignmentId)) {
                 assignmentMap.set(a.assignment.assignmentId, a.assignment);
             }
@@ -36,12 +36,12 @@ const StudentAssignments = (props) => {
 
     }
 
-    useEffect(filteredAssignmentsData, [assignments])
+    useEffect(filteredAssignmentsData, [studentAssignments])
 
     return (
         <>
             {
-                assignments &&
+                studentAssignments &&
                 <AssignmentList
                     assignments={mapAssignments}
                     isTeacher={false}
@@ -61,11 +61,11 @@ StudentAssignments.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    const { assignments,
+    const { studentAssignments,
         studentAssignmentsLoading,
         studentAssignmentsError } = state.Assignments;
     return {
-        assignments,
+        studentAssignments,
         studentAssignmentsLoading,
         studentAssignmentsError
     };

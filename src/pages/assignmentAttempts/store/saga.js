@@ -10,7 +10,7 @@ import {
 import {
     getAssignmentAttemptsSuccess, getAssignmentAttemptsFailure,
     getAssignmentAttemptDetailSuccess, getAssignmentAttemptDetailFailure,
-    getAttemptDetailSuccess, getAttemptDetailFailure
+    getAssignmentDetailSuccess, getAssignmentDetailFailure
 } from "./actions"
 
 import {
@@ -41,19 +41,19 @@ function* getAssignmentAttemptDetailsHttp({ payload: { assignmentAttemptId } }) 
 function* getAssignmentDetailsHttp({ payload: { assignmentId } }) {
     try {
         const response = yield call(getAssignmentDetail, assignmentId);
-        yield put(getAttemptDetailSuccess(response))
+        yield put(getAssignmentDetailSuccess(response))
     } catch (error) {
-        yield put(getAttemptDetailFailure(error))
+        yield put(getAssignmentDetailFailure(error))
     }
 }
 
 
 
 
-function* AttemptsSaga() {
+function* AssignmentAttemptsSaga() {
     yield takeEvery(GET_ASSIGNMENT_ATTEMPTS, getAssignmentAttemptsHttp)
     yield takeEvery(GET_ASSIGNMENT_ATTEMPT_DETAIL, getAssignmentAttemptDetailsHttp)
     yield takeEvery(GET_ASSIGNMENT_DETAIL, getAssignmentDetailsHttp)
 }
 
-export default AttemptsSaga
+export default AssignmentAttemptsSaga

@@ -37,10 +37,11 @@ import {
 } from './actionTypes'
 
 const initialState = {
-    assignments: [],
+    studentAssignments: [],
     studentAssignmentsLoading: false,
     studentAssignmentsError: null,
 
+    teacherAssignments: [],
     teacherAssignmentsLoading: false,
     teacherAssignmentsError: null,
 
@@ -83,7 +84,7 @@ export default (state = initialState, action) => {
         case GET_STUDENT_ASSIGNMENTS_SUCCESS:
             state = {
                 ...state,
-                assignments: action.payload,
+                studentAssignments: action.payload,
                 studentAssignmentsLoading: false,
             }
             break;
@@ -105,7 +106,7 @@ export default (state = initialState, action) => {
         case GET_TEACHER_ASSIGNMENTS_SUCCESS:
             state = {
                 ...state,
-                assignments: action.payload,
+                teacherAssignments: action.payload,
                 teacherAssignmentsLoading: false,
                 teacherAssignmentsError: null,
             }

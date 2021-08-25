@@ -1,26 +1,15 @@
 import React from 'react';
 
 import {
-    CardBody,
-    Card,
-    CardText,
     Row,
-    Col,
-    CardHeader,
-    Button,
-    Table
+    Col
 } from 'reactstrap';
 
-import { ArrowLeft } from 'react-feather'
 
-import CardReload from '../../@core/components/card-reload';
 import { connect } from 'react-redux'
 import { useEffect } from 'react';
-import Avatar from '@components/avatar'
 import { getTestAttempts } from '@store/actions';
-import { getProfileImageUrl } from '../../helpers/url_helper'
 import { withRouter } from 'react-router-dom';
-import { DateTime } from '../../components/date-time';
 import TestDetail from '../tests/TestDetail';
 import AttemptList from './AttemptList';
 

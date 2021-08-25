@@ -71,7 +71,7 @@ export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attemp
 
 
 //ASSIGNMENT -ATTEMPTS
-export const GET_STUDENT_ASSIGNMENT_ATTEMPTS = (studentId, assignment) => `${BASE_API_URL}/students/${studentId}/assignments/${assignment}/attempts`
+export const GET_STUDENT_ASSIGNMENT_ATTEMPTS = (studentId, assignment) => `${BASE_API_URL}/students/${studentId}/assignments/${assignment}/assignment-attempts`
 export const GET_ASSIGNMENT_ATTEMPT_DETAIL = assignmentAttemptId => `${BASE_API_URL}/assignment-attempts/${assignmentAttemptId}`
 // export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attempts/${attemptId}/subjective-marks`
 

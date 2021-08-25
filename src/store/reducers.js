@@ -13,6 +13,8 @@ import Documents from "./../pages/documents/store/reducer"
 import Blogs from "./../pages/blog/store/reducer"
 import Lessons from "./../pages/lessons/store/reducer"
 import Assignments from "./../pages/assignments/store/reducer"
+import AssignmentAttempts from "./../pages/assignmentAttempts/store/reducer"
+
 import GoogleSignIn from './../views/google-signin/store/reducer'
 import SetupPassword from './../pages/auth/setup-password/store/reducer'
 import Register from './../pages/auth/register/store/reducer'
@@ -35,6 +37,7 @@ const rootReducer = combineReducers({
   Blogs,
   Lessons,
   Assignments,
+  AssignmentAttempts,
   GoogleSignIn,
   SetupPassword,
   GetStarted,

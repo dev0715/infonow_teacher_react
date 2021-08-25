@@ -58,20 +58,21 @@ const AssignmentList = (props) => {
                     </thead>
                     <tbody>
 
-                        {assignments && assignments.map((a, i) =>
+                        {assignments &&
+                            assignments.map((a, i) =>
 
-                            <tr key={"assignment-" + i} onClick={() => onSelectAssignment(a)}>
-                                <td>{i + 1}</td>
-                                <td>
-                                    <span className='align-middle font-weight-bold'>
-                                        {a.title}
-                                    </span>
-                                </td>
-                                <td>{titleCase(a.type)}</td>
-                                <td><DateTime dateTime={a.createdAt} type="dateTime" /></td>
-                                <td>{a.totalMarks}</td>
-                            </tr>
-                        )}
+                                <tr key={"assignment-" + i} onClick={() => onSelectAssignment(a)}>
+                                    <td>{i + 1}</td>
+                                    <td>
+                                        <span className='align-middle font-weight-bold'>
+                                            {a.title}
+                                        </span>
+                                    </td>
+                                    <td>{titleCase(a.type)}</td>
+                                    <td><DateTime dateTime={a.createdAt} type="dateTime" /></td>
+                                    <td>{a.totalMarks}</td>
+                                </tr>
+                            )}
                     </tbody>
                 </Table>
             </CardBody>

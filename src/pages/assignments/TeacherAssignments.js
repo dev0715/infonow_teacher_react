@@ -9,7 +9,7 @@ import AssignmentList from './AssignmentList'
 
 export const TeacherAssignments = (props) => {
 
-    const { teacherAssignmentsLoading, assignments } = props
+    const { teacherAssignmentsLoading, teacherAssignments } = props
 
     const fetchTeacherAssignment = () => {
         props.getTeacherAssignments();
@@ -43,15 +43,17 @@ export const TeacherAssignments = (props) => {
 
     return (
         <div>
-            <AssignmentList
-                assignments={assignments}
-                isTeacher={true}
-                fetchAssignments={fetchTeacherAssignment}
-                onSelect={onSelectAssignment}
-                onNewAssignment={addNewAssignment}
-                onEditAssignment={onEditAssignment}
-                isReloading={teacherAssignmentsLoading}
-                onBack={props.onBack} />
+            {Object.keys(teacherAssignments).length > 0 && teacherAssignments &&
+                <AssignmentList
+                    assignments={teacherAssignments}
+                    isTeacher={true}
+                    fetchAssignments={fetchTeacherAssignment}
+                    onSelect={onSelectAssignment}
+                    onNewAssignment={addNewAssignment}
+                    onEditAssignment={onEditAssignment}
+                    isReloading={teacherAssignmentsLoading}
+                    onBack={props.onBack} />
+            }
         </div>
     )
 }
@@ -63,8 +65,14 @@ TeacherAssignments.propTypes = {
 
 
 const mapStateToProps = (state) => {
-    const { assignments, teacherAssignmentsLoading, teacherAssignmentsError } = state.Assignments;
-    return { assignments, teacherAssignmentsLoading, teacherAssignmentsError };
+    const { teacherAssignments,
+        teacherAssignmentsLoading,
+        teacherAssignmentsError } = state.Assignments;
+    return {
+        teacherAssignments,
+        teacherAssignmentsLoading,
+        teacherAssignmentsError
+    };
 }
 
 const mapDispatchToProps = {
