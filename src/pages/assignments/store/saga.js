@@ -2,6 +2,8 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 // Login Redux States
 import {
+    GET_TEACHER_UPCOMING_ASSIGNMENTS,
+    GET_TEACHER_PAST_ASSIGNMENTS,
     GET_STUDENT_ASSIGNMENTS,
     GET_TEACHER_ASSIGNMENTS,
     POST_ASSIGNMENT,
@@ -12,7 +14,11 @@ import {
     UNASSIGN_ASSIGNMENT
 } from "./actionTypes"
 
-import {
+import { 
+    getTeacherUpcomingAssignmentsFailure,
+    getTeacherUpcomingAssignmentsSuccess,
+    getTeacherPastAssignmentsFailure,
+    getTeacherPastAssignmentsSuccess,
     getStudentAssignmentsSuccess, getStudentAssignmentsFailure,
     getTeacherAssignmentsSuccess, getTeacherAssignmentsFailure,
     postAssignmentSuccess, postAssignmentFailure,
@@ -24,6 +30,8 @@ import {
 } from "./actions"
 
 import {
+    getTeacherPastAssignments,
+    getTeacherUpcomingAssignments,
     getAllStudentAssignment,
     getAssignments,
     postAssignment,
@@ -33,6 +41,34 @@ import {
     getAssignmentUpcomingStudent,
     unassignAssignment
 } from '@helpers/backend-helpers'
+
+function* getTeacherUpcomingAssignmentsHttp() {
+    try {
+      const response = yield call(getTeacherUpcomingAssignments);
+      if (response) {
+        yield put(getTeacherUpcomingAssignmentsSuccess(response))
+        return;
+      }
+      throw "Unknown response received from Server";
+  
+    } catch (error) {
+      yield put(getTeacherUpcomingAssignmentsFailure(error.message ? error.message : error))
+    }
+  }
+  
+  function* getTeacherPastAssignmentsHttp() {
+    try {
+      const response = yield call(getTeacherPastAssignments);
+      if (response) {
+        yield put(getTeacherPastAssignmentsSuccess(response))
+        return;
+      }
+      throw "Unknown response received from Server";
+  
+    } catch (error) {
+      yield put(getTeacherPastAssignmentsFailure(error.message ? error.message : error))
+    }
+  }
 
 function* getStudentAssignmentsHttp({ payload: studentId }) {
     try {
@@ -108,6 +144,8 @@ function* unassignStudentAssignmentHttp({ payload: { data } }) {
 }
 
 function* AssignmentsSaga() {
+    yield takeEvery(GET_TEACHER_UPCOMING_ASSIGNMENTS, getTeacherUpcomingAssignmentsHttp)
+    yield takeEvery(GET_TEACHER_PAST_ASSIGNMENTS, getTeacherPastAssignmentsHttp)
     yield takeEvery(GET_STUDENT_ASSIGNMENTS, getStudentAssignmentsHttp)
     yield takeEvery(GET_TEACHER_ASSIGNMENTS, getTeacherAssignmentsHttp)
     yield takeEvery(POST_ASSIGNMENT, postAssignmentHttp)

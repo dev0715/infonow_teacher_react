@@ -1,4 +1,12 @@
 import {
+    GET_TEACHER_UPCOMING_ASSIGNMENTS,
+    GET_TEACHER_UPCOMING_ASSIGNMENTS_SUCCESS,
+    GET_TEACHER_UPCOMING_ASSIGNMENTS_FAILURE,
+
+    GET_TEACHER_PAST_ASSIGNMENTS,
+    GET_TEACHER_PAST_ASSIGNMENTS_SUCCESS,
+    GET_TEACHER_PAST_ASSIGNMENTS_FAILURE,
+
     GET_STUDENT_ASSIGNMENTS,
     GET_STUDENT_ASSIGNMENTS_SUCCESS,
     GET_STUDENT_ASSIGNMENTS_FAILURE,
@@ -31,6 +39,46 @@ import {
     UNASSIGN_ASSIGNMENT_SUCCESS,
     UNASSIGN_ASSIGNMENT_FAILURE,
 } from './actionTypes'
+
+export const getTeacherUpcomingAssignments = () => {
+    return {
+        type: GET_TEACHER_UPCOMING_ASSIGNMENTS,
+    }
+}
+
+export const getTeacherUpcomingAssignmentsSuccess = (data) => {
+    return {
+        type: GET_TEACHER_UPCOMING_ASSIGNMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export const getTeacherUpcomingAssignmentsFailure = (error) => {
+    return {
+        type: GET_TEACHER_UPCOMING_ASSIGNMENTS_FAILURE,
+        payload: error
+    }
+}
+
+export const getTeacherPastAssignments = () => {
+    return {
+        type: GET_TEACHER_PAST_ASSIGNMENTS,
+    }
+}
+
+export const getTeacherPastAssignmentsSuccess = (data) => {
+    return {
+        type: GET_TEACHER_PAST_ASSIGNMENTS_SUCCESS,
+        payload: data
+    }
+}
+
+export const getTeacherPastAssignmentsFailure = (error) => {
+    return {
+        type: GET_TEACHER_PAST_ASSIGNMENTS_FAILURE,
+        payload: error
+    }
+}
 
 export const getStudentAssignments = (studentId) => {
     return {

@@ -17,7 +17,9 @@ import { connect } from 'react-redux'
 
 import { withRouter } from 'react-router';
 import {
-  getAllMeetings, getTeacherRecentLessons, selectTopic, selectLesson
+  getAllMeetings, getTeacherRecentLessons, 
+  selectTopic, selectLesson, 
+  getTeacherUpcomingTests, getTeacherUpcomingAssignments
 } from '../../store/actions'
 import moment from 'moment'
 
@@ -43,6 +45,7 @@ const CalendarComponent = (props) => {
   useEffect(() => {
     props.getAllMeetings();
     props.getTeacherRecentLessons();
+    props.getTeacherUpcomingTests();
   }, [])
 
   const toggleAllFilter = (checked) => {
@@ -69,15 +72,15 @@ const CalendarComponent = (props) => {
             data: mt
           }
         }),
-      // ...props.newTests.map(t => {
-      //   return {
-      //     type: 'test',
-      //     title: t.test.title,
-      //     date: moment(t.startTime).format('YYYY-MM-DD'),
-      //     data: t
-      //   }
-      // }),
-      // ...props.newAssignments.map(a => {
+      ...props.newTests.map(t => {
+        return {
+          type: 'test',
+          title: t.test.title,
+          date: moment(t.startTime).format('YYYY-MM-DD'),
+          data: t
+        }
+      }),
+      // ...props.upcomingAssignments.map(a => {
       //   return {
       //     type: 'assignment',
       //     title: a.assignment.title,
@@ -251,7 +254,7 @@ const CalendarComponent = (props) => {
         </div>
       </div>
       <div className="text-right">
-        {
+        {/* {
           (moment().isAfter(moment(e.data.startDate))
             || moment().isSame(moment(e.data.startDate))
             || moment().isBefore(moment(e.data.endDate))
@@ -263,7 +266,7 @@ const CalendarComponent = (props) => {
           >
             Start
           </Button.Ripple>
-        }
+        } */}
 
         <Button.Ripple
           color='secondary'
@@ -280,7 +283,7 @@ const CalendarComponent = (props) => {
     <Fragment>
       <UILoader blocking={
         props.meetingsLoading ||
-        props.newAssignmentsLoading ||
+        props.upcomingAssignmentsLoading ||
         props.newTestsLoading ||
         props.recentLessonsLoading
       } >
@@ -367,16 +370,16 @@ const mapStateToProps = (state) => {
     meetingsError,
 
   } = state.Meetings;
-  // const {
-  //   newAssignments,
-  //   newAssignmentsLoading,
-  //   newAssignmentsError,
-  // } = state.Assignments;
-  // const {
-  //   newTests,
-  //   newTestsLoading,
-  //   newTestsError,
-  // } = state.Tests;
+  const {
+    upcomingAssignments,
+    upcomingAssignmentsLoading,
+    upcomingAssignmentsError,
+  } = state.Assignments;
+  const {
+    newTests,
+    newTestsLoading,
+    newTestsError,
+  } = state.Tests;
   const {
     recentLessons,
     recentLessonsLoading,
@@ -387,12 +390,12 @@ const mapStateToProps = (state) => {
     meetings,
     meetingsLoading,
     meetingsError,
-    // newAssignments,
-    // newAssignmentsLoading,
-    // newAssignmentsError,
-    // newTests,
-    // newTestsLoading,
-    // newTestsError,
+    upcomingAssignments,
+    upcomingAssignmentsLoading,
+    upcomingAssignmentsError,
+    newTests,
+    newTestsLoading,
+    newTestsError,
     recentLessons,
     recentLessonsLoading,
     recentLessonsError,
@@ -402,6 +405,7 @@ const mapStateToProps = (state) => {
 export default withRouter(
   connect(mapStateToProps, {
     getAllMeetings, getTeacherRecentLessons,
-    selectTopic, selectLesson
+    selectTopic, selectLesson,
+    getTeacherUpcomingTests,getTeacherUpcomingAssignments
   })(CalendarComponent)
 )

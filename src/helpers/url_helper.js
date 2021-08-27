@@ -37,6 +37,9 @@ export const FORGOT_PASSWORD = `${BASE_URL}/forget-password`
 
 
 //Tests
+
+export const GET_PAST_TESTS = `${BASE_URL}/api/v1/tests/past-tests`
+export const GET_UPCOMING_TESTS = `${BASE_URL}/api/v1/tests/upcoming-tests`
 export const POST_TEST = `${BASE_API_URL}/tests`
 export const PUT_TEST = `${BASE_API_URL}/tests`
 export const GET_TESTS = `${BASE_API_URL}/tests`
@@ -49,6 +52,8 @@ export const UNASSIGN_TEST = (testId) => `${BASE_API_URL}/tests/${testId}/unassi
 
 
 //Assignments
+export const UPCOMING_ASSIGNMENTS = `${BASE_URL}/api/v1/assignments/upcoming-assignments`
+export const PAST_ASSIGNMENTS = `${BASE_URL}/api/v1/assignments/past-assignments`
 export const POST_ASSIGNMENT = `${BASE_API_URL}/assignments`
 export const PUT_ASSIGNMENT = `${BASE_API_URL}/assignments`
 export const GET_ASSIGNMENTS = `${BASE_API_URL}/assignments`

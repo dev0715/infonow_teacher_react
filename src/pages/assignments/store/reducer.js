@@ -1,5 +1,13 @@
 import { string } from 'prop-types';
 import {
+    GET_TEACHER_UPCOMING_ASSIGNMENTS,
+    GET_TEACHER_UPCOMING_ASSIGNMENTS_SUCCESS,
+    GET_TEACHER_UPCOMING_ASSIGNMENTS_FAILURE,
+
+    GET_TEACHER_PAST_ASSIGNMENTS,
+    GET_TEACHER_PAST_ASSIGNMENTS_SUCCESS,
+    GET_TEACHER_PAST_ASSIGNMENTS_FAILURE,
+
     GET_STUDENT_ASSIGNMENTS,
     GET_STUDENT_ASSIGNMENTS_SUCCESS,
     GET_STUDENT_ASSIGNMENTS_FAILURE,
@@ -37,6 +45,14 @@ import {
 } from './actionTypes'
 
 const initialState = {
+    upcomingAssignments: [],
+    upcomingAssignmentsLoading: false,
+    upcomingAssignmentsError: null,
+
+    pastAssignments: [],
+    pastAssignmentsLoading: false,
+    pastAssignmentsError: null,
+
     studentAssignments: [],
     studentAssignmentsLoading: false,
     studentAssignmentsError: null,
@@ -75,6 +91,31 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+
+        case GET_TEACHER_UPCOMING_ASSIGNMENTS:
+            state = { ...state, upcomingAssignments: [], upcomingAssignmentsLoading: true }
+            break
+
+        case GET_TEACHER_UPCOMING_ASSIGNMENTS_SUCCESS:
+            state = { ...state, upcomingAssignments: action.payload, upcomingAssignmentsLoading: false, upcomingAssignmentsError: null }
+            break
+
+        case GET_TEACHER_UPCOMING_ASSIGNMENTS_FAILURE:
+            state = { ...state, upcomingAssignments: [], upcomingAssignmentsLoading: false, upcomingAssignmentsError: action.payload }
+            break
+
+        case GET_TEACHER_PAST_ASSIGNMENTS:
+            state = { ...state, pastAssignments: [], pastAssignmentsLoading: true }
+            break
+
+        case GET_TEACHER_PAST_ASSIGNMENTS_SUCCESS:
+            state = { ...state, pastAssignments: action.payload, pastAssignmentsLoading: false, pastAssignmentsError: null }
+            break
+
+        case GET_TEACHER_PAST_ASSIGNMENTS_FAILURE:
+            state = { ...state, pastAssignments: [], pastAssignmentsLoading: false, pastAssignmentsError: action.payload }
+            break
+
         case GET_STUDENT_ASSIGNMENTS:
             state = {
                 ...state,

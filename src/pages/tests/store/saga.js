@@ -2,6 +2,8 @@ import { call, put, takeEvery } from "redux-saga/effects"
 
 // Login Redux States
 import {
+    GET_TEACHER_UPCOMING_TESTS,
+    GET_TEACHER_PAST_TESTS,
     GET_STUDENT_TESTS,
     GET_TEACHER_TESTS,
     POST_TEST,
@@ -13,6 +15,8 @@ import {
 } from "./actionTypes"
 
 import {
+    getTeacherPastTestsSuccess, getTeacherPastTestsFailure, 
+    getTeacherUpcomingTestsSuccess, getTeacherUpcomingTestsFailure,
     getStudentTestsSuccess, getStudentTestsFailure,
     getTeacherTestsSuccess, getTeacherTestsFailure,
     postTestSuccess, postTestFailure,
@@ -24,6 +28,8 @@ import {
 } from "./actions"
 
 import {
+    getUpcomingTests,
+    getPastTests,
     getAllStudentTest,
     getTests,
     postTest,
@@ -107,7 +113,39 @@ function* unassignStudentTestHttp({ payload: { data } }) {
     }
 }
 
+
+function* getTeacherUpcomingTestsHttp() {
+    try {
+        const response = yield call(getUpcomingTests);
+        if (response) {
+            yield put(getTeacherUpcomingTestsSuccess(response))
+            return;
+        }
+        throw "Unknown response received from Server";
+
+    } catch (error) {
+        yield put(getTeacherUpcomingTestsFailure(error.message ? error.message : error))
+    }
+}
+
+function* getTeacherPastTestsHttp() {
+    try {
+        const response = yield call(getPastTests);
+        if (response) {
+            yield put(getTeacherPastTestsSuccess(response))
+            return;
+        }
+        throw "Unknown response received from Server";
+
+    } catch (error) {
+        yield put(getTeacherPastTestsFailure(error.message ? error.message : error))
+    }
+}
+
 function* TestsSaga() {
+
+    yield takeEvery(GET_TEACHER_UPCOMING_TESTS, getTeacherUpcomingTestsHttp)
+    yield takeEvery(GET_TEACHER_PAST_TESTS, getTeacherPastTestsHttp)
     yield takeEvery(GET_STUDENT_TESTS, getStudentTestsHttp)
     yield takeEvery(GET_TEACHER_TESTS, getTeacherTestsHttp)
     yield takeEvery(POST_TEST, postTestHttp)

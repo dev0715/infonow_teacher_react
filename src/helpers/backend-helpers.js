@@ -64,6 +64,8 @@ export const getStudentAssignmentAttempts = (studentId, assignmentId) => get(url
 export const getAssignmentAttemptDetail = (assignmentAttemptId) => get(url.GET_ASSIGNMENT_ATTEMPT_DETAIL(assignmentAttemptId));
 
 //Tests
+export const getPastTests = () => get(url.GET_PAST_TESTS);
+export const getUpcomingTests = () => get(url.GET_UPCOMING_TESTS);
 export const getTestDetail = (testId) => get(url.GET_TEST_BY_ID(testId));
 export const getTests = () => get(url.GET_TESTS);
 export const postTest = data => postForm(url.POST_TEST, data);
@@ -74,6 +76,8 @@ export const getTestUpcomingStudent = (testId) => get(url.GET_TEST_UPCOMING_STUD
 export const unassignTest = (testId, studentTestId) => del(url.UNASSIGN_TEST(testId), studentTestId);
 
 //Assignment
+export const getTeacherUpcomingAssignments = () => get(url.UPCOMING_ASSIGNMENTS)
+export const getTeacherPastAssignments = () => get(url.PAST_ASSIGNMENTS)
 export const getAssignmentDetail = (assignmentId) => get(url.GET_ASSIGNMENT_BY_ID(assignmentId));
 export const getAssignments = () => get(url.GET_ASSIGNMENTS);
 export const postAssignment = data => post(url.POST_ASSIGNMENT, data);
