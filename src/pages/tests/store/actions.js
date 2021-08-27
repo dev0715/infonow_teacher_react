@@ -30,7 +30,55 @@ import {
     UNASSIGN_TEST,
     UNASSIGN_TEST_SUCCESS,
     UNASSIGN_TEST_FAILURE,
+
+    GET_TEACHER_UPCOMING_TESTS,
+    GET_TEACHER_UPCOMING_TESTS_SUCCESS,
+    GET_TEACHER_UPCOMING_TESTS_FAILURE,
+
+    GET_TEACHER_PAST_TESTS,
+    GET_TEACHER_PAST_TESTS_SUCCESS,
+    GET_TEACHER_PAST_TESTS_FAILURE,
 } from './actionTypes'
+
+export const getTeacherUpcomingTests = () => {
+    return {
+        type: GET_TEACHER_UPCOMING_TESTS,
+    }
+}
+
+export const getTeacherUpcomingTestsSuccess = (data) => {
+    return {
+        type: GET_TEACHER_UPCOMING_TESTS_SUCCESS,
+        payload: data
+    }
+}
+
+export const getTeacherUpcomingTestsFailure = (error) => {
+    return {
+        type: GET_TEACHER_UPCOMING_TESTS_FAILURE,
+        payload: error
+    }
+}
+
+export const getTeacherPastTests = () => {
+    return {
+        type: GET_TEACHER_PAST_TESTS,
+    }
+}
+
+export const getTeacherPastTestsSuccess = (data) => {
+    return {
+        type: GET_TEACHER_PAST_TESTS_SUCCESS,
+        payload: data
+    }
+}
+
+export const getTeacherPastTestsFailure = (error) => {
+    return {
+        type: GET_TEACHER_PAST_TESTS_FAILURE,
+        payload: error
+    }
+}
 
 export const getStudentTests = (studentId) => {
     return {

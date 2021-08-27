@@ -63,15 +63,18 @@ const UserDropdown = (props) => {
           <User size={14} className='mr-75' />
           <span className='align-middle'>Profile</span>
         </DropdownItem>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
+        {/* <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
           <Mail size={14} className='mr-75' />
           <span className='align-middle'>Inbox</span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
+        </DropdownItem> */}
+        {/* <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
           <CheckSquare size={14} className='mr-75' />
           <span className='align-middle'>Tasks</span>
-        </DropdownItem>
-        <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
+        </DropdownItem> */}
+        <DropdownItem tag={Link} to='#' onClick={e => {
+          e.preventDefault()
+          props.history.push("/chat")
+        }}>
           <MessageSquare size={14} className='mr-75' />
           <span className='align-middle'>Chats</span>
         </DropdownItem>

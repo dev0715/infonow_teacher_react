@@ -32,6 +32,9 @@ import { GET_DOCUMENT_URL } from '../../helpers/url_helper'
 import { saveAs } from 'file-saver';
 
 
+// ** Styles
+import '@styles/react/libs/tables/react-dataTable-component.scss'
+
 // ** Bootstrap Checkbox Component
 const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
     <div className='custom-control custom-checkbox'>

@@ -422,7 +422,8 @@ const AppLessons = (props) => {
 
     return <>
         {
-            props.selectedTopic && <Fragment>
+            props.topics.find(t => t.id == props.selectedTopic) &&
+            < Fragment >
                 <UILoader
                     blocking={props.lessonsLoading || props.studentsLessonUnassignLoading}
                 >

@@ -86,37 +86,6 @@ ul.list-documents {
 	background-color: white !important;
 }
 
-.dark-layout {
-	.rdt_TableHeadRow {
-		background-color: #283046 !important;
-
-		.rdt_TableCol {
-			.rdt_TableCol_Sortable:hover {
-				color: white !important;
-			}
-			.lgkeMn {
-				color: #b4b7bd;
-			}
-		}
-	}
-	.rdt_TableCol {
-		color: #b4b7bd;
-	}
-	.rdt_TableRow {
-		background-color: #283046 !important;
-		color: #b4b7bd;
-	}
-	.user-document-progress-container {
-		background-color: #161d31 !important;
-		color: #b4b7bd !important;
-	}
-
-	.icdHOq {
-		background-color: #161d31 !important;
-		color: #b4b7bd;
-	}
-}
-
 .rdt_TableHead {
 	.rdt_TableHeadRow {
 		.rdt_TableCol:first-child {

@@ -32,10 +32,9 @@ const AccountSettings = (props) => {
 
   return (
     <Fragment>
-      <Breadcrumbs
-        breadCrumbTitle='Account Settings'
-        breadCrumbParent='Pages'
-        breadCrumbActive='Account Settings' />
+      <h3 className="mb-2">
+        Account Settings
+      </h3>
       <UILoader blocking={
         props.updateProfileLoading ||
         props.updateProfilePictureLoading ||

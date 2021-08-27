@@ -362,6 +362,9 @@ const ChatLog = props => {
         <div className='start-chat-icon mb-1'>
           <MessageSquare />
         </div>
+        <h4 className='sidebar-toggle start-chat-text' onClick={handleStartConversation}>
+          Start Conversation
+        </h4>
       </div>
 
       <div className={

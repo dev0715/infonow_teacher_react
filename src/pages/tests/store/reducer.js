@@ -33,6 +33,14 @@ import {
     UNASSIGN_TEST_SUCCESS,
     UNASSIGN_TEST_FAILURE,
 
+    GET_TEACHER_UPCOMING_TESTS,
+    GET_TEACHER_UPCOMING_TESTS_SUCCESS,
+    GET_TEACHER_UPCOMING_TESTS_FAILURE,
+
+    GET_TEACHER_PAST_TESTS,
+    GET_TEACHER_PAST_TESTS_SUCCESS,
+    GET_TEACHER_PAST_TESTS_FAILURE,
+
 
 } from './actionTypes'
 
@@ -70,10 +78,42 @@ const initialState = {
     unassignTestSuccess: false,
     unassignTestLoading: false,
     unassignTestError: null,
+
+    newTests: [],
+    newTestsLoading: false,
+    newTestsError: null,
+
+    pastTests: [],
+    pastTestsLoading: false,
+    pastTestsError: null,
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
+
+        case GET_TEACHER_UPCOMING_TESTS:
+            state = { ...state, newTests: [], newTestsLoading: true }
+            break
+
+        case GET_TEACHER_UPCOMING_TESTS_SUCCESS:
+            state = { ...state, newTests: action.payload, newTestsLoading: false, newTestsError: null }
+            break
+
+        case GET_TEACHER_UPCOMING_TESTS_FAILURE:
+            return { ...state, newTests: [], newTestsLoading: false, newTestsError: action.payload }
+
+        case GET_TEACHER_PAST_TESTS:
+            state = { ...state, pastTests: [], pastTestsLoading: true }
+            break
+
+        case GET_TEACHER_PAST_TESTS_SUCCESS:
+            state = { ...state, pastTests: action.payload, pastTestsLoading: false, pastTestsError: null }
+            break;
+
+        case GET_TEACHER_PAST_TESTS_FAILURE:
+            state = { ...state, pastTests: [], pastTestsLoading: false, pastTestsError: action.payload }
+            break;
+
         case GET_STUDENT_TESTS:
             state = {
                 ...state,
