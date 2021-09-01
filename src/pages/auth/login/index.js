@@ -123,8 +123,8 @@ const Login = (props) => {
                                 type='submit'
                                 color='primary'
                                 block
-                                disabled={props.loading}>
-                                {props.loading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}Sign in
+                                disabled={props.loading || isSigningIn}>
+                                {(props.loading || isSigningIn) && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}Sign in
                             </Button.Ripple>
 
                         </AvForm>
