@@ -17,8 +17,8 @@ import { connect } from 'react-redux'
 
 import { withRouter } from 'react-router';
 import {
-  getAllMeetings, getTeacherRecentLessons, 
-  selectTopic, selectLesson, 
+  getAllMeetings, getTeacherRecentLessons,
+  selectTopic, selectLesson,
   getTeacherUpcomingTests, getTeacherUpcomingAssignments
 } from '../../store/actions'
 import moment from 'moment'
@@ -410,6 +410,6 @@ export default withRouter(
   connect(mapStateToProps, {
     getAllMeetings, getTeacherRecentLessons,
     selectTopic, selectLesson,
-    getTeacherUpcomingTests,getTeacherUpcomingAssignments
+    getTeacherUpcomingTests, getTeacherUpcomingAssignments
   })(CalendarComponent)
 )

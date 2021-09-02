@@ -18,12 +18,19 @@ const Tabs = ({ activeTab, toggleTab }) => {
       </NavItem>
       <NavItem>
         <NavLink active={activeTab === '2'} onClick={() => toggleTab('2')}>
+          <Info size={18} className='mr-1' />
+          <span className='font-weight-bold'>Info</span>
+        </NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink active={activeTab === '3'} onClick={() => toggleTab('3')}>
           <Lock size={18} className='mr-1' />
           <span className='font-weight-bold'>Change Password</span>
         </NavLink>
       </NavItem>
       <NavItem>
-        <NavLink active={activeTab === '3'} onClick={() => history.push('/calender')}>
+        <NavLink active={activeTab === '4'} onClick={() => history.push('/calender')}>
           <Calendar size={18} className='mr-1' />
           <span className='font-weight-bold'>Calender</span>
         </NavLink>
