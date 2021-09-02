@@ -213,9 +213,7 @@ export default (state = initialState, action) => {
         case ASSIGN_ASSIGNMENT:
             state = {
                 ...state,
-                assignAssignmentSuccess: false,
                 assignAssignmentLoading: true,
-                assignAssignmentError: null
             }
             break;
         case ASSIGN_ASSIGNMENT_SUCCESS:
@@ -224,7 +222,6 @@ export default (state = initialState, action) => {
                 assignAssignment: action.payload,
                 assignAssignmentSuccess: true,
                 assignAssignmentLoading: false,
-                assignAssignmentError: null,
             }
             break;
         case ASSIGN_ASSIGNMENT_FAILURE:
@@ -240,7 +237,6 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 pastAssignmentStudentsLoading: true,
-                pastAssignmentStudentsError: null
             }
             break;
         case GET_ASSIGNMENT_PAST_STUDENT_SUCCESS:
@@ -248,7 +244,6 @@ export default (state = initialState, action) => {
                 ...state,
                 pastAssignmentStudents: action.payload,
                 pastAssignmentStudentsLoading: false,
-                pastAssignmentStudentsError: null,
             }
             break;
         case GET_ASSIGNMENT_PAST_STUDENT_FAILURE:
@@ -263,7 +258,6 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 upcomingAssignmentStudentsLoading: true,
-                upcomingAssignmentStudentsError: null
             }
             break;
         case GET_ASSIGNMENT_UPCOMING_STUDENT_SUCCESS:
@@ -271,7 +265,6 @@ export default (state = initialState, action) => {
                 ...state,
                 upcomingAssignmentStudents: action.payload,
                 upcomingAssignmentStudentsLoading: false,
-                upcomingAssignmentStudentsError: null,
             }
             break;
         case GET_ASSIGNMENT_UPCOMING_STUDENT_FAILURE:
@@ -287,15 +280,13 @@ export default (state = initialState, action) => {
                 ...state,
                 unassignAssignmentSuccess: false,
                 unassignAssignmentLoading: true,
-                unassignAssignmentError: null
             }
             break;
         case UNASSIGN_ASSIGNMENT_SUCCESS:
             state = {
                 ...state,
                 unassignAssignmentSuccess: true,
-                unassignAssignmentLoading: false,
-                unassignAssignmentError: null,
+                unassignAssignmentLoading: false
             }
             break;
         case UNASSIGN_ASSIGNMENT_FAILURE:

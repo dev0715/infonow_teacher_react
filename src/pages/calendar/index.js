@@ -46,6 +46,7 @@ const CalendarComponent = (props) => {
     props.getAllMeetings();
     props.getTeacherRecentLessons();
     props.getTeacherUpcomingTests();
+    props.getTeacherUpcomingAssignments();
   }, [])
 
   const toggleAllFilter = (checked) => {
@@ -80,14 +81,14 @@ const CalendarComponent = (props) => {
           data: t
         }
       }),
-      // ...props.upcomingAssignments.map(a => {
-      //   return {
-      //     type: 'assignment',
-      //     title: a.assignment.title,
-      //     date: moment(a.startDate).format('YYYY-MM-DD'),
-      //     data: a
-      //   }
-      // }),
+      ...props.upcomingAssignments.map(a => {
+        return {
+          type: 'assignment',
+          title: a.assignment.title,
+          date: moment(a.startDate).format('YYYY-MM-DD'),
+          data: a
+        }
+      }),
       ...props.recentLessons.map(l => {
         return {
           type: 'lesson',
@@ -390,12 +391,15 @@ const mapStateToProps = (state) => {
     meetings,
     meetingsLoading,
     meetingsError,
+
     upcomingAssignments,
     upcomingAssignmentsLoading,
     upcomingAssignmentsError,
+
     newTests,
     newTestsLoading,
     newTestsError,
+
     recentLessons,
     recentLessonsLoading,
     recentLessonsError,
