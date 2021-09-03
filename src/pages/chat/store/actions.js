@@ -34,6 +34,12 @@ import {
   UPDATE_ABOUT_SUCCESS,
   UPDATE_ABOUT_FAILURE,
   SET_PREVIOUS_MESSAGES_LOADING,
+  CREATE_CHAT,
+  CREATE_CHAT_SUCCESS,
+  CREATE_CHAT_FAILURE,
+  GET_ALL_TEACHER_STUDENTS,
+  GET_ALL_TEACHER_STUDENTS_SUCCESS,
+  GET_ALL_TEACHER_STUDENTS_FAILURE,
 
 } from './actionTypes'
 
@@ -202,7 +208,6 @@ export const unmuteChatNotification = (chatId) => {
   }
 }
 
-
 export const uploadDocument = ({ chatId, file, callback }) => {
   return {
     type: UPLOAD_DOCUMENT,
@@ -259,7 +264,6 @@ export const getSelectChatDocumentsFailure = (error) => {
   }
 }
 
-
 export const updateAbout = ({ about }) => {
   return {
     type: UPDATE_ABOUT,
@@ -277,6 +281,49 @@ export const updateAboutSuccess = (data) => {
 export const updateAboutFailure = (error) => {
   return {
     type: UPDATE_ABOUT_FAILURE,
+    payload: error
+  }
+}
+
+
+export const createChat = (data) => {
+  return {
+    type: CREATE_CHAT,
+    payload: data
+  }
+}
+
+export const createChatSuccess = (data) => {
+  return {
+    type: CREATE_CHAT_SUCCESS,
+    payload: data
+  }
+}
+
+export const createChatFailure = (error) => {
+  return {
+    type: CREATE_CHAT_FAILURE,
+    payload: error
+  }
+}
+
+
+export const getAllTeacherStudents = () => {
+  return {
+    type: GET_ALL_TEACHER_STUDENTS,
+  }
+}
+
+export const getAllTeacherStudentsSuccess = (data) => {
+  return {
+    type: GET_ALL_TEACHER_STUDENTS_SUCCESS,
+    payload: data
+  }
+}
+
+export const getAllTeacherStudentsFailure = (error) => {
+  return {
+    type: GET_ALL_TEACHER_STUDENTS_FAILURE,
     payload: error
   }
 }

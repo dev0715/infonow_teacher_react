@@ -5,7 +5,6 @@ import { Fragment } from 'react'
 // ** Third Party Components
 import {
     Card, CardBody,
-    UncontrolledDropdown,
     UncontrolledButtonDropdown,
     DropdownMenu,
     DropdownItem,
@@ -20,8 +19,7 @@ import {
     Col,
     Button,
     Media,
-    Badge,
-    Table
+    Badge
 } from 'reactstrap'
 
 

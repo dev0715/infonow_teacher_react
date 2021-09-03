@@ -37,6 +37,12 @@ import {
   UPDATE_ABOUT_SUCCESS,
   UPDATE_ABOUT_FAILURE,
   SET_PREVIOUS_MESSAGES_LOADING,
+  CREATE_CHAT,
+  CREATE_CHAT_SUCCESS,
+  CREATE_CHAT_FAILURE,
+  GET_ALL_TEACHER_STUDENTS,
+  GET_ALL_TEACHER_STUDENTS_SUCCESS,
+  GET_ALL_TEACHER_STUDENTS_FAILURE,
 
 } from './actionTypes'
 
@@ -62,12 +68,15 @@ const initialState = {
   isEndOfMessages: false,
   isNotificationEnabled: localStorage.getItem("isNotificationEnabled"),
   mutedNotificationIds: {},
-
   documentList: [],
   uploadedDocuments: [],
-
   aboutUpdating: false,
-  aboutError: null
+  aboutError: null,
+  newChatLoading: false,
+  newChatError: null,
+  teacherStudents: [],
+  teacherStudentsLoading: false,
+  teacherStudentsError: null,
 }
 
 
@@ -299,6 +308,24 @@ const chatReducer = (state = initialState, action) => {
 
     case UPDATE_ABOUT_FAILURE:
       return { ...state, aboutUpdating: false, aboutError: action.payload }
+
+    case CREATE_CHAT:
+      return { ...state, newChatLoading: true }
+
+    case CREATE_CHAT_SUCCESS:
+      return { ...state, chats: [...state.chats.filter(c => c.chatId != action.payload.chatId), action.payload], newChatError: null, newChatLoading: false }
+
+    case CREATE_CHAT_FAILURE:
+      return { ...state, newChatError: action.payload, newChatLoading: false }
+
+    case GET_ALL_TEACHER_STUDENTS:
+      return { ...state, teacherStudentsLoading: true, teacherStudentsError: null }
+
+    case GET_ALL_TEACHER_STUDENTS_SUCCESS:
+      return { ...state, teacherStudents: action.payload, teacherStudentsError: null, teacherStudentsLoading: false }
+
+    case GET_ALL_TEACHER_STUDENTS_FAILURE:
+      return { ...state, teacherStudentsError: action.payload, teacherStudentsLoading: false }
 
     default:
       return state

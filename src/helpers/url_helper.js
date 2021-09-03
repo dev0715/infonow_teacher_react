@@ -1,15 +1,15 @@
 
-// export const BASE_URL = `http://192.168.10.102:3600`
-// export const MEETING_API_URL = `http://192.168.10.104:3900`
-// export const CHAT_API_URL = `http://192.168.10.104:3700`
-// export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
-// export const BLOG_API_URL = `http://192.168.10.102:1337`
+export const BASE_URL = `http://192.168.10.102:3600`
+export const MEETING_API_URL = `http://192.168.10.104:3900`
+export const CHAT_API_URL = `http://192.168.10.104:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
+export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.meditati.ro/main`
-export const MEETING_API_URL = `https://meeting.meditati.ro/api`
-export const CHAT_API_URL = `https://api.meditati.ro/chat`
-export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
-export const BLOG_API_URL = `https://api.meditati.ro/blog`
+// export const BASE_URL = `https://api.meditati.ro/main`
+// export const MEETING_API_URL = `https://meeting.meditati.ro/api`
+// export const CHAT_API_URL = `https://api.meditati.ro/chat`
+// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
+// export const BLOG_API_URL = `https://api.meditati.ro/blog`
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
@@ -25,6 +25,10 @@ export const getProfileImageUrl = url => url ? IMAGES_BASE_URL + url : IMAGES_BA
 //Get Started
 
 export const GET_STARTED_CONTENT = `${BASE_URL}/api/v1/strapi/content/student_content`
+
+//  All Students 
+export const ALL_STUDENTS = `${BASE_URL}/api/v1/students/all-students?limit=1000&page=1`;
+
 
 
 // Login
@@ -81,9 +85,12 @@ export const GET_ASSIGNMENT_ATTEMPT_DETAIL = assignmentAttemptId => `${BASE_API_
 // export const PUT_SUBJECTIVE_ATTEMPT_MARKS = attemptId => `${BASE_API_URL}/attempts/${attemptId}/subjective-marks`
 
 // Chats
+
+export const CHATS = `${CHAT_API_URL}/chats`
 export const GET_CHATS_CONTACTS = id => `${CHAT_API_URL}/users/${id}/chats`
 export const GET_CHAT_DOCUMENTS = id => `${BASE_URL}/documents?chatId=${id}`
 export const UPDATE_USER = id => `${BASE_URL}/api/v1/teacher/${id}/profile`
+
 
 // Meetings
 export const NEW_MEETING = `${MEETING_API_URL}/meetings`

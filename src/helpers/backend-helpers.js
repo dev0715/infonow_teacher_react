@@ -26,6 +26,10 @@ export const isUserAuthenticated = () => {
 // Get started
 export const getStartedContent = () => get(url.GET_STARTED_CONTENT)
 
+// All Student  
+
+export const getAllTeacherStudents = () => get(url.ALL_STUDENTS)
+
 //Meeting
 export const newMeeting = data => post(url.NEW_MEETING, data);
 export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
@@ -40,6 +44,7 @@ export const newAdminMeeting = data => post(url.NEW_ADMIN_MEETING, data);
 export const getChatContactsRequest = id => get(url.GET_CHATS_CONTACTS(id))
 export const getChatDocuments = id => get(url.GET_CHAT_DOCUMENTS(id))
 export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
+export const createChat = data => post(url.CHATS, data)
 
 // Student Actions
 export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);

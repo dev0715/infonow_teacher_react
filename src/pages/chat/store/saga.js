@@ -5,21 +5,39 @@ import {
   GET_SELECT_CHAT_DOCUMENTS,
   UPDATE_ABOUT,
   UPLOAD_DOCUMENT,
+  CREATE_CHAT,
+  GET_ALL_TEACHER_STUDENTS
 } from "./actionTypes"
 
 import { v4 } from 'uuid';
 import axios from 'axios';
 
 import {
-  addDocumentToQueue, cancelDocumentUpload,
-  getChatContactsFailure, getChatContactsSuccess,
-  getSelectChatDocumentsFailure, getSelectChatDocumentsSuccess,
-  updateAboutFailure, updateAboutSuccess,
+  addDocumentToQueue,
+  cancelDocumentUpload,
+  getChatContactsFailure,
+  getChatContactsSuccess,
+  getSelectChatDocumentsFailure,
+  getSelectChatDocumentsSuccess,
+  updateAboutFailure,
+  updateAboutSuccess,
   updateDocumentProgress,
+  createChatSuccess,
+  createChatFailure,
+  getAllTeacherStudentsSuccess,
+  getAllTeacherStudentsFailure
 } from "./actions"
 
 //Include Both Helper File with needed methods
-import { getChatContactsRequest, getChatDocuments, getLoggedInUser, updateUser, uploadDocument } from "../../../helpers/backend-helpers"
+import {
+  getChatContactsRequest,
+  getChatDocuments,
+  getLoggedInUser,
+  updateUser,
+  uploadDocument,
+  createChat,
+  getAllTeacherStudents
+} from "../../../helpers/backend-helpers"
 
 function* getChatContacts({ payload: { userId } }) {
   try {
@@ -107,11 +125,44 @@ function* updateAbout({ payload: { about } }) {
   }
 }
 
+
+function* createChatHttp({ payload }) {
+  try {
+
+    const response = yield call(createChat, payload);
+    if (response) {
+      yield put(createChatSuccess(response))
+      return;
+    }
+    throw "Unknown response received from Server";
+
+  } catch (error) {
+    yield put(createChatFailure(error.message ? error.message : error))
+  }
+}
+
+function* getAllTeacherStudentsHttp() {
+  try {
+    let user = getLoggedInUser()
+    const response = yield call(getAllTeacherStudents, user.userId);
+    if (response) {
+      yield put(getAllTeacherStudentsSuccess(response))
+      return;
+    }
+    throw "Unknown response received from Server";
+
+  } catch (error) {
+    yield put(getAllTeacherStudentsFailure(error.message ? error.message : error))
+  }
+}
+
 function* chatSaga() {
   yield takeEvery(GET_CHAT_CONTACTS, getChatContacts)
   yield takeEvery(UPLOAD_DOCUMENT, uploadDoc)
   yield takeEvery(GET_SELECT_CHAT_DOCUMENTS, getDoc)
   yield takeEvery(UPDATE_ABOUT, updateAbout)
+  yield takeEvery(CREATE_CHAT, createChatHttp)
+  yield takeEvery(GET_ALL_TEACHER_STUDENTS, getAllTeacherStudentsHttp)
 }
 
 export default chatSaga

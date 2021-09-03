@@ -1,6 +1,6 @@
 import React from 'react';
 // ** React Imports
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -11,26 +11,50 @@ import { formatDateToMonthShort } from '@utils'
 // ** Third Party Components
 import classnames from 'classnames'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { X, Search, Bell } from 'react-feather'
+import { X, Search, Bell, Plus } from 'react-feather'
 import {
   CardText, InputGroup, InputGroupAddon,
-  Input, InputGroupText, CustomInput
+  Input, InputGroupText, CustomInput,
+  Modal, ModalBody, Row, Col,
+  Button, UncontrolledDropdown,
+  DropdownItem, DropdownMenu, DropdownToggle,
+  FormGroup, Label
 } from 'reactstrap'
 
 
 import UILoader from '../../@core/components/ui-loader';
 
+
+import NotFound from '../../components/not-found';
+import NoNetwork from '../../components/no-network';
+
+import { notifyError, notifySuccess, notifyWarning } from '../../utility/toast'
+
 import { GET_IMAGE_URL } from './../../helpers/url_helper';
 
 import { getPreviousMessages } from './socket/events'
+
+
 const SidebarLeft = props => {
   // ** Props & Store
   const { sidebar, handleUserSidebarLeft, handleSidebar, userSidebarLeft, socket, store } = props
 
   const {
     setNotificationEnabled,
-    isNotificationEnabled, selectChat, selectedChat,
-    user, chats, chatLoading, updateAbout
+    isNotificationEnabled,
+    selectChat,
+    selectedChat,
+    user,
+    chats,
+    chatLoading,
+    updateAbout,
+    newChatLoading,
+    newChatError,
+    createChat,
+    getAllTeacherStudents,
+    teacherStudents,
+    teacherStudentsLoading,
+    teacherStudentsError,
   } = store
 
   // ** State
@@ -40,11 +64,37 @@ const SidebarLeft = props => {
   const [status, setStatus] = useState('online')
   const [filteredChat, setFilteredChat] = useState([])
 
+  const [isNewChat, setIsNewChat] = useState(false)
+  const [isNewChatGroup, setIsNewChatGroup] = useState(false)
+
+  const [groupName, setGroupName] = useState('')
+  const [participants, setParticipants] = useState([])
+
   // ** Handles User Chat Click
   const handleUserClick = (chat, socket) => {
     selectChat(chat)
     getPreviousMessages(socket, chat.chatId)
   }
+
+
+  useEffect(() => {
+    if (isNewChat && !newChatLoading && newChatError) {
+      notifyError("New Chat", newChatError)
+    }
+    else if (isNewChat && !newChatLoading && !newChatError) {
+      notifySuccess("New Chat", 'Chat started Successfully')
+    }
+  }, [newChatLoading])
+
+  useEffect(() => {
+    if (isNewChatGroup && !newChatLoading && newChatError) {
+      notifyError("New Group Chat", newChatError)
+    }
+    else if (isNewChatGroup && !newChatLoading && !newChatError) {
+      closeNewChat()
+      notifySuccess("New Group Chat", 'Chat started Successfully')
+    }
+  }, [newChatLoading])
 
   // ** Renders Chat
   const renderChats = () => {
@@ -81,7 +131,14 @@ const SidebarLeft = props => {
                     : item.chatParticipants.find(u => u.user.userId != user.userId).user.name}
                 </h5>
                 <CardText className='text-truncate'>
-                  {item.messages.length > 0 ? item.messages[0].content : ''}
+                  {
+                    item.chatParticipants.find(u => u.user.userId == user.userId && !u.blockedAt) ?
+                      <>
+                        {item.messages.length > 0 ? item.messages[0].content : ''}
+                      </>
+                      :
+                      '...'
+                  }
                 </CardText>
               </div>
               <div className='chat-meta text-nowrap'>
@@ -121,6 +178,46 @@ const SidebarLeft = props => {
     e.preventDefault()
     console.log("ABOUT___", e.target.value)
     updateAbout({ about: e.target.value })
+  }
+
+  const getChatByUserId = (id) => {
+    return chats
+      .filter(ct => ct.type == "chat")
+      .find(c => c.chatParticipants.find(p => p.user.userId == id))
+  }
+  const openNewChatModel = (e, group = false) => {
+    e.preventDefault()
+    group ? setIsNewChatGroup(true) : setIsNewChat(true)
+    getAllTeacherStudents();
+  }
+
+  const closeNewChat = () => {
+    setIsNewChat(false)
+    setIsNewChatGroup(false)
+    setGroupName('')
+    setParticipants([])
+  }
+
+  const startNewChat = (id) => {
+    createChat({
+      participants: [id],
+      type: "chat"
+    })
+  }
+
+  const toggleUserFromGroup = (userId) => {
+    if (participants.find(id => id == userId)) return setParticipants(participants.filter(id => id != userId))
+    setParticipants([...participants, userId])
+  }
+
+  const startNewGroupChat = () => {
+    if (!groupName) return notifyWarning("New Group Chat", "Group name is required")
+    if (participants.length == 0) return notifyWarning("New Group Chat", "Participants are required for group creation")
+    createChat({
+      participants,
+      type: "group",
+      groupName
+    })
   }
 
 
@@ -257,6 +354,27 @@ const SidebarLeft = props => {
                   onChange={handleFilter}
                 />
               </InputGroup>
+              <div className="d-flex  justify-content-center align-items-center pl-1">
+                <UncontrolledDropdown>
+                  <DropdownToggle tag='span'>
+                    <Plus size={15} />
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem
+                      tag='a' href='/' className='w-100'
+                      onClick={e => openNewChatModel(e)}
+                    >
+                      <span className='align-middle ml-50'>New Personal Chat</span>
+                    </DropdownItem>
+                    <DropdownItem
+                      tag='a' href='/' className='w-100'
+                      onClick={e => openNewChatModel(e, true)}
+                    >
+                      <span className='align-middle ml-50'>New Group Chat</span>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
             </div>
           </div>
           <PerfectScrollbar className='chat-user-list-wrapper list-group' options={{ wheelPropagation: false }}>
@@ -267,9 +385,125 @@ const SidebarLeft = props => {
               </UILoader>
             </ul>
           </PerfectScrollbar>
-
         </div>
       </div>
+      <Modal isOpen={isNewChat} className="pt-5">
+        <UILoader blocking={newChatLoading || teacherStudentsLoading}>
+          <ModalBody className="p-2">
+            <div className="d-flex justify-content-lg-between align-items-center">
+              <h3 className="m-0">New Chat</h3>
+              <X
+                size={16}
+                onClick={() => closeNewChat()}
+              />
+            </div>
+            <div className="mt-2">
+              <div className="text-center">
+                {
+                  teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
+                    teacherStudents.map((s, index) =>
+                      <Row key={'non-connected' + index}>
+                        <Col sm='12'>
+                          <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                            <h5 className="m-0">
+                              {
+                                s.name
+                              }
+                            </h5>
+                            {
+                              getChatByUserId(s.userId) ? <Button.Ripple
+                                color='primary'
+                                className="btn btn-sm"
+                                disabled={true}
+                              >
+                                Chatting
+                              </Button.Ripple>
+                                :
+                                <Button.Ripple
+                                  color='primary'
+                                  className="btn btn-sm"
+                                  onClick={() => startNewChat(s.userId)}
+                                >
+                                  Start Conversation
+                                </Button.Ripple>
+                            }
+                          </div>
+                        </Col>
+                      </Row>)
+                }
+              </div>
+            </div>
+          </ModalBody>
+        </UILoader>
+      </Modal>
+
+      <Modal isOpen={isNewChatGroup} className="pt-5">
+        <UILoader blocking={newChatLoading || teacherStudentsLoading}>
+          <ModalBody className="p-2">
+            <div className="d-flex justify-content-lg-between align-items-center">
+              <h3 className="m-0">New Group Chat</h3>
+              <X
+                size={16}
+                onClick={() => closeNewChat()}
+              />
+            </div>
+            <div className="mt-2">
+              <div >
+                {
+                  teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
+                    <>
+                      <FormGroup>
+                        <Label className="ml-25">
+                          Group Name
+                        </Label>
+                        <InputGroup className='input-group-merge'>
+                          <Input
+                            type="text"
+                            placeholder='Enter group name'
+                            value={groupName}
+                            onChange={e => setGroupName(e.target.value)}
+                          />
+                        </InputGroup>
+                      </FormGroup>
+                      <Label className="ml-25 mb-1">
+                        Select Participants
+                      </Label>
+                      {teacherStudents.map((s, index) =>
+                        <Row key={'non-connected' + index}>
+                          <Col sm='12'>
+                            <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                              <h6 className="m-0">
+                                {
+                                  s.name
+                                }
+                              </h6>
+                              <CustomInput
+                                type='checkbox'
+                                className='custom-control-Primary'
+                                id={"group-user-" + index}
+                                inline
+                                onClick={() => toggleUserFromGroup(s.userId)}
+                              />
+                            </div>
+                          </Col>
+                        </Row>)
+                      }
+                      <div className="text-right mt-2">
+                        <Button.Ripple
+                          color="primary"
+                          onClick={() => startNewGroupChat()}
+                        >
+                          Create Group
+                        </Button.Ripple>
+                      </div>
+                    </>
+                }
+              </div>
+            </div>
+          </ModalBody>
+        </UILoader>
+      </Modal>
+
     </div>
   )
 }

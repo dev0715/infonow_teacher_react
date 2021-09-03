@@ -38,7 +38,9 @@ import {
   updateAbout,
   updateAboutSuccess,
   updateAboutFailure,
-  setPreviousMessagesLoading
+  setPreviousMessagesLoading,
+  createChat,
+  getAllTeacherStudents
 
 } from './store/actions'
 
@@ -191,7 +193,12 @@ const mapStateToProps = (state) => {
     chatDocumentsLoading,
     chatLoading,
     aboutUpdating,
-    messagesLoading
+    messagesLoading,
+    newChatLoading,
+    newChatError,
+    teacherStudents,
+    teacherStudentsLoading,
+    teacherStudentsError,
 
   } = state.Chat;
   return {
@@ -215,21 +222,37 @@ const mapStateToProps = (state) => {
     chatDocumentsLoading,
     chatLoading,
     aboutUpdating,
-    messagesLoading
+    messagesLoading,
+    newChatLoading,
+    newChatError,
+    teacherStudents,
+    teacherStudentsLoading,
+    teacherStudentsError,
   }
 }
 
 export default withRouter(
   connect(mapStateToProps, {
     setLoggedUser,
-    getChatContacts, authorizedSuccess, authorizedFailure, saveNewMessage,
-    setRoomJoined, selectChat, updateSelectChat,
-    getPreviousMessagesSuccess, getPreviousMessagesFailure,
+    getChatContacts,
+    authorizedSuccess,
+    authorizedFailure,
+    saveNewMessage,
+    setRoomJoined,
+    selectChat,
+    updateSelectChat,
+    getPreviousMessagesSuccess,
+    getPreviousMessagesFailure,
     newMessage,
-    updateChatHeadMessage, updateChatParticipants,
+    updateChatHeadMessage,
+    updateChatParticipants,
     deleteMessages,
-    playNotificationSound, stopNotificationSound, setNotificationEnabled,
-    setNotificationIds, muteChatNotification, unmuteChatNotification,
+    playNotificationSound,
+    stopNotificationSound,
+    setNotificationEnabled,
+    setNotificationIds,
+    muteChatNotification,
+    unmuteChatNotification,
     uploadDocument,
     addDocumentToQueue,
     cancelDocumentUpload,
@@ -241,6 +264,8 @@ export default withRouter(
     updateAbout,
     updateAboutSuccess,
     updateAboutFailure,
-    setPreviousMessagesLoading
+    setPreviousMessagesLoading,
+    createChat,
+    getAllTeacherStudents
   })(AppChat)
 )
