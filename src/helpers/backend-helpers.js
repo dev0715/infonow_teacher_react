@@ -31,6 +31,7 @@ export const getStartedContent = () => get(url.GET_STARTED_CONTENT)
 export const getAllTeacherStudents = () => get(url.ALL_STUDENTS)
 
 //Meeting
+export const getMeetingToken = () => get(url.MEETING_TOKEN);
 export const newMeeting = data => post(url.NEW_MEETING, data);
 export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
 export const getMeetingDates = userId => get(url.GET_MEETING_DATES(userId));

@@ -1,12 +1,14 @@
 
 // export const BASE_URL = `http://192.168.10.102:3600`
 // export const MEETING_API_URL = `http://192.168.10.104:3900`
+// export const MEETING_APP_URL = `http://192.168.10.104:3001`
 // export const CHAT_API_URL = `http://192.168.10.104:3700`
 // export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
 // export const BLOG_API_URL = `http://192.168.10.102:1337`
 
 export const BASE_URL = `https://api.meditati.ro/main`
 export const MEETING_API_URL = `https://meet.meditati.ro/api`
+export const MEETING_APP_URL = `https://meet.meditati.ro`
 export const CHAT_API_URL = `https://api.meditati.ro/chat`
 export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
 export const BLOG_API_URL = `https://api.meditati.ro/blog`
@@ -93,6 +95,7 @@ export const UPDATE_USER = id => `${BASE_URL}/api/v1/teacher/${id}/profile`
 
 
 // Meetings
+export const MEETING_TOKEN = `${MEETING_API_URL}/users/authenticate`
 export const NEW_MEETING = `${MEETING_API_URL}/meetings`
 export const UPDATE_MEETING = (id, action) => `${MEETING_API_URL}/meetings/${id}/${action}`
 export const GET_ALL_MEETINGS = id => `${MEETING_API_URL}/users/${id}/meetings`

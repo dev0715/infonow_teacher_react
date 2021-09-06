@@ -14,6 +14,9 @@ import {
     GET_STUDENTS_FOR_MEETING,
     GET_STUDENTS_FOR_MEETING_SUCCESS,
     GET_STUDENTS_FOR_MEETING_FAILURE,
+    GET_MEETING_TOKEN,
+    GET_MEETING_TOKEN_SUCCESS,
+    GET_MEETING_TOKEN_FAILURE,
 
 } from './actionTypes'
 
@@ -28,7 +31,10 @@ const initialState = {
     newMeetingError: null,
     students: [],
     studentLoading: false,
-    studentsError: null
+    studentsError: null,
+    meetingToken: null,
+    meetingTokenLoading: false,
+    meetingTokenError: null
 }
 
 
@@ -177,6 +183,32 @@ export default (state = initialState, action) => {
                 students: [],
                 studentLoading: false,
                 studentsError: action.payload
+            }
+            break;
+
+        case GET_MEETING_TOKEN:
+            state = {
+                ...state,
+                meetingTokenLoading: true,
+                meetingTokenError: null
+            }
+            break;
+
+        case GET_MEETING_TOKEN_SUCCESS:
+            state = {
+                ...state,
+                meetingToken: action.payload,
+                meetingTokenLoading: false,
+                meetingTokenError: null
+            }
+            break;
+
+        case GET_MEETING_TOKEN_FAILURE:
+            state = {
+                ...state,
+                meetingToken: null,
+                meetingTokenLoading: false,
+                meetingTokenError: action.payload
             }
             break;
 
