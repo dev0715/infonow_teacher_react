@@ -65,14 +65,17 @@ export const MeetingPreview = (props) => {
                     {meeting.agenda}
                 </Col>
             </Row>
-            <Row className="mt-2">
-                <Col sm={12} md={2}>
-                    <h6>Personal Message</h6>
-                </Col>
-                <Col sm={12} md={10} >
-                    {meeting.message}
-                </Col>
-            </Row>
+            {
+                meeting.message &&
+                <Row className="mt-2">
+                    <Col sm={12} md={2}>
+                        <h6>Personal Message</h6>
+                    </Col>
+                    <Col sm={12} md={10} >
+                        {meeting.message}
+                    </Col>
+                </Row>
+            }
         </>
 
 }

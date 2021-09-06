@@ -61,7 +61,7 @@ function* uploadProfilePictureHttp({ payload }) {
 function* updateProfileDataHttp({ payload }) {
   try {
     let user = getLoggedInUser() || {}
-    console.log("data", payload)
+    // console.log("data", payload)
     const response = yield call(updateProfileData, user.userId, payload);
     if (response) {
       yield put(updateProfileDataSuccess(response))

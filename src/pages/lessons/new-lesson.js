@@ -59,7 +59,7 @@ const newLesson = (props) => {
         if (!props.selectedTopic) {
             props.history.goBack()
         }
-        console.log("Lesson", props.location.state)
+        // console.log("Lesson", props.location.state)
         if (props.location.state) setLessonForUpdate(props.location.state)
     }, [props.selectedTopic])
 
@@ -118,7 +118,7 @@ const newLesson = (props) => {
                 "Content is required for lesson")
         }
         if (Object.keys(lessonForUpdate).length > 0) {
-            console.log("Update lesson")
+            // console.log("Update lesson")
             props.updateLesson({
                 id: lessonForUpdate.id,
                 topic: props.selectedTopic,

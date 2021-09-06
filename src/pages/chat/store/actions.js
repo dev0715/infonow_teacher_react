@@ -40,6 +40,12 @@ import {
   GET_ALL_TEACHER_STUDENTS,
   GET_ALL_TEACHER_STUDENTS_SUCCESS,
   GET_ALL_TEACHER_STUDENTS_FAILURE,
+  ADD_PARTICIPANTS,
+  ADD_PARTICIPANTS_SUCCESS,
+  ADD_PARTICIPANTS_FAILURE,
+  REMOVE_PARTICIPANTS,
+  REMOVE_PARTICIPANTS_SUCCESS,
+  REMOVE_PARTICIPANTS_FAILURE,
 
 } from './actionTypes'
 
@@ -144,7 +150,6 @@ export const saveNewMessage = (res) => {
     payload: res
   }
 }
-
 
 export const updateChatHeadMessage = ({ success, chatId, data }) => {
   return {
@@ -285,7 +290,6 @@ export const updateAboutFailure = (error) => {
   }
 }
 
-
 export const createChat = (data) => {
   return {
     type: CREATE_CHAT,
@@ -307,7 +311,6 @@ export const createChatFailure = (error) => {
   }
 }
 
-
 export const getAllTeacherStudents = () => {
   return {
     type: GET_ALL_TEACHER_STUDENTS,
@@ -324,6 +327,46 @@ export const getAllTeacherStudentsSuccess = (data) => {
 export const getAllTeacherStudentsFailure = (error) => {
   return {
     type: GET_ALL_TEACHER_STUDENTS_FAILURE,
+    payload: error
+  }
+}
+
+export const addParticipants = () => {
+  return {
+    type: ADD_PARTICIPANTS,
+  }
+}
+
+export const addParticipantsSuccess = (data) => {
+  return {
+    type: ADD_PARTICIPANTS_SUCCESS,
+    payload: data
+  }
+}
+
+export const addParticipantsFailure = (error) => {
+  return {
+    type: ADD_PARTICIPANTS_FAILURE,
+    payload: error
+  }
+}
+
+export const removeParticipants = () => {
+  return {
+    type: REMOVE_PARTICIPANTS,
+  }
+}
+
+export const removeParticipantsSuccess = (data) => {
+  return {
+    type: REMOVE_PARTICIPANTS_SUCCESS,
+    payload: data
+  }
+}
+
+export const removeParticipantsFailure = (error) => {
+  return {
+    type: REMOVE_PARTICIPANTS_FAILURE,
     payload: error
   }
 }

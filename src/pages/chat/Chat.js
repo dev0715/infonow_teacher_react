@@ -28,36 +28,80 @@ import {
   Button,
   Spinner,
   Progress,
-  Tooltip,
   UncontrolledTooltip,
   Card,
-  CardBody
+  CardBody, Row, Col, Modal, ModalBody
 } from 'reactstrap'
 
 import moment from 'moment';
 
 
 import { v4 } from "uuid"
-import { sendMessage, getPreviousMessages, deleteMessages, userBlockChat, userUnBlockChat } from './socket/events';
+import {
+  sendMessage,
+  getPreviousMessages,
+  deleteMessages,
+  userBlockChat,
+  userUnBlockChat,
+  addParticipantsWithSocket,
+  removeParticipantsWithSocket
+} from './socket/events';
 
 import { GET_DOCUMENT_URL, GET_IMAGE_URL, DOCUMENT_BASE_URL } from './../../helpers/url_helper';
+
+import NotFound from '../../components/not-found';
+
+import { notifyError, notifySuccess, notifyWarning } from '../../utility/toast'
+
+import UILoader from '../../@core/components/ui-loader';
+
 import { detectLinkInMessage, getFileIcon, getFilePreview } from './utility';
-import Picker, { SKIN_TONE_NEUTRAL } from "emoji-picker-react";
+import Picker from "emoji-picker-react";
+
+import { DateTime } from '../../components/date-time'
 
 import { useDropzone } from 'react-dropzone'
+
+
+import './style.scss'
 
 const ChatLog = props => {
   // ** Props & Store
   const {
     store,
-    handleUserSidebarRight, handleSidebar,
-    userSidebarLeft, socket } = props
+    handleUserSidebarRight,
+    handleSidebar,
+    userSidebarLeft,
+    socket
+  } = props
 
-  const { muteChatNotification, uploadDocument,
-    unmuteChatNotification, mutedNotificationIds,
-    selectedChat, newMessage,
-    isEndOfMessages, documentList, cancelDocumentUpload, updateDocumentProgress,
-    user, messages, messagesLoading, setPreviousMessagesLoading } = store
+  const {
+    muteChatNotification,
+    uploadDocument,
+    unmuteChatNotification,
+    mutedNotificationIds,
+    chats,
+    selectedChat,
+    newMessage,
+    isEndOfMessages,
+    documentList,
+    cancelDocumentUpload,
+    updateDocumentProgress,
+    user,
+    messages,
+    messagesLoading,
+    setPreviousMessagesLoading,
+    getAllTeacherStudents,
+    teacherStudents,
+    teacherStudentsLoading,
+    teacherStudentsError,
+    addParticipantLoading,
+    addParticipantError,
+    addParticipants,
+    removeParticipants,
+    removeParticipantLoading,
+    removeParticipantError
+  } = store
 
 
 
@@ -74,6 +118,12 @@ const ChatLog = props => {
   const [emojiSelectorShowing, setEmojiSelectorShowing] = useState(false)
   const [dropZoneVisible, setDropZoneVisible] = useState(false)
   const [query, setQuery] = useState("")
+
+  const [isAddParticipants, setIsAddParticipants] = useState(false)
+  const [isRemoveParticipants, setIsRemoveParticipants] = useState(false)
+  const [participants, setParticipants] = useState([])
+  const [participantsRemoveList, setParticipantsRemoveList] = useState([])
+  const [userQuery, setUserQuery] = useState('')
 
 
   useEffect(() => {
@@ -157,9 +207,10 @@ const ChatLog = props => {
             >
               <Calendar size={16} />
               &nbsp;&nbsp;
-              {
+              <DateTime type="date" dateTime={item.createdAt} />
+              {/* {
                 moment(item.createdAt).format("DD MMM YYYY")
-              }
+              } */}
             </div>
           }
 
@@ -230,10 +281,16 @@ const ChatLog = props => {
                     item.user.userId == msgs[index + 1].user.userId
                       && moment(msgs[index + 1].createdAt).isSame(item.createdAt, 'minute') ?
                       ""
-                      : <div className="msg-time" > {moment(item.createdAt).format("hh:mm a")}</div>
+                      : <div className="msg-time" >
+                        <DateTime type="time" dateTime={item.createdAt} />
+                        {/* {moment(item.createdAt).format("hh:mm a")} */}
+                      </div>
                   }
                 </>
-                : <div className="msg-time" > {moment(item.createdAt).format("hh:mm a")}</div>
+                : <div className="msg-time" >
+                  <DateTime type="time" dateTime={item.createdAt} />
+                  {/* {moment(item.createdAt).format("hh:mm a")} */}
+                </div>
             }
           </div>
         </div>
@@ -268,6 +325,95 @@ const ChatLog = props => {
   const blockChat = (e) => {
     e.preventDefault()
     userBlockChat(socket, selectedChat.chatId)
+  }
+
+  const closeGroupOptions = () => {
+    setIsAddParticipants(false)
+    setIsRemoveParticipants(false)
+    setUserQuery("")
+    setParticipants([])
+    setParticipantsRemoveList([])
+  }
+
+
+  const toggleUserFromGroup = (user) => {
+    if (participants.find(p => p.userId == user.userId)) return setParticipants(participants.filter(p => p.userId != user.userId))
+    setParticipants([...participants, user])
+  }
+
+  const toggleUserFromGroupForRemoval = (u) => {
+
+    if (participantsRemoveList.find(p => p.user.userId == u.user.userId))
+      return setParticipants(participantsRemoveList.filter(p => p.user.userId != u.user.userId))
+    setParticipantsRemoveList([...participantsRemoveList, u])
+  }
+
+  useEffect(() => {
+    if (isAddParticipants && !addParticipantLoading && addParticipantError) {
+      notifyError("Add Participants", addParticipantError)
+    }
+    else if (isAddParticipants && !addParticipantLoading && !addParticipantError) {
+      closeGroupOptions()
+      notifySuccess("Add Participants", 'Participants added Successfully')
+    }
+  }, [addParticipantLoading])
+
+  useEffect(() => {
+    if (isRemoveParticipants && !removeParticipantLoading && removeParticipantError) {
+      notifyError("Remove Participants", removeParticipantError)
+    }
+    else if (isRemoveParticipants && !removeParticipantLoading && !removeParticipantError) {
+      closeGroupOptions()
+      notifySuccess("Remove Participants", 'Participants removed Successfully')
+    }
+  }, [removeParticipantLoading])
+
+  const groupContacts = () => {
+    return teacherStudents
+      .filter(u => !selectedChat.chatParticipants.find(p => p.user.userId == u.userId && p.chatParticipantStatus == 1))
+      .filter(u => !participants.find(p => p.userId == u.userId))
+      .filter(p => p.name.toLowerCase().includes(userQuery.toLowerCase()))
+  }
+
+  const getChatParticipants = () => {
+    return selectedChat.chatParticipants
+      .filter(p => p.user.userId != user.userId)
+      .filter(p => p.chatParticipantStatus == 1)
+      .filter(u => !participantsRemoveList.find(p => p.user.userId == u.user.userId))
+      .filter(p => p.user.name.toLowerCase().includes(userQuery.toLowerCase()))
+  }
+
+
+  const addParticipantsToGroup = () => {
+
+    if (participants.length == 0) return notifyWarning("Add Participants", "Participants are required ")
+    addParticipants();
+    addParticipantsWithSocket(socket, {
+      chatId: selectedChat.chatId,
+      participants: participants.map(u => u.userId),
+    })
+  }
+
+  const removeParticipantsFromGroup = () => {
+
+    if (participantsRemoveList.length == 0) return notifyWarning("Remove Participant", "Participants are required for removal ")
+    removeParticipants();
+    removeParticipantsWithSocket(socket, {
+      chatId: selectedChat.chatId,
+      participants: participantsRemoveList.map(u => u.user.userId),
+    })
+  }
+
+
+  const addParticipantsHandler = (e) => {
+    e.preventDefault()
+    setIsAddParticipants(true)
+    getAllTeacherStudents()
+  }
+
+  const removeParticipantsHandler = (e) => {
+    e.preventDefault()
+    setIsRemoveParticipants(true)
   }
 
   const unBlockChat = (e) => {
@@ -379,7 +525,7 @@ const ChatLog = props => {
         <input {...getInputProps()} />
         <FileText className="icon" width={50} height={50} />
       </div>
-      {Object.keys(selectedChat).length &&
+      {Object.keys(selectedChat).length > 0 &&
         <div
           className={classnames('active-chat', { 'd-none': selectedChat === null })}
           onDragEnter={e => captureDragOver(e)}
@@ -461,6 +607,7 @@ const ChatLog = props => {
                         Block Chat
                       </DropdownItem>
                     }
+
                     {
                       selectedChat.chatParticipants.find(u => u.user.userId == user.userId && u.blockedAt) &&
                       <DropdownItem href='/' onClick={unBlockChat}>
@@ -470,6 +617,17 @@ const ChatLog = props => {
                     <DropdownItem href='/' onClick={clearChat}>
                       Clear Chat
                     </DropdownItem>
+                    {
+                      selectedChat.type == 'group' && selectedChat.user.userId == user.userId &&
+                      <>
+                        <DropdownItem href='/' onClick={addParticipantsHandler}>
+                          Add Participants
+                        </DropdownItem>
+                        <DropdownItem href='/' onClick={removeParticipantsHandler}>
+                          Remove Participants
+                        </DropdownItem>
+                      </>
+                    }
                     <DropdownItem href='/' onClick={e => e.preventDefault()}>
                       Report
                     </DropdownItem>
@@ -507,6 +665,7 @@ const ChatLog = props => {
                 <AvatarGroup
                   data={
                     selectedChat.chatParticipants
+                      .filter(cp => cp.chatParticipantStatus != 0)
                       .filter(cp => cp.seenAt != null && cp.user.userId != user.userId)
                       .map(p => ({
                         title: p.user.name,
@@ -602,6 +761,213 @@ const ChatLog = props => {
           }
         </div>
       }
+      {
+        Object.keys(selectedChat).length > 0 &&
+        <>
+          <Modal isOpen={isAddParticipants} toggle={() => closeGroupOptions()} className="pt-5">
+            <UILoader blocking={teacherStudentsLoading || addParticipantLoading}>
+              <ModalBody className="p-2">
+                <div className="d-flex justify-content-between align-items-center">
+                  <h3 className="m-0">{selectedChat.groupName}</h3>
+                  {
+                    participants.length > 0 &&
+                    <Button.Ripple
+                      color='primary'
+                      onClick={() => addParticipantsToGroup()}
+                    >
+                      Submit
+                    </Button.Ripple>
+                  }
+                </div>
+                <div className="mt-2">
+                  <div >
+                    {
+                      teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
+                        <>
+                          {
+                            participants.length > 0 &&
+                            <>
+                              <Label className="ml-25 mb-1">
+                                Participants
+                              </Label>
+                              <Row className="mb-2">
+                                {
+                                  participants.map((u, index) =>
+                                    <Col
+                                      key={"selected-participant" + index}
+                                      md='3'
+                                      lg='2'
+                                    >
+                                      <div>
+                                        <Avatar
+                                          img={GET_IMAGE_URL(u.profilePicture)} size='lg' />
+                                        <div className="unselect-group-user"
+                                          onClick={() => toggleUserFromGroup(u)}
+                                        >
+                                          <X size={14} />
+                                        </div>
+                                      </div>
+                                    </Col>)
+                                }
+                              </Row>
+                            </>
+                          }
+                          <InputGroup className='input-group-merge'>
+                            <Input placeholder='Search here' value={userQuery} onChange={e => setUserQuery(e.target.value)} />
+                            <InputGroupAddon addonType='append'>
+                              <InputGroupText>
+                                {
+                                  !userQuery &&
+                                  <Search size={14} />
+                                }
+                                {
+                                  userQuery &&
+                                  <X size={14} onClick={() => setUserQuery('')} />
+                                }
+                              </InputGroupText>
+                            </InputGroupAddon>
+                          </InputGroup>
+                          <Label className="ml-25 mb-1 mt-1">
+                            Contacts
+                          </Label>
+                          {
+                            groupContacts().length > 0 ?
+                              groupContacts()
+                                .map((s, index) =>
+                                  <Row key={'non-connected' + index}>
+                                    <Col sm='12'>
+                                      <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                                        <div className="d-flex align-items-center">
+                                          <Avatar
+                                            img={GET_IMAGE_URL(s.profilePicture)} size='sm' />
+                                          <h5 className="m-0 ml-25">
+                                            {
+                                              s.name
+                                            }
+                                          </h5>
+                                        </div>
+                                        <Button.Ripple
+                                          color='primary'
+                                          onClick={() => toggleUserFromGroup(s)}
+                                        >
+                                          Add
+                                        </Button.Ripple>
+                                      </div>
+                                    </Col>
+                                  </Row>)
+                              : <NotFound message="No more contacts" />
+                          }
+                        </>
+                    }
+                  </div>
+                </div>
+              </ModalBody>
+            </UILoader>
+          </Modal>
+          <Modal isOpen={isRemoveParticipants} toggle={() => closeGroupOptions()} className="pt-5">
+            <UILoader blocking={removeParticipantLoading}>
+              <ModalBody className="p-2">
+                <div className="d-flex justify-content-between align-items-center">
+                  <h3 className="m-0">{selectedChat.groupName}</h3>
+                  {
+                    participantsRemoveList.length > 0 &&
+                    <Button.Ripple
+                      color='primary'
+                      onClick={() => removeParticipantsFromGroup()}
+                    >
+                      Submit
+                    </Button.Ripple>
+                  }
+                </div>
+                <div className="mt-2">
+                  <div >
+                    {
+                      selectedChat.chatParticipants.length < 2 ? <NotFound message="No user available for removal" /> :
+                        <>
+                          {
+                            participantsRemoveList.length > 0 &&
+                            <>
+                              <Label className="ml-25 mb-1">
+                                Participants
+                              </Label>
+                              <Row className="mb-2">
+                                {
+                                  participantsRemoveList.map((u, index) =>
+                                    <Col
+                                      key={"selected-participant" + index}
+                                      md='3'
+                                      lg='2'
+                                    >
+                                      <div>
+                                        <Avatar
+                                          img={GET_IMAGE_URL(u.user.profilePicture)} size='lg' />
+                                        <div className="unselect-group-user"
+                                          onClick={() => toggleUserFromGroupForRemoval(u)}
+                                        >
+                                          <X size={14} />
+                                        </div>
+                                      </div>
+                                    </Col>)
+                                }
+                              </Row>
+                            </>
+                          }
+                          <InputGroup className='input-group-merge'>
+                            <Input placeholder='Search here' value={userQuery} onChange={e => setUserQuery(e.target.value)} />
+                            <InputGroupAddon addonType='append'>
+                              <InputGroupText>
+                                {
+                                  !userQuery &&
+                                  <Search size={14} />
+                                }
+                                {
+                                  userQuery &&
+                                  <X size={14} onClick={() => setUserQuery('')} />
+                                }
+                              </InputGroupText>
+                            </InputGroupAddon>
+                          </InputGroup>
+                          <Label className="ml-25 mb-1 mt-1">
+                            Contacts
+                          </Label>
+                          {
+                            getChatParticipants().length > 0 ?
+                              getChatParticipants()
+                                .map((u, index) =>
+                                  <Row key={'connected' + index}>
+                                    <Col sm='12'>
+                                      <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                                        <div className="d-flex align-items-center">
+                                          <Avatar
+                                            img={GET_IMAGE_URL(u.user.profilePicture)} size='sm' />
+                                          <h5 className="m-0 ml-25">
+                                            {
+                                              u.user.name
+                                            }
+                                          </h5>
+                                        </div>
+                                        <Button.Ripple
+                                          color='primary'
+                                          onClick={() => toggleUserFromGroupForRemoval(u)}
+                                        >
+                                          Remove
+                                        </Button.Ripple>
+                                      </div>
+                                    </Col>
+                                  </Row>)
+                              : <NotFound message="No more contacts" />
+                          }
+                        </>
+                    }
+                  </div>
+                </div>
+              </ModalBody>
+            </UILoader>
+          </Modal>
+
+        </>
+      }
+
 
     </div >
   )

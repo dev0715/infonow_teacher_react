@@ -34,6 +34,8 @@ import { GET_IMAGE_URL } from './../../helpers/url_helper';
 
 import { getPreviousMessages } from './socket/events'
 
+import './style.scss'
+
 
 const SidebarLeft = props => {
   // ** Props & Store
@@ -69,6 +71,7 @@ const SidebarLeft = props => {
 
   const [groupName, setGroupName] = useState('')
   const [participants, setParticipants] = useState([])
+  const [userQuery, setUserQuery] = useState('')
 
   // ** Handles User Chat Click
   const handleUserClick = (chat, socket) => {
@@ -78,23 +81,16 @@ const SidebarLeft = props => {
 
 
   useEffect(() => {
-    if (isNewChat && !newChatLoading && newChatError) {
-      notifyError("New Chat", newChatError)
+    if ((isNewChat || isNewChatGroup) && !newChatLoading && newChatError) {
+      notifyError(isNewChat ? "New Chat" : "New Group Chat", newChatError)
     }
-    else if (isNewChat && !newChatLoading && !newChatError) {
-      notifySuccess("New Chat", 'Chat started Successfully')
+    else if ((isNewChat || isNewChatGroup) && !newChatLoading && !newChatError) {
+      closeNewChat()
+      if (chats.length > 0) handleUserClick(chats[chats.length - 1], socket)
+      notifySuccess(isNewChat ? "New Chat" : "New Group Chat", 'Chat started Successfully')
     }
   }, [newChatLoading])
 
-  useEffect(() => {
-    if (isNewChatGroup && !newChatLoading && newChatError) {
-      notifyError("New Group Chat", newChatError)
-    }
-    else if (isNewChatGroup && !newChatLoading && !newChatError) {
-      closeNewChat()
-      notifySuccess("New Group Chat", 'Chat started Successfully')
-    }
-  }, [newChatLoading])
 
   // ** Renders Chat
   const renderChats = () => {
@@ -170,13 +166,13 @@ const SidebarLeft = props => {
   }
 
   const onNotificationChange = (e) => {
-    console.log(e.target.checked)
+    // console.log(e.target.checked)
     setNotificationEnabled(e.target.checked)
   }
 
   const saveAbout = (e) => {
     e.preventDefault()
-    console.log("ABOUT___", e.target.value)
+    // console.log("ABOUT___", e.target.value)
     updateAbout({ about: e.target.value })
   }
 
@@ -185,6 +181,7 @@ const SidebarLeft = props => {
       .filter(ct => ct.type == "chat")
       .find(c => c.chatParticipants.find(p => p.user.userId == id))
   }
+
   const openNewChatModel = (e, group = false) => {
     e.preventDefault()
     group ? setIsNewChatGroup(true) : setIsNewChat(true)
@@ -196,6 +193,7 @@ const SidebarLeft = props => {
     setIsNewChatGroup(false)
     setGroupName('')
     setParticipants([])
+    setUserQuery("")
   }
 
   const startNewChat = (id) => {
@@ -205,16 +203,21 @@ const SidebarLeft = props => {
     })
   }
 
-  const toggleUserFromGroup = (userId) => {
-    if (participants.find(id => id == userId)) return setParticipants(participants.filter(id => id != userId))
-    setParticipants([...participants, userId])
+  const toggleUserFromGroup = (user) => {
+    if (participants.find(p => p.userId == user.userId)) return setParticipants(participants.filter(p => p.userId != user.userId))
+    setParticipants([...participants, user])
+  }
+
+  const groupContacts = () => {
+    return teacherStudents
+      .filter(u => !participants.find(p => p.userId == u.userId)).filter(p => p.name.toLowerCase().includes(userQuery.toLowerCase()))
   }
 
   const startNewGroupChat = () => {
     if (!groupName) return notifyWarning("New Group Chat", "Group name is required")
     if (participants.length == 0) return notifyWarning("New Group Chat", "Participants are required for group creation")
     createChat({
-      participants,
+      participants: participants.map(u => u.userId),
       type: "group",
       groupName
     })
@@ -357,7 +360,10 @@ const SidebarLeft = props => {
               <div className="d-flex  justify-content-center align-items-center pl-1">
                 <UncontrolledDropdown>
                   <DropdownToggle tag='span'>
-                    <Plus size={15} />
+                    <Button.Ripple color="flat-primary" className="btn btn-icon">
+                      <Plus size={15} />
+                    </Button.Ripple>
+
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem
@@ -398,38 +404,55 @@ const SidebarLeft = props => {
               />
             </div>
             <div className="mt-2">
-              <div className="text-center">
+              <InputGroup className='input-group-merge'>
+                <Input placeholder='Search here' value={userQuery} onChange={e => setUserQuery(e.target.value)} />
+                <InputGroupAddon addonType='append'>
+                  <InputGroupText>
+                    {
+                      !userQuery &&
+                      <Search size={14} />
+                    }
+                    {
+                      userQuery &&
+                      <X size={14} onClick={() => setUserQuery('')} />
+                    }
+                  </InputGroupText>
+                </InputGroupAddon>
+              </InputGroup>
+
+              <div className="mt-2">
                 {
                   teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
-                    teacherStudents.map((s, index) =>
-                      <Row key={'non-connected' + index}>
-                        <Col sm='12'>
-                          <div className="d-flex justify-content-lg-between align-items-center mb-1">
-                            <h5 className="m-0">
-                              {
-                                s.name
-                              }
-                            </h5>
-                            {
-                              getChatByUserId(s.userId) ? <Button.Ripple
-                                color='primary'
-                                className="btn btn-sm"
-                                disabled={true}
-                              >
-                                Chatting
-                              </Button.Ripple>
-                                :
-                                <Button.Ripple
-                                  color='primary'
-                                  className="btn btn-sm"
-                                  onClick={() => startNewChat(s.userId)}
-                                >
-                                  Start Conversation
-                                </Button.Ripple>
-                            }
-                          </div>
-                        </Col>
-                      </Row>)
+                    teacherStudents
+                      .filter(u => u.name.toLowerCase().includes(userQuery.toLowerCase()))
+                      .map((s, index) =>
+                        <Row key={'non-connected' + index}>
+                          <Col sm='12'>
+                            <div className=" new-chat-head-item d-flex justify-content-lg-between align-items-center mb-1">
+                              <div className="d-flex align-items-center">
+                                <Avatar
+                                  img={GET_IMAGE_URL(s.profilePicture)} size='sm' />
+                                <h5 className="m-0 ml-25">
+                                  {
+                                    s.name
+                                  }
+                                </h5>
+                              </div>
+                              <div className="action-btn">
+                                {
+                                  !getChatByUserId(s.userId) &&
+                                  <Button.Ripple
+                                    color='primary'
+                                    className="btn btn-sm"
+                                    onClick={() => startNewChat(s.userId)}
+                                  >
+                                    Start Conversation
+                                  </Button.Ripple>
+                                }
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>)
                 }
               </div>
             </div>
@@ -437,15 +460,17 @@ const SidebarLeft = props => {
         </UILoader>
       </Modal>
 
-      <Modal isOpen={isNewChatGroup} className="pt-5">
+      <Modal isOpen={isNewChatGroup} toggle={() => closeNewChat()} className="pt-5">
         <UILoader blocking={newChatLoading || teacherStudentsLoading}>
           <ModalBody className="p-2">
-            <div className="d-flex justify-content-lg-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center">
               <h3 className="m-0">New Group Chat</h3>
-              <X
-                size={16}
-                onClick={() => closeNewChat()}
-              />
+              <Button.Ripple
+                color='primary'
+                onClick={() => startNewGroupChat()}
+              >
+                Submit
+              </Button.Ripple>
             </div>
             <div className="mt-2">
               <div >
@@ -465,37 +490,79 @@ const SidebarLeft = props => {
                           />
                         </InputGroup>
                       </FormGroup>
-                      <Label className="ml-25 mb-1">
-                        Select Participants
-                      </Label>
-                      {teacherStudents.map((s, index) =>
-                        <Row key={'non-connected' + index}>
-                          <Col sm='12'>
-                            <div className="d-flex justify-content-lg-between align-items-center mb-1">
-                              <h6 className="m-0">
-                                {
-                                  s.name
-                                }
-                              </h6>
-                              <CustomInput
-                                type='checkbox'
-                                className='custom-control-Primary'
-                                id={"group-user-" + index}
-                                inline
-                                onClick={() => toggleUserFromGroup(s.userId)}
-                              />
-                            </div>
-                          </Col>
-                        </Row>)
+                      {
+                        participants.length > 0 &&
+                        <>
+                          <Label className="ml-25 mb-1">
+                            Participants
+                          </Label>
+                          <Row className="mb-2">
+                            {
+                              participants.map((u, index) =>
+                                <Col
+                                  key={"selected-participant" + index}
+                                  md='3'
+                                  lg='2'
+                                >
+                                  <div>
+                                    <Avatar
+                                      img={GET_IMAGE_URL(u.profilePicture)} size='lg' />
+                                    <div className="unselect-group-user"
+                                      onClick={() => toggleUserFromGroup(u)}
+                                    >
+                                      <X size={14} />
+                                    </div>
+                                  </div>
+                                </Col>)
+                            }
+                          </Row>
+                        </>
                       }
-                      <div className="text-right mt-2">
-                        <Button.Ripple
-                          color="primary"
-                          onClick={() => startNewGroupChat()}
-                        >
-                          Create Group
-                        </Button.Ripple>
-                      </div>
+                      <InputGroup className='input-group-merge'>
+                        <Input placeholder='Search here' value={userQuery} onChange={e => setUserQuery(e.target.value)} />
+                        <InputGroupAddon addonType='append'>
+                          <InputGroupText>
+                            {
+                              !userQuery &&
+                              <Search size={14} />
+                            }
+                            {
+                              userQuery &&
+                              <X size={14} onClick={() => setUserQuery('')} />
+                            }
+                          </InputGroupText>
+                        </InputGroupAddon>
+                      </InputGroup>
+                      <Label className="ml-25 mb-1 mt-1">
+                        Contacts
+                      </Label>
+                      {
+                        groupContacts().length > 0 ?
+                          groupContacts()
+                            .map((s, index) =>
+                              <Row key={'non-connected' + index}>
+                                <Col sm='12'>
+                                  <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                                    <div className="d-flex align-items-center">
+                                      <Avatar
+                                        img={GET_IMAGE_URL(s.profilePicture)} size='sm' />
+                                      <h5 className="m-0 ml-25">
+                                        {
+                                          s.name
+                                        }
+                                      </h5>
+                                    </div>
+                                    <Button.Ripple
+                                      color='primary'
+                                      onClick={() => toggleUserFromGroup(s)}
+                                    >
+                                      Add
+                                    </Button.Ripple>
+                                  </div>
+                                </Col>
+                              </Row>)
+                          : <NotFound message="No more contacts" />
+                      }
                     </>
                 }
               </div>

@@ -411,7 +411,7 @@ const GetStartedPage = (props) => {
     }
 
     const renderContent = (contentData) => {
-        console.log(contentData);
+        // console.log(contentData);
         if (contentData) {
             let uploadPath = `${BLOG_API_URL}/uploads/`;
             let markdown = String(contentData).replaceAll("/uploads/", uploadPath);

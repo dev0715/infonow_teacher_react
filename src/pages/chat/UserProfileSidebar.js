@@ -88,20 +88,23 @@ const UserProfileSidebar = props => {
               <h6 className='section-label mb-1 mt-3'>Group Information</h6>
               <ul className='list-unstyled'>
                 {
-                  selectedChat.chatParticipants.filter(cp => cp.user.userId != user.userId).map(c =>
-                    <li className='mb-1' key={c.user.userId}>
-                      <div>
-                        <Avatar
-                          img={GET_IMAGE_URL(c.user.profilePicture)}
-                        />
-                        <span className="pl-1">
-                          {
-                            c.user.name
-                          }
-                        </span>
-                      </div>
-                    </li>
-                  )
+                  selectedChat.chatParticipants
+                    .filter(cp => cp.user.userId != user.userId)
+                    .filter(cp => cp.chatParticipantStatus != 0)
+                    .map(c =>
+                      <li className='mb-1' key={c.user.userId}>
+                        <div>
+                          <Avatar
+                            img={GET_IMAGE_URL(c.user.profilePicture)}
+                          />
+                          <span className="pl-1">
+                            {
+                              c.user.name
+                            }
+                          </span>
+                        </div>
+                      </li>
+                    )
                 }
               </ul>
             </>

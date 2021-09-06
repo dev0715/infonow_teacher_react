@@ -107,7 +107,7 @@ const CalendarComponent = (props) => {
   }
 
   const handleLesson = (lesson) => {
-    console.log("Lesson", lesson)
+    // console.log("Lesson", lesson)
     props.selectTopic(lesson.topic.id)
     props.selectLesson(lesson.id)
     props.history.push('/topic-lessons')
@@ -119,7 +119,7 @@ const CalendarComponent = (props) => {
   }
 
   const handleEvent = (e) => {
-    // console.log("event", e)
+    // // console.log("event", e)
     setEvent(e)
   }
 

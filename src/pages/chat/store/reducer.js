@@ -43,6 +43,12 @@ import {
   GET_ALL_TEACHER_STUDENTS,
   GET_ALL_TEACHER_STUDENTS_SUCCESS,
   GET_ALL_TEACHER_STUDENTS_FAILURE,
+  ADD_PARTICIPANTS,
+  ADD_PARTICIPANTS_SUCCESS,
+  ADD_PARTICIPANTS_FAILURE,
+  REMOVE_PARTICIPANTS,
+  REMOVE_PARTICIPANTS_SUCCESS,
+  REMOVE_PARTICIPANTS_FAILURE,
 
 } from './actionTypes'
 
@@ -77,6 +83,10 @@ const initialState = {
   teacherStudents: [],
   teacherStudentsLoading: false,
   teacherStudentsError: null,
+  addParticipantLoading: false,
+  addParticipantError: null,
+  removeParticipantLoading: false,
+  removeParticipantError: null
 }
 
 
@@ -89,7 +99,7 @@ const saveNewMessage = (state, { success, chatId, data, messageId, error }) => {
     state.messages.forEach(m => {
       if (m.messageId == messageId) {
         m.error = true;
-        console.log("MESSAGE ERROR", error)
+        // console.log("MESSAGE ERROR", error)
       }
     })
   }
@@ -97,13 +107,13 @@ const saveNewMessage = (state, { success, chatId, data, messageId, error }) => {
     state.messages.forEach(m => {
       if (m.messageId == messageId) {
         m = data;
-        console.log("MESSAGE REPLACED", state.messages)
+        // console.log("MESSAGE REPLACED", state.messages)
       }
     })
   }
   else if (success && !messageId && chatId == state.selectedChat.chatId) {
     state.messages.push(data)
-    console.log("MESSAGE PUSHED", state.messages)
+    // console.log("MESSAGE PUSHED", state.messages)
   }
 
   return { ...state, messages: [...state.messages] }
@@ -146,7 +156,7 @@ const getPreviousMessagesSuccess = (state, action) => {
 const playNotificationSound = (state, res) => {
 
   if (res.success && state.selectedChat.chatId != res.chatId && state.isNotificationEnabled && !state.mutedNotificationIds[res.chatId] && state.user.userId != res.data.user.userId) {
-    console.log("NOTIFICATION_USER_TRUE")
+    // console.log("NOTIFICATION_USER_TRUE")
     state.isNotification = true;
   }
   else {
@@ -326,6 +336,44 @@ const chatReducer = (state = initialState, action) => {
 
     case GET_ALL_TEACHER_STUDENTS_FAILURE:
       return { ...state, teacherStudentsError: action.payload, teacherStudentsLoading: false }
+
+    case ADD_PARTICIPANTS:
+      return { ...state, addParticipantLoading: true, addParticipantError: null }
+
+    case ADD_PARTICIPANTS_SUCCESS:
+      return {
+        ...state,
+        chats: updateChatParticipants(state, action),
+        selectedChat: { ...state.selectedChat, chatParticipants: action.payload.data },
+        addParticipantLoading: false,
+        addParticipantError: null
+      }
+
+    case ADD_PARTICIPANTS_FAILURE:
+      return {
+        ...state,
+        addParticipantLoading: false,
+        addParticipantError: action.payload
+      }
+
+    case REMOVE_PARTICIPANTS:
+      return { ...state, removeParticipantLoading: true, removeParticipantError: null }
+
+    case REMOVE_PARTICIPANTS_SUCCESS:
+      return {
+        ...state,
+        chats: updateChatParticipants(state, action),
+        selectedChat: { ...state.selectedChat, chatParticipants: action.payload.data },
+        removeParticipantLoading: false,
+        removeParticipantError: null
+      }
+
+    case REMOVE_PARTICIPANTS_FAILURE:
+      return {
+        ...state,
+        removeParticipantLoading: false,
+        removeParticipantError: action.payload
+      }
 
     default:
       return state

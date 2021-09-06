@@ -85,7 +85,7 @@ const MeetingList = (props) => {
 	}, []);
 
 	useEffect(() => {
-		console.log("Meetings", props.meetings)
+		// console.log("Meetings", props.meetings)
 		let meeting = props.meetings.find(m => m.meetingId == updateMeetingId)
 		if (meeting) {
 			if (!meeting.loading && !meeting.error) {
@@ -124,10 +124,12 @@ const MeetingList = (props) => {
 		let date = moment(meetingDate)
 		let time = moment(meetingTime)
 		date.set('hour', time.get('hour')).set('minute', time.get('minute'))
-		onMeetingAction(e, updateMeetingId, MeetingActions.Reschedule, {
+		let data = {
 			message,
 			scheduledAt: date,
-		})
+		}
+		if (!data.message) delete data.message;
+		onMeetingAction(e, updateMeetingId, MeetingActions.Reschedule, data)
 	}
 
 	const closeRescheduleMeeting = () => {
@@ -184,7 +186,6 @@ const MeetingList = (props) => {
 										placeholder='Send a personal message'
 										value={message}
 										onChange={e => setMessage(e.target.value)}
-										required
 									/>
 								</InputGroup>
 							</FormGroup>
@@ -291,7 +292,7 @@ const MeetingList = (props) => {
 				<CardBody className="meeting-table-body">
 					{
 						props.meetings.filter(m => m.status != 'accepted').length == 0 ?
-							<NotFound message="No more meetings found" />
+							<NotFound message="No meetings found" />
 							:
 							<Table responsive hover >
 								<thead>

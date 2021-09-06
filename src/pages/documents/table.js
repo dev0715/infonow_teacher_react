@@ -77,7 +77,7 @@ const DataTableWithButtons = (props) => {
 
     const copyLink = (e, text) => {
         e.preventDefault()
-        console.log("COPY_LINK", text)
+        // console.log("COPY_LINK", text)
         let input = document.createElement('input');
         input.setAttribute('value', text);
         document.body.appendChild(input);
@@ -191,7 +191,7 @@ const DataTableWithButtons = (props) => {
     }
 
     const onFileSelectChange = (e) => {
-        console.log("FILES", e.target.files)
+        // console.log("FILES", e.target.files)
         let count = 0;
         for (let key in e.target.files) {
             if (e.target.files.hasOwnProperty(key)) {

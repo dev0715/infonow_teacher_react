@@ -37,7 +37,7 @@ const AssignmentAttemptDetail = (props) => {
     useEffect(getAttemptAndAssignmentDetail, []);
 
     useEffect(() => {
-        console.log("assignmentAttemptDetail.assignment", assignmentAttemptDetail.assignment)
+        // console.log("assignmentAttemptDetail.assignment", assignmentAttemptDetail.assignment)
     }, [assignmentAttemptDetail]);
 
     return (

@@ -20,13 +20,25 @@ import classnames from 'classnames'
 import { connect, useSelector } from 'react-redux'
 import {
   setLoggedUser,
-  getChatContacts, authorizedSuccess, authorizedFailure,
-  setRoomJoined, selectChat, updateSelectChat,
-  getPreviousMessagesSuccess, getPreviousMessagesFailure,
-  newMessage, saveNewMessage, deleteMessages,
-  updateChatHeadMessage, updateChatParticipants,
-  playNotificationSound, stopNotificationSound, setNotificationEnabled,
-  setNotificationIds, muteChatNotification, unmuteChatNotification,
+  getChatContacts,
+  authorizedSuccess,
+  authorizedFailure,
+  setRoomJoined,
+  selectChat,
+  updateSelectChat,
+  getPreviousMessagesSuccess,
+  getPreviousMessagesFailure,
+  newMessage,
+  saveNewMessage,
+  deleteMessages,
+  updateChatHeadMessage,
+  updateChatParticipants,
+  playNotificationSound,
+  stopNotificationSound,
+  setNotificationEnabled,
+  setNotificationIds,
+  muteChatNotification,
+  unmuteChatNotification,
   uploadDocument,
   addDocumentToQueue,
   cancelDocumentUpload,
@@ -40,7 +52,13 @@ import {
   updateAboutFailure,
   setPreviousMessagesLoading,
   createChat,
-  getAllTeacherStudents
+  getAllTeacherStudents,
+  addParticipants,
+  addParticipantsSuccess,
+  addParticipantsFailure,
+  removeParticipants,
+  removeParticipantsSuccess,
+  removeParticipantsFailure,
 
 } from './store/actions'
 
@@ -88,7 +106,7 @@ const AppChat = (props) => {
   }, [])
 
   useEffect(() => {
-    if (!props.isRoomJoined) {
+    if (!props.isRoomsJoined && props.chats.length > 0) {
       for (var chat of props.chats) {
         socket.emit(IOEvents.JOIN_ROOM, { chatId: chat.chatId })
       }
@@ -179,7 +197,7 @@ const mapStateToProps = (state) => {
     chatError,
     authError,
     isAuthorized,
-    isRoomJoined,
+    isRoomsJoined,
     selectedChat,
     selectedUser,
     messages,
@@ -199,6 +217,10 @@ const mapStateToProps = (state) => {
     teacherStudents,
     teacherStudentsLoading,
     teacherStudentsError,
+    addParticipantLoading,
+    addParticipantError,
+    removeParticipantLoading,
+    removeParticipantError
 
   } = state.Chat;
   return {
@@ -208,7 +230,7 @@ const mapStateToProps = (state) => {
     chatError,
     authError,
     isAuthorized,
-    isRoomJoined,
+    isRoomsJoined,
     selectedChat,
     selectedUser,
     messages,
@@ -228,6 +250,10 @@ const mapStateToProps = (state) => {
     teacherStudents,
     teacherStudentsLoading,
     teacherStudentsError,
+    addParticipantLoading,
+    addParticipantError,
+    removeParticipantLoading,
+    removeParticipantError
   }
 }
 
@@ -266,6 +292,12 @@ export default withRouter(
     updateAboutFailure,
     setPreviousMessagesLoading,
     createChat,
-    getAllTeacherStudents
+    getAllTeacherStudents,
+    addParticipants,
+    addParticipantsSuccess,
+    addParticipantsFailure,
+    removeParticipants,
+    removeParticipantsSuccess,
+    removeParticipantsFailure,
   })(AppChat)
 )

@@ -97,13 +97,13 @@ function* addNewTopicHttp({ payload: { title, description, file } }) {
   try {
 
 
-    console.log(file);
+    // console.log(file);
     let formData = new FormData()
     formData.append("title", title)
     formData.append("description", description)
     formData.append("file", file)
 
-    console.log("dfsdfsd");
+    // console.log("dfsdfsd");
     const response = yield call(uploadNewTopic, formData);
     if (response) {
       yield put(addNewTopicSuccess(response))
@@ -113,7 +113,7 @@ function* addNewTopicHttp({ payload: { title, description, file } }) {
 
 
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     yield put(addNewTopicFailure(error.message ? error.message : error))
   }
 }
