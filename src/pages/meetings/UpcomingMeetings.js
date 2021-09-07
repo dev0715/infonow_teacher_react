@@ -17,6 +17,8 @@ import CardReload from '@components/card-reload'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { AddMeetingToCalenderButton } from './addMeetingToCalender'
+
 import {
 	getMeetingDates, newMeeting, getStudentsForMeeting
 } from '@store/actions';
@@ -49,12 +51,11 @@ const UpcomingMeetingItem = ({ meeting }) => {
 			</Col>
 			<Col xs={2}>
 				<Fade>
-					<Button.Ripple
+					<AddMeetingToCalenderButton
 						className='remind-me-btn btn-icon'
-						color='primary'
-					>
-						<Bell size={14} />
-					</Button.Ripple>
+						type="button-icon"
+						meeting={meeting}
+					/>
 				</Fade>
 			</Col>
 		</Row>
