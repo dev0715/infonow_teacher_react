@@ -397,7 +397,7 @@ const SidebarLeft = props => {
       <Modal isOpen={isNewChat} className="pt-5">
         <UILoader blocking={newChatLoading || teacherStudentsLoading}>
           <ModalBody className="p-2">
-            <div className="d-flex justify-content-lg-between align-items-center">
+            <div className="d-flex justify-content-between align-items-center">
               <h3 className="m-0">New Chat</h3>
               <X
                 size={16}
