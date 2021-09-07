@@ -128,12 +128,12 @@ const UserProfileSidebar = props => {
                     className='cursor-pointer mb-1'
                   >
                     <Row className="shared-media-item">
-                      <Col lg='1'>
+                      <Col xs='1'>
                         {
                           getFileIcon(d.fileType)
                         }
                       </Col>
-                      <Col lg='9'>
+                      <Col xs='9'>
                         <span id={`chat-media-${d.documentId}`} className="ml-1">
                           {
                             getShortNameForDocument(d.fileName)
@@ -143,7 +143,7 @@ const UserProfileSidebar = props => {
                           {d.fileName}
                         </UncontrolledTooltip>
                       </Col>
-                      <Col lg='1' className="download-btn">
+                      <Col xs='1' className="download-btn">
                         <Download
                           size={16}
                           onClick={() => saveAs(GET_DOCUMENT_URL(d.name), d.fileName)}

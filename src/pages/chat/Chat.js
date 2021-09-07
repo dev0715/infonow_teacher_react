@@ -344,7 +344,7 @@ const ChatLog = props => {
   const toggleUserFromGroupForRemoval = (u) => {
 
     if (participantsRemoveList.find(p => p.user.userId == u.user.userId))
-      return setParticipants(participantsRemoveList.filter(p => p.user.userId != u.user.userId))
+      return setParticipantsRemoveList(participantsRemoveList.filter(p => p.user.userId != u.user.userId))
     setParticipantsRemoveList([...participantsRemoveList, u])
   }
 
@@ -795,8 +795,10 @@ const ChatLog = props => {
                                   participants.map((u, index) =>
                                     <Col
                                       key={"selected-participant" + index}
-                                      md='3'
                                       lg='2'
+                                      md='2'
+                                      sm='2'
+                                      xs="3"
                                     >
                                       <div>
                                         <Avatar
@@ -836,7 +838,7 @@ const ChatLog = props => {
                                 .map((s, index) =>
                                   <Row key={'non-connected' + index}>
                                     <Col sm='12'>
-                                      <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                                      <div className="d-flex justify-content-between align-items-center mb-1">
                                         <div className="d-flex align-items-center">
                                           <Avatar
                                             img={GET_IMAGE_URL(s.profilePicture)} size='sm' />
@@ -895,8 +897,10 @@ const ChatLog = props => {
                                   participantsRemoveList.map((u, index) =>
                                     <Col
                                       key={"selected-participant" + index}
-                                      md='3'
                                       lg='2'
+                                      md='2'
+                                      sm='2'
+                                      xs="3"
                                     >
                                       <div>
                                         <Avatar
@@ -936,7 +940,7 @@ const ChatLog = props => {
                                 .map((u, index) =>
                                   <Row key={'connected' + index}>
                                     <Col sm='12'>
-                                      <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                                      <div className="d-flex justify-content-between align-items-center mb-1">
                                         <div className="d-flex align-items-center">
                                           <Avatar
                                             img={GET_IMAGE_URL(u.user.profilePicture)} size='sm' />

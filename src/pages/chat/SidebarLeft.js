@@ -429,7 +429,7 @@ const SidebarLeft = props => {
                       .map((s, index) =>
                         <Row key={'non-connected' + index}>
                           <Col sm='12'>
-                            <div className=" new-chat-head-item d-flex justify-content-lg-between align-items-center mb-1">
+                            <div className=" new-chat-head-item d-flex justify-content-between align-items-center mb-1">
                               <div className="d-flex align-items-center">
                                 <Avatar
                                   img={GET_IMAGE_URL(s.profilePicture)} size='sm' />
@@ -441,13 +441,13 @@ const SidebarLeft = props => {
                               </div>
                               <div className="action-btn">
                                 {
-                                  !getChatByUserId(s.userId) &&
+                                  // !getChatByUserId(s.userId) &&
                                   <Button.Ripple
                                     color='primary'
                                     className="btn btn-sm"
                                     onClick={() => startNewChat(s.userId)}
                                   >
-                                    Start Conversation
+                                    Chat
                                   </Button.Ripple>
                                 }
                               </div>
@@ -466,12 +466,16 @@ const SidebarLeft = props => {
           <ModalBody className="p-2">
             <div className="d-flex justify-content-between align-items-center">
               <h3 className="m-0">New Group Chat</h3>
-              <Button.Ripple
-                color='primary'
-                onClick={() => startNewGroupChat()}
-              >
-                Submit
-              </Button.Ripple>
+              {
+                participants.length > 0 &&
+
+                <Button.Ripple
+                  color='primary'
+                  onClick={() => startNewGroupChat()}
+                >
+                  Submit
+                </Button.Ripple>
+              }
             </div>
             <div className="mt-2">
               <div >
@@ -502,10 +506,12 @@ const SidebarLeft = props => {
                               participants.map((u, index) =>
                                 <Col
                                   key={"selected-participant" + index}
-                                  md='3'
                                   lg='2'
+                                  md='2'
+                                  sm='2'
+                                  xs="3"
                                 >
-                                  <div>
+                                  <div className='w-100'>
                                     <Avatar
                                       img={GET_IMAGE_URL(u.profilePicture)} size='lg' />
                                     <div className="unselect-group-user"
@@ -543,7 +549,7 @@ const SidebarLeft = props => {
                             .map((s, index) =>
                               <Row key={'non-connected' + index}>
                                 <Col sm='12'>
-                                  <div className="d-flex justify-content-lg-between align-items-center mb-1">
+                                  <div className="d-flex justify-content-between align-items-center mb-1">
                                     <div className="d-flex align-items-center">
                                       <Avatar
                                         img={GET_IMAGE_URL(s.profilePicture)} size='sm' />
