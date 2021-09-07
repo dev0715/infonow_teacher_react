@@ -75,6 +75,7 @@ const SidebarLeft = props => {
 
   // ** Handles User Chat Click
   const handleUserClick = (chat, socket) => {
+    handleSidebar()
     selectChat(chat)
     getPreviousMessages(socket, chat.chatId)
   }
