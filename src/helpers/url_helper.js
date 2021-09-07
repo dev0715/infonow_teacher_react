@@ -10,7 +10,7 @@ export const BASE_URL = `https://api.meditati.ro/main`
 export const MEETING_API_URL = `https://meet.meditati.ro/api`
 export const MEETING_APP_URL = `https://meet.meditati.ro`
 export const CHAT_API_URL = `https://api.meditati.ro/chat`
-export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/live-chat`
+export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/`
 export const BLOG_API_URL = `https://api.meditati.ro/blog`
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
