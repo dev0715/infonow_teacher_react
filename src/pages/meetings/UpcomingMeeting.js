@@ -28,32 +28,29 @@ const UpcomingMeeting = (props) => {
 
 	const { meeting } = props
 	const [skin, setSkin] = useSkin();
+	const [meetingUrl, setMeetingUrl] = useState("");
 
-	const [isActive, setIsActive] = useState(false)
-
-
-	const data = [{
-		title: 'Hello',
-		img: 'https://pv-magazine-usa.com/wp-content/uploads/sites/2/2019/10/FordEV-1200x800.jpeg'
-	}]
-	const illus =
-		skin === 'dark' ? 'upcoming-meeting-dark.svg' : 'upcoming-meeting.svg';
+	const illus = skin === 'dark' ? 'upcoming-meeting-dark.svg' : 'upcoming-meeting.svg';
 	const illustration = require(`@src/assets/images/illustrations/${illus}`);
 
 	const handleJoin = (e) => {
 		e.preventDefault();
-		setIsActive(true)
-		if (!props.meetingToken || props.meetingTokenError)
-			props.getMeetingToken()
+		if (meetingUrl) {
+			window.open(meetingUrl);
+		}
 	}
 
 	useEffect(() => {
-		if (props.meetingToken && isActive) {
-			setIsActive(false)
+		if (!props.meetingToken || props.meetingTokenError)
+			props.getMeetingToken()
+	}, [])
+
+	useEffect(() => {
+		if (props.meetingToken) {
 			let url = `${MEETING_APP_URL}/${meeting.meetingId}/${encodeURIComponent("JWT " + props.meetingToken)}`
-			window.open(url, '_blank');
+			setMeetingUrl(url)
 		}
-	}, [isActive, props.meetingToken])
+	}, [props.meetingToken])
 
 
 
