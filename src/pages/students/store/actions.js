@@ -8,9 +8,10 @@ import {
     GET_STUDENT_BY_ID_FAILURE,
 } from './actionTypes'
 
-export const getAllStudents = () => {
+export const getAllStudents = (data) => {
     return {
-        type: GET_STUDENTS
+        type: GET_STUDENTS,
+        payload:data
     }
 }
 

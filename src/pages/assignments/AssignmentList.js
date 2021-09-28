@@ -11,10 +11,11 @@ import { Plus } from 'react-feather'
 
 import { titleCase } from '../../helpers/HelperFunctions';
 import '../../assets/scss/custom/components/_card.scss'
+import CustomPagination from '../pagination';
 
 const AssignmentList = (props) => {
 
-    const { assignments, isTeacher, fetchAssignments, isReloading } = props;
+    const {count,  assignments, isTeacher, fetchAssignments, isReloading ,onPageChange } = props;
 
     const onSelectAssignment = (assignment) => {
         if (props.onSelect) {
@@ -26,6 +27,11 @@ const AssignmentList = (props) => {
         if (props.onNewAssignment) {
             props.onNewAssignment()
         }
+    }
+
+    const onSelectPage = (page) => {
+        if(onPageChange)
+           onPageChange(page)
     }
 
 
@@ -75,6 +81,7 @@ const AssignmentList = (props) => {
                             )}
                     </tbody>
                 </Table>
+                <CustomPagination pages={Math.ceil(count / 20)} onSelect={onSelectPage}/>
             </CardBody>
         </CardReload>
     );

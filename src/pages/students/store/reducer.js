@@ -9,6 +9,7 @@ import {
 
 const initialState = {
     students: [],
+    studentList:{},
     studentsLoading: false,
     studentsError: null,
     studentProfile: {},
@@ -26,7 +27,8 @@ export default (state = initialState, action) => {
         case GET_STUDENTS_SUCCESS:
             state = {
                 ...state,
-                students: action.payload,
+                studentList:{...state.studentList,[action.payload.page]:[action.payload.res.data]},
+                students: action.payload.res,
                 studentsLoading: false,
                 studentsError: null,
             }

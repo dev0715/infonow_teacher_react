@@ -10,7 +10,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { postAssignment } from '@store/actions'
 import { ArrowLeft } from 'react-feather'
-import { Editor, EditorState } from 'draft-js'
+import { EditorState } from 'draft-js'
+import { Editor, } from 'react-draft-wysiwyg';
 import UILoader from '../../@core/components/ui-loader';
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
 import { stateToMarkdown } from "draft-js-export-markdown";
@@ -19,6 +20,8 @@ import '../../assets/scss/custom/components/_card.scss'
 import '../../assets/scss/custom/components/_question.scss'
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 import '@styles/react/libs/editor/editor.scss'
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 const NewAssignment = (props) => {
 
 	const { newAssignmentLoading, newAssignmentError, newAssignmentSuccess } = props
@@ -99,8 +102,6 @@ const NewAssignment = (props) => {
 															/>
 														</div>
 													</Col>
-
-
 													<Col md={4}>
 														<div className='mb-3'>
 															<AvField
@@ -126,27 +127,29 @@ const NewAssignment = (props) => {
 														</FormGroup>
 													</Col>
 
-													<Card>
-														<CardHeader>
-															<CardTitle tag='h4'>Assignment Content</CardTitle>
-														</CardHeader>
-														<CardBody>
-															<Editor editorState={editorVal} onEditorStateChange={onContentChange} />
-														</CardBody>
-													</Card>
-
-													<Col lg={12}>
-														<div className='mt-3'>
-															<button
-																className='btn btn-primary waves-effect waves-light'
-																type='submit'>
-																{/* disabled={props.newTestLoading}> */}
-																{newAssignmentLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
-																Create Assignment
-															</button>
-														</div>
-													</Col>
 												</Row>
+
+
+												<Label tag='h4'>Assignment Content</Label>
+												<Editor
+													editorState={editorVal}
+													onEditorStateChange={onContentChange}
+													wrapperClassName="wrapper-class"
+													editorClassName="editor-class"
+													toolbarClassName="toolbar-class" />
+
+												<Col lg={12}>
+													<div className='mt-3'>
+														<button
+															className='btn btn-primary waves-effect waves-light'
+															type='submit'>
+															{/* disabled={props.newTestLoading}> */}
+															{newAssignmentLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
+															Create Assignment
+														</button>
+													</div>
+												</Col>
+
 											</AvForm>
 										</CardBody>
 									</Card>

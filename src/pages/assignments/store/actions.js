@@ -101,9 +101,10 @@ export const getStudentAssignmentsFailure = (error) => {
     }
 }
 
-export const getTeacherAssignments = () => {
+export const getTeacherAssignments = (data) => {
     return {
-        type: GET_TEACHER_ASSIGNMENTS
+        type: GET_TEACHER_ASSIGNMENTS,
+        payload:data
     }
 }
 

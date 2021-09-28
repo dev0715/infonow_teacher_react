@@ -10,10 +10,17 @@ import { withRouter } from 'react-router-dom'
 export const StudentTests = (props) => {
 
     const [mapTests, setMapTests] = useState()
-    const { studentId, tests, studentTestsLoading } = props;
+    const [studentTestsData, setStudentTestsData] = useState()
+    const [currentPage, setCurrentPage] = useState(1)
+    const { studentId,  studentTestsLoading } = props;
 
     const fetchStudentTests = () => {
-        props.getStudentTests(studentId)
+        let data = {
+            "studentId": studentId,
+            page: currentPage,
+            limit: 20
+        }
+        props.getStudentTests(data)
     }
 
     const onSelectTest = (test) => {
@@ -25,25 +32,46 @@ export const StudentTests = (props) => {
     useEffect(fetchStudentTests, [])
 
     const filteredTestsData = () => {
-        let testMap = new Map();
-        for (let t of tests) {
-            if (t.test && !testMap.has(t.test.testId)) {
-                testMap.set(t.test.testId, t.test);
+        if (studentTestsData) {
+            let testMap = new Map();
+            for (let t of studentTestsData) {
+                if (t.test && !testMap.has(t.test.testId)) {
+                    testMap.set(t.test.testId, t.test);
+                }
             }
+            setMapTests(Array.from(testMap.values()));
         }
-        setMapTests(Array.from(testMap.values()));
     }
 
-    useEffect(filteredTestsData, [tests])
+    const onPageChange = (page) => {
+        let data = {
+            "studentId": studentId,
+            page: page,
+            limit: 20
+        }
+        if (props.studentTestList[page]) setStudentTestsData(props.studentTestList[page])
+        else props.getStudentTests(data)
+    }
+
+    const setTestListData = () => {
+        setStudentTestsData(props.studentTests.data)
+    }
+
+    useEffect(setTestListData, [props.studentTests])
+    useEffect(filteredTestsData, [studentTestsData])
 
     return (
         <>
             {
-                Object.keys(tests).length > 0 &&
-                <TestList tests={mapTests}
+                mapTests && 
+                Object.keys(mapTests).length > 0 &&
+                <TestList 
+                    tests={mapTests}
                     fetchTests={fetchStudentTests}
+                    count={props.studentTests.count}
                     isTeacher={false}
                     onSelect={onSelectTest}
+                    onPageChange={onPageChange}
                     isReloading={studentTestsLoading}
                     onBack={props.onBack} />
             }
@@ -58,8 +86,8 @@ StudentTests.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-    const { tests, studentTestsLoading, studentTestsError } = state.Tests;
-    return { tests, studentTestsLoading, studentTestsError };
+    const { studentTests, studentTestList, studentTestsLoading, studentTestsError } = state.Tests;
+    return { studentTests, studentTestList, studentTestsLoading, studentTestsError };
 }
 
 const mapDispatchToProps = {

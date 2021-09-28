@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import {
     Row,
     Col,
@@ -8,7 +9,8 @@ import { useState, useEffect } from 'react'
 import '../../assets/scss/custom/components/_card.scss'
 import ViewTest from './ViewTest';
 import EditTest from './EditTest';
-
+import { getTestById } from '@store/actions'
+import UILoader from '../../@core/components/ui-loader';
 
 const ViewOrEdit = (props) => {
 
@@ -19,21 +21,39 @@ const ViewOrEdit = (props) => {
         setIsView(!isView)
     }
 
+    useEffect(() => {
+        props.getTestById(test.testId)
+    }, [])
+
     useEffect(() => { }, [isView])
 
+    useEffect(() => { 
+        console.log("CHEK TEST ==>", props.selectedTest);
+    }, [ props.selectedTest])
+  
     return (
         <>
-            {
-                test && (
-                    isView ?
-                        <ViewTest test={test} onChangeView={onChangeView} />
-                        : <EditTest test={test} onChangeView={onChangeView} />
-                )
-            }
-
+            <UILoader blocking={props.selectedTestLoading}>
+                {
+                    props.selectedTest &&
+                    props.selectedTest.testId && (
+                        isView ?
+                            <ViewTest test={props.selectedTest} onChangeView={onChangeView} />
+                            : <EditTest test={props.selectedTest} onChangeView={onChangeView} />
+                    )
+                }
+            </UILoader>
         </>);
 };
 
-export default ViewOrEdit
 
+const mapStateToProps = (state) => {
+    const { selectedTest, selectedTestLoading, selectedTestError } = state.Tests;
+    return { selectedTest, selectedTestLoading, selectedTestError };
+}
 
+const mapDispatchToProps = {
+    getTestById
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ViewOrEdit))

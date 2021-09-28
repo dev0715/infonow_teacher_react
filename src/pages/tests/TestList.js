@@ -11,9 +11,10 @@ import { Button } from 'reactstrap'
 import { Plus } from 'react-feather'
 
 import '../../assets/scss/custom/components/_card.scss'
+import CustomPagination from '../pagination';
 const TestList = (props) => {
 
-    const { tests, isTeacher, fetchTests, isReloading } = props;
+    const {count,  tests, isTeacher, fetchTests, isReloading ,onPageChange} = props;
 
     const onSelectTests = (test) => {
         if (props.onSelect) {
@@ -25,6 +26,10 @@ const TestList = (props) => {
         if (props.onNewTest) {
             props.onNewTest()
         }
+    }
+    const onSelectPage = (page) =>{
+        if(onPageChange)
+           onPageChange(page)
     }
 
 
@@ -73,6 +78,7 @@ const TestList = (props) => {
                         )}
                     </tbody>
                 </Table>
+                <CustomPagination pages={Math.ceil(count / 20)} onSelect={onSelectPage}/>
             </CardBody>
         </CardReload>
     );

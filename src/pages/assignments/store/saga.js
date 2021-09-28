@@ -14,7 +14,7 @@ import {
     UNASSIGN_ASSIGNMENT
 } from "./actionTypes"
 
-import { 
+import {
     getTeacherUpcomingAssignmentsFailure,
     getTeacherUpcomingAssignmentsSuccess,
     getTeacherPastAssignmentsFailure,
@@ -44,45 +44,53 @@ import {
 
 function* getTeacherUpcomingAssignmentsHttp() {
     try {
-      const response = yield call(getTeacherUpcomingAssignments);
-      if (response) {
-        yield put(getTeacherUpcomingAssignmentsSuccess(response))
-        return;
-      }
-      throw "Unknown response received from Server";
-  
-    } catch (error) {
-      yield put(getTeacherUpcomingAssignmentsFailure(error.message ? error.message : error))
-    }
-  }
-  
-  function* getTeacherPastAssignmentsHttp() {
-    try {
-      const response = yield call(getTeacherPastAssignments);
-      if (response) {
-        yield put(getTeacherPastAssignmentsSuccess(response))
-        return;
-      }
-      throw "Unknown response received from Server";
-  
-    } catch (error) {
-      yield put(getTeacherPastAssignmentsFailure(error.message ? error.message : error))
-    }
-  }
+        const response = yield call(getTeacherUpcomingAssignments);
+        if (response) {
+            yield put(getTeacherUpcomingAssignmentsSuccess(response))
+            return;
+        }
+        throw "Unknown response received from Server";
 
-function* getStudentAssignmentsHttp({ payload: studentId }) {
+    } catch (error) {
+        yield put(getTeacherUpcomingAssignmentsFailure(error.message ? error.message : error))
+    }
+}
+
+function* getTeacherPastAssignmentsHttp() {
     try {
-        const response = yield call(getAllStudentAssignment, studentId);
-        yield put(getStudentAssignmentsSuccess(response))
+        const response = yield call(getTeacherPastAssignments);
+        if (response) {
+            yield put(getTeacherPastAssignmentsSuccess(response))
+            return;
+        }
+        throw "Unknown response received from Server";
+
+    } catch (error) {
+        yield put(getTeacherPastAssignmentsFailure(error.message ? error.message : error))
+    }
+}
+
+function* getStudentAssignmentsHttp({ payload: data }) {
+    try {
+        const response = yield call(getAllStudentAssignment, data);
+        let res ={
+            "res":response,
+            "page":data.page
+        }
+        yield put(getStudentAssignmentsSuccess(res))
     } catch (error) {
         yield put(getStudentAssignmentsFailure(error))
     }
 }
 
-function* getTeacherAssignmentsHttp() {
+function* getTeacherAssignmentsHttp({payload:data}) {
     try {
-        const response = yield call(getAssignments);
-        yield put(getTeacherAssignmentsSuccess(response))
+        const response = yield call(getAssignments,data);
+        let res = {
+            "res":response,
+            "page":data.page
+        }
+        yield put(getTeacherAssignmentsSuccess(res))
     } catch (error) {
         yield put(getTeacherAssignmentsFailure(error))
     }

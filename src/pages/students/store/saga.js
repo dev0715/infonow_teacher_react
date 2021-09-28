@@ -15,10 +15,14 @@ import { getAllStudents, getStudentProfile } from '@helpers/backend-helpers'
 
 
 
-function* getAllStudentsHttp() {
+function* getAllStudentsHttp({payload:data}) {
     try {
-        const response = yield call(getAllStudents);
-        yield put(getStudentsSuccess(response))
+        const response = yield call(getAllStudents,data);
+        let res = {
+            "res":response,
+            "page":data.page
+        }
+        yield put(getStudentsSuccess(res))
     } catch (error) {
         yield put(getStudentsFailure(error))
     }

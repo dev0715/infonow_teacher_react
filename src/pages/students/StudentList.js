@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
     CardBody,
@@ -18,21 +18,41 @@ import { getAllStudents, getStudentById } from '@store/actions';
 import { withRouter, } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
+import CustomPagination from '../pagination';
 const StudentList = (props) => {
 
-    const { students } = props
-
-    const fetchStudents = () => {
-        props.getAllStudents();
-    }
-
-    useEffect(() => {
-        fetchStudents();
-    }, []);
+    const { students, studentList } = props
+    const [studentData, setStudentData] = useState()
+    const [currentPage, setCurrentPage] = useState(currentPage)
+  
 
     const onStudentSelect = (student) => {
         props.history.push(`/students/${student.user.userId}`)
     }
+
+    const onPageChange = (page) => {
+        let data = {
+            "page" : page,
+            "limit": 20
+        }
+        if(studentList[page]) setStudentData(studentList[page])
+        else props.getAllStudents(data)
+    }
+
+    const fetchStudents = () => {
+        let data = {
+            "page" : currentPage,
+            "limit": 20
+        }
+        props.getAllStudents(data);
+    }
+    useEffect(() => {
+       setStudentData(students.data)
+    }, [students]);
+
+    useEffect(() => {
+        fetchStudents();
+    }, []);
 
     const getStudentStatusColor = (studentStatus) => {
         switch (studentStatus) {
@@ -43,6 +63,7 @@ const StudentList = (props) => {
             default: return 'light-warning'
         }
     }
+    
 
     return (
 
@@ -63,7 +84,7 @@ const StudentList = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {students && students.map((s, i) =>
+                        {studentData && studentData.map((s, i) =>
                             <tr key={s.userId} >
                                 <td>{i + 1}</td>
                                 <td onClick={() => onStudentSelect(s)}>
@@ -90,6 +111,7 @@ const StudentList = (props) => {
                         )}
                     </tbody>
                 </Table>
+                <CustomPagination pages={Math.ceil(students.count / 20)} onSelect={onPageChange}/>
             </CardBody >
         </CardReload >
     );
@@ -98,10 +120,12 @@ const StudentList = (props) => {
 
 const mapStateToProps = (state) => {
     const { students,
+        studentList,
         studentsError,
         studentsLoading } = state.Students;
     return {
         students,
+        studentList,
         studentsError,
         studentsLoading
     };

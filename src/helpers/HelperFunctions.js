@@ -10,11 +10,17 @@ export function mergeDateTime(date, time, dateFormat = "YYYY-MM-DD", timeFormat 
     return `${moment(date).format(dateFormat)} ${moment(time).format(timeFormat)}`;
 }
 
+const toTitleCase = (string) => {
+    let str = String(string);
+    return str.charAt(0).toUpperCase() + str.substr(1);
+}
+
 
 const showAlertDialog = (msg, icon) => {
     const MySwal = withReactContent(Swal)
     return MySwal.fire({
-        title: msg,
+        text: msg,
+        title: toTitleCase(icon),
         icon: icon,
         customClass: {
             confirmButton: 'btn btn-primary'

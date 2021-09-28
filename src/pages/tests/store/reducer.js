@@ -41,14 +41,19 @@ import {
     GET_TEACHER_PAST_TESTS_SUCCESS,
     GET_TEACHER_PAST_TESTS_FAILURE,
 
-
+    GET_TEST_BY_ID,
+    GET_TEST_BY_ID_SUCCESS,
+    GET_TEST_BY_ID_FAILURE,
 } from './actionTypes'
 
 const initialState = {
-    tests: [],
+    studentTests: [],
+    studentTestList:{},
     studentTestsLoading: false,
     studentTestsError: null,
 
+    teacherTests:[],
+    teacherTestList:{},
     teacherTestsLoading: false,
     teacherTestsError: null,
 
@@ -86,6 +91,10 @@ const initialState = {
     pastTests: [],
     pastTestsLoading: false,
     pastTestsError: null,
+
+    selectedTest: {},
+    selectedTestLoading: false,
+    selectedTestError: null,
 }
 
 export default (state = initialState, action) => {
@@ -122,12 +131,15 @@ export default (state = initialState, action) => {
             }
             break;
         case GET_STUDENT_TESTS_SUCCESS:
+           
             state = {
                 ...state,
-                tests: action.payload,
+                studentTestList:{...state.studentTestList,[action.payload.page]:[action.payload.res.data]},
+                studentTests: action.payload.res,
                 studentTestsLoading: false,
                 studentTestsError: null,
             }
+           
             break;
         case GET_STUDENT_TESTS_FAILURE:
             state = {
@@ -136,6 +148,7 @@ export default (state = initialState, action) => {
                 studentTestsError: action.payload,
             }
             break;
+
         case GET_TEACHER_TESTS:
             state = {
                 ...state,
@@ -146,7 +159,8 @@ export default (state = initialState, action) => {
         case GET_TEACHER_TESTS_SUCCESS:
             state = {
                 ...state,
-                tests: action.payload,
+                teacherTestList:{...state.teacherTestList,[action.payload.page]:action.payload.res.data},
+                teacherTests: action.payload.res,
                 teacherTestsLoading: false,
                 teacherTestsError: null,
             }
@@ -299,6 +313,16 @@ export default (state = initialState, action) => {
                 unassignTestLoading: false,
                 unassignTestError: action.payload,
             }
+            break;
+
+        case GET_TEST_BY_ID:
+            state = { ...state, selectedTestLoading: true }
+            break;
+        case GET_TEST_BY_ID_SUCCESS:
+            state = { ...state, selectedTestLoading: false, selectedTest: action.payload }
+            break;
+        case GET_TEST_BY_ID_FAILURE:
+            state = { ...state, selectedTest: {}, selectedTestLoading: false, selectedTestError: action.payload }
             break;
         default:
             state = { ...state }

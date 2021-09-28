@@ -2,17 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { getTeacherAssignments } from '@store/actions'
 import AssignmentList from './AssignmentList'
+import { setContext } from '@redux-saga/core/effects'
 
 export const TeacherAssignments = (props) => {
 
     const { teacherAssignmentsLoading, teacherAssignments } = props
+    const [teacherAssignmentsData, setTeacherAssignmentsData, teacherAssignmentsList] = useState()
+    const [currentPage, setCurrentPage] = useState(1)
 
     const fetchTeacherAssignment = () => {
-        props.getTeacherAssignments();
+        let data = {
+            "page": currentPage,
+            "limit": 20
+        }
+        props.getTeacherAssignments(data);
     }
 
     const onSelectAssignment = (assignment) => {
@@ -35,22 +42,39 @@ export const TeacherAssignments = (props) => {
         // })
     }
 
+    const onPageChange = (page) => {
+        let data = {
+            "page": page,
+            "limit": 20
+        }
+        if (teacherAssignmentsList[page]) setTeacherAssignmentsData(teacherAssignmentsList[page])
+        else { props.getTeacherAssignments(data); }
+    }
+
 
     useEffect(() => {
         fetchTeacherAssignment();
     }, [])
 
+    useEffect(() => {
+        setTeacherAssignmentsData(teacherAssignments.data)
+    }, [teacherAssignments])
+
 
     return (
         <div>
-            {Object.keys(teacherAssignments).length > 0 && teacherAssignments &&
+            {
+                teacherAssignmentsData &&
+                Object.keys(teacherAssignmentsData).length > 0 &&
                 <AssignmentList
-                    assignments={teacherAssignments}
+                    assignments={teacherAssignmentsData}
+                    count={teacherAssignments.count}
                     isTeacher={true}
                     fetchAssignments={fetchTeacherAssignment}
                     onSelect={onSelectAssignment}
                     onNewAssignment={addNewAssignment}
                     onEditAssignment={onEditAssignment}
+                    onPageChange={onPageChange}
                     isReloading={teacherAssignmentsLoading}
                     onBack={props.onBack} />
             }
@@ -66,9 +90,11 @@ TeacherAssignments.propTypes = {
 
 const mapStateToProps = (state) => {
     const { teacherAssignments,
+        teacherAssignmentsList,
         teacherAssignmentsLoading,
         teacherAssignmentsError } = state.Assignments;
     return {
+        teacherAssignmentsList,
         teacherAssignments,
         teacherAssignmentsLoading,
         teacherAssignmentsError

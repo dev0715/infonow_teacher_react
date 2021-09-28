@@ -53,10 +53,12 @@ const initialState = {
     pastAssignmentsLoading: false,
     pastAssignmentsError: null,
 
+    studentAssignmentsList:{},
     studentAssignments: [],
     studentAssignmentsLoading: false,
     studentAssignmentsError: null,
 
+    teacherAssignmentsList:{},
     teacherAssignments: [],
     teacherAssignmentsLoading: false,
     teacherAssignmentsError: null,
@@ -125,7 +127,8 @@ export default (state = initialState, action) => {
         case GET_STUDENT_ASSIGNMENTS_SUCCESS:
             state = {
                 ...state,
-                studentAssignments: action.payload,
+                studentAssignmentsList:{...state.studentAssignmentsList,[action.payload.page]:[action.payload.res.data]},
+                studentAssignments: action.payload.res,
                 studentAssignmentsLoading: false,
             }
             break;
@@ -147,11 +150,13 @@ export default (state = initialState, action) => {
         case GET_TEACHER_ASSIGNMENTS_SUCCESS:
             state = {
                 ...state,
-                teacherAssignments: action.payload,
+                teacherAssignmentsList:{...state.teacherAssignmentsList,[action.payload.page]:action.payload.res.data},
+                teacherAssignments: action.payload.res,
                 teacherAssignmentsLoading: false,
                 teacherAssignmentsError: null,
             }
             break;
+
         case GET_TEACHER_ASSIGNMENTS_FAILURE:
             state = {
                 ...state,

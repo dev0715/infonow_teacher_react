@@ -68,7 +68,7 @@ const newLesson = (props) => {
             setTitle(lessonForUpdate.title);
             setDescription(lessonForUpdate.description)
             setVideoUrl(lessonForUpdate.videoUrl || "")
-            let contentState = stateFromMarkdown(lessonForUpdate.content);
+            let contentState = stateFromMarkdown(lessonForUpdate.content ,{ parserOptions: {atomicImages: true}})
             setEditorState(EditorState.createWithContent(contentState))
         }
     }, [lessonForUpdate])

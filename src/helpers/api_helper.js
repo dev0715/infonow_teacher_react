@@ -103,3 +103,12 @@ export async function del(url, data, config = {}) {
 		.delete(url, { ...config, data: data })
 		.then((response) => response.data);
 }
+
+export function GetUrlWithPagingParams(url , params = {}){
+	let endUrl = url;
+	let values = [];
+	values.push(`page=${params.page || 1}`);
+	values.push(`limit=${params.limit || 20}`);
+	endUrl += '?'+(values.join('&'));
+	return endUrl
+}

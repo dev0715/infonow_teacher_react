@@ -11,7 +11,8 @@ import {
     ASSIGN_TEST,
     GET_PAST_STUDENT,
     GET_UPCOMING_STUDENT,
-    UNASSIGN_TEST
+    UNASSIGN_TEST,
+    GET_TEST_BY_ID
 } from "./actionTypes"
 
 import {
@@ -24,7 +25,8 @@ import {
     assignTestSuccess, assignTestFailure,
     getPastStudentSuccess, getPastStudentFailure,
     getUpcomingStudentSuccess, getUpcomingStudentFailure,
-    unassignTestSuccess, unassignTestFailure
+    unassignTestSuccess, unassignTestFailure,
+    getTestByIdSuccess, getTestByIdFailure,
 } from "./actions"
 
 import {
@@ -37,22 +39,33 @@ import {
     assignTest,
     getTestPastStudent,
     getTestUpcomingStudent,
-    unassignTest
+    unassignTest,
+    getTestById
 } from '@helpers/backend-helpers'
 
-function* getStudentTestsHttp({ payload: studentId }) {
+
+function* getStudentTestsHttp({ payload: data }) {
     try {
-        const response = yield call(getAllStudentTest, studentId);
-        yield put(getStudentTestsSuccess(response))
+        const response = yield call(getAllStudentTest, data);
+       let res = {
+           "res":response,
+           "page":data.page
+       }
+       
+        yield put(getStudentTestsSuccess(res))
     } catch (error) {
         yield put(getStudentTestsFailure(error))
     }
 }
 
-function* getTeacherTestsHttp() {
+function* getTeacherTestsHttp({payload:data}) {
     try {
-        const response = yield call(getTests);
-        yield put(getTeacherTestsSuccess(response))
+        const response = yield call(getTests, data);
+        let res ={
+            "res":response,
+            "page":data.page
+        }
+        yield put(getTeacherTestsSuccess(res))
     } catch (error) {
         yield put(getTeacherTestsFailure(error))
     }
@@ -113,7 +126,6 @@ function* unassignStudentTestHttp({ payload: { data } }) {
     }
 }
 
-
 function* getTeacherUpcomingTestsHttp() {
     try {
         const response = yield call(getUpcomingTests);
@@ -142,6 +154,21 @@ function* getTeacherPastTestsHttp() {
     }
 }
 
+function* getTestByIdHttp({payload:testId}) {
+    try {
+        const response = yield call(getTestById,testId);
+        if (response) {
+            
+            yield put(getTestByIdSuccess(response))
+            return;
+        }
+        throw "Unknown response received from Server";
+
+    } catch (error) {
+        yield put(getTestByIdFailure(error.message ? error.message : error))
+    }
+}
+
 function* TestsSaga() {
 
     yield takeEvery(GET_TEACHER_UPCOMING_TESTS, getTeacherUpcomingTestsHttp)
@@ -154,6 +181,7 @@ function* TestsSaga() {
     yield takeEvery(GET_PAST_STUDENT, getPastStudentHttp)
     yield takeEvery(GET_UPCOMING_STUDENT, getUpcomingStudentHttp)
     yield takeEvery(UNASSIGN_TEST, unassignStudentTestHttp)
+    yield takeEvery(GET_TEST_BY_ID, getTestByIdHttp)
 }
 
 export default TestsSaga

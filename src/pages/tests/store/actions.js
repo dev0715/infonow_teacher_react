@@ -38,6 +38,10 @@ import {
     GET_TEACHER_PAST_TESTS,
     GET_TEACHER_PAST_TESTS_SUCCESS,
     GET_TEACHER_PAST_TESTS_FAILURE,
+
+    GET_TEST_BY_ID,
+    GET_TEST_BY_ID_SUCCESS,
+    GET_TEST_BY_ID_FAILURE,
 } from './actionTypes'
 
 export const getTeacherUpcomingTests = () => {
@@ -101,9 +105,10 @@ export const getStudentTestsFailure = (error) => {
     }
 }
 
-export const getTeacherTests = () => {
+export const getTeacherTests = (data) => {
     return {
-        type: GET_TEACHER_TESTS
+        type: GET_TEACHER_TESTS,
+        payload:data
     }
 }
 
@@ -253,6 +258,28 @@ export const unassignTestFailure = (error) => {
 }
 
 
+export const getTestById = (testId) => {
+    return{
+        type:GET_TEST_BY_ID,
+        payload:testId
+    }
+}
+
+
+export const getTestByIdSuccess = (test) => {
+    return{
+        type:GET_TEST_BY_ID_SUCCESS,
+        payload:test
+    }
+}
+
+
+export const getTestByIdFailure = (error) => {
+    return{
+        type:GET_TEST_BY_ID_FAILURE,
+        payload:error
+    }
+}
 
 
 

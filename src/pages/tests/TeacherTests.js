@@ -3,16 +3,18 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import TestList from './TestList'
 import { withRouter } from 'react-router-dom'
-import { useEffect } from 'react'
-
+import { useEffect,useState } from 'react'
 import { getTeacherTests } from '@store/actions'
 
 export const TeacherTests = (props) => {
 
     const { teacherTestsLoading } = props
+    const [currentPage, setCurrentPage] = useState(1)
+    const [teacherTestsData, setTeacherTestsData] = useState()
 
     const fetchTeacherTests = () => {
-        props.getTeacherTests();
+        let data= {"page":currentPage, limit:20}
+        props.getTeacherTests(data);
     }
 
     const onSelectTest = (test) => {
@@ -35,21 +37,37 @@ export const TeacherTests = (props) => {
         })
     }
 
+    const onPageChange = (page) => {
+        setCurrentPage(page)
+        let data= {"page":page, limit:20}
+        if(props.teacherTestList[page]) setTeacherTestsData(props.teacherTestList[page])
+        else props.getTeacherTests(data);
+    }
 
     useEffect(() => {
         fetchTeacherTests();
     }, [])
 
+    useEffect(() => {
+        setTeacherTestsData(props.teacherTests.data)
+    }, [props.teacherTests])
+
     return (
         <div>
-            <TestList tests={props.tests}
+            {
+            teacherTestsData &&
+            <TestList
+                count={props.teacherTests.count}
+                tests={teacherTestsData}
                 isTeacher={true}
                 fetchTests={fetchTeacherTests}
                 onSelect={onSelectTest}
                 onNewTest={addNewTest}
                 onEditTest={onEditTest}
+                onPageChange={onPageChange}
                 isReloading={teacherTestsLoading}
                 onBack={props.onBack} />
+            }
         </div>
     )
 }
@@ -61,8 +79,8 @@ TeacherTests.propTypes = {
 
 
 const mapStateToProps = (state) => {
-    const { tests, teacherTestsLoading, teacherTestsError } = state.Tests;
-    return { tests, teacherTestsLoading, teacherTestsError };
+    const { teacherTests, teacherTestList, teacherTestsLoading, teacherTestsError } = state.Tests;
+    return { teacherTests,teacherTestList, teacherTestsLoading, teacherTestsError };
 }
 
 const mapDispatchToProps = {
