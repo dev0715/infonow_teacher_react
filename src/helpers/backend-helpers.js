@@ -108,7 +108,6 @@ export const getAssignmentUpcomingStudent = (assignmentId) => get(url.GET_ASSIGN
 export const unassignAssignment = (assignmentId, studentAssignmentId) => del(url.UNASSIGN_TEST(assignmentId), studentAssignmentId);
 
 //Lessons
-
 export const getTopics = () => get(url.TOPICS);
 export const deleteTopic = (id) => del(url.TOPIC(id));
 export const getLesson = (id) => get(url.LESSON(id));

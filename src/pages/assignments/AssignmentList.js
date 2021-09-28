@@ -15,7 +15,7 @@ import CustomPagination from '../pagination';
 
 const AssignmentList = (props) => {
 
-    const {count,  assignments, isTeacher, fetchAssignments, isReloading ,onPageChange } = props;
+    const {count, limit,  assignments, isTeacher, fetchAssignments, isReloading ,onPageChange } = props;
 
     const onSelectAssignment = (assignment) => {
         if (props.onSelect) {
@@ -81,7 +81,7 @@ const AssignmentList = (props) => {
                             )}
                     </tbody>
                 </Table>
-                <CustomPagination pages={Math.ceil(count / 20)} onSelect={onSelectPage}/>
+                <CustomPagination pages={Math.ceil(count / limit || 20)} onSelect={onSelectPage}/>
             </CardBody>
         </CardReload>
     );

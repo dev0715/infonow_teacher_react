@@ -30,17 +30,16 @@ import { getLoggedInUser } from '../../helpers/backend-helpers'
 import '@styles/react/apps/app-calendar.scss'
 
 import UILoader from '../../@core/components/ui-loader';
-
 import { DateTimeFunction } from '../../components/date-time'
 
 
 const CalendarComponent = (props) => {
 
   const [event, setEvent] = useState(null)
-
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false)
-
   const [selectedFilters, setSelectedFilters] = useState(filters.map(f => f.type))
+  const [upcomingTestData, setUpcomingTestData] = useState([])
+  const [upcomingAssignmentData, setUpcomingAssignmentData] = useState([])
 
   useEffect(() => {
     props.getAllMeetings();
@@ -48,6 +47,14 @@ const CalendarComponent = (props) => {
     props.getTeacherUpcomingTests();
     props.getTeacherUpcomingAssignments();
   }, [])
+
+  useEffect(() => {
+    if(props.newTests.data)setUpcomingTestData(props.newTests.data)
+  }, [props.newTests])
+
+  useEffect(() => {
+    if(props.upcomingAssignments.data) setUpcomingAssignmentData(props.upcomingAssignments.data)
+  }, [props.upcomingAssignments])
 
   const toggleAllFilter = (checked) => {
     if (checked) return setSelectedFilters(filters.map(f => f.type))
@@ -73,7 +80,8 @@ const CalendarComponent = (props) => {
             data: mt
           }
         }),
-      ...props.newTests.map(t => {
+
+      upcomingTestData && upcomingTestData.map(t => {
         return {
           type: 'test',
           title: t.test.title,
@@ -81,7 +89,8 @@ const CalendarComponent = (props) => {
           data: t
         }
       }),
-      ...props.upcomingAssignments.map(a => {
+
+      upcomingAssignmentData && upcomingAssignmentData.map(a => {
         return {
           type: 'assignment',
           title: a.assignment.title,
@@ -89,6 +98,7 @@ const CalendarComponent = (props) => {
           data: a
         }
       }),
+
       ...props.recentLessons.map(l => {
         return {
           type: 'lesson',
@@ -314,7 +324,7 @@ const CalendarComponent = (props) => {
             </Col>
             <Col className='position-relative'>
               <Calendar
-                events={filteredEvents()}
+                 events={filteredEvents()}
                 toggleSidebar={setLeftSidebarOpen}
                 handleEvent={handleEvent}
               />
@@ -376,11 +386,13 @@ const mapStateToProps = (state) => {
     upcomingAssignmentsLoading,
     upcomingAssignmentsError,
   } = state.Assignments;
+
   const {
     newTests,
     newTestsLoading,
     newTestsError,
   } = state.Tests;
+
   const {
     recentLessons,
     recentLessonsLoading,

@@ -15,7 +15,8 @@ import {
   DELETE_LESSON,
   DELETE_TOPIC,
   UPDATE_TOPIC,
-  UPDATE_LESSON
+  UPDATE_LESSON,
+  GET_RECENT_LESSONS,
 } from "./actionTypes"
 
 
@@ -45,7 +46,10 @@ import {
   updateTopicSuccess,
   updateTopicFailure,
   updateLessonSuccess,
-  updateLessonFailure
+  updateLessonFailure,
+
+  getRecentLessonsSuccess,
+  getRecentLessonsFailure,
 } from "./actions"
 
 //Include Both Helper File with needed methods
@@ -260,6 +264,20 @@ function* deleteLessonHttp({ payload }) {
   }
 }
 
+function* getRecentLessonsHttp() {
+  try {
+    const response = yield call(getRecentLessons);
+    if (response) {
+      yield put(getRecentLessonsSuccess(response))
+      return;
+    }
+    throw "Unknown response received from Server";
+
+  } catch (error) {
+    yield put(getRecentLessonsFailure(error.message ? error.message : error))
+  }
+}
+
 
 function* teacherLessonSaga() {
   yield takeEvery(GET_TEACHER_TOPICS, getTopicsHttp)
@@ -275,6 +293,7 @@ function* teacherLessonSaga() {
   yield takeEvery(DELETE_LESSON, deleteLessonHttp)
   yield takeEvery(UPDATE_TOPIC, updateTopicHttp)
   yield takeEvery(UPDATE_LESSON, updateLessonHttp)
+  yield takeEvery(GET_RECENT_LESSONS, getRecentLessonsHttp)
 }
 
 export default teacherLessonSaga

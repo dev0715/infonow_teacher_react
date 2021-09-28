@@ -46,6 +46,9 @@ import {
   UPDATE_LESSON_SUCCESS,
   UPDATE_LESSON_FAILURE,
 
+  GET_RECENT_LESSONS,
+  GET_RECENT_LESSONS_SUCCESS,
+  GET_RECENT_LESSONS_FAILURE,
 } from './actionTypes'
 
 const initialState = {
@@ -80,7 +83,11 @@ const initialState = {
   updateTopicUploading: false,
   updateTopicError: null,
   updateLessonLoading: false,
-  updateLessonError: null
+  updateLessonError: null,
+
+  recentLessons: [],
+  recentLessonsLoading: false,
+  recentLessonsError: null,
 }
 
 const updateTopicSuccess = (state, payload) => {
@@ -298,6 +305,15 @@ const teacherLessonReducer = (state = initialState, action) => {
     case DELETE_LESSON_FAILURE:
       return { ...state, lessonDeleting: false, lessonDeleteError: action.payload }
 
+    case GET_RECENT_LESSONS:
+      return { ...state, recentLessons: [], recentLessonsLoading: true }
+
+    case GET_RECENT_LESSONS_SUCCESS:
+      return { ...state, recentLessons: action.payload, recentLessonsLoading: false, recentLessonsError: null }
+
+    case GET_RECENT_LESSONS_FAILURE:
+      return { ...state, recentLessons: [], recentLessonsLoading: false, recentLessonsError: action.payload }
+      
     default:
       return state
   }

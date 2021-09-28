@@ -17,7 +17,7 @@ const StudentAssignments = (props) => {
         let data ={
             "studentId":studentId,
             "page":currentPage,
-            "limit":20
+            "limit":5
         }
         props.getStudentAssignments(data)
     }
@@ -32,7 +32,7 @@ const StudentAssignments = (props) => {
         let data ={
             "studentId":studentId,
             "page":page,
-            "limit":20
+            "limit":5
         }
         if(studentAssignmentList[page]) setStudentAssignmentData(studentAssignmentList[page])
         else props.getStudentAssignments(data)
@@ -68,6 +68,7 @@ const StudentAssignments = (props) => {
                 <AssignmentList
                     assignments={mapAssignments}
                     count={studentAssignments.count}
+                    limit={5}
                     isTeacher={false}
                     fetchAssignments={fetchStudentAssignments}
                     onSelect={onSelectAssignment}

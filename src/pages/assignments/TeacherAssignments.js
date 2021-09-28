@@ -70,6 +70,7 @@ export const TeacherAssignments = (props) => {
                     assignments={teacherAssignmentsData}
                     count={teacherAssignments.count}
                     isTeacher={true}
+                    limit={20}
                     fetchAssignments={fetchTeacherAssignment}
                     onSelect={onSelectAssignment}
                     onNewAssignment={addNewAssignment}

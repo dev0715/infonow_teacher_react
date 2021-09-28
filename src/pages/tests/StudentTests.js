@@ -18,7 +18,7 @@ export const StudentTests = (props) => {
         let data = {
             "studentId": studentId,
             page: currentPage,
-            limit: 20
+            limit: 5
         }
         props.getStudentTests(data)
     }
@@ -47,7 +47,7 @@ export const StudentTests = (props) => {
         let data = {
             "studentId": studentId,
             page: page,
-            limit: 20
+            limit: 5
         }
         if (props.studentTestList[page]) setStudentTestsData(props.studentTestList[page])
         else props.getStudentTests(data)
@@ -70,6 +70,7 @@ export const StudentTests = (props) => {
                     fetchTests={fetchStudentTests}
                     count={props.studentTests.count}
                     isTeacher={false}
+                    limit = {5}
                     onSelect={onSelectTest}
                     onPageChange={onPageChange}
                     isReloading={studentTestsLoading}

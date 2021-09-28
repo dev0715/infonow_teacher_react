@@ -60,6 +60,7 @@ export const TeacherTests = (props) => {
                 count={props.teacherTests.count}
                 tests={teacherTestsData}
                 isTeacher={true}
+                limit={20}
                 fetchTests={fetchTeacherTests}
                 onSelect={onSelectTest}
                 onNewTest={addNewTest}

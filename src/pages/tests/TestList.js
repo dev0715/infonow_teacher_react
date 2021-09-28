@@ -14,7 +14,7 @@ import '../../assets/scss/custom/components/_card.scss'
 import CustomPagination from '../pagination';
 const TestList = (props) => {
 
-    const {count,  tests, isTeacher, fetchTests, isReloading ,onPageChange} = props;
+    const {count, limit ,  tests, isTeacher, fetchTests, isReloading ,onPageChange} = props;
 
     const onSelectTests = (test) => {
         if (props.onSelect) {
@@ -78,7 +78,7 @@ const TestList = (props) => {
                         )}
                     </tbody>
                 </Table>
-                <CustomPagination pages={Math.ceil(count / 20)} onSelect={onSelectPage}/>
+                <CustomPagination pages={Math.ceil(count / limit || 20)} onSelect={onSelectPage}/>
             </CardBody>
         </CardReload>
     );

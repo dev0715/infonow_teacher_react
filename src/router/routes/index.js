@@ -13,7 +13,7 @@ const GetStartedRoute = '/get-started'
 const Routes = [
   {
     path: '/home',
-    component: lazy(() => import('../../views/Home'))
+    component: lazy(() => import('../../pages/dashboard'))
   },
   {
     path: '/get-started',
