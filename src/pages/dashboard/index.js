@@ -122,9 +122,11 @@ const Dashboard = (props) => {
                                     <div className="heading">
                                         Upcoming <br /> Payments
                                     </div>
-                                    <div className="count text-primary">
+                                    <div className="count text-primary" style={{ fontSize: "16px"}}>
                                         {
-                                            <DateTime dateTime={props.paymentPlan.endDate} type="date" />
+                                            props.paymentPlan
+                                            && props.paymentPlan.endDate
+                                            && moment.utc(props.paymentPlan.endDate).local().format("DD MMM")
                                         }
                                     </div>
                                 </div>
