@@ -23,12 +23,20 @@ const GeneralTabs = (props) => {
   const [isEditing, setIsEditing] = useState(false)
   const [avatar, setAvatar] = useState('')
   const [name, setName] = useState("")
+  const [city, setCity] = useState("")
+  const [county, setCounty] = useState("")
+  const [country, setCountry] = useState("")
+  const [address, setAddress] = useState("")
   const [about, setAbout] = useState("")
   const [file, setFile] = useState(null)
 
   useEffect(() => {
     setName(props.user.name || "")
     setAbout(props.user.about || "")
+    setCity(props.user.city || "")
+    setCounty(props.user.county || "")
+    setCountry(props.user.country || "")
+    setAddress(props.user.address || "")
   }, [props.user])
 
   const onChange = e => {
@@ -76,9 +84,8 @@ const GeneralTabs = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // console.log("submitting")
     props.updateProfileData({
-      name, about
+      name, about , city, county, country, address
     })
   }
 
@@ -155,6 +162,74 @@ const GeneralTabs = (props) => {
                   placeholder='Enter Email'
                   value={props.user.email || ""}
                   disabled
+                />
+              </InputGroup>
+            </FormGroup>
+          </Col>
+          <Col sm='12'>
+            <FormGroup>
+              <Label className="ml-25">
+                Address
+              </Label>
+              <InputGroup className='input-group-merge'>
+                <Input
+                  type="text"
+                  placeholder='Enter Address'
+                  value={address || ""}
+                  onChange={e => setAddress(e.target.value)}
+                  disabled={!isEditing}
+                  required
+                />
+              </InputGroup>
+            </FormGroup>
+          </Col>
+          <Col sm='12'>
+            <FormGroup>
+              <Label className="ml-25">
+                City
+              </Label>
+              <InputGroup className='input-group-merge'>
+                <Input
+                  type="text"
+                  placeholder='Enter City'
+                  value={city || ""}
+                  onChange={e => setCity(e.target.value)}
+                  disabled={!isEditing}
+                  required
+                />
+              </InputGroup>
+            </FormGroup>
+          </Col>
+          <Col sm='12'>
+            <FormGroup>
+              <Label className="ml-25">
+                County
+              </Label>
+              <InputGroup className='input-group-merge'>
+                <Input
+                  type="text"
+                  placeholder='Enter County'
+                  value={county || ""}
+                  onChange={e => setCounty(e.target.value)}
+                  disabled={!isEditing}
+                  required
+                />
+              </InputGroup>
+            </FormGroup>
+          </Col>
+          <Col sm='12'>
+            <FormGroup>
+              <Label className="ml-25">
+                Country
+              </Label>
+              <InputGroup className='input-group-merge'>
+                <Input
+                  type="text"
+                  placeholder='Enter Country'
+                  value={country || ""}
+                  onChange={e => setCountry(e.target.value)}
+                  disabled={!isEditing}
+                  required
                 />
               </InputGroup>
             </FormGroup>

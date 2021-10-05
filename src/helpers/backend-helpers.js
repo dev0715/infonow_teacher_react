@@ -139,3 +139,15 @@ export const uploadDocument = (data, options) => postForm(url.UPLOAD_DOCUMENT_UR
 export const updateProfileData = (id, data) => put(url.UPDATE_PROFILE_DATA(id), data);
 export const uploadProfilePicture = (id, data) => postForm(url.UPLOAD_PROFILE_PICTURE(id), data);
 export const updatePassword = (id, data) => put(url.UPDATE_PASSWORD(id), data);
+
+
+//stripe
+export const getStripeKey = () => get(url.GET_STRIPE_KEY);
+export const getPaymentPlan = () => get(url.PAYMENT_PLAN);
+export const getPaymentMethods = () => get(url.PAYMENT_METHODS);
+export const postPaymentMethods = (data) => post(url.PAYMENT_METHODS, data);
+export const putPaymentMethods = (data) => put(url.PAYMENT_METHODS, data);
+export const postPayment = () => post(url.POST_PAYMENT);
+
+//Ebook
+export const getEbooks = () => get(url.GET_EBOOKS)

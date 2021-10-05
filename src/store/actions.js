@@ -58,6 +58,11 @@ export * from './../pages/auth/reset-password/store/actions'
 //Profile
 export * from './../pages/profile/store/actions'
 
-
 //GetStarted
 export * from './../pages/get-started/store/actions'
+
+//Ebook
+export * from './../pages/ebook/store/actions'
+
+//Stripe
+export * from './../pages/stripe/store/actions'

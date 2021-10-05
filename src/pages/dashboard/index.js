@@ -18,7 +18,8 @@ import {
     getTeacherTests,
     getRecentLessons,
     selectLesson,
-    selectTopic
+    selectTopic,
+    getPaymentPlan
 } from '../../store/actions'
 import UILoader from '../../@core/components/ui-loader';
 import { DateTime } from '../../components/date-time'
@@ -35,11 +36,13 @@ const Dashboard = (props) => {
     const [upcomingAssignmentsData, setUpcomingAssignmentsData] = useState([])
     const [upcomingTestData, setUpcomingTestsData] = useState([])
 
+
     useEffect(() => {
         props.getTeacherTests();
         props.getTeacherUpcomingAssignments();
         props.getAllMeetings();
         props.getRecentLessons();
+        props.getPaymentPlan();
     }, [])
 
     const getUpcomingMeeting = () => {
@@ -59,7 +62,7 @@ const Dashboard = (props) => {
     }, [props.newAssignments])
 
     useEffect(() => {
-        setUpcomingTestsData(props.newTests.data)
+        if (props.newTests && props.newTests.data) setUpcomingTestsData(props.newTests.data)
     }, [props.newTests])
 
 
@@ -72,8 +75,11 @@ const Dashboard = (props) => {
                     || props.newTestsLoading
                     || props.newAssignmentsLoading
                     || props.incompleteLessonsLoading
+                    || props.paymentPlanLoading
                 }
             >
+
+
                 <Card>
                     <CardBody >
                         <Row>
@@ -114,11 +120,11 @@ const Dashboard = (props) => {
                                 <div
                                     className=" dashboard-stats-item">
                                     <div className="heading">
-                                        Incomplete <br /> Lessons
+                                        Upcoming <br /> Payments
                                     </div>
                                     <div className="count text-primary">
                                         {
-                                            props.incompleteLessons
+                                            <DateTime dateTime={props.paymentPlan.endDate} type="date" />
                                         }
                                     </div>
                                 </div>
@@ -183,7 +189,6 @@ const Dashboard = (props) => {
                                     {
                                         !props.newAssignmentsLoading &&
                                         !props.newAssignmentsError &&
-                                        upcomingAssignmentsData &&
                                         upcomingAssignmentsData.length > 0 &&
                                         <Table responsive hover >
                                             <tbody>
@@ -225,7 +230,6 @@ const Dashboard = (props) => {
                                     {
                                         !props.newTestsLoading &&
                                         !props.newTestsError &&
-                                        upcomingTestData &&
                                         upcomingTestData.length == 0 &&
                                         <div className="text-center pb-1">
                                             No test found
@@ -344,6 +348,13 @@ const mapStateToProps = (state) => {
         newTestsLoading,
         newTestsError,
     } = state.Tests;
+
+    const {
+        paymentPlan,
+        paymentPlanError,
+        paymentPlanLoading,
+
+    } = state.Stripe;
     const {
         recentLessons,
         recentLessonsLoading,
@@ -372,6 +383,10 @@ const mapStateToProps = (state) => {
         incompleteLessons,
         incompleteLessonsLoading,
         incompleteLessonsError,
+
+        paymentPlan,
+        paymentPlanError,
+        paymentPlanLoading,
     }
 }
 
@@ -382,6 +397,7 @@ export default withRouter(
         getTeacherTests,
         getRecentLessons,
         selectLesson,
-        selectTopic
+        selectTopic,
+        getPaymentPlan
     })(Dashboard)
 )

@@ -60,3 +60,63 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 .chat-app-window .user-chats .msg-delivery-status-container {
 	float: right;
 }
+
+.card-item-container{
+	.card-item{
+		margin: 8px -4px;
+	}	
+}
+
+.card-item{
+    align-items: center;
+	padding-left: 8px!important;
+    box-shadow: 3px 0px 24px rgba(0,0,0,0.06);
+	border-radius: 7px;
+    padding: 12px 24px;
+
+    img{
+        width: auto;
+        height: 32px;
+    }   
+
+    &>div:nth-child(2){
+        padding-left: 24px;
+		h5,h6,p,small{margin:0}
+		h6{font-size: 0.75rem;}
+		p{line-height: 0.7rem;}
+		p>small{font-size: 0.7rem!important;}
+    }
+
+	&.active{
+		background-color: $primary;
+		h6,h5,p{color: $white;}
+		
+	}
+}
+
+.subscription-page{
+	.pay-subscription-container{
+		position: absolute;
+		top: 15px;
+		right: 15px;
+		display: flex;
+		flex-direction: column;
+		.btn{
+			margin-bottom: 12px!important;
+		}
+	}
+}
+
+@media only screen and (max-width: 768px){
+	.card-item{
+		img{
+			width: 32px!important;
+			height: auto!important;
+		} 
+		&>div:nth-child(2){
+			padding-left: 12px;
+			h5{font-size: 0.9rem;
+			margin-bottom: 5px;}
+		}
+	}
+}

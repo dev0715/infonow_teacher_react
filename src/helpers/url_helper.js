@@ -1,17 +1,17 @@
 
-// export const BASE_URL = `http://192.168.10.102:3600`
-// export const MEETING_API_URL = `http://192.168.10.104:3900`
-// export const MEETING_APP_URL = `http://192.168.10.104:3001`
-// export const CHAT_API_URL = `http://192.168.10.104:3700`
-// export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
-// export const BLOG_API_URL = `http://192.168.10.102:1337`
+export const BASE_URL = `http://192.168.10.102:3600`
+export const MEETING_API_URL = `http://192.168.10.104:3900`
+export const MEETING_APP_URL = `http://192.168.10.104:3001`
+export const CHAT_API_URL = `http://192.168.10.104:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
+export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.meditati.ro/main`;
-export const MEETING_API_URL = `https://meet.meditati.ro/api`;
-export const MEETING_APP_URL = `https://meet.meditati.ro`;
-export const CHAT_API_URL = `https://api.meditati.ro/chat`;
-export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/`;
-export const BLOG_API_URL = `https://api.meditati.ro/blog`;
+// export const BASE_URL = `https://api.meditati.ro/main`;
+// export const MEETING_API_URL = `https://meet.meditati.ro/api`;
+// export const MEETING_APP_URL = `https://meet.meditati.ro`;
+// export const CHAT_API_URL = `https://api.meditati.ro/chat`;
+// export const CHAT_SOCKET_API_URL = `https://api.meditati.ro/`;
+// export const BLOG_API_URL = `https://api.meditati.ro/blog`;
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
@@ -134,3 +134,13 @@ export const ASSIGN_LESSON_TO_STUDENTS = `${BASE_URL}/api/v1/strapi/student-less
 export const UPDATE_PROFILE_DATA = id => `${BASE_URL}/api/v1/teachers/${id}/profile`
 export const UPLOAD_PROFILE_PICTURE = id => `${BASE_URL}/api/v1/teachers/${id}/profile-picture`
 export const UPDATE_PASSWORD = id => `${BASE_URL}/api/v1/teachers/${id}/password`
+
+//Stripe
+export const PAYMENT_METHODS =  `${BASE_URL}/api/v1/teachers/payment-methods`
+export const PAYMENT_PLAN = `${BASE_URL}/api/v1/teachers/payment-plan`
+export const GET_STRIPE_KEY =  `${BASE_URL}/api/v1/teachers/public-key`
+export const POST_PAYMENT =  `${BASE_URL}/api/v1/teachers/pay`
+
+
+//Ebooks
+export const GET_EBOOKS = `${BASE_URL}/api/v1/ebooks`

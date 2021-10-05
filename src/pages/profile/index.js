@@ -18,6 +18,7 @@ import UILoader from '../../@core/components/ui-loader';
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 import { getLoggedInUser } from '../../helpers/backend-helpers'
+import SavedCardsTabContent from './SavedCardsTabContent'
 
 const AccountSettings = (props) => {
   const [activeTab, setActiveTab] = useState('1')
@@ -56,6 +57,9 @@ const AccountSettings = (props) => {
                   </TabPane>
                   <TabPane tabId='3'>
                     <PasswordTabContent />
+                  </TabPane>
+                  <TabPane tabId='4'>
+                    <SavedCardsTabContent />
                   </TabPane>
                 </TabContent>
               </CardBody>

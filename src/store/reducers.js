@@ -22,6 +22,8 @@ import GetStarted from './../pages/get-started/store/reducer'
 import Profile from './../pages/profile/store/reducer'
 import ForgotPassword from './../pages/auth/forgot-password/store/reducer'
 import ResetPassword from './../pages/auth/reset-password/store/reducer'
+import Stripe from './../pages/stripe/store/reducer'
+import Ebook from './../pages/ebook/store/reducer'
 
 const rootReducer = combineReducers({
   Register,
@@ -43,7 +45,9 @@ const rootReducer = combineReducers({
   GetStarted,
   Profile,
   ForgotPassword,
-  ResetPassword
+  ResetPassword,
+  Stripe,
+  Ebook
 })
 
 export default rootReducer

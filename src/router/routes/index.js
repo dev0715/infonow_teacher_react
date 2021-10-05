@@ -13,7 +13,8 @@ const GetStartedRoute = '/get-started'
 const Routes = [
   {
     path: '/home',
-    component: lazy(() => import('../../views/Home'))
+    className:'dashboard-application',
+    component: lazy(() => import('../../pages/dashboard'))
   },
   {
     path: '/get-started',
@@ -169,6 +170,15 @@ const Routes = [
     exact: true,
     className: 'new-lesson-application',
     component: lazy(() => import('../../pages/lessons/new-lesson'))
+  },
+  {
+    path: '/ebooks',
+    exact: true,
+    component: lazy(() => import('../../pages/ebook'))
+  },
+  {
+    path: '/checkout',
+    component: lazy(() => import('../../pages/stripe'))
   },
   {
     path: '/login',

@@ -61,18 +61,16 @@ const AssignmentsTabContainer = (props) => {
     }, [assignAssignmentSuccess]);
 
     useEffect(() => {
-        // if (assignAssignmentError) errorAlertDialog(assignAssignmentError);
-        if (assignAssignmentError) errorAlertDialog("CHECK 2");
+        if (assignAssignmentError) errorAlertDialog(assignAssignmentError);
     }, [assignAssignmentError]);
 
     useEffect(() => {
-        if (unassignAssignmentSuccess) successAlertDialog('Test has been unassigned successfully');
+        if (unassignAssignmentSuccess) successAlertDialog('Assignment has been unassigned successfully');
         fetchStudents()
     }, [unassignAssignmentSuccess]);
 
     useEffect(() => {
-        // if (unassignAssignmentError) errorAlertDialog(unassignAssignmentError);
-        if (unassignAssignmentError) errorAlertDialog("CHECK 1");
+        if (unassignAssignmentError) errorAlertDialog(unassignAssignmentError);
     }, [unassignAssignmentError]);
 
 

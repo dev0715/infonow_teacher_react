@@ -67,6 +67,13 @@ export default [
     newUserAccessible: true
   },
   {
+    id: 'ebook',
+    title: 'Ebook',
+    icon: <i className="la la-newspaper" />,
+    navLink: '/ebooks',
+    newUserAccessible: true
+  },
+  {
     id: 'feedback',
     title: 'Feedback',
     icon: <i className="la la-thumbs-up" />,
