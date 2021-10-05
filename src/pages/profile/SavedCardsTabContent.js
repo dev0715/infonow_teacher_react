@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Button, CardBody, CardTitle, Card, Label, } from 'reactstrap'
-
+import { Row, Col, Button, CardBody, CardTitle, Card, Label, Alert} from 'reactstrap'
+import {DateTime} from '../../components/date-time'
 
 // ** Store & Actions
 import { connect } from 'react-redux'
@@ -60,11 +60,21 @@ const SavedCardsTabContent = (props) => {
   return (
     <div className="subscription-page">
       {
+        props.paymentMethodsListError && <Alert className="p-1 w-75" color="danger">{props.paymentMethodsListError}</Alert>
+      }
+      {
+        props.paymentPlanError && <Alert className="p-1 w-75" color="danger">{props.paymentPlanError}</Alert>
+      }
+      {
+        props.postPaymentError && <Alert className="p-1 w-75" color="danger">{props.postPaymentError}</Alert>
+      }
+      {
         props.paymentPlan &&
         Object.keys(props.paymentPlan).length > 0 &&
         <div className="mb-4">
           <h4>Active Plan</h4>
           <h5>{props.paymentPlan.price}{props.paymentPlan.currencyCode} <small>/month</small></h5>
+          <h6>{props.paymentPlan.endDate && <>Renews on <DateTime type="date" dateTime={props.paymentPlan.endDate}/></>}</h6>
           <div className="pay-subscription-container">
            
             {
@@ -128,6 +138,10 @@ const mapStateToProps = (state) => {
     paymentPlanError,
     paymentPlanLoading,
 
+    postPaymentSuccess,
+    postPaymentLoading,
+    postPaymentError
+
   } = state.Stripe;
   return {
     paymentMethodsList,
@@ -137,6 +151,10 @@ const mapStateToProps = (state) => {
     paymentPlan,
     paymentPlanError,
     paymentPlanLoading,
+
+    postPaymentSuccess,
+    postPaymentLoading,
+    postPaymentError
 
   }
 }

@@ -151,7 +151,7 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col sm='12'>
+          <Col md='6'>
             <FormGroup>
               <Label className="ml-25">
                 Email
@@ -166,7 +166,7 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col sm='12'>
+          <Col  sm='12'>
             <FormGroup>
               <Label className="ml-25">
                 Address
@@ -183,7 +183,7 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col sm='12'>
+          <Col  md='6'>
             <FormGroup>
               <Label className="ml-25">
                 City
@@ -200,7 +200,7 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col sm='12'>
+          <Col  md='6'>
             <FormGroup>
               <Label className="ml-25">
                 County
@@ -217,7 +217,7 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col sm='12'>
+          <Col  md='6'>
             <FormGroup>
               <Label className="ml-25">
                 Country
