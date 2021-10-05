@@ -151,3 +151,6 @@ export const postPayment = () => post(url.POST_PAYMENT);
 
 //Ebook
 export const getEbooks = () => get(url.GET_EBOOKS)
+
+//Counties
+export const getCounties = () => get(url.GET_COUNTIES)

@@ -4,6 +4,8 @@ import {
   Form, InputGroup
 } from 'reactstrap'
 
+import Select from 'react-select'
+import { selectThemeColors } from '@utils'
 // ** Store & Actions
 import { connect } from 'react-redux'
 import {
@@ -25,10 +27,11 @@ const GeneralTabs = (props) => {
   const [name, setName] = useState("")
   const [city, setCity] = useState("")
   const [county, setCounty] = useState("")
-  const [country, setCountry] = useState("")
+  const [country, setCountry] = useState("Romania")
   const [address, setAddress] = useState("")
   const [about, setAbout] = useState("")
   const [file, setFile] = useState(null)
+  const [cities, setCities] = useState([]);
 
   useEffect(() => {
     setName(props.user.name || "")
@@ -38,6 +41,16 @@ const GeneralTabs = (props) => {
     setCountry(props.user.country || "")
     setAddress(props.user.address || "")
   }, [props.user])
+
+  useEffect(()=>{
+    if(county){
+      let citiesDataList = props.countiesData.cities || {};
+      let citiesList = citiesDataList[county] || []
+      let filteredCities = citiesList.map(x=>{return {label: x.name, value: x.name}});
+      setCities(filteredCities)
+      setCity(filteredCities[0]);
+    }
+  },[county])
 
   const onChange = e => {
     const reader = new FileReader(),
@@ -85,7 +98,7 @@ const GeneralTabs = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     props.updateProfileData({
-      name, about , city, county, country, address
+      name, about, city, county, country, address
     })
   }
 
@@ -93,6 +106,13 @@ const GeneralTabs = (props) => {
     setFile(null);
     setAvatar(props.user.profilePicture || "")
   }
+
+  const countryOptions = [
+    { value: 'Romania', label: 'Romania' }
+  ]
+
+  let counties__  = props.countiesData.counties || []
+  const countiesOptions = counties__.map(x=>{return {value: x.id, label: x.name}});
 
   return (
     <Fragment>
@@ -135,7 +155,7 @@ const GeneralTabs = (props) => {
         onSubmit={e => handleSubmit(e)}
       >
         <Row>
-          <Col sm='12'>
+          <Col md='6'>
             <FormGroup>
               <Label className="ml-25">
                 Name
@@ -166,7 +186,7 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col  sm='12'>
+          <Col md='6'>
             <FormGroup>
               <Label className="ml-25">
                 Address
@@ -183,55 +203,52 @@ const GeneralTabs = (props) => {
               </InputGroup>
             </FormGroup>
           </Col>
-          <Col  md='6'>
-            <FormGroup>
-              <Label className="ml-25">
-                City
-              </Label>
-              <InputGroup className='input-group-merge'>
-                <Input
-                  type="text"
-                  placeholder='Enter City'
-                  value={city || ""}
-                  onChange={e => setCity(e.target.value)}
-                  disabled={!isEditing}
-                  required
-                />
-              </InputGroup>
-            </FormGroup>
-          </Col>
-          <Col  md='6'>
+          <Col md='6'>
             <FormGroup>
               <Label className="ml-25">
                 County
               </Label>
-              <InputGroup className='input-group-merge'>
-                <Input
-                  type="text"
-                  placeholder='Enter County'
-                  value={county || ""}
-                  onChange={e => setCounty(e.target.value)}
-                  disabled={!isEditing}
-                  required
+              <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  defaultValue={countiesOptions.find(e => (e.value == county))}
+                  options={countiesOptions}
+                  isClearable={false}
+                  onChange={e => setCounty(e.value)}
                 />
-              </InputGroup>
             </FormGroup>
           </Col>
-          <Col  md='6'>
+          <Col md='6'>
             <FormGroup>
               <Label className="ml-25">
-                Country
+                City
               </Label>
-              <InputGroup className='input-group-merge'>
-                <Input
-                  type="text"
-                  placeholder='Enter Country'
-                  value={country || ""}
-                  onChange={e => setCountry(e.target.value)}
-                  disabled={!isEditing}
-                  required
+              <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  defaultValue={city}
+                  options={cities}
+                  isClearable={false}
+                  onChange={e => setCity(e.value)}
                 />
-              </InputGroup>
+            </FormGroup>
+          </Col>
+          
+          <Col md='6'>
+            <FormGroup>
+              <Label className="ml-25">Country</Label>
+                <Label  className="ml-25" >Country</Label>
+                <Select
+                  theme={selectThemeColors}
+                  className='react-select'
+                  classNamePrefix='select'
+                  defaultValue={countryOptions.find(e => (e.value == country))}
+                  options={countryOptions}
+                  isClearable={false}
+                  onChange={e => setCountry(e.value)}
+                />
             </FormGroup>
           </Col>
           <Col sm='12'>
@@ -286,17 +303,29 @@ const mapStateToProps = (state) => {
 
   const {
     user,
+
     updateProfileLoading,
     updateProfileError,
+
     updateProfilePictureLoading,
     updateProfilePictureError,
+
+    countiesData,
+    countiesLoading,
+    countiesError
   } = state.Profile;
   return {
     user,
+
     updateProfileLoading,
     updateProfileError,
+
     updateProfilePictureLoading,
     updateProfilePictureError,
+
+    countiesData,
+    countiesLoading,
+    countiesError
   }
 }
 

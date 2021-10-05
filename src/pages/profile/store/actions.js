@@ -8,7 +8,11 @@ import {
   UPDATE_PASSWORD,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILURE,
-  SET_PROFILE_USER
+  SET_PROFILE_USER,
+
+  GET_COUNTIES,
+  GET_COUNTIES_SUCCESS,
+  GET_COUNTIES_FAILURE,
 } from './actionTypes'
 
 
@@ -79,5 +83,25 @@ export const setProfileUser = (data) => {
   return {
     type: SET_PROFILE_USER,
     payload: data
+  }
+}
+
+export const getCounties = () => {
+  return {
+    type: GET_COUNTIES
+  }
+}
+
+export const getCountiesSuccess = (data) => {
+  return {
+    type: GET_COUNTIES_SUCCESS,
+    payload: data
+  }
+}
+
+export const getCountiesFailure = (error) => {
+  return {
+    type: GET_COUNTIES_FAILURE,
+    payload: error
   }
 }

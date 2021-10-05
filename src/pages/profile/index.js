@@ -10,14 +10,11 @@ import { connect } from 'react-redux'
 // import { getUserTopics, getUserTopicLessons, selectTopic, selectLesson, getLesson, completedLesson } from './store/actions'
 
 import { withRouter } from 'react-router';
-
-import { setProfileUser } from './store/actions'
-
+import { setProfileUser , getCounties } from './store/actions'
 import UILoader from '../../@core/components/ui-loader';
-
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
-import { getLoggedInUser } from '../../helpers/backend-helpers'
+import { getLoggedInUser  } from '../../helpers/backend-helpers'
 import SavedCardsTabContent from './SavedCardsTabContent'
 
 const AccountSettings = (props) => {
@@ -29,6 +26,7 @@ const AccountSettings = (props) => {
 
   useEffect(() => {
     props.setProfileUser(getLoggedInUser() || {})
+    props.getCounties()
   }, [])
 
   return (
@@ -88,6 +86,7 @@ const mapStateToProps = (state) => {
 
 export default withRouter(
   connect(mapStateToProps, {
-    setProfileUser
+    setProfileUser,
+    getCounties
   })(AccountSettings)
 )
