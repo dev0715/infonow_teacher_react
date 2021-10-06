@@ -202,9 +202,10 @@ const VerticalLayout = props => {
         />
       ) : null}
       <footer
-        className={classnames(`footer footer-light ${footerClasses[footerType] || 'footer-static'}`, {
+        className={classnames(`footer footer-custom-background footer-light ${footerClasses[footerType] || 'footer-static'}`, {
           'd-none': footerType === 'hidden'
         })}
+
       >
         {footer ? footer : <FooterComponent footerType={footerType} footerClasses={footerClasses} />}
       </footer>
