@@ -128,9 +128,10 @@ export const setDefaultPaymentMethodFailure = (error) => {
     }
 }
 
-export const postPayment = () => {
+export const postPayment = (data) => {
     return {
-        type: POST_PAYMENT
+        type: POST_PAYMENT,
+        payload:data
     }
 }
 

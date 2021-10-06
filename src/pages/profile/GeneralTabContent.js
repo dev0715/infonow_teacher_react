@@ -38,8 +38,9 @@ const GeneralTabs = (props) => {
     setAbout(props.user.about || "")
     setCity(props.user.city || "")
     setCounty(props.user.county || "")
-    setCountry(props.user.country || "")
+    setCountry(props.user.country || "Romania")
     setAddress(props.user.address || "")
+
   }, [props.user])
 
   useEffect(()=>{
@@ -47,8 +48,8 @@ const GeneralTabs = (props) => {
       let citiesDataList = props.countiesData.cities || {};
       let citiesList = citiesDataList[county] || []
       let filteredCities = citiesList.map(x=>{return {label: x.name, value: x.name}});
-      setCities(filteredCities)
       setCity(filteredCities[0]);
+      setCities(filteredCities)
     }
   },[county])
 
@@ -228,7 +229,7 @@ const GeneralTabs = (props) => {
                   theme={selectThemeColors}
                   className='react-select'
                   classNamePrefix='select'
-                  defaultValue={city}
+                  defaultValue={cities.find(e => (e.value == city))}
                   options={cities}
                   isClearable={false}
                   onChange={e => setCity(e.value)}
@@ -239,7 +240,6 @@ const GeneralTabs = (props) => {
           <Col md='6'>
             <FormGroup>
               <Label className="ml-25">Country</Label>
-                <Label  className="ml-25" >Country</Label>
                 <Select
                   theme={selectThemeColors}
                   className='react-select'
