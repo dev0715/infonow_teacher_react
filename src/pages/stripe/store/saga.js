@@ -71,9 +71,9 @@ function* setDefaultPaymentMethodHttp({payload:data}) {
     }
 }
 
-function* postPaymentHttp() {
+function* postPaymentHttp({payload:data}) {
     try {
-        const response = yield call(postPayment);
+        const response = yield call(postPayment,data);
         yield put(postPaymentSuccess(response))
     } catch (error) {
         yield put(postPaymentFailure(error))

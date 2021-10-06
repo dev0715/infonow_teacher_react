@@ -147,7 +147,7 @@ export const getPaymentPlan = () => get(url.PAYMENT_PLAN);
 export const getPaymentMethods = () => get(url.PAYMENT_METHODS);
 export const postPaymentMethods = (data) => post(url.PAYMENT_METHODS, data);
 export const putPaymentMethods = (data) => put(url.PAYMENT_METHODS, data);
-export const postPayment = () => post(url.POST_PAYMENT);
+export const postPayment = (data) => post(url.POST_PAYMENT,data);
 
 //Ebook
 export const getEbooks = () => get(url.GET_EBOOKS)

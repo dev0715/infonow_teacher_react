@@ -133,12 +133,12 @@ const CheckoutForm = (props) => {
                 stripeToken ?
                     <div className="Result">
                         <div className="ResultTitle" role="alert">
-                            Payment successful
+                            Card added successfully
                         </div>
-                        <div className="ResultMessage">
+                        {/* <div className="ResultMessage">
                             Thanks for trying Stripe Elements. No money was charged, but we
                             generated a PaymentMethod: {stripeToken.id}
-                        </div>
+                        </div> */}
                         {/* <ResetButton onClick={reset} /> */}
                     </div>
                     :
@@ -196,7 +196,7 @@ const StripeApp = (props) => {
 
     return (
         <>
-          <UILoader blocking={props.stripePublickeyLoading}>
+          <UILoader blocking={props.stripePublickeyLoading || props.paymentMethodLoading}>
             {
                 props.stripePublicKey &&
                 stripe &&
@@ -229,6 +229,7 @@ const mapStateToProps = (state) => {
         stripePublickeyError,
 
         paymentMethod,
+        paymentMethodSuccess,
         paymentMethodError,
         paymentMethodLoading
     } = state.Stripe;

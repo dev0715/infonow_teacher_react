@@ -36,6 +36,7 @@ const initialState = {
     paymentMethodsListLoading: false,
 
     paymentMethod: [],
+    paymentMethodSuccess:false,
     paymentMethodError: null,
     paymentMethodLoading: false,
 
@@ -101,12 +102,15 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 paymentMethodLoading: true,
+                paymentMethodSuccess:false,
+                paymentMethodError:null
             }
             break;
         case POST_PAYMENT_METHODS_SUCCESS:
             state = {
                 ...state,
                 paymentMethodLoading: false,
+                paymentMethodSuccess:true,
                 paymentMethod: action.payload
             }
             break;
@@ -143,6 +147,8 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 defaultPaymentMethodLoading: true,
+                defaultPaymentMethodSuccess:false,
+                defaultPaymentMethodError:null,
             }
             break;
         case SET_DEFAULT_PAYMENT_METHOD_SUCCESS:
@@ -166,6 +172,8 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 postPaymentLoading: true,
+                postPaymentSuccess:false,
+                postPaymentError:null,
             }
             break;
 

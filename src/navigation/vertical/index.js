@@ -69,7 +69,7 @@ export default [
   {
     id: 'ebook',
     title: 'Ebook',
-    icon: <i className="la la-newspaper" />,
+    icon: <i className="la la-book" />,
     navLink: '/ebooks',
     newUserAccessible: true
   },
