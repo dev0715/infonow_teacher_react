@@ -34,11 +34,11 @@ const AccountSettings = (props) => {
       <h3 className="mb-2">
         Account Settings
       </h3>
-      <UILoader blocking={
+      {/* <UILoader blocking={
         props.updateProfileLoading ||
         props.updateProfilePictureLoading ||
         props.updatePasswordLoading}
-      >
+      > */}
         <Row>
           <Col className='mb-2 mb-md-0' md='3'>
             <Tabs activeTab={activeTab} toggleTab={toggleTab} />
@@ -64,7 +64,7 @@ const AccountSettings = (props) => {
             </Card>
           </Col>
         </Row>
-      </UILoader>
+      {/* </UILoader> */}
 
     </Fragment>
   )

@@ -33,7 +33,7 @@ html {
     min-height: calc(100% - #{$footer-height});
     margin-left: $menu-expanded-width;
     &.app-content {
-      background: $body-bg;
+      // background: $body-bg;
       padding: calc(#{$content-padding} + #{$navbar-height} + #{$floating-nav-margin}) #{$content-padding} 0;
       &.show-overlay {
         .content-overlay {
@@ -120,7 +120,7 @@ html {
   // For floating navbar
   .navbar-floating {
     &.footer-static {
-      background: $body-bg!important;
+      // background: $body-bg!important;
       .app-content {
         .content-area-wrapper,
         .kanban-wrapper {
