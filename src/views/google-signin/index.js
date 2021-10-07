@@ -11,7 +11,7 @@ import { GoogleLogin } from 'react-google-login';
 import { notifyError, notifySuccess } from '../../utility/toast';
 
 
-let clientId = "378379895413-ovfahkbo3b8g9vv890jc2apsjkbirj61.apps.googleusercontent.com";
+let clientId = "945249982713-plp53hn5gk5iog0a49ag6hldr3o78o3o.apps.googleusercontent.com";
 
 
 
