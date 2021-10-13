@@ -40,3 +40,12 @@ export const successAlertDialog = (msg) => {
 export const infoAlertDialog = (msg) => {
     showAlertDialog(msg, 'info')
 }
+
+export const setLocalizedLang = (lang) => {
+    localStorage.setItem('lang', lang)
+}
+
+export const getLocalizedLang = () => {
+    let lang = localStorage.getItem('lang')
+    return lang ? lang : 'ro'
+}

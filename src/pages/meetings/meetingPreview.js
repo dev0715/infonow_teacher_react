@@ -16,8 +16,10 @@ import { titleCase } from '@utils';
 
 import Avatar from '@components/avatar'
 import { GET_IMAGE_URL } from './../../helpers/url_helper';
+import { useTranslation } from 'react-i18next';
 
 export const MeetingPreview = (props) => {
+    const { t } = useTranslation()
     const { meeting, user } = props
     return meeting && user &&
         <>
@@ -59,7 +61,7 @@ export const MeetingPreview = (props) => {
             </Row>
             <Row className="mt-4">
                 <Col sm={12} md={2}>
-                    <h6>Agenda</h6>
+                    <h6>{t('Agenda')}</h6>
                 </Col>
                 <Col sm={12} md={10}>
                     {meeting.agenda}
@@ -69,7 +71,7 @@ export const MeetingPreview = (props) => {
                 meeting.message &&
                 <Row className="mt-2">
                     <Col sm={12} md={2}>
-                        <h6>Personal Message</h6>
+                        <h6>{t('Personal Message')}</h6>
                     </Col>
                     <Col sm={12} md={10} >
                         {meeting.message}

@@ -12,9 +12,11 @@ import { DOCUMENT_BASE_URL } from '../../helpers/url_helper';
 import PreviewBookModal from './preview-book-modal';
 import StripeApp from '../stripe'
 import SavedCardModal from './saved-cards-modal';
+import { useTranslation } from 'react-i18next';
 
 const Ebook = (props) => {
 
+    const {t} = useTranslation()
     const { ebooks, ebooksError, ebooksLoading } = props
 
     const [isOpenPreview, setIsOpenPreview] = useState(false)
@@ -28,9 +30,6 @@ const Ebook = (props) => {
         props.getEbooks()
         props.getPaymentMethods()
     }
-
-
-
 
     const togglePreviewModal = () => {
         setPreviewImage(null)
@@ -91,10 +90,10 @@ const Ebook = (props) => {
                                                 {book.description}
                                             </CardText>
                                             <Button.Ripple color='primary' onClick={() => BuyBook(book)} outline >
-                                                Buy Now
+                                               {t('Buy Now')}
                                             </Button.Ripple>
                                             <Button.Ripple onClick={() => setPreviewImage(book.previewImage)} className="ml-2" color='secondary' outline>
-                                                Preview
+                                                {t('Preview')}
                                             </Button.Ripple>
                                         </CardBody>
                                     </Card>

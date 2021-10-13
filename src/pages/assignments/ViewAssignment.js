@@ -5,19 +5,15 @@ import {
     Col,
     Card, CardBody, CardTitle, CardHeader
 } from 'reactstrap';
-import { useState, useEffect } from 'react'
-import { getAttemptDetail, getTestDetail } from '@store/actions';
-import ViewQuestions from '../questions/view/Question'
-import Questions from "../testQuestions/Questions"
-import TestDetail from '../tests/TestDetail'
 import '../../assets/scss/custom/components/_card.scss'
 import AssignmentDetail from './AssignmentDetail';
-import { Editor } from 'draft-js';
 import ReactMarkdown from 'react-markdown';
+import { useTranslation } from 'react-i18next';
 
 
 const ViewAssignment = (props) => {
 
+    const {t} = useTranslation()
     const { assignment, onChangeView } = props
     return (
         <>
@@ -34,7 +30,7 @@ const ViewAssignment = (props) => {
 
                             <Card>
                                 <CardHeader>
-                                    <CardTitle tag='h4'>Assignment Content</CardTitle>
+                                    <CardTitle tag='h4'>{t('Assignment Content')}</CardTitle>
                                 </CardHeader>
                                 <CardBody>
                                     <ReactMarkdown >{assignment.content}</ReactMarkdown>

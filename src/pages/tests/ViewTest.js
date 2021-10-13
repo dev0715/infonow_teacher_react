@@ -4,10 +4,7 @@ import {
     Row,
     Col,
 } from 'reactstrap';
-import { useState, useEffect } from 'react'
-import { getAttemptDetail, getTestDetail } from '@store/actions';
 import ViewQuestions from '../questions/view/Question'
-import Questions from "../testQuestions/Questions"
 import TestDetail from '../tests/TestDetail'
 import '../../assets/scss/custom/components/_card.scss'
 

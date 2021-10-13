@@ -15,11 +15,11 @@ import '../../assets/scss/custom/components/_card.scss'
 import UILoader from '../../@core/components/ui-loader';
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 const NewTest = (props) => {
 
+	const {t} = useTranslation()
 	const { newTestLoading, newTestError } = props
-
-
 	const loading = false;
 
 	const [newTest, setNewTest] = useState({
@@ -78,7 +78,7 @@ const NewTest = (props) => {
 
 	useEffect(() => {
 		if (props.newTestError) errorAlertDialog(props.newTestError);
-		if (props.newTestSuccess) successAlertDialog('Test has been created successfully');
+		if (props.newTestSuccess) successAlertDialog(t('Test has been created successfully'));
 	}, [props.newTestError, props.newTestSuccess]);
 
 
@@ -92,7 +92,6 @@ const NewTest = (props) => {
 
 
 	const onBack = () => {
-		//	props.postTestFailed(null)
 		props.history.push('/tests')
 	}
 
@@ -107,7 +106,7 @@ const NewTest = (props) => {
 								<Col lg={12}>
 									<Card>
 										<CardHeader>
-											<CardTitle><Button.Ripple className="btn-icon mr-2" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>Create a New Test</CardTitle>
+											<CardTitle><Button.Ripple className="btn-icon mr-2" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>{t('Create a New Test')}</CardTitle>
 										</CardHeader>
 										<CardBody>
 											<AvForm
@@ -121,11 +120,11 @@ const NewTest = (props) => {
 														<div className='mb-3'>
 															<AvField
 																name='title'
-																label={'Test Title *'}
+																label={t('Test Title *')}
 																value={newTest.title}
 																onChange={onTitleChange}
 																className='form-control'
-																placeholder={'Enter test title'}
+																placeholder={t('Enter test title')}
 																type='text'
 																required
 															/>
@@ -136,12 +135,12 @@ const NewTest = (props) => {
 														<div className='mb-3'>
 															<AvField
 																name='timeLimit'
-																label={'Time Limit *'}
+																label={t('Time Limit *')}
 																value={newTest.timeLimit}
 																onChange={onTimeLimitChange}
 																className='form-control'
 																placeholder={
-																	'Time limit in Minutes'
+																	t('Time limit in Minutes')
 																}
 																type='number'
 																min={10}
@@ -154,11 +153,11 @@ const NewTest = (props) => {
 														<div className='mb-3'>
 															<AvField
 																name='totalMarks'
-																label={'Total Marks *'}
+																label={t('Total Marks *')}
 																value={`${newTest.totalMarks}`}
 																className='form-control'
 																placeholder={
-																	'Total Marks'
+																	t('Total Marks')
 																}
 																type='number'
 																disabled
@@ -183,7 +182,7 @@ const NewTest = (props) => {
 																type='submit'>
 																{/* disabled={props.newTestLoading}> */}
 																{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
-																Create Test
+																{t('Create Test')}
 															</button>
 														</div>
 													</Col>

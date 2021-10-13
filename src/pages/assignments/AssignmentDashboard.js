@@ -1,14 +1,10 @@
 import React from 'react';
-
 import {
     Row,
     Col,
 } from 'reactstrap';
 import AssignmentDetail from './AssignmentDetail';
 import AssignmentsTabContainer from './AssignmentsTabContainer';
-
-
-
 
 const AssignAssignmentHome = (props) => {
 

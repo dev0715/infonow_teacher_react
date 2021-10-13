@@ -19,10 +19,12 @@ import {
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
 import PastAndUpcomingAssignmentStudentList from './PastAndUpcomingAssignmentStudentList';
+import { useTranslation } from 'react-i18next';
 
 
 const AssignmentsTabContainer = (props) => {
 
+    const { t } = useTranslation()
     const [active, setActive] = useState('1')
 
     const [isLoading, setIsLoading] = useState(false)
@@ -56,7 +58,7 @@ const AssignmentsTabContainer = (props) => {
     }, [unassignAssignmentLoading]);
 
     useEffect(() => {
-        if (assignAssignmentSuccess) successAlertDialog('Assignment has been assigned successfully');
+        if (assignAssignmentSuccess) successAlertDialog(t('Assignment has been assigned successfully'));
         fetchStudents()
     }, [assignAssignmentSuccess]);
 
@@ -65,7 +67,7 @@ const AssignmentsTabContainer = (props) => {
     }, [assignAssignmentError]);
 
     useEffect(() => {
-        if (unassignAssignmentSuccess) successAlertDialog('Assignment has been unassigned successfully');
+        if (unassignAssignmentSuccess) successAlertDialog(t('Assignment has been unassigned successfully'));
         fetchStudents()
     }, [unassignAssignmentSuccess]);
 
@@ -106,7 +108,7 @@ const AssignmentsTabContainer = (props) => {
                                         toggle('1')
                                     }}
                                 >
-                                    Past Assignment
+                                    {t('Past Assignments')}
                                 </NavLink>
                             </NavItem>
                             <NavItem>
@@ -116,7 +118,7 @@ const AssignmentsTabContainer = (props) => {
                                         toggle('2')
                                     }}
                                 >
-                                    Upcoming Assignment
+                                    {t('Upcoming Assignments')}
                                 </NavLink>
                             </NavItem>
 

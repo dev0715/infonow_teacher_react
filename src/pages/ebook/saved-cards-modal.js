@@ -7,16 +7,17 @@ import { withRouter } from 'react-router';
 import {
     postPayment,
 } from '@store/actions'
-import { Modal, ModalBody, ModalFooter, CardImg, Button, ModalHeader, Label } from "reactstrap"
-import { DOCUMENT_BASE_URL } from "../../helpers/url_helper";
+import { Modal, ModalBody, Button, ModalHeader } from "reactstrap"
 import CardContainer from "../stripe/card-container";
 import UILoader from "../../@core/components/ui-loader";
 
 import StripeApp from '../stripe'
+import { useTranslation } from "react-i18next";
 const imgPlaceholder = require(`@src/assets/images/custom-placeholder/img_preview_placeholder.jpeg`);
 
 const SavedCardModal = (props) => {
 
+    const {t} = useTranslation()
     const { isOpen, ebook, toggleModal, paymentMethodsList, fetchData } = props
 
     const [isOpenAddNewCard, setIsOpenAddNewCard] = useState(false)
@@ -51,14 +52,14 @@ const SavedCardModal = (props) => {
                                 <Button.Ripple
                                     color='success'
                                     onClick={() => payToBuyBook()}>
-                                    Pay
+                                    {t('Pay')}
                                 </Button.Ripple>
 
                                 <Button.Ripple
                                     className="m-2"
                                     color='flat-primary'
                                     onClick={() => setIsOpenAddNewCard(true)}>
-                                    New Card
+                                    {t('New Card')}
                                 </Button.Ripple>
                             </div>
                         </div>
@@ -103,7 +104,6 @@ const mapStateToProps = (state) => {
         paymentMethodSuccess,
         paymentMethodError,
         paymentMethodLoading
-
     }
 }
 

@@ -10,6 +10,7 @@ import withReactContent from 'sweetalert2-react-content'
 import {
     setDefaultPaymentMethod,
   } from '@store/actions'
+import { useTranslation } from "react-i18next";
 
 
 let AmericanExpress = require("../../assets/images/credit-cards/american_express.png")
@@ -23,6 +24,7 @@ let UnknownCard = require("../../assets/images/credit-cards/unknown_card.png")
 
 const CardContainer = (props) => {
 
+    const {t} = useTranslation()
     const { paymentMethodsList } = props
 
 
@@ -34,8 +36,8 @@ const CardContainer = (props) => {
     const setDefaultCardPopup = (p) => {
         return MySwal.fire({
             icon: 'question',
-            title: "Confirm",
-            text: 'Are you sure you want to set this card as your default card?',
+            title: t("Confirm"),
+            text: t('Are you sure you want to set this card as your default card?'),
             customClass: {
                 confirmButton: 'btn btn-primary',
                 cancelButton: 'btn btn-outline-danger ml-1'

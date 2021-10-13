@@ -35,9 +35,12 @@ import { GET_IMAGE_URL } from './../../helpers/url_helper';
 import { getPreviousMessages } from './socket/events'
 
 import './style.scss'
+import { useTranslation } from 'react-i18next';
 
 
 const SidebarLeft = props => {
+
+  const { t } = useTranslation()
   // ** Props & Store
   const { sidebar, handleUserSidebarLeft, handleSidebar, userSidebarLeft, socket, store } = props
 
@@ -83,12 +86,12 @@ const SidebarLeft = props => {
 
   useEffect(() => {
     if ((isNewChat || isNewChatGroup) && !newChatLoading && newChatError) {
-      notifyError(isNewChat ? "New Chat" : "New Group Chat", newChatError)
+      notifyError(isNewChat ? t("New Chat") : t("New Group Chat"), newChatError)
     }
     else if ((isNewChat || isNewChatGroup) && !newChatLoading && !newChatError) {
       closeNewChat()
       if (chats.length > 0) handleUserClick(chats[chats.length - 1], socket)
-      notifySuccess(isNewChat ? "New Chat" : "New Group Chat", 'Chat started Successfully')
+      notifySuccess(isNewChat ? t("New Chat") : t("New Group Chat"), t('Chat started Successfully'))
     }
   }, [newChatLoading])
 
@@ -215,8 +218,8 @@ const SidebarLeft = props => {
   }
 
   const startNewGroupChat = () => {
-    if (!groupName) return notifyWarning("New Group Chat", "Group name is required")
-    if (participants.length == 0) return notifyWarning("New Group Chat", "Participants are required for group creation")
+    if (!groupName) return notifyWarning(t("New Group Chat"), t("Group name is required"))
+    if (participants.length == 0) return notifyWarning(t("New Group Chat"), t("Participants are required for group creation"))
     createChat({
       participants: participants.map(u => u.userId),
       type: "group",
@@ -263,14 +266,14 @@ const SidebarLeft = props => {
                 <span className='char-count'>{user.about ? user.about.length : 0}</span>/ 120
               </small>
             </div>
-            <h6 className='section-label mb-1 mt-3'>Status</h6>
+            <h6 className='section-label mb-1 mt-3'>{t('Status')}</h6>
             <ul className='list-unstyled user-status'>
               <li className='pb-1'>
                 <CustomInput
                   type='radio'
                   className='custom-control-primary'
                   id='online'
-                  label='Online'
+                  label={t('Online')}
                   onChange={e => setStatus('online')}
                   checked={status === 'online'}
                 />
@@ -280,7 +283,7 @@ const SidebarLeft = props => {
                   type='radio'
                   className='custom-control-danger'
                   id='busy'
-                  label='Do Not Disturb'
+                  label={t('Do Not Disturb')}
                   onChange={e => setStatus('busy')}
                   checked={status === 'busy'}
                 />
@@ -290,7 +293,7 @@ const SidebarLeft = props => {
                   type='radio'
                   className='custom-control-warning'
                   id='away'
-                  label='Away'
+                  label={t('Away')}
                   onChange={e => setStatus('away')}
                   checked={status === 'away'}
                 />
@@ -300,18 +303,18 @@ const SidebarLeft = props => {
                   type='radio'
                   className='custom-control-secondary'
                   id='offline'
-                  label='Offline'
+                  label={t('Offline')}
                   onChange={e => setStatus('offline')}
                   checked={status === 'offline'}
                 />
               </li>
             </ul>
-            <h6 className='section-label mb-1 mt-2'>Settings</h6>
+            <h6 className='section-label mb-1 mt-2'>{t('Settings')}</h6>
             <ul className='list-unstyled'>
               <li className='d-flex justify-content-between align-items-center mb-1'>
                 <div className='d-flex align-items-center'>
                   <Bell className='mr-75' size='18' />
-                  <span className='align-middle'>Notification</span>
+                  <span className='align-middle'>{t('Notification')}</span>
                 </div>
                 <CustomInput
                   type='switch'
@@ -354,7 +357,7 @@ const SidebarLeft = props => {
                 <Input
                   value={query}
                   className='round'
-                  placeholder='Search or start a new chat'
+                  placeholder={t('Search or start a new chat')}
                   onChange={handleFilter}
                 />
               </InputGroup>
@@ -371,13 +374,13 @@ const SidebarLeft = props => {
                       tag='a' href='/' className='w-100'
                       onClick={e => openNewChatModel(e)}
                     >
-                      <span className='align-middle ml-50'>New Personal Chat</span>
+                      <span className='align-middle ml-50'>{t('New Personal Chat')}</span>
                     </DropdownItem>
                     <DropdownItem
                       tag='a' href='/' className='w-100'
                       onClick={e => openNewChatModel(e, true)}
                     >
-                      <span className='align-middle ml-50'>New Group Chat</span>
+                      <span className='align-middle ml-50'>{t('New Group Chat')}</span>
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
@@ -385,7 +388,7 @@ const SidebarLeft = props => {
             </div>
           </div>
           <PerfectScrollbar className='chat-user-list-wrapper list-group' options={{ wheelPropagation: false }}>
-            <h4 className='chat-list-title'>Chats</h4>
+            <h4 className='chat-list-title'>{t('Chats')}</h4>
             <ul className='chat-users-list chat-list media-list'>
               <UILoader blocking={chatLoading}>
                 {renderChats()}
@@ -447,7 +450,7 @@ const SidebarLeft = props => {
                                     className="btn btn-sm"
                                     onClick={() => startNewChat(s.userId)}
                                   >
-                                    Chat
+                                    {t('Chat')}
                                   </Button.Ripple>
                                 }
                               </div>
@@ -465,7 +468,7 @@ const SidebarLeft = props => {
         <UILoader blocking={newChatLoading || teacherStudentsLoading}>
           <ModalBody className="p-2">
             <div className="d-flex justify-content-between align-items-center">
-              <h3 className="m-0">New Group Chat</h3>
+              <h3 className="m-0">{t('New Group Chat')}</h3>
               {
                 participants.length > 0 &&
 
@@ -473,23 +476,23 @@ const SidebarLeft = props => {
                   color='primary'
                   onClick={() => startNewGroupChat()}
                 >
-                  Submit
+                  {t('Submit')}
                 </Button.Ripple>
               }
             </div>
             <div className="mt-2">
               <div >
                 {
-                  teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
+                  teacherStudents.length == 0 ? <NotFound message={t("No user Available for new chat")} /> :
                     <>
                       <FormGroup>
                         <Label className="ml-25">
-                          Group Name
+                          {t('Group Name')}
                         </Label>
                         <InputGroup className='input-group-merge'>
                           <Input
                             type="text"
-                            placeholder='Enter group name'
+                            placeholder={t('Enter group name')}
                             value={groupName}
                             onChange={e => setGroupName(e.target.value)}
                           />
@@ -499,7 +502,7 @@ const SidebarLeft = props => {
                         participants.length > 0 &&
                         <>
                           <Label className="ml-25 mb-1">
-                            Participants
+                            {t('Participants')}
                           </Label>
                           <Row className="mb-2">
                             {
@@ -541,7 +544,7 @@ const SidebarLeft = props => {
                         </InputGroupAddon>
                       </InputGroup>
                       <Label className="ml-25 mb-1 mt-1">
-                        Contacts
+                        {t('Contacts')}
                       </Label>
                       {
                         groupContacts().length > 0 ?
@@ -563,12 +566,12 @@ const SidebarLeft = props => {
                                       color='primary'
                                       onClick={() => toggleUserFromGroup(s)}
                                     >
-                                      Add
+                                      {t('Add')}
                                     </Button.Ripple>
                                   </div>
                                 </Col>
                               </Row>)
-                          : <NotFound message="No more contacts" />
+                          : <NotFound message={t("No more contacts")} />
                       }
                     </>
                 }

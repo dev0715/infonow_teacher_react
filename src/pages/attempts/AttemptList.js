@@ -6,11 +6,12 @@ import {
 import { DateTime } from '../../components/date-time';
 import PropTypes from 'prop-types';
 import CardReload from '../../@core/components/card-reload';
+import { useTranslation } from 'react-i18next';
 
 const AttemptList = (props) => {
 
     const { attempts } = props;
-
+    const {t} = useTranslation()
     const onSelectAttempt = (attempt) => {
         if (props.onSelect) {
             if (attempt.submittedAt)
@@ -26,8 +27,8 @@ const AttemptList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Started At</th>
-                            <th>Submitted At</th>
+                            <th>{t('Started At')}</th>
+                            <th>{t('Submitted At')}</th>
                         </tr>
                     </thead>
                     <tbody>

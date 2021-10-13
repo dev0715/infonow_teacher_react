@@ -74,9 +74,9 @@ function* updateMeetingHttp({ payload: { id, action, data } }) {
 }
 
 
-function* getStudentsForMeetingHttp() {
+function* getStudentsForMeetingHttp({payload:data}) {
     try {
-        const response = yield call(getAllStudents);
+        const response = yield call(getAllStudents, data);
         yield put(getStudentsForMeetingSuccess(response))
     } catch (error) {
         yield put(getStudentsForMeetingFailure(error.message ? error.message : error))

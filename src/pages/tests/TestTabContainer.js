@@ -19,10 +19,12 @@ import {
 import PastAndUpcomingTestStudentList from './PastAndUpcomingTestStudentList';
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 
 
 const TestsTabContainer = (props) => {
 
+    const { t } = useTranslation()
     const [active, setActive] = useState('1')
 
     const [isLoading, setIsLoading] = useState(false)
@@ -57,13 +59,13 @@ const TestsTabContainer = (props) => {
 
     useEffect(() => {
         if (assignTestError) errorAlertDialog(assignTestError);
-        if (assignTestSuccess) successAlertDialog('Test has been assigned successfully');
+        if (assignTestSuccess) successAlertDialog(t('Test has been assigned successfully'));
         fetchStudents()
     }, [assignTestError, assignTestSuccess]);
 
     useEffect(() => {
         if (props.unassignTestError) errorAlertDialog(props.unassignTestError, 'error');
-        if (props.unassignTestSuccess) successAlertDialog('Test has been unassigned successfully');
+        if (props.unassignTestSuccess) successAlertDialog(t('Test has been unassigned successfully'));
         fetchStudents()
     }, [unassignTestError, unassignTestSuccess]);
 
@@ -100,7 +102,7 @@ const TestsTabContainer = (props) => {
                                         toggle('1')
                                     }}
                                 >
-                                    Past Test
+                                    {t('Past Tests')}
                                 </NavLink>
                             </NavItem>
                             <NavItem>
@@ -110,7 +112,7 @@ const TestsTabContainer = (props) => {
                                         toggle('2')
                                     }}
                                 >
-                                    Upcoming Test
+                                    {t('Upcoming Tests')}
                                 </NavLink>
                             </NavItem>
 

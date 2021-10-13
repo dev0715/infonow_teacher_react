@@ -52,11 +52,13 @@ import { notifyError, notifySuccess } from '../../utility/toast'
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { useTranslation } from 'react-i18next';
 
 const MySwal = withReactContent(Swal)
 
 const AppLessons = (props) => {
 
+    const { t } = useTranslation()
     const lessonRef = React.createRef()
     const lessonContentRef = React.createRef()
     const [isOpen, setIsOpen] = useState(false);
@@ -86,10 +88,10 @@ const AppLessons = (props) => {
     useEffect(() => {
         if (isLessonDeleting && !props.lessonDeleting && props.lessonDeleteError) {
             setIsLessonDeleting(false)
-            notifyError("Delete Lesson", props.lessonDeleteError)
+            notifyError(t("Delete Lesson"), props.lessonDeleteError)
         } else if (isLessonDeleting && !props.lessonDeleting && !props.lessonDeleteError) {
             setIsLessonDeleting(false)
-            notifySuccess("Delete Lesson", "Lesson deleted successfully")
+            notifySuccess(t("Delete Lesson"), t("Lesson deleted successfully"))
         }
     }, [props.lessonDeleting])
 
@@ -97,10 +99,10 @@ const AppLessons = (props) => {
         if (isAssignModelOpen && !props.studentsLessonAssignLoading && !props.studentsLessonAssignError) {
             setIsAssignModelOpen(false)
             setStudentIdsAccessRequest([])
-            notifySuccess("Lesson Access", "Lesson access granted successfully")
+            notifySuccess(t("Lesson Access"), t("Lesson access granted successfully"))
         }
         else if (isAssignModelOpen && !props.studentsLessonAssignLoading && props.studentsLessonAssignError) {
-            notifyError("Lesson Access", props.studentsLessonAssignError)
+            notifyError(t("Lesson Access"), props.studentsLessonAssignError)
         }
     }, [props.studentsLessonAssignLoading])
 
@@ -108,10 +110,10 @@ const AppLessons = (props) => {
         if (isRevoking && !props.studentsLessonUnassignLoading && !props.studentsLessonUnassignError) {
             setIsRevoking(false)
             setStudentIdsAccessRemove([])
-            notifySuccess("Lesson Access", "Lesson access revoked successfully")
+            notifySuccess(t("Lesson Access"), t("Lesson access revoked successfully"))
         }
         else if (isRevoking && !props.studentsLessonUnassignLoading && props.studentsLessonUnassignError) {
-            notifyError("Lesson Access", props.studentsLessonUnassignError)
+            notifyError(t("Lesson Access"), props.studentsLessonUnassignError)
         }
     }, [props.studentsLessonUnassignLoading])
 
@@ -235,7 +237,7 @@ const AppLessons = (props) => {
                                 outline
                                 onClick={() => handleLessonEdit(lesson)}
                             >
-                                Edit
+                                {t('Edit')}
                             </Button.Ripple>
                         </div>
                     </CardHeader>
@@ -249,7 +251,7 @@ const AppLessons = (props) => {
                                 <div className="lesson-video mt-2">
                                     <iframe
                                         src={lesson.videoUrl}
-                                        title="YouTube video player"
+                                        title={t("YouTube video player")}
                                         frameBorder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowFullScreen
@@ -279,7 +281,7 @@ const AppLessons = (props) => {
                 <div className={`students ${isOpenLessons ? 'active' : 'm-2'}`}>
                     <div className="heading" onClick={toggleLessons}>
                         <h4>
-                            Students
+                            {t('Students')}
                         </h4>
                         <div>
                             {
@@ -319,7 +321,7 @@ const AppLessons = (props) => {
                                             >
                                                 <Plus size={14} />
                                                 &nbsp;
-                                                Grant Access
+                                                {t('Grant Access')}
                                             </Button.Ripple>
                                         </div>
                                     </Col>
@@ -334,9 +336,9 @@ const AppLessons = (props) => {
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Student</th>
-                                                <th>Progress</th>
-                                                <th>Date</th>
+                                                <th>{t('Students')}</th>
+                                                <th>{t('Progress')}</th>
+                                                <th>{t('Date')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -367,9 +369,9 @@ const AppLessons = (props) => {
                                                             {
                                                                 s.isCompleted ?
                                                                     <Badge pill color='light-success' className='mr-1'>
-                                                                        Completed
+                                                                        {t('Completed')}
                                                                     </Badge> : <Badge pill color='light-warning' className='mr-1'>
-                                                                        InComplete
+                                                                        {t('Incomplete')}
                                                                     </Badge>
                                                             }
                                                         </td>
@@ -389,7 +391,7 @@ const AppLessons = (props) => {
                                             color='primary'
                                             onClick={() => revokeAccess()}
                                         >
-                                            Revoke Access
+                                            {t('Revoke Access')}
                                         </Button.Ripple>
                                     </div>
                                 }
@@ -404,8 +406,8 @@ const AppLessons = (props) => {
     const handleLessonDelete = (id) => {
         return MySwal.fire({
             icon: 'question',
-            title: "Confirm",
-            text: `Are you sure to delete this lesson?`,
+            title: `${t("Confirm")}`,
+            text: `${t('Are you sure to delete this lesson?')}`,
             customClass: {
                 confirmButton: 'btn btn-primary',
                 cancelButton: 'btn btn-secondary ml-1'
@@ -488,7 +490,7 @@ const AppLessons = (props) => {
                                                         </div>
                                                         <div className="d-flex w-100 align-items-center justify-content-between">
                                                             <h4 className="text-primary ml-25 mb-0">
-                                                                Lessons
+                                                                {t('Lessons')}
                                                             </h4>
                                                             <div >
                                                                 <Button.Ripple
@@ -572,11 +574,11 @@ const AppLessons = (props) => {
                                 />
                             </div>
                             <h4>
-                                Select a student
+                                {t('Select a student')}
                             </h4>
                             {
                                 getStudentsWithoutLesson().length == 0 &&
-                                <NotFound message="No Student Left" />
+                                <NotFound message={t("No Student Left")} />
                             }
                             <Row className="mt-1">
                                 {
@@ -616,7 +618,7 @@ const AppLessons = (props) => {
                                         className="mt-2"
                                         onClick={() => assignLesson()}
                                     >
-                                        Apply
+                                        {t('Apply')}
                                     </Button.Ripple>
                                 </div>
                             }

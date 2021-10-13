@@ -21,6 +21,7 @@ import { getProfileImageUrl } from '../../helpers/url_helper'
 import StudentListModal from '../tests/StudentListModal';
 import TestDurationModal from '../tests/TestDurationModal';
 import { mergeDateTime } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 
 const PastAndUpcomingTestStudentList = (props) => {
     const {
@@ -34,12 +35,13 @@ const PastAndUpcomingTestStudentList = (props) => {
     } = props
 
 
+    const {t} = useTranslation()
     const [studentModalState, setStudentModalState] = useState(false)
     const [testModalState, setTestModalState] = useState(false)
     const [selectedStudent, setSelectedStudent] = useState(null)
 
     const fetchAllStudents = () => {
-        props.getAllStudents();
+        props.getAllStudents({limit:1000, page:1});
     }
 
     useEffect(() => {
@@ -91,13 +93,13 @@ const PastAndUpcomingTestStudentList = (props) => {
 
         <CardReload
             className="past-and-upcoming-test-student"
-            title='Students'
+            title={t('Students')}
             onReload={fetchStudents}
             isReloading={isReloading}>
             {
                 isUpcoming &&
                 <Button.Ripple className='btn-header' size="sm" color='primary' onClick={() => toggleStudentModalState()} >
-                    <span className='align-middle ml-25'>Schedule Test</span>
+                    <span className='align-middle ml-25'>{t('Schedule Test')}</span>
                 </Button.Ripple>
             }
             <CardBody className="p-0">
@@ -105,13 +107,13 @@ const PastAndUpcomingTestStudentList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Start time</th>
-                            <th>End time</th>
-                            <th>Status</th>
+                            <th>{t('Name')}</th>
+                            <th>{t('Start time')}</th>
+                            <th>{t('End time')}</th>
+                            <th>{t('Status')}</th>
                             {
                                 isUpcoming &&
-                                <th>Action</th>
+                                <th>{t('Action')}</th>
                             }
 
                         </tr>
@@ -150,7 +152,7 @@ const PastAndUpcomingTestStudentList = (props) => {
                                                 <DropdownMenu right>
                                                     <DropdownItem tag='a' href='/' className='w-100' onClick={e => UnassignTest(e, s)}>
                                                         <FileText size={15} />
-                                                        <span className='align-middle ml-50'>Unassign</span>
+                                                        <span className='align-middle ml-50'>{t('Unassign')}</span>
                                                     </DropdownItem>
                                                 </DropdownMenu>
                                             </UncontrolledDropdown>
@@ -164,7 +166,7 @@ const PastAndUpcomingTestStudentList = (props) => {
                 {
                     studentModalState &&
                     <StudentListModal
-                        students={students}
+                        students={students.data}
                         isOpen={studentModalState}
                         onSelectedStudent={selectedStudentAssign}
                         toggleModalState={toggleStudentModalState} />

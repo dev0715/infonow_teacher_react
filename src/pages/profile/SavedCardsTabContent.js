@@ -10,18 +10,17 @@ import {
 } from '@store/actions'
 
 
-
 import moment from 'moment';
 import { notifyError, notifySuccess } from '../../utility/toast'
 import StripeApp from '../stripe'
 import UILoader from '../../@core/components/ui-loader'
 import CardContainer from '../stripe/card-container'
-
-
+import { useTranslation } from 'react-i18next';
 
 
 const SavedCardsTabContent = (props) => {
 
+  const{t} = useTranslation()
   const [isOpenModal, setIsOpenModal] = useState(false)
   const toggleModalState = () => {
     setIsOpenModal(!isOpenModal)
@@ -38,14 +37,14 @@ const SavedCardsTabContent = (props) => {
 
   useEffect(() => {
     if (props.postPaymentSuccess) {
-      notifySuccess('Payment', 'Payment was Successfully')
+      notifySuccess(t('Payment'), t('Payment was Successfully'))
       getPaymentMethodsAndPlans()
     }
   }, [props.postPaymentSuccess])
 
   useEffect(() => {
     if (props.paymentMethodSuccess) {
-      notifySuccess('Payment', 'Card added Successfully')
+      notifySuccess(t('Payment'), t('Card added Successfully'))
       getPaymentMethodsAndPlans()
     }
   }, [props.paymentMethodSuccess])
@@ -57,13 +56,13 @@ const SavedCardsTabContent = (props) => {
 
   useEffect(() => {
     if (props.defaultPaymentMethodSuccess) {
-      notifySuccess('Default Card', 'Selected card has been set as your default card successfully')
+      notifySuccess(t('Default Card'), t('Selected card has been set as your default card successfully'))
       getPaymentMethodsAndPlans()
     }
   }, [props.defaultPaymentMethodSuccess])
 
   useEffect(() => {
-    if (props.defaultPaymentMethodError) notifyError('Default Card', props.defaultPaymentMethodError)
+    if (props.defaultPaymentMethodError) notifyError(t('Default Card'), props.defaultPaymentMethodError)
   }, [props.defaultPaymentMethodError])
 
 
@@ -89,7 +88,7 @@ const SavedCardsTabContent = (props) => {
           props.paymentPlan &&
           Object.keys(props.paymentPlan).length > 0 &&
           <div className="mb-4">
-            <h4>Active Plan</h4>
+            <h4>{t('Active Plan')}</h4>
             <h5>{props.paymentPlan.price}{props.paymentPlan.currencyCode} <small>/month</small></h5>
             <h6>{props.paymentPlan.endDate && <>Renews on <DateTime type="date" dateTime={props.paymentPlan.endDate} /></>}</h6>
             <div className="pay-subscription-container">
@@ -106,7 +105,7 @@ const SavedCardsTabContent = (props) => {
                 size="sm"
                 color='flat-primary'
                 onClick={() => setIsOpenModal(true)}>
-                New Card
+                {t('New Card')}
               </Button.Ripple>
             </div>
 

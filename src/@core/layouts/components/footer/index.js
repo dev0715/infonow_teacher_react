@@ -12,13 +12,13 @@ const Footer = () => {
         </a>
         <span className='d-none d-sm-inline-block'>, All rights Reserved</span>
       </span>
-      <span className='float-md-right d-none d-md-block'>
+      {/* <span className='float-md-right d-none d-md-block'>
         Made with
         <Heart size={14} />{'  '}
         by <a href='https://efsol.com.pk' target='_blank' rel='noopener noreferrer'>
           Efsol
         </a>
-      </span>
+      </span> */}
     </p>
   )
 }

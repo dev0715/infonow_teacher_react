@@ -16,8 +16,10 @@ import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
 import { getLoggedInUser  } from '../../helpers/backend-helpers'
 import SavedCardsTabContent from './SavedCardsTabContent'
+import { useTranslation } from 'react-i18next'
 
 const AccountSettings = (props) => {
+   const {t}= useTranslation()
   const [activeTab, setActiveTab] = useState('1')
 
   const toggleTab = tab => {
@@ -32,7 +34,7 @@ const AccountSettings = (props) => {
   return (
     <Fragment>
       <h3 className="mb-2">
-        Account Settings
+        {t('Account Settings')}
       </h3>
       {/* <UILoader blocking={
         props.updateProfileLoading ||

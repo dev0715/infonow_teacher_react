@@ -2,25 +2,23 @@ import React from 'react';
 import { useEffect } from 'react';
 import {
     CardBody,
-    CardTitle,
     Table,
     Badge,
     Button
 } from 'reactstrap';
-import { MoreVertical, Edit, FileText } from 'react-feather'
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import CardReload from '../../@core/components/card-reload';
 import Avatar from '@components/avatar'
 import { titleCase } from '@utils';
 import { DateTime } from '../../components/date-time';
 import { useState } from 'react';
 import { getAllStudents } from '@store/actions';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
 import StudentListModal from '../tests/StudentListModal';
 import TestDurationModal from '../tests/TestDurationModal';
 import { mergeDateTime } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 
 const PastAndUpcomingAssignmentStudentList = (props) => {
     const {
@@ -34,12 +32,13 @@ const PastAndUpcomingAssignmentStudentList = (props) => {
     } = props
 
 
+    const {t} = useTranslation()
     const [studentModalState, setStudentModalState] = useState(false)
     const [testModalState, setTestModalState] = useState(false)
     const [selectedStudent, setSelectedStudent] = useState(null)
 
     const fetchAllStudents = () => {
-        props.getAllStudents();
+        props.getAllStudents({page:1,limit:1000});
     }
 
     useEffect(() => {
@@ -97,7 +96,7 @@ const PastAndUpcomingAssignmentStudentList = (props) => {
             {
                 isUpcoming &&
                 <Button.Ripple className='btn-header' size="sm" color='primary' onClick={() => toggleStudentModalState()} >
-                    <span className='align-middle ml-25'>Schedule Assignment</span>
+                    <span className='align-middle ml-25'>{t('Schedule Assignment')}</span>
                 </Button.Ripple>
             }
             <CardBody className="p-0">
@@ -105,10 +104,10 @@ const PastAndUpcomingAssignmentStudentList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Start time</th>
-                            <th>End time</th>
-                            <th>Status</th>
+                            <th>{t('Name')}</th>
+                            <th>{t('Start time')}</th>
+                            <th>{t('End time')}</th>
+                            <th>{t('Status')}</th>
                             {/* {
                                 isUpcoming &&
                                 <th>Action</th>
@@ -164,7 +163,7 @@ const PastAndUpcomingAssignmentStudentList = (props) => {
                 {
                     studentModalState &&
                     <StudentListModal
-                        students={students}
+                        students={students.data}
                         isOpen={studentModalState}
                         onSelectedStudent={selectedStudentAssign}
                         toggleModalState={toggleStudentModalState} />

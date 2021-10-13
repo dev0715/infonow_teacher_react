@@ -64,8 +64,11 @@ import { useDropzone } from 'react-dropzone'
 
 
 import './style.scss'
+import { useTranslation } from 'react-i18next';
 
 const ChatLog = props => {
+
+  const { t } = useTranslation()
   // ** Props & Store
   const {
     store,
@@ -350,21 +353,21 @@ const ChatLog = props => {
 
   useEffect(() => {
     if (isAddParticipants && !addParticipantLoading && addParticipantError) {
-      notifyError("Add Participants", addParticipantError)
+      notifyError(t("Add Participants"), addParticipantError)
     }
     else if (isAddParticipants && !addParticipantLoading && !addParticipantError) {
       closeGroupOptions()
-      notifySuccess("Add Participants", 'Participants added Successfully')
+      notifySuccess(t("Add Participants"), t('Participants added Successfully'))
     }
   }, [addParticipantLoading])
 
   useEffect(() => {
     if (isRemoveParticipants && !removeParticipantLoading && removeParticipantError) {
-      notifyError("Remove Participants", removeParticipantError)
+      notifyError(t("Remove Participants"), removeParticipantError)
     }
     else if (isRemoveParticipants && !removeParticipantLoading && !removeParticipantError) {
       closeGroupOptions()
-      notifySuccess("Remove Participants", 'Participants removed Successfully')
+      notifySuccess(t("Remove Participants"), t('Participants removed Successfully'))
     }
   }, [removeParticipantLoading])
 
@@ -386,7 +389,7 @@ const ChatLog = props => {
 
   const addParticipantsToGroup = () => {
 
-    if (participants.length == 0) return notifyWarning("Add Participants", "Participants are required ")
+    if (participants.length == 0) return notifyWarning(t("Add Participants"), t("Participants are required"))
     addParticipants();
     addParticipantsWithSocket(socket, {
       chatId: selectedChat.chatId,
@@ -396,7 +399,7 @@ const ChatLog = props => {
 
   const removeParticipantsFromGroup = () => {
 
-    if (participantsRemoveList.length == 0) return notifyWarning("Remove Participant", "Participants are required for removal ")
+    if (participantsRemoveList.length == 0) return notifyWarning(t("Remove Participant"), t("Participants are required for removal"))
     removeParticipants();
     removeParticipantsWithSocket(socket, {
       chatId: selectedChat.chatId,
@@ -509,7 +512,7 @@ const ChatLog = props => {
           <MessageSquare />
         </div>
         <h4 className='sidebar-toggle start-chat-text' onClick={handleStartConversation}>
-          Start Conversation
+          {t('Start Conversation')}
         </h4>
       </div>
 
@@ -585,51 +588,51 @@ const ChatLog = props => {
                       e.preventDefault()
                       handleUserSidebarRight()
                     }}>
-                      View Contact
+                      {t('View Contact')}
                     </DropdownItem>
                     {
                       mutedNotificationIds && !mutedNotificationIds[selectedChat.chatId]
                       &&
                       <DropdownItem href='/' onClick={muteNotification}>
-                        Mute Notifications
+                        {t('Mute Notifications')}
                       </DropdownItem>
                     }
                     {
                       mutedNotificationIds && mutedNotificationIds[selectedChat.chatId]
                       &&
                       <DropdownItem href='/' onClick={unmuteNotification}>
-                        Unmute Notifications
+                        {t('Unmute Notifications')}
                       </DropdownItem>
                     }
                     {
                       selectedChat.chatParticipants.find(u => u.user.userId == user.userId && !u.blockedAt) &&
                       <DropdownItem href='/' onClick={blockChat}>
-                        Block Chat
+                        {t('Block Chat')}
                       </DropdownItem>
                     }
 
                     {
                       selectedChat.chatParticipants.find(u => u.user.userId == user.userId && u.blockedAt) &&
                       <DropdownItem href='/' onClick={unBlockChat}>
-                        Unblock Chat
+                        {t('Unblock Chat')}
                       </DropdownItem>
                     }
                     <DropdownItem href='/' onClick={clearChat}>
-                      Clear Chat
+                      {teacherStudentsLoading('Clear Chat')}
                     </DropdownItem>
                     {
                       selectedChat.type == 'group' && selectedChat.user.userId == user.userId &&
                       <>
                         <DropdownItem href='/' onClick={addParticipantsHandler}>
-                          Add Participants
+                          {t('Add Participants')}
                         </DropdownItem>
                         <DropdownItem href='/' onClick={removeParticipantsHandler}>
-                          Remove Participants
+                          {t('Remove Participants')}
                         </DropdownItem>
                       </>
                     }
                     <DropdownItem href='/' onClick={e => e.preventDefault()}>
-                      Report
+                      {t('Report')}
                     </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
@@ -756,7 +759,7 @@ const ChatLog = props => {
               </Form>
               :
               <div className="text-center pt-1">
-                You can not reply to this conversation
+                {t('You can not reply to this conversation')}
               </div>
           }
         </div>
@@ -775,7 +778,7 @@ const ChatLog = props => {
                       color='primary'
                       onClick={() => addParticipantsToGroup()}
                     >
-                      Submit
+                      {t('Submit')}
                     </Button.Ripple>
                   }
                 </div>
@@ -788,7 +791,7 @@ const ChatLog = props => {
                             participants.length > 0 &&
                             <>
                               <Label className="ml-25 mb-1">
-                                Participants
+                                {t('Participants')}
                               </Label>
                               <Row className="mb-2">
                                 {
@@ -830,7 +833,7 @@ const ChatLog = props => {
                             </InputGroupAddon>
                           </InputGroup>
                           <Label className="ml-25 mb-1 mt-1">
-                            Contacts
+                            {t('Contacts')}
                           </Label>
                           {
                             groupContacts().length > 0 ?
@@ -852,7 +855,7 @@ const ChatLog = props => {
                                           color='primary'
                                           onClick={() => toggleUserFromGroup(s)}
                                         >
-                                          Add
+                                          {t('Add')}
                                         </Button.Ripple>
                                       </div>
                                     </Col>
@@ -877,7 +880,7 @@ const ChatLog = props => {
                       color='primary'
                       onClick={() => removeParticipantsFromGroup()}
                     >
-                      Submit
+                      {t('Submit')}
                     </Button.Ripple>
                   }
                 </div>
@@ -890,7 +893,7 @@ const ChatLog = props => {
                             participantsRemoveList.length > 0 &&
                             <>
                               <Label className="ml-25 mb-1">
-                                Participants
+                                {t('Participants')}
                               </Label>
                               <Row className="mb-2">
                                 {
@@ -932,7 +935,7 @@ const ChatLog = props => {
                             </InputGroupAddon>
                           </InputGroup>
                           <Label className="ml-25 mb-1 mt-1">
-                            Contacts
+                            {t('Contacts')}
                           </Label>
                           {
                             getChatParticipants().length > 0 ?
@@ -954,7 +957,7 @@ const ChatLog = props => {
                                           color='primary'
                                           onClick={() => toggleUserFromGroupForRemoval(u)}
                                         >
-                                          Remove
+                                          {t('Remove')}
                                         </Button.Ripple>
                                       </div>
                                     </Col>

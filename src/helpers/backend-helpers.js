@@ -3,16 +3,16 @@ import * as  url from "./url_helper"
 
 // Gets the logged in user data from local session
 export const getLoggedInUser = () => {
-  const user = localStorage.getItem("authUser")
+  const user = localStorage.getItem("authTeacher")
   return user ? JSON.parse(user) : null;
 }
 
 export const setLoggedInUser = (obj = {}) => {
-  localStorage.setItem("authUser", JSON.stringify(obj))
+  localStorage.setItem("authTeacher", JSON.stringify(obj))
 }
 
 export const getAuthentication = () => {
-  const tokenInfo = localStorage.getItem("authToken")
+  const tokenInfo = localStorage.getItem("authTeacherToken")
   return tokenInfo ? JSON.parse(tokenInfo) : null;
 }
 

@@ -10,6 +10,7 @@ import store from './store'
 // ** Toast & ThemeColors Context
 import { ToastContainer } from 'react-toastify'
 import { ThemeContext } from './utility/context/ThemeColors'
+import './configs/i18nextConfig'
 
 // ** Spinner (Splash Screen)
 import Spinner from './@core/components/spinner/Fallback-spinner'
@@ -35,10 +36,12 @@ import './assets/scss/style.scss'
 
 // ** Service Worker
 import * as serviceWorker from './serviceWorker'
-
+import i18next from "i18next";
+import { getLocalizedLang } from './helpers/HelperFunctions';
 // ** Lazy load app
 const LazyApp = lazy(() => import('./App'))
-
+const lang = getLocalizedLang()
+i18next.changeLanguage(lang)
 ReactDOM.render(
   <Provider store={store}>
     <Suspense fallback={<Spinner />}>

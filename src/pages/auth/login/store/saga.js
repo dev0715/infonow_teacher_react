@@ -14,8 +14,8 @@ function* loginUser({ payload: { user, history } }) {
         const response = yield call(postStudentLogin, user);
         if (response.user) {
             response.user = { ...response.user, userType: user.userType }
-            localStorage.setItem("authUser", JSON.stringify(response.user))
-            localStorage.setItem("authToken", JSON.stringify({ token: response.token, tokenType: response.tokenType }))
+            localStorage.setItem("authTeacher", JSON.stringify(response.user))
+            localStorage.setItem("authTeacherToken", JSON.stringify({ token: response.token, tokenType: response.tokenType }))
             yield put(loginSuccess(response))
             return;
         }
@@ -28,8 +28,8 @@ function* loginUser({ payload: { user, history } }) {
 
 function* logoutUser({ payload: { history } }) {
     try {
-        localStorage.removeItem("authUser")
-        localStorage.removeItem("authToken")
+        localStorage.removeItem("authTeacher")
+        localStorage.removeItem("authTeacherToken")
         localStorage.removeItem("adminUser")
         // console.log("Token", getAuthentication())
         resetAPIAuthToken();

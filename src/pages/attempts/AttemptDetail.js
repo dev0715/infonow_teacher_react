@@ -16,11 +16,12 @@ import '../../assets/scss/custom/components/_card.scss'
 import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 import UILoader from '../../@core/components/ui-loader';
 import { infoAlertDialog, successAlertDialog, errorAlertDialog } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 const AttemptDetail = (props) => {
 
     const attemptId = props.match.params.attemptId;
     const updatedAttemptQuestions = []
-
+    const {t} = useTranslation()
 
     const {
         attemptDetail,
@@ -47,18 +48,18 @@ const AttemptDetail = (props) => {
     const onUpdateAttemptSubjectiveMarks = () => {
         if (updatedAttemptQuestions.length == attemptDetail.subjectiveAttempt.length)
             putSubjectiveAttemptMarks(attemptId, updatedAttemptQuestions)
-        else infoAlertDialog("Enter number for all subjective questions")
+        else infoAlertDialog(t("Enter number for all subjective questions"))
     }
 
 
     useEffect(getAttemptAndTestDetail, []);
 
     useEffect(() => {
-        if (updateAttemptSuccess) successAlertDialog('Attempt marks update successfully');
+        if (updateAttemptSuccess) successAlertDialog(t('Attempt marks update successfully'));
     }, [updateAttemptSuccess]);
 
     useEffect(() => {
-        if (updateAttemptError && !updateAttemptSuccess) errorAlertDialog("Attempt marks could not be updated");
+        if (updateAttemptError && !updateAttemptSuccess) errorAlertDialog(t("Attempt marks could not be updated"));
     }, [updateAttemptError]);
 
     return (

@@ -19,8 +19,10 @@ import { getFileIcon } from './utility';
 import UILoader from '../../@core/components/ui-loader';
 
 import { saveAs } from 'file-saver';
+import { useTranslation } from 'react-i18next';
 
 const UserProfileSidebar = props => {
+  const { t } = useTranslation()
   // ** Props
   const { handleUserSidebarRight, userSidebarRight, store } = props
 
@@ -72,7 +74,7 @@ const UserProfileSidebar = props => {
         {
           selectedChat.type != "group" &&
           <>
-            <h6 className='section-label mb-1'>About</h6>
+            <h6 className='section-label mb-1'>{t('About')}</h6>
             <p>
               {
                 selectedChat.chatParticipants.find(cp => cp.user.userId != user.userId)
@@ -85,7 +87,7 @@ const UserProfileSidebar = props => {
           {
             selectedChat.type == "group" &&
             <>
-              <h6 className='section-label mb-1 mt-3'>Group Information</h6>
+              <h6 className='section-label mb-1 mt-3'>{t('Group Information')}</h6>
               <ul className='list-unstyled'>
                 {
                   selectedChat.chatParticipants
@@ -111,13 +113,13 @@ const UserProfileSidebar = props => {
           }
         </div>
         <div className='more-options'>
-          <h6 className='section-label mb-1 mt-3'>Shared Media</h6>
+          <h6 className='section-label mb-1 mt-3'>{t('Shared Media')}</h6>
           <UILoader blocking={!!chatDocumentsLoading}>
             <ul className='list-unstyled'>
               {
                 chatDocuments.length == 0 && !chatDocumentsLoading &&
                 <li className='cursor-pointer mb-1'>
-                  No Media found
+                  {t('No Media found')}
                 </li>
               }
               {

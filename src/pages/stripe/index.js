@@ -13,6 +13,7 @@ import {
     useStripe
 } from "@stripe/react-stripe-js";
 import "./style.scss";
+import { useTranslation } from "react-i18next";
 let cardIllustration = require("../../assets/images/credit-cards/card_illustration.png")
 
 const CARD_OPTIONS = {
@@ -84,6 +85,7 @@ const SubmitButton = ({ processing, error, children, disabled }) => (
 // );
 
 const CheckoutForm = (props) => {
+    const {t} =useTranslation()
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);
@@ -133,7 +135,7 @@ const CheckoutForm = (props) => {
                 stripeToken ?
                     <div className="Result">
                         <div className="ResultTitle" role="alert">
-                            Card added successfully
+                            {t('Card added successfully')}
                         </div>
                         {/* <div className="ResultMessage">
                             Thanks for trying Stripe Elements. No money was charged, but we
@@ -154,7 +156,7 @@ const CheckoutForm = (props) => {
                         </fieldset>
                         {/* {error && <ErrorMessage>{error.message}</ErrorMessage>} */}
                         <SubmitButton processing={processing} error={error} disabled={!stripe}>
-                            Add Card
+                           {t('Add Card')}
                         </SubmitButton>
                     </form>
             }
@@ -174,6 +176,7 @@ const ELEMENTS_OPTIONS = {
 
 const StripeApp = (props) => {
 
+    const {t} =useTranslation()
     const { isOpenModal, toggleModalState } = props
     const { stripePublicKey } = props
     const [stripe, setStripe] = useState(null);
@@ -201,7 +204,7 @@ const StripeApp = (props) => {
                 props.stripePublicKey &&
                 stripe &&
                 <Modal className="modal-lg" scrollable isOpen={isOpenModal} toggle={toggleModalState}>
-                    <ModalHeader toggle={toggleModalState}>Add Card </ModalHeader>
+                    <ModalHeader toggle={toggleModalState}>{t('Add Card')} </ModalHeader>
                     <ModalBody>
                         <Card>
                             {

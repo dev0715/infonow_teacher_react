@@ -8,9 +8,11 @@ import { useState } from 'react';
 
 import '../../../assets/scss/custom/components/_question.scss'
 import { infoAlertDialog } from '../../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 
 export const Subjective = (props) => {
 
+    const {t}= useTranslation()
     const { question, updateQuestions } = props
 
     const number = props.number || '';
@@ -28,7 +30,7 @@ export const Subjective = (props) => {
             }
             updateQuestions(data)
         } else {
-            infoAlertDialog("obtained marks can't be greater than total marks")
+            infoAlertDialog(`${t("Obtained marks cannot be greater than total marks")}`)
         }
     }
 
@@ -47,7 +49,7 @@ export const Subjective = (props) => {
                             {answer.answerText}
                         </h7>
                         <FormGroup className={question.image ? 'attempt-obtained-marks-with-image' : ''}>
-                            <Label for='obtained-marks'>Enter Obtained Marks</Label>
+                            <Label for='obtained-marks'>{t('Enter Obtained Marks')}</Label>
                             <Input id='obtained-marks' value={obtainedMarks} onChange={e => onUpdateQuestionMarks(e)} />
                         </FormGroup>
 
@@ -60,7 +62,7 @@ export const Subjective = (props) => {
                                 <img src={`${IMAGES_BASE_URL}/${question.image}`} />
                             </div>
                         }
-                        <div className="text-right"><p className="text-muted text-right">Marks: {question.marks}</p></div>
+                        <div className="text-right"><p className="text-muted text-right">{t('Marks')}: {question.marks}</p></div>
 
                     </Col>
                 </Row>

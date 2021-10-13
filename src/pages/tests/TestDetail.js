@@ -13,9 +13,11 @@ import PropTypes from 'prop-types';
 import { ArrowLeft, Edit } from 'react-feather'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { useTranslation } from 'react-i18next';
 
 const TestDetail = (props) => {
 
+    const {t} = useTranslation()
     const { test, isEdit, onChangeView, isUpdateMarks, onUpdateMarks } = props;
 
     const onAssignTest = () => {
@@ -40,11 +42,11 @@ const TestDetail = (props) => {
                                 <Col md="6" className="text-right">
                                     <Button.Ripple className="mr-1" color='secondary' onClick={onChangeView} >
                                         <Edit size={14} />
-                                        <span className='align-middle ml-25'>Edit</span>
+                                        <span className='align-middle ml-25'>{t('Edit')}</span>
                                     </Button.Ripple>
 
                                     <Button.Ripple color='primary' onClick={onAssignTest}  >
-                                        <span className='align-middle ml-25'>Test Dashboard</span>
+                                        <span className='align-middle ml-25'>{t('Test Dashboard')}</span>
                                     </Button.Ripple>
                                 </Col>
                             }
@@ -53,7 +55,7 @@ const TestDetail = (props) => {
                                 isUpdateMarks &&
                                 <Col md="6" className="text-right">
                                     <Button.Ripple color='primary' onClick={onUpdateMarks}  >
-                                        <span className='align-middle ml-25'>Add Marks</span>
+                                        <span className='align-middle ml-25'>{t('Add Marks')}</span>
                                     </Button.Ripple>
                                 </Col>
                             }
@@ -70,12 +72,12 @@ const TestDetail = (props) => {
                                                         <h4 className=''>{test.title}</h4>
                                                         <Row>
                                                             <CardText tag='span' className='ml-1'>
-                                                                Created At: <strong>{<DateTime dateTime={test.createdAt} type="datetime" />}</strong>
+                                                                {t('Created At')}: <strong>{<DateTime dateTime={test.createdAt} type="datetime" />}</strong>
                                                             </CardText>
                                                         </Row>
                                                         <Row>
                                                             <CardText tag='span' className='ml-1'>
-                                                                Duration: <strong>{test.timeLimit / 60} mins</strong>
+                                                                {t('Duration')}: <strong>{test.timeLimit / 60} mins</strong>
                                                             </CardText>
                                                         </Row>
 

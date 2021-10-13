@@ -53,6 +53,7 @@ import './style.scss'
 
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { useTranslation } from 'react-i18next';
 
 let placeHolder = require("../../assets/images/icons/image-placeholer.svg")
 
@@ -60,7 +61,7 @@ const MySwal = withReactContent(Swal)
 
 const AppLessons = (props) => {
 
-
+    const { t } = useTranslation()
     const [isNewTopic, setIsNewTopic] = useState(false)
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -93,20 +94,20 @@ const AppLessons = (props) => {
     useEffect(() => {
         if (isTopicDeleting && !props.topicDeleting && props.topicDeleteError) {
             setIsTopicDeleting(false)
-            notifyError("Delete Topic", props.topicDeleteError)
+            notifyError(t("Delete Topic"), props.topicDeleteError)
         } else if (isTopicDeleting && !props.topicDeleting && !props.topicDeleteError) {
             setIsTopicDeleting(false)
-            notifySuccess("Delete Topic", "Topic deleted successfully")
+            notifySuccess(t("Delete Topic"), t("Topic deleted successfully"))
         }
     }, [props.topicDeleting])
 
     useEffect(() => {
         if (isNewTopic && !props.newTopicUploading && !props.newTopicError) {
             closeTopic()
-            notifySuccess("New Topic", "Topic Added successfully")
+            notifySuccess(t("New Topic"), t("Topic Added successfully"))
         }
         else if (isNewTopic && !props.newTopicUploading && props.newTopicError) {
-            notifyError("New Topic", props.newTopicError)
+            notifyError(t("New Topic"), props.newTopicError)
         }
 
     }, [props.newTopicUploading])
@@ -114,10 +115,10 @@ const AppLessons = (props) => {
     useEffect(() => {
         if (updateTopicId && !props.updateTopicUploading && !props.updateTopicError) {
             closeTopic()
-            notifySuccess("Update Topic", "Topic updated successfully")
+            notifySuccess(t("Update Topic"), t("Topic updated successfully"))
         }
         else if (updateTopicId && !props.updateTopicUploading && props.updateTopicError) {
-            notifyError("Update Topic", props.updateTopicError)
+            notifyError(t("Update Topic"), props.updateTopicError)
         }
 
     }, [props.updateTopicUploading])
@@ -133,7 +134,7 @@ const AppLessons = (props) => {
             props.updateTopic(data);
             return
         }
-        if (!file) return notifyError("New Topic", "Image is required for new topic")
+        if (!file) return notifyError(t("New Topic"), t("Image is required for new topic"))
         props.addNewTopic({
             title,
             description,
@@ -158,8 +159,8 @@ const AppLessons = (props) => {
     const handleTopicDelete = (id) => {
         return MySwal.fire({
             icon: 'question',
-            title: "Confirm",
-            text: `Are you sure to delete this topic?`,
+            title: `${t("Confirm")}`,
+            text: `${t('Are you sure to delete this topic?')}`,
             customClass: {
                 confirmButton: 'btn btn-primary',
                 cancelButton: 'btn btn-secondary ml-1'
@@ -194,7 +195,7 @@ const AppLessons = (props) => {
                     <CardBody className='p-0'>
                         <Card>
                             <CardHeader>
-                                <CardTitle className='text-primary'>Topics</CardTitle>
+                                <CardTitle className='text-primary'>{t('Topics')}</CardTitle>
                                 <div className="text-right">
                                     <Button.Ripple
                                         color='primary'
@@ -202,7 +203,7 @@ const AppLessons = (props) => {
                                     >
                                         <Plus size={14} />
                                         &nbsp;
-                                        New Topic
+                                        {t('New Topic')}
                                     </Button.Ripple>
                                 </div>
                             </CardHeader>
@@ -274,7 +275,7 @@ const AppLessons = (props) => {
                         </Card>
                         <Card>
                             <CardHeader>
-                                <CardTitle className="text-primary">Recent Lessons</CardTitle>
+                                <CardTitle className="text-primary">{t('Recent Lessons')}</CardTitle>
                             </CardHeader>
                             <CardBody>
                                 {
@@ -293,10 +294,10 @@ const AppLessons = (props) => {
                                     <Table responsive hover>
                                         <thead>
                                             <tr>
-                                                <th>Lesson</th>
-                                                <th>Topic</th>
-                                                <th>Uploaded</th>
-                                                <th>Students</th>
+                                                <th>{t('Lesson')}</th>
+                                                <th>{t('Topic')}</th>
+                                                <th>{t('Uploaded')}</th>
+                                                <th>{t('Students')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -350,8 +351,8 @@ const AppLessons = (props) => {
                             <h6>
                                 {
                                     updateTopicId ?
-                                        "Update Topic" :
-                                        "New Topic"
+                                        t("Update Topic") :
+                                        t("New Topic")
                                 }
                             </h6>
                             <Form
@@ -360,12 +361,12 @@ const AppLessons = (props) => {
                             >
                                 <FormGroup>
                                     <Label className="ml-25">
-                                        Title
+                                        {t('Title')}
                                     </Label>
                                     <InputGroup className='input-group-merge'>
                                         <Input
                                             type="text"
-                                            placeholder='Title'
+                                            placeholder={t('Title')}
                                             value={title}
                                             onChange={e => setTitle(e.target.value)}
                                             required />
@@ -373,13 +374,13 @@ const AppLessons = (props) => {
                                 </FormGroup>
                                 <FormGroup>
                                     <Label className="ml-25">
-                                        Description
+                                        {t('Description')}
                                     </Label>
                                     <InputGroup className='input-group-merge'>
                                         <Input
                                             type='textarea'
                                             rows='4'
-                                            placeholder='Description'
+                                            placeholder={t('Description')}
                                             value={description}
                                             onChange={e => setDescription(e.target.value)}
                                             required
@@ -407,7 +408,7 @@ const AppLessons = (props) => {
                                         type="submit"
                                         color='primary'
                                     >
-                                        Submit
+                                        {t('Submit')}
                                     </Button.Ripple>
                                 </FormGroup>
                             </Form>

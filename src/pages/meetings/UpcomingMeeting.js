@@ -23,9 +23,11 @@ import UILoader from '../../@core/components/ui-loader';
 import { MEETING_APP_URL } from '../../helpers/url_helper'
 
 import { AddMeetingToCalenderButton } from './addMeetingToCalender'
+import { useTranslation } from 'react-i18next';
 
 const UpcomingMeeting = (props) => {
 
+	const { t } = useTranslation()
 	const { meeting } = props
 	const [skin, setSkin] = useSkin();
 	const [meetingUrl, setMeetingUrl] = useState("");
@@ -70,7 +72,7 @@ const UpcomingMeeting = (props) => {
 								</div>
 								<div className='my-auto'>
 									<CardTitle tag='h4' className='mb-25'>
-										Upcoming Meeting
+										{t('Upcoming Meeting')}
 									</CardTitle>
 									<CardText className='mb-0'>
 										{meeting.agenda}
@@ -86,7 +88,7 @@ const UpcomingMeeting = (props) => {
 
 								<a target="_blank" onClick={(e) => handleJoin(e)}>
 									<Button.Ripple className='mr-1' color='primary'>
-										Join
+										{t('Join')}
 									</Button.Ripple>
 								</a>
 							</div>

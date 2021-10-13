@@ -14,9 +14,11 @@ import { ArrowLeft, Edit } from 'react-feather'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { titleCase } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 
 const AssignmentDetail = (props) => {
 
+    const { t } = useTranslation()
     const { assignment, isEdit, onChangeView, isUpdateMarks, onUpdateMarks } = props;
 
     const onAssignAssignment = () => {
@@ -34,7 +36,7 @@ const AssignmentDetail = (props) => {
                         <Row className="mb-2">
                             <Col md="6">
                                 <Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-                                <h3 className='ml-2 d-inline m-0'>Assignment</h3>
+                                <h3 className='ml-2 d-inline m-0'>{t('Assignments')}</h3>
                             </Col>
                             {
                                 isEdit &&
@@ -45,7 +47,7 @@ const AssignmentDetail = (props) => {
                                     </Button.Ripple> */}
 
                                     <Button.Ripple color='primary' onClick={onAssignAssignment}  >
-                                        <span className='align-middle ml-25'>Assignment Dashboard</span>
+                                        <span className='align-middle ml-25'>{t('Assignment Dashboard')}</span>
                                     </Button.Ripple>
                                 </Col>
                             }
@@ -54,7 +56,7 @@ const AssignmentDetail = (props) => {
                                 isUpdateMarks &&
                                 <Col md="6" className="text-right">
                                     <Button.Ripple color='primary' onClick={onUpdateMarks}  >
-                                        <span className='align-middle ml-25'>Add Marks</span>
+                                        <span className='align-middle ml-25'>{t('Add Marks')}</span>
                                     </Button.Ripple>
                                 </Col>
                             }
@@ -71,12 +73,13 @@ const AssignmentDetail = (props) => {
                                                         <h4 className=''>{assignment.title}</h4>
                                                         <Row>
                                                             <CardText tag='span' className='ml-1'>
-                                                                Created At: <strong>{<DateTime dateTime={assignment.createdAt} type="datetime" />}</strong>
+                                                                {t('Created At')}: <strong>{<DateTime dateTime={assignment.createdAt} type="datetime" />}</strong>
                                                             </CardText>
                                                         </Row>
-                                                        <Row>                                                            <CardText tag='span' className='ml-1'>
-                                                            type: <strong>{titleCase(assignment.type)}</strong>
-                                                        </CardText>
+                                                        <Row>
+                                                            <CardText tag='span' className='ml-1'>
+                                                                {t('type')}: <strong>{titleCase(assignment.type)}</strong>
+                                                            </CardText>
                                                         </Row>
 
                                                     </div>

@@ -15,12 +15,12 @@ import UILoader from '../../@core/components/ui-loader';
 import { infoAlertDialog, successAlertDialog, errorAlertDialog } from '../../helpers/HelperFunctions';
 import AssignmentDetail from '../assignments/AssignmentDetail';
 import ReactMarkdown from 'react-markdown';
+import { useTranslation } from 'react-i18next';
 
 const AssignmentAttemptDetail = (props) => {
 
+    const {t} = useTranslation()
     const assignmentAttemptId = props.match.params.assignmentAttemptId;
-
-
 
     const {
         assignmentAttemptDetail,
@@ -37,7 +37,6 @@ const AssignmentAttemptDetail = (props) => {
     useEffect(getAttemptAndAssignmentDetail, []);
 
     useEffect(() => {
-        // console.log("assignmentAttemptDetail.assignment", assignmentAttemptDetail.assignment)
     }, [assignmentAttemptDetail]);
 
     return (
@@ -56,7 +55,7 @@ const AssignmentAttemptDetail = (props) => {
 
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle tag='h4'>Assignment Content</CardTitle>
+                                        <CardTitle tag='h4'>{t('Assignment Content')}</CardTitle>
                                     </CardHeader>
                                     <CardBody>
                                         <ReactMarkdown >{assignmentAttemptDetail.assignment.content}</ReactMarkdown>

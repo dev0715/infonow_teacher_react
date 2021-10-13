@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     Col, UncontrolledButtonDropdown, DropdownMenu, DropdownItem, DropdownToggle
 } from 'reactstrap';
@@ -6,6 +7,7 @@ import Question from '../questions/new/Question';
 
 const Questions = (props) => {
 
+    const {t} = useTranslation()
     const { questions, isEdit } = props
 
     const objectiveQuestion = {
@@ -58,11 +60,11 @@ const Questions = (props) => {
                     <div className='demo-inline-spacing'>
                         <UncontrolledButtonDropdown>
                             <DropdownToggle color='success' outline caret>
-                                Add New Question
+                                {t('Add New Question')}
                             </DropdownToggle>
                             <DropdownMenu >
-                                <DropdownItem onClick={() => { addQuestion(1, 0) }}>Objective Question</DropdownItem>
-                                <DropdownItem onClick={() => { addQuestion(2, 0) }}>Subjective Question</DropdownItem>
+                                <DropdownItem onClick={() => { addQuestion(1, 0) }}>{t('Objective Question')}</DropdownItem>
+                                <DropdownItem onClick={() => { addQuestion(2, 0) }}>{t('Subjective Question')}</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledButtonDropdown>
                     </div>

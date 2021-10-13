@@ -12,7 +12,7 @@ function* setupAccountPasswordHttp({ payload: { data, history } }) {
     try {
         const response = yield call(setupAccountPassword, data);
         if (response) {
-            localStorage.setItem("authUser", JSON.stringify(response))
+            localStorage.setItem("authTeacher", JSON.stringify(response))
             setTimeout(() => {
                 history.replace("/")
             }, 100)

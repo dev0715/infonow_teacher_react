@@ -9,9 +9,11 @@ import ApiCalendar from 'react-google-calendar-api';
 
 import { notifySuccess, notifyWarning } from '../../utility/toast'
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 export const AddMeetingToCalenderButton = (props) => {
 
+    const { t } = useTranslation()
     const { meeting, type, className } = props
 
     const [isCalendarSignIn, setIsCalendarSignIn] = useState(false)
@@ -26,7 +28,7 @@ export const AddMeetingToCalenderButton = (props) => {
     }, [])
 
     const addMeetingToCalender = () => {
-        if (!meeting) return notifyWarning("Meeting", `Could not add meeting to google calendar. Please try again`)
+        if (!meeting) return notifyWarning(t("Meeting"), t(`Could not add meeting to google calendar. Please try again`))
         const event = {
             summary: meeting.agenda,
             start: {
@@ -42,7 +44,7 @@ export const AddMeetingToCalenderButton = (props) => {
         ApiCalendar.createEvent(event)
             .then((result) => {
                 setIsRemindMe(false)
-                notifySuccess("Meeting", `Meeting has been added to your Google Calendar`)
+                notifySuccess(t("Meeting"), t(`Meeting has been added to your Google Calendar`))
             })
             .catch((error) => {
                 setIsRemindMe(false)
@@ -61,7 +63,7 @@ export const AddMeetingToCalenderButton = (props) => {
                     exist = true
             });
             if (exist) {
-                notifySuccess("Meeting", `Meeting has been added to your Google Calendar`)
+                notifySuccess(t("Meeting"), t(`Meeting has been added to your Google Calendar`))
                 setIsRemindMe(false);
                 return
             }
@@ -72,7 +74,6 @@ export const AddMeetingToCalenderButton = (props) => {
 
     useEffect(() => {
         if (ApiCalendar.sign && isRemindMe) {
-            // console.log("getting calenders", ApiCalendar.sign, isRemindMe)
             getCalenderEvents()
         }
     }, [isCalendarSignIn, isRemindMe])
@@ -98,7 +99,7 @@ export const AddMeetingToCalenderButton = (props) => {
                 >
                     <Bell size={14} />
                     <span className='align-middle ml-25'>
-                        Remind Me
+                        {t('Remind Me')}
                     </span>
                 </Button.Ripple>
                 :

@@ -28,7 +28,6 @@ const ViewOrEdit = (props) => {
     useEffect(() => { }, [isView])
 
     useEffect(() => { 
-        console.log("CHEK TEST ==>", props.selectedTest);
     }, [ props.selectedTest])
   
     return (

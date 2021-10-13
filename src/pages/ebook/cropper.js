@@ -3,10 +3,12 @@ import {useEffect, useState , useRef} from "react"
 import {Cropper} from "react-cropper"
 import "cropperjs/dist/cropper.css";
 import { Modal ,ModalBody, ModalFooter , Button } from "reactstrap"
+import { useTranslation } from "react-i18next";
 const imgPlaceholder = require(`@src/assets/images/custom-placeholder/img_preview_placeholder.jpeg`);
 
 const TestCropper = (props) => {
 
+    const {t} = useTranslation()
     const {type, isOpen , Image ,toggleModal , onCrop} = props
     const [cropResult, setCropResult] = useState()
     const cropperRef = useRef(null);
@@ -53,7 +55,7 @@ const TestCropper = (props) => {
                     
                 </ModalBody>
                 <ModalFooter>
-                    <Button color='primary'onClick={cropImage}> Crop  </Button>
+                    <Button color='primary'onClick={cropImage}> {t('Crop')}  </Button>
                 </ModalFooter>
             </Modal>
         </>

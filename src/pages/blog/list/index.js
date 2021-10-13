@@ -24,8 +24,6 @@ import {
 
 import Avatar from '@components/avatar'
 import { Link } from 'react-router-dom'
-import { MessageSquare } from 'react-feather'
-import Breadcrumbs from '@components/breadcrumbs'
 import {
   Row,
   Col,
@@ -35,11 +33,7 @@ import {
   CardTitle,
   CardImg,
   Badge,
-  Media,
-  Pagination,
-  PaginationItem,
-  PaginationLink
-} from 'reactstrap'
+  Media} from 'reactstrap'
 
 import * as Icon from 'react-feather'
 

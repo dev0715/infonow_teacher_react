@@ -14,10 +14,12 @@ import BrandLogo from '../../../components/brand-logo'
 import { connect } from 'react-redux'
 
 import { notifyError, notifySuccess, } from '../../../utility/toast'
+import { useTranslation } from 'react-i18next';
 
 
 const ForgotPassword = (props) => {
     const [skin, setSkin] = useSkin()
+    const {t}= useTranslation()
 
     const illustration = skin === 'dark' ? 'forgot-password-dark.svg' : 'forgot-password.svg',
         source = require(`@src/assets/images/illustrations/${illustration}`)
@@ -29,11 +31,11 @@ const ForgotPassword = (props) => {
     useEffect(() => {
         if (processing && !props.loading && props.error) {
             setProcessing(false)
-            notifyError("Forgot Password", props.error)
+            notifyError(t("Forgot Password"), props.error)
         }
         else if (processing && !props.loading && !props.error) {
             setProcessing(false)
-            notifySuccess("Forgot Password", "Reset Link sent successfully")
+            notifySuccess(t("Forgot Password"), t("Reset Link sent successfully"))
         }
 
     }, [props.loading])
@@ -61,22 +63,22 @@ const ForgotPassword = (props) => {
                 <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
                     <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                         <CardTitle tag='h2' className='font-weight-bold mb-1'>
-                            Forgot Password?
+                           {t('Forgot Password')}?
                         </CardTitle>
                         <CardText className='mb-2'>
-                            Enter your email and we'll send you instructions to reset your password
+                            {t(`Enter your email and we'll send you instructions to reset your password`)}
                         </CardText>
                         <Form
                             onSubmit={e => handleSubmit(e)}
                         >
                             <FormGroup>
                                 <Label className="ml-25">
-                                    Email
+                                    {t('Email')}
                                 </Label>
                                 <InputGroup className='input-group-merge'>
                                     <Input
                                         type="email"
-                                        placeholder='Enter email'
+                                        placeholder={t('Enter email')}
                                         value={email}
                                         onChange={e => setEmail(e.target.value)}
                                         required />
@@ -89,7 +91,7 @@ const ForgotPassword = (props) => {
                                 disabled={props.loading}
                             >
                                 {props.loading && <><i className="las la-spinner la-spin"></i>&nbsp;&nbsp;</>}
-                                Send Reset Link
+                                {t('Send Reset Link')}
                             </Button.Ripple>
                             <br />
                             <Button.Ripple
@@ -99,7 +101,7 @@ const ForgotPassword = (props) => {
                                 disabled={props.loading}
                                 onClick={() => props.history.replace('/login')}
                             >
-                                Back to Login
+                                {t('Back to Login')}
                             </Button.Ripple>
                         </Form>
                     </Col>

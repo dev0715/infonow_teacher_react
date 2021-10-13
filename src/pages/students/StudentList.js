@@ -19,12 +19,15 @@ import { withRouter, } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getProfileImageUrl } from '../../helpers/url_helper'
 import CustomPagination from '../pagination';
+import { useTranslation } from 'react-i18next';
+
 const StudentList = (props) => {
 
+    const { t } = useTranslation()
     const { students, studentList } = props
     const [studentData, setStudentData] = useState()
     const [currentPage, setCurrentPage] = useState(currentPage)
-  
+
 
     const onStudentSelect = (student) => {
         props.history.push(`/students/${student.user.userId}`)
@@ -32,22 +35,22 @@ const StudentList = (props) => {
 
     const onPageChange = (page) => {
         let data = {
-            "page" : page,
+            "page": page,
             "limit": 20
         }
-        if(studentList[page]) setStudentData(studentList[page])
+        if (studentList[page]) setStudentData(studentList[page])
         else props.getAllStudents(data)
     }
 
     const fetchStudents = () => {
         let data = {
-            "page" : currentPage,
+            "page": currentPage,
             "limit": 20
         }
         props.getAllStudents(data);
     }
     useEffect(() => {
-       setStudentData(students.data)
+        setStudentData(students.data)
     }, [students]);
 
     useEffect(() => {
@@ -63,12 +66,12 @@ const StudentList = (props) => {
             default: return 'light-warning'
         }
     }
-    
+
 
     return (
 
         <CardReload
-            title='Students'
+            title={t('Students')}
             onReload={fetchStudents}
             isReloading={props.studentsLoading} >
             < CardBody >
@@ -76,10 +79,10 @@ const StudentList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Created At</th>
-                            <th>Status</th>
+                            <th>{t('Name')}</th>
+                            <th>{t('Email')}</th>
+                            <th>{t('Created At')}</th>
+                            <th>{t('Status')}</th>
 
                         </tr>
                     </thead>
@@ -111,7 +114,7 @@ const StudentList = (props) => {
                         )}
                     </tbody>
                 </Table>
-                <CustomPagination pages={Math.ceil(students.count / 20)} onSelect={onPageChange}/>
+                <CustomPagination pages={Math.ceil(students.count / 20)} onSelect={onPageChange} />
             </CardBody >
         </CardReload >
     );

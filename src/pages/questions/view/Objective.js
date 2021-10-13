@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, CardBody, Row, Col } from 'reactstrap';
 import { IMAGES_BASE_URL } from '../../../helpers/url_helper';
-import { CheckCircle, XCircle } from 'react-feather';
+import { useTranslation } from 'react-i18next';
 export const Objective = (props) => {
+    const {t} = useTranslation()
     const {
         question,
         number } = props;
@@ -16,7 +17,7 @@ export const Objective = (props) => {
                         <h6 >
                             {`${number}. ${question.text}`}
                         </h6>
-                        <p className="text-muted">Marks: {question.marks}</p>
+                        <p className="text-muted">{t('Marks')}: {question.marks}</p>
                     </Col>
                 </Row>
 

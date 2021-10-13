@@ -32,10 +32,12 @@ import { stateToMarkdown } from "draft-js-export-markdown";
 import { stateFromMarkdown } from 'draft-js-import-markdown';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { useTranslation } from 'react-i18next';
 
 
 const newLesson = (props) => {
 
+    const { t } = useTranslation()
     const [editorVal, setEditorVal] = useState();
     const [myEditorVal, setMyEditorVal] = useState(() => EditorState.createEmpty());
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
@@ -59,7 +61,6 @@ const newLesson = (props) => {
         if (!props.selectedTopic) {
             props.history.goBack()
         }
-        // console.log("Lesson", props.location.state)
         if (props.location.state) setLessonForUpdate(props.location.state)
     }, [props.selectedTopic])
 
@@ -68,7 +69,7 @@ const newLesson = (props) => {
             setTitle(lessonForUpdate.title);
             setDescription(lessonForUpdate.description)
             setVideoUrl(lessonForUpdate.videoUrl || "")
-            let contentState = stateFromMarkdown(lessonForUpdate.content ,{ parserOptions: {atomicImages: true}})
+            let contentState = stateFromMarkdown(lessonForUpdate.content, { parserOptions: { atomicImages: true } })
             setEditorState(EditorState.createWithContent(contentState))
         }
     }, [lessonForUpdate])
@@ -76,22 +77,22 @@ const newLesson = (props) => {
     useEffect(() => {
         if (isNewLesson && !props.newLessonUploading && !props.newLessonError) {
             setIsNewLesson(false)
-            notifySuccess("New Lesson", "Lesson Added successfully")
+            notifySuccess(t("New Lesson"), t("Lesson Added successfully"))
             props.history.goBack()
         }
         else if (isNewLesson && !props.newLessonUploading && props.newLessonError) {
             setIsNewLesson(false)
-            notifyError("New Lesson", props.newLessonError)
+            notifyError(t("New Lesson"), props.newLessonError)
         }
     }, [props.newLessonUploading])
 
     useEffect(() => {
         if (Object.keys(lessonForUpdate).length > 0 && !props.updateLessonLoading && !props.updateLessonError) {
-            notifySuccess("Update Lesson", "Lesson updated successfully")
+            notifySuccess(t("Update Lesson"), t("Lesson updated successfully"))
             props.history.goBack()
         }
         else if (Object.keys(lessonForUpdate).length > 0 && !props.updateLessonLoading && props.updateLessonError) {
-            notifyError("Update Lesson", props.updateLessonError)
+            notifyError(t("Update Lesson"), props.updateLessonError)
         }
     }, [props.updateLessonLoading])
 
@@ -115,10 +116,9 @@ const newLesson = (props) => {
         if (!editorState.getCurrentContent().hasText()) {
             return notifyError(`${Object.keys(lessonForUpdate).length > 0 ?
                 "Update" : "New"} Lesson`,
-                "Content is required for lesson")
+                t("Content is required for lesson"))
         }
         if (Object.keys(lessonForUpdate).length > 0) {
-            // console.log("Update lesson")
             props.updateLesson({
                 id: lessonForUpdate.id,
                 topic: props.selectedTopic,
@@ -173,7 +173,7 @@ const newLesson = (props) => {
                                     </Button.Ripple>
                                 </div>
                                 <h4 className="text-primary ml-25 mb-0">
-                                    {Object.keys(lessonForUpdate).length > 0 ? "Update" : "New"} Lesson
+                                    {Object.keys(lessonForUpdate).length > 0 ? "Update" : "New"} {t('Lesson')}
                                 </h4>
                             </div>
                             <div>
@@ -181,7 +181,7 @@ const newLesson = (props) => {
                                     color='primary'
                                     onClick={() => setIsPreview(!isPreview)}
                                 >
-                                    {isPreview ? "Exit Preview" : "Preview"}
+                                    {isPreview ? `${t("Exit Preview")}` : `${t("Preview")}`}
                                 </Button.Ripple>
 
                             </div>
@@ -228,12 +228,12 @@ const newLesson = (props) => {
                                 >
                                     <FormGroup>
                                         <Label className="ml-25">
-                                            Title
+                                            {t('Title')}
                                         </Label>
                                         <InputGroup className='input-group-merge'>
                                             <Input
                                                 type="text"
-                                                placeholder='Title'
+                                                placeholder={t('Title')}
                                                 value={title}
                                                 onChange={e => setTitle(e.target.value)}
                                                 required
@@ -242,13 +242,13 @@ const newLesson = (props) => {
                                     </FormGroup>
                                     <FormGroup>
                                         <Label className="ml-25">
-                                            Description
+                                            {t('Description')}
                                         </Label>
                                         <InputGroup className='input-group-merge'>
                                             <Input
                                                 type='textarea'
                                                 rows='4'
-                                                placeholder='Description'
+                                                placeholder={t('Description')}
                                                 value={description}
                                                 onChange={e => setDescription(e.target.value)}
                                                 required
@@ -257,7 +257,7 @@ const newLesson = (props) => {
                                     </FormGroup>
                                     <FormGroup>
                                         <Label className="ml-25 ">
-                                            Content
+                                            {t('Content')}
                                         </Label>
                                         <Editor
                                             editorState={editorState}
@@ -270,12 +270,12 @@ const newLesson = (props) => {
 
                                     <FormGroup>
                                         <Label className="ml-25">
-                                            Video Url
+                                            {t('Video Url')}
                                         </Label>
                                         <InputGroup className='input-group-merge'>
                                             <Input
                                                 type='url'
-                                                placeholder='video url'
+                                                placeholder={t('Video url')}
                                                 value={videoUrl}
                                                 onChange={e => setVideoUrl(e.target.value)}
                                             />
@@ -287,7 +287,7 @@ const newLesson = (props) => {
                                             <img
                                                 src={getVideoThumbnailUrl(videoUrl)}
                                                 className="rounded  new-lesson-thumbnail"
-                                                alt="Not Valid Url" />
+                                                alt={t("Not Valid Url")}/>
                                         </FormGroup>
                                     }
                                     <Button.Ripple
@@ -295,7 +295,7 @@ const newLesson = (props) => {
                                         color='primary'
                                         className='mt-2'
                                     >
-                                        Submit
+                                        {t('Submit')}
                                     </Button.Ripple>
                                 </Form>
                         }

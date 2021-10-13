@@ -8,15 +8,15 @@ import PropTypes from 'prop-types';
 import CardReload from '../../@core/components/card-reload';
 import { Button } from 'reactstrap'
 import { Plus } from 'react-feather'
-
 import { titleCase } from '../../helpers/HelperFunctions';
 import '../../assets/scss/custom/components/_card.scss'
 import CustomPagination from '../pagination';
+import { useTranslation } from 'react-i18next';
 
 const AssignmentList = (props) => {
 
-    const {count, limit,  assignments, isTeacher, fetchAssignments, isReloading ,onPageChange } = props;
-
+    const { count, limit, assignments, isTeacher, fetchAssignments, isReloading, onPageChange } = props;
+    const { t } = useTranslation()
     const onSelectAssignment = (assignment) => {
         if (props.onSelect) {
             props.onSelect(assignment);
@@ -30,15 +30,15 @@ const AssignmentList = (props) => {
     }
 
     const onSelectPage = (page) => {
-        if(onPageChange)
-           onPageChange(page)
+        if (onPageChange)
+            onPageChange(page)
     }
 
 
 
     return (
         <CardReload className="p-0 test-list"
-            title='Assignments'
+            title={t('Assignments')}
             onReload={fetchAssignments}
             isReloading={isReloading}>
             {
@@ -46,7 +46,7 @@ const AssignmentList = (props) => {
                 <div className="text-right">
                     <Button.Ripple className='btn-header' color='primary' onClick={onNewAssignments}>
                         <Plus size={14} />
-                        <span className='align-middle ml-25'>New Assignment</span>
+                        <span className='align-middle ml-25'>{t('New Assignment')}</span>
                     </Button.Ripple>
                 </div>
             }
@@ -56,10 +56,10 @@ const AssignmentList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>title</th>
-                            <th>Type</th>
-                            <th>Created At</th>
-                            <th>Total Marks</th>
+                            <th>{t('Title')}</th>
+                            <th>{t('Type')}</th>
+                            <th>{t('Created At')}</th>
+                            <th>{t('Total Marks')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,7 +81,7 @@ const AssignmentList = (props) => {
                             )}
                     </tbody>
                 </Table>
-                <CustomPagination pages={Math.ceil(count / limit || 20)} onSelect={onSelectPage}/>
+                <CustomPagination pages={Math.ceil(count / limit || 20)} onSelect={onSelectPage} />
             </CardBody>
         </CardReload>
     );

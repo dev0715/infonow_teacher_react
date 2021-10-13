@@ -15,8 +15,10 @@ import '../../assets/scss/custom/components/_question.scss'
 
 import UILoader from '../../@core/components/ui-loader';
 import { errorAlertDialog, successAlertDialog } from '../../helpers/HelperFunctions';
+import { useTranslation } from 'react-i18next';
 const EditTest = (props) => {
 
+	const { t } = useTranslation()
 	const loading = false;
 	const { onChangeView, updateTestLoading, updateTestError, updateTestSuccess } = props
 	const [test, setTest] = useState(props.test)
@@ -78,7 +80,7 @@ const EditTest = (props) => {
 
 	useEffect(() => {
 		if (updateTestError) errorAlertDialog(updateTestError, 'error');
-		if (updateTestSuccess) successAlertDialog('Test has been updated successfully', 'success');
+		if (updateTestSuccess) successAlertDialog(t('Test has been updated successfully'), 'success');
 	}, [updateTestError, updateTestSuccess]);
 
 
@@ -90,12 +92,12 @@ const EditTest = (props) => {
 						<Row className="mb-2">
 							<Col md="6">
 								<Button.Ripple className="btn-icon" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>
-								<h3 className='ml-2 d-inline m-0'>Edit Test</h3>
+								<h3 className='ml-2 d-inline m-0'>{t('Edit Test')}</h3>
 							</Col>
 							<Col className="text-right" md="6">
 								<Button.Ripple color='primary' onClick={onChangeView} >
 									<Eye size={14} />
-									<span className='align-middle ml-25'>View</span>
+									<span className='align-middle ml-25'>{t('View')}</span>
 								</Button.Ripple>
 							</Col>
 						</Row>
@@ -115,7 +117,7 @@ const EditTest = (props) => {
 													<div className='mb-3'>
 														<AvField
 															name='title'
-															label={'Test Title *'}
+															label={t('Test Title *')}
 															value={test.title}
 															onChange={onTitleChange}
 															className='form-control'
@@ -130,12 +132,12 @@ const EditTest = (props) => {
 													<div className='mb-3'>
 														<AvField
 															name='timeLimit'
-															label={'Time Limit *'}
+															label={t('Time Limit *')}
 															value={`${test.timeLimit / 60}`}
 															onChange={onTimeLimitChange}
 															className='form-control'
 															placeholder={
-																'Time limit in Minutes'
+																t('Time limit in Minutes')
 															}
 															type='number'
 															min={10}
@@ -147,11 +149,11 @@ const EditTest = (props) => {
 													<div className='mb-3'>
 														<AvField
 															name='totalMarks'
-															label={'Total Marks *'}
+															label={t('Total Marks *')}
 															value={`${test.totalMarks}`}
 															className='form-control'
 															placeholder={
-																'Total Marks'
+																t('Total Marks')
 															}
 															type='number'
 															disabled
@@ -177,7 +179,7 @@ const EditTest = (props) => {
 															type='submit'>
 															{/* disabled={props.newTestLoading}> */}
 															{props.newTestLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
-															Edit Test
+															{t('Edit Test')}
 														</button>
 													</div>
 												</Col>

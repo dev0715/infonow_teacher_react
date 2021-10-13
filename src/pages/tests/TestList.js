@@ -12,10 +12,12 @@ import { Plus } from 'react-feather'
 
 import '../../assets/scss/custom/components/_card.scss'
 import CustomPagination from '../pagination';
+import { useTranslation } from 'react-i18next';
 const TestList = (props) => {
 
-    const {count, limit ,  tests, isTeacher, fetchTests, isReloading ,onPageChange} = props;
+    const { count, limit, tests, isTeacher, fetchTests, isReloading, onPageChange } = props;
 
+    const { t } = useTranslation()
     const onSelectTests = (test) => {
         if (props.onSelect) {
             props.onSelect(test);
@@ -27,16 +29,16 @@ const TestList = (props) => {
             props.onNewTest()
         }
     }
-    const onSelectPage = (page) =>{
-        if(onPageChange)
-           onPageChange(page)
+    const onSelectPage = (page) => {
+        if (onPageChange)
+            onPageChange(page)
     }
 
 
 
     return (
         <CardReload className="p-0 test-list"
-            title='Tests'
+            title={t('Tests')}
             onReload={fetchTests}
             isReloading={isReloading}>
             {
@@ -44,7 +46,7 @@ const TestList = (props) => {
                 <div className="text-right">
                     <Button.Ripple className='btn-header' color='primary' onClick={onNewTest}>
                         <Plus size={14} />
-                        <span className='align-middle ml-25'>Add Test</span>
+                        <span className='align-middle ml-25'>{t('Add Test')}</span>
                     </Button.Ripple>
                 </div>
             }
@@ -54,10 +56,10 @@ const TestList = (props) => {
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Title</th>
-                            <th>Created At</th>
-                            <th>Time Limit</th>
-                            <th>Total Marks</th>
+                            <th>{t("Title")}</th>
+                            <th>{(t('Created At'))}</th>
+                            <th>{t('Time Limit')}</th>
+                            <th>{t('Total Marks')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +80,7 @@ const TestList = (props) => {
                         )}
                     </tbody>
                 </Table>
-                <CustomPagination pages={Math.ceil(count / limit || 20)} onSelect={onSelectPage}/>
+                <CustomPagination pages={Math.ceil(count / limit || 20)} onSelect={onSelectPage} />
             </CardBody>
         </CardReload>
     );

@@ -7,24 +7,26 @@ import {
 import Avatar from '@components/avatar'
 import { DateTime } from '../../components/date-time';
 import { getProfileImageUrl } from '../../helpers/url_helper'
+import { useTranslation } from 'react-i18next';
 const StudentListModal = (props) => {
 
-    const { students, isOpen, toggleModalState, onSelectedStudent } = props
+    const {t} = useTranslation()
+     const { students, isOpen, toggleModalState, onSelectedStudent } = props
 
 
     return (
         < Modal className="modal-lg" scrollable isOpen={isOpen} toggle={toggleModalState}>
-            <ModalHeader toggle={toggleModalState}>Assign test to student</ModalHeader>
+            <ModalHeader toggle={toggleModalState}>{t('Assign test to student')}</ModalHeader>
             <ModalBody>
 
                 <Table responsive >
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Created At</th>
-                            <th>Action</th>
+                            <th>{t('Name')}</th>
+                            <th>{t('Email')}</th>
+                            <th>{t('Created At')}</th>
+                            <th>{t('Action')}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +47,7 @@ const StudentListModal = (props) => {
 
                                 <td>
                                     <Button.Ripple color='flat-primary' onClick={e => { e.preventDefault(); onSelectedStudent(s) }}>
-                                        Assign
+                                        {t('Assign')}
                                     </Button.Ripple>
                                 </td>
 

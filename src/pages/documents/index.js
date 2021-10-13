@@ -4,11 +4,6 @@ import { Fragment, useState, useEffect } from 'react'
 
 import Select from 'react-select'
 
-// ** Third Party Components
-import classnames from 'classnames'
-
-
-
 // ** Store & Actions
 import { connect, useSelector } from 'react-redux'
 import {
@@ -31,7 +26,7 @@ import './style.scss'
 
 import { withRouter } from 'react-router';
 
-import DocumentTable from './table'
+import DocumentTable from './documentList'
 import { Row, Col, Progress, UncontrolledTooltip } from 'reactstrap';
 import { Card, CardBody } from 'reactstrap';
 
@@ -42,16 +37,15 @@ import { getShortNameForDocument } from '../../utility/Utils';
 
 
 import UILoader from '../../@core/components/ui-loader';
+import { useTranslation } from 'react-i18next';
 
 
 const AppDocuments = (props) => {
+    const {t} = useTranslation()
     // ** Store Vars
     const store = useSelector(state => state.Documents)
 
     // ** Get data on Mount
-
-
-
     useEffect(() => {
         props.getUserDocuments()
     }, [])
@@ -107,7 +101,7 @@ const AppDocuments = (props) => {
                         <Row>
                             <Col lg="2" md="3" sm="12" >
                                 <div className="mt-3">
-                                    <h6 className="text-muted pl-1  mt-3 mb-2">Category</h6>
+                                    <h6 className="text-muted pl-1  mt-3 mb-2">{t('Category')}</h6>
                                     <Select
                                         className="file-category-select d-sm-block d-md-none d-lg-none d-xl-none"
                                         options={categoryTypes}
@@ -126,7 +120,7 @@ const AppDocuments = (props) => {
                                                         c.icon
                                                     }
                                                     <span >
-                                                        {c.label}
+                                                        {t(c.label)}
                                                     </span>
                                                 </li>)
                                         }

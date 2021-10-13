@@ -34,6 +34,7 @@ import { saveAs } from 'file-saver';
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { useTranslation } from 'react-i18next'
 
 // ** Bootstrap Checkbox Component
 const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
@@ -45,8 +46,9 @@ const BootstrapCheckbox = forwardRef(({ onClick, ...rest }, ref) => (
 
 
 
-const DataTableWithButtons = (props) => {
+const DocumentsList = (props) => {
 
+    const {t} = useTranslation()
     const { store } = props
     const { documents, documentLoading, selectedType,
         uploadUserDocument, updateUserDocumentProgress,
@@ -97,13 +99,13 @@ const DataTableWithButtons = (props) => {
     }
     const columns = [
         {
-            name: 'File Name',
+            name: `${t('File Name')}`,
             selector: 'fileName',
             sortable: true,
             minWidth: '250px'
         },
         {
-            name: 'Size',
+            name: `${t('Size')}`,
             selector: 'fileSize',
             sortable: false,
             minWidth: '100px',
@@ -118,7 +120,7 @@ const DataTableWithButtons = (props) => {
             }
         },
         {
-            name: 'Last Modified',
+            name:`${t('Last Modified')}`,
             selector: 'updatedAt',
             sortable: true,
             minWidth: '250px',
@@ -132,7 +134,7 @@ const DataTableWithButtons = (props) => {
             }
         },
         {
-            name: 'Actions',
+            name: `${t('Actions')}`,
             selector: 'name',
             allowOverflow: true,
             cell: row => {
@@ -145,15 +147,15 @@ const DataTableWithButtons = (props) => {
                             <DropdownMenu right>
                                 <DropdownItem tag='a' href='/' className='w-100' onClick={e => downloadDocument(e, row)}>
                                     <Download size={15} />
-                                    <span className='align-middle ml-50'>Download</span>
+                                    <span className='align-middle ml-50'>{t('Download')}</span>
                                 </DropdownItem>
                                 <DropdownItem tag='a' href='/' className='w-100' onClick={e => copyLink(e, GET_DOCUMENT_URL(row.name))}>
                                     <Copy size={15} />
-                                    <span className='align-middle ml-50'>Copy Link</span>
+                                    <span className='align-middle ml-50'>{t('Copy Link')}</span>
                                 </DropdownItem>
                                 <DropdownItem tag='a' href='/' className='w-100' onClick={e => deleteDoc(e, row.documentId)}>
                                     <Trash size={15} />
-                                    <span className='align-middle ml-50'>Delete</span>
+                                    <span className='align-middle ml-50'>{t('Delete')}</span>
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
@@ -277,7 +279,7 @@ const DataTableWithButtons = (props) => {
                 <Row className='justify-content-end mx-0'>
                     <Col className='d-flex align-items-center justify-content-end mt-1' md='6' sm='12'>
                         <Label className='mr-1' for='search-input'>
-                            Search
+                            {t('Search')}
                         </Label>
                         <Input
                             className='dataTable-filter mb-50'
@@ -308,4 +310,4 @@ const DataTableWithButtons = (props) => {
     )
 }
 
-export default DataTableWithButtons
+export default DocumentsList

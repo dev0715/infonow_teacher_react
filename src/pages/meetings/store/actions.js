@@ -103,9 +103,10 @@ export const updateMeetingFailure = ({ id, error }) => {
     }
 }
 
-export const getStudentsForMeeting = () => {
+export const getStudentsForMeeting = (data) => {
     return {
         type: GET_STUDENTS_FOR_MEETING,
+        payload:data
     }
 }
 

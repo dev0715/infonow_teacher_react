@@ -2,6 +2,7 @@
 import React from 'react'
 import { useRef, useState } from 'react';
 import { X } from 'react-feather'
+import { useTranslation } from 'react-i18next';
 import { Button } from 'reactstrap'
 import Swal from 'sweetalert2';
 
@@ -9,6 +10,7 @@ export const QuestionImageFile = (props) => {
 
     let imageUrl = null
 
+    const {t} = useTranslation()
     const { question, index, label, onFileChanged, htmlId, htmlName, maxSizeInBytes } = props;
 
     if (question.image) {
@@ -31,7 +33,7 @@ export const QuestionImageFile = (props) => {
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                html: `Image file is too big. Please upload an image of upto 2MB`
+                html:`${t('Image file is too big. Please upload an image of upto 2MB')}`
             })
 
             e.target.value = "";

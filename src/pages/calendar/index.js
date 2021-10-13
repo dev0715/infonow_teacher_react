@@ -31,10 +31,12 @@ import '@styles/react/apps/app-calendar.scss'
 
 import UILoader from '../../@core/components/ui-loader';
 import { DateTimeFunction } from '../../components/date-time'
+import { useTranslation } from 'react-i18next'
 
 
 const CalendarComponent = (props) => {
 
+  const {t} = useTranslation()
   const [event, setEvent] = useState(null)
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false)
   const [selectedFilters, setSelectedFilters] = useState(filters.map(f => f.type))
@@ -144,14 +146,14 @@ const CalendarComponent = (props) => {
           color='primary'
           onClick={() => props.history.push('/meetings')}
         >
-          View All
+          {t('View All')}
         </Button.Ripple>
         <Button.Ripple
           color='secondary'
           className="ml-1"
           onClick={() => setEvent(null)}
         >
-          Dismiss
+          {t('Dismiss')}
         </Button.Ripple>
       </div>
     </div>
@@ -160,17 +162,17 @@ const CalendarComponent = (props) => {
 
   const lessonPreview = (e) => {
     return <div className="text-left">
-      <h5>Lesson</h5>
+      <h5>{t('Lesson')}</h5>
       <div className="form-group">
-        <label >Topic</label>
+        <label >{t('Topic')}</label>
         <input className="form-control" disabled value={e.data.topic.title} />
       </div>
       <div className="form-group">
-        <label >Lesson</label>
+        <label >{t('Lesson')}</label>
         <input className="form-control" disabled value={e.data.title} />
       </div>
       <div className="form-group">
-        <label >Lesson Details</label>
+        <label >{t('Lesson Details')}</label>
         <textarea className="form-control" value={e.data.description} disabled rows="5"></textarea>
       </div>
       <div className="text-right">
@@ -178,14 +180,14 @@ const CalendarComponent = (props) => {
           color='primary'
           onClick={() => handleLesson(e.data)}
         >
-          View
+          {t('View')}
         </Button.Ripple>
         <Button.Ripple
           color='secondary'
           className="ml-1"
           onClick={() => setEvent(null)}
         >
-          Dismiss
+          {t('Dismiss')}
         </Button.Ripple>
       </div>
 
@@ -195,28 +197,28 @@ const CalendarComponent = (props) => {
   const testPreview = (e) => {
     return <div className="text-left">
       <h5>
-        Test
+        {t('Test')}
       </h5>
       <div className="form-group">
-        <label >Title</label>
+        <label >{t('Title')}</label>
         <input className="form-control" disabled value={e.data.test.title} />
       </div>
       <div className="row">
         <div className="col-md-12 col-lg-6">
           <div className="form-group">
-            <label >Starting At</label>
+            <label >{t('Starting At')}</label>
             <input className="form-control" disabled value={DateTimeFunction(e.data.startDate)} />
           </div>
         </div>
         <div className="col-md-12 col-lg-6">
           <div className="form-group">
-            <label >Ending At</label>
+            <label >{t('Ending At')}</label>
             <input className="form-control" disabled value={DateTimeFunction(e.data.endDate)} />
           </div>
         </div>
       </div>
       <div className="form-group">
-        <label >Duration</label>
+        <label >{t('Duration')}</label>
         <input className="form-control" disabled value={`${e.data.test.timeLimit / 60} mins`} />
       </div>
       <div className="text-right">
@@ -224,14 +226,14 @@ const CalendarComponent = (props) => {
           color='primary'
           onClick={() => props.history.push("/tests")}
         >
-          View All
+         {t('View All')}
         </Button.Ripple>
         <Button.Ripple
           color='secondary'
           className="ml-1"
           onClick={() => setEvent(null)}
         >
-          Dismiss
+          {t('Dismiss')}
         </Button.Ripple>
       </div>
     </div>

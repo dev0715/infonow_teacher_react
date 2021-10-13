@@ -7,6 +7,7 @@ import UserDropdown from './UserDropdown'
 // ** Third Party Components
 import { Sun, Moon, Menu } from 'react-feather'
 import { NavItem, NavLink } from 'reactstrap'
+import LangDropdown from './LangDropdown';
 
 const NavbarUser = props => {
   // ** Props
@@ -38,6 +39,9 @@ const NavbarUser = props => {
         </NavItem>
       </div>
       <ul className='nav navbar-nav align-items-center ml-auto'>
+        <LangDropdown />
+      </ul>
+      <ul className='nav navbar-nav align-items-center'>
         <UserDropdown />
       </ul>
     </Fragment>

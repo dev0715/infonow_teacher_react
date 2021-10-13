@@ -22,8 +22,10 @@ import '@styles/base/plugins/extensions/ext-component-sweet-alerts.scss'
 import '@styles/react/libs/editor/editor.scss'
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { useTranslation } from 'react-i18next';
 const NewAssignment = (props) => {
 
+	const { t } = useTranslation()
 	const { newAssignmentLoading, newAssignmentError, newAssignmentSuccess } = props
 	const loading = false;
 	const [editorVal, setEditorVal] = useState(EditorState.createEmpty())
@@ -47,7 +49,7 @@ const NewAssignment = (props) => {
 
 	useEffect(() => {
 		if (newAssignmentError) errorAlertDialog(newAssignmentError);
-		if (newAssignmentSuccess) successAlertDialog('Assignment has been created successfully');
+		if (newAssignmentSuccess) successAlertDialog(t('Assignment has been created successfully'));
 	}, [newAssignmentError, newAssignmentSuccess]);
 
 
@@ -78,7 +80,7 @@ const NewAssignment = (props) => {
 								<Col lg={12}>
 									<Card>
 										<CardHeader>
-											<CardTitle><Button.Ripple className="btn-icon mr-2" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>Create a New Assignment</CardTitle>
+											<CardTitle><Button.Ripple className="btn-icon mr-2" size="sm" onClick={() => props.history.goBack()}><ArrowLeft size={16} /></Button.Ripple>{t('Create a New Assignment')}</CardTitle>
 										</CardHeader>
 										<CardBody>
 											<AvForm
@@ -92,11 +94,11 @@ const NewAssignment = (props) => {
 														<div className='mb-3'>
 															<AvField
 																name='title'
-																label={'Assignment Title *'}
+																label={`${t('Assignment Title')} *`}
 																value={newAssignment.title}
 																onChange={onTitleChange}
 																className='form-control'
-																placeholder={'Enter Assignment title'}
+																placeholder={t('Enter Assignment title')}
 																type='text'
 																required
 															/>
@@ -106,12 +108,12 @@ const NewAssignment = (props) => {
 														<div className='mb-3'>
 															<AvField
 																name='totalMarks'
-																label={'Total Marks *'}
+																label={t('Total Marks *')}
 																onChange={onMarksChange}
 																value={`${newAssignment.totalMarks}`}
 																className='form-control'
 																placeholder={
-																	'Total Marks'
+																	t('Total Marks')
 																}
 																type='number'
 															/>
@@ -119,7 +121,7 @@ const NewAssignment = (props) => {
 													</Col>
 													<Col md={4}>
 														<FormGroup>
-															<Label for='select-custom'>Assignment Type</Label>
+															<Label for='select-custom'>{t('Assignment Type')}</Label>
 															<CustomInput type='select' name='select' id='select-custom' onChange={changeAssignmentType}>
 																<option value="coding">Coding</option>
 																<option value="theoretical">Theoretical</option>
@@ -130,7 +132,7 @@ const NewAssignment = (props) => {
 												</Row>
 
 
-												<Label tag='h4'>Assignment Content</Label>
+												<Label tag='h4'>{t('Assignment Content')}</Label>
 												<Editor
 													editorState={editorVal}
 													onEditorStateChange={onContentChange}
@@ -145,7 +147,7 @@ const NewAssignment = (props) => {
 															type='submit'>
 															{/* disabled={props.newTestLoading}> */}
 															{newAssignmentLoading && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}
-															Create Assignment
+															{t('Create Assignment')}
 														</button>
 													</div>
 												</Col>

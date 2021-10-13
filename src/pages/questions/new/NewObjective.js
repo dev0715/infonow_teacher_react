@@ -5,11 +5,12 @@ import {
 } from 'reactstrap';
 import { Plus, Trash } from 'react-feather'
 import { AvField, AvRadioGroup, AvRadio } from 'availity-reactstrap-validation';
-import { useRef } from 'react';
 import QuestionFooter from './QuestionFooter';
 import QuestionImageFile from './QuestionImageFile';
+import { useTranslation } from 'react-i18next';
 
 const NewObjective = (props) => {
+    const {t} =  useTranslation()
     let selectedOptionId = null
     const { question, index, isEdit } = props
 
@@ -85,7 +86,7 @@ const NewObjective = (props) => {
                                 value={`${question.text}`}
                                 className='form-control'
                                 placeholder={
-                                    'Enter question statement'
+                                    t('Enter question statement')
                                 }
                                 onChange={e => onChangeQuestionText(e)}
                                 type='text'
@@ -98,7 +99,7 @@ const NewObjective = (props) => {
                 <Row>
                     <Col lg={6}>
                         <AvRadioGroup name={`question${index}radio`} label="" required
-                            errorMessage="Atleast one must be selected"
+                            errorMessage={t("Atleast one must be selected")}
                             value={String(selectedOption)}>
                             {question.options.map((option, optionIndex) =>
                                 <div className='mb-2 single-option'>
@@ -116,7 +117,7 @@ const NewObjective = (props) => {
                                                 onChange={e => onChangeOptionText(e, optionIndex)}
                                                 className='form-control option-text'
                                                 placeholder={
-                                                    `Enter Option ${optionIndex + 1}`
+                                                    `${t('Enter Option')} ${optionIndex + 1}`
                                                 }
                                                 type='text'
                                                 required

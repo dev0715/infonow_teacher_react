@@ -21,11 +21,11 @@ import { User, Mail, CheckSquare, MessageSquare, Settings, CreditCard, HelpCircl
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-default.jpg'
 import { GET_IMAGE_URL } from '../../../../helpers/url_helper';
+import { useTranslation } from 'react-i18next';
 
 const UserDropdown = (props) => {
 
-
-
+ const {t} = useTranslation()
   const history = useHistory()
 
   // ** State
@@ -61,26 +61,19 @@ const UserDropdown = (props) => {
         }}
         >
           <User size={14} className='mr-75' />
-          <span className='align-middle'>Profile</span>
+          <span className='align-middle'>{t('Profile')}</span>
         </DropdownItem>
-        {/* <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
-          <Mail size={14} className='mr-75' />
-          <span className='align-middle'>Inbox</span>
-        </DropdownItem> */}
-        {/* <DropdownItem tag={Link} to='#' onClick={e => e.preventDefault()}>
-          <CheckSquare size={14} className='mr-75' />
-          <span className='align-middle'>Tasks</span>
-        </DropdownItem> */}
+        
         <DropdownItem tag={Link} to='#' onClick={e => {
           e.preventDefault()
           props.history.push("/chat")
         }}>
           <MessageSquare size={14} className='mr-75' />
-          <span className='align-middle'>Chats</span>
+          <span className='align-middle'>{t('Chats')}</span>
         </DropdownItem>
         <DropdownItem tag={Link} to='#' onClick={() => props.logoutUser(history)}>
           <Power size={14} className='mr-75' />
-          <span className='align-middle'>Logout</span>
+          <span className='align-middle'>{t('Logout')}</span>
         </DropdownItem>
       </DropdownMenu>
     </UncontrolledDropdown>

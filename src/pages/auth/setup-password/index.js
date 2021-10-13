@@ -16,10 +16,12 @@ import { connect } from 'react-redux'
 import { notifyError, notifySuccess, notifyWarning } from '../../../utility/toast'
 
 import { getLoggedInUser } from '../../../helpers/backend-helpers'
+import { useTranslation } from 'react-i18next';
 
 const Login = (props) => {
     const [skin, setSkin] = useSkin()
 
+    const { t } = useTranslation()
     const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
         source = require(`@src/assets/images/illustrations/${illustration}`)
 
@@ -36,11 +38,11 @@ const Login = (props) => {
     useEffect(() => {
         if (processing && !props.loading && props.error) {
             setProcessing(false)
-            notifyError("Setup Password", props.error)
+            notifyError(t("Setup Password"), props.error)
         }
         else if (processing && !props.loading && !props.error) {
             setProcessing(false)
-            notifySuccess("Setup Password", "Password setup successfully")
+            notifySuccess(t("Setup Password"), t("Password setup successfully"))
         }
 
     }, [props.loading])
@@ -48,7 +50,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (password != confirmPassword)
-            return notifyWarning("Setup Password", "Confirm password is not same")
+            return notifyWarning(t("Setup Password"), t("Confirm password is not same"))
         setProcessing(true)
         props.setupAccountPassword({
             data: {
@@ -74,20 +76,20 @@ const Login = (props) => {
                 <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
                     <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                         <CardTitle tag='h2' className='font-weight-bold mb-1'>
-                            Setup Password
+                            {t('Setup Password')}
                         </CardTitle>
-                        <CardText className='mb-2'>Please setup new password</CardText>
+                        <CardText className='mb-2'>{t('Please setup new password')}</CardText>
                         <Form
                             onSubmit={e => handleSubmit(e)}
                         >
                             <FormGroup>
                                 <Label className="ml-25">
-                                    Password
+                                    {t('Password')}
                                 </Label>
                                 <InputGroup className='input-group-merge'>
                                     <Input
                                         type="password"
-                                        placeholder='Enter Password'
+                                        placeholder={t('Enter Password')}
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
                                         required />
@@ -96,12 +98,12 @@ const Login = (props) => {
                             <FormGroup>
                                 <InputGroup className='input-group-merge'>
                                     <Label className="ml-25">
-                                        Confirm Password
+                                        {t('Confirm Password')}
                                     </Label>
                                     <InputGroup>
                                         <Input
                                             type="password"
-                                            placeholder='Enter Password'
+                                            placeholder={t('Enter Password')}
                                             value={confirmPassword}
                                             onChange={e => setConfirmPassword(e.target.value)}
                                             required />
@@ -115,7 +117,7 @@ const Login = (props) => {
                                 disabled={props.loading}
                             >
                                 {props.loading && <><i className="las la-spinner la-spin"></i>&nbsp;&nbsp;</>}
-                                Submit
+                                {t('Submit')}
                             </Button.Ripple>
                         </Form>
                     </Col>

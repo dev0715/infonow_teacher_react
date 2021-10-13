@@ -1,16 +1,12 @@
 import React from 'react'
 import { Fragment, useState, useEffect } from 'react'
-import axios from 'axios'
-import classnames from 'classnames'
 import Avatar from '@components/avatar'
-import cmtImg from '@src/assets/images/portrait/small/avatar-s-6.jpg'
-import { kFormatter } from '@utils'
 
 
 import { withRouter } from 'react-router';
 
 // ** Store & Actions
-import { connect, useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 import {
   getBlogList,
   getBlogListSuccess,
@@ -26,18 +22,6 @@ import {
 } from '../store/actions'
 
 
-import {
-  Share2,
-  MessageSquare,
-  Bookmark,
-  GitHub,
-  Gitlab,
-  Facebook,
-  Twitter,
-  Linkedin,
-  CornerUpLeft
-} from 'react-feather'
-import Breadcrumbs from '@components/breadcrumbs'
 
 
 import UILoader from '../../../@core/components/ui-loader';
@@ -51,20 +35,12 @@ import {
   Col,
   Card,
   CardBody,
-  CardTitle,
-  CardText,
-  CardImg,
   Badge,
   Media,
-  UncontrolledDropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
   Form,
   Input,
   Button,
-  FormGroup,
-  CustomInput
+  FormGroup
 } from 'reactstrap'
 
 import '@styles/base/pages/page-blog.scss'
@@ -76,10 +52,12 @@ import moment from 'moment'
 import ReactMarkdown from 'react-markdown'
 import { render } from 'react-dom'
 import { getCategoryBadgeColor } from '../util'
+import { useTranslation } from 'react-i18next';
 
 
 const BlogDetails = (props) => {
 
+  const { t } = useTranslation()
   let { id } = useParams();
   const { selectedBlog } = props
 
@@ -181,7 +159,7 @@ const BlogDetails = (props) => {
                   {
                     props.blogComments.length > 0 &&
                     <Col sm='12'>
-                      <h6 className='section-label'>Comment</h6>
+                      <h6 className='section-label'>{t('Comment')}</h6>
                       <Card>
                         <CardBody>
                           {renderComments()}
@@ -190,7 +168,7 @@ const BlogDetails = (props) => {
                     </Col>
                   }
                   <Col sm='12'>
-                    <h6 className='section-label'>Leave a Comment</h6>
+                    <h6 className='section-label'>{t('Leave a Comment')}</h6>
                     <Card>
                       <CardBody>
                         <Form className='form' onSubmit={e => postComment(e)}>
@@ -209,7 +187,7 @@ const BlogDetails = (props) => {
                               </FormGroup>
                             </Col>
                             <Col sm='12'>
-                              <Button.Ripple type="submit" color='primary'>Post Comment</Button.Ripple>
+                              <Button.Ripple type="submit" color='primary'>{t('Post Comment')}</Button.Ripple>
                             </Col>
                           </Row>
                         </Form>

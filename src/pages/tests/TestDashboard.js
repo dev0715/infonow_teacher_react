@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     Row,
     Col,
@@ -11,6 +10,7 @@ import TestsTabContainer from './TestTabContainer';
 
 const AssignTestHome = (props) => {
 
+   
     const { test } = props.location.state;
 
     return (
