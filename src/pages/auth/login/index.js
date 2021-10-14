@@ -11,6 +11,7 @@ import BrandLogo from '../../../components/brand-logo'
 import { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { useEffect, useState } from 'react';
+import PasswordToggle from '../../../components/password-toggle';
 
 import GoogleSignIn from '../../../views/google-signin';
 import { useTranslation } from 'react-i18next';
@@ -91,7 +92,7 @@ const Login = (props) => {
 
                             <AvField
                                 name='email'
-                                label={'Email'}
+                                label={t('Email')}
                                 className='form-control'
                                 placeholder='john@example.com'
                                 type='email'
@@ -107,12 +108,10 @@ const Login = (props) => {
                                     <small>{t('Forgot Password')}?</small>
                                 </Link>
                             </div>
-                            <AvField
-                                name='password'
-                                label=''
-                                type='password'
-                                required
-                                placeholder={t('Enter Password')}
+                            
+                            <PasswordToggle
+                                name="password"
+                                label={t('Enter Password')}
                             />
 
                             <FormGroup>

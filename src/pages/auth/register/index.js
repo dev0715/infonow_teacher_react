@@ -12,6 +12,7 @@ import {
 import '@styles/base/pages/page-auth.scss'
 import BrandLogo from '../../../components/brand-logo'
 import { connect } from 'react-redux'
+import InputPasswordToggle from '../../../@core/components/input-password-toggle';
 
 import { notifyError, notifySuccess, notifyWarning } from '../../../utility/toast'
 import GoogleSignIn from '../../../views/google-signin';
@@ -110,28 +111,28 @@ const Register = (props) => {
                                 <Label className="ml-25">
                                     {t('Password')}
                                 </Label>
-                                <InputGroup className='input-group-merge'>
-                                    <Input
-                                        type="password"
-                                        placeholder={t('Enter Password')}
-                                        value={password}
-                                        onChange={e => setPassword(e.target.value)}
-                                        required />
-                                </InputGroup>
+                                <InputPasswordToggle
+                                    value={password}
+                                    id='password'
+                                    name='password'
+                                    placeholder={t('Enter Password')}
+                                    className='input-group-merge'
+                                    onChange={e => setPassword(e.target.value)}
+                                />
                             </FormGroup>
                             <FormGroup>
                                 <InputGroup className='input-group-merge'>
                                     <Label className="ml-25">
                                         {t('Confirm Password')}
                                     </Label>
-                                    <InputGroup>
-                                        <Input
-                                            type="password"
-                                            placeholder={t('Enter Password')}
-                                            value={confirmPassword}
-                                            onChange={e => setConfirmPassword(e.target.value)}
-                                            required />
-                                    </InputGroup>
+                                    <InputPasswordToggle
+                                        value={confirmPassword}
+                                        id='password'
+                                        name='password'
+                                        placeholder={t('Enter Password')}
+                                        className='input-group-merge'
+                                        onChange={e => setConfirmPassword(e.target.value)}
+                                    />
                                 </InputGroup>
                             </FormGroup>
                             <Button.Ripple
