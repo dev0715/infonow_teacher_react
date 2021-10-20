@@ -19,9 +19,9 @@ import {
   GET_LESSON,
   GET_LESSON_SUCCESS,
   GET_LESSON_FAILURE,
-  GET_STUDENTS_FOR_LESSON,
-  GET_STUDENTS_FOR_LESSON_SUCCESS,
-  GET_STUDENTS_FOR_LESSON_FAILURE,
+  // GET_STUDENTS_FOR_LESSON,
+  // GET_STUDENTS_FOR_LESSON_SUCCESS,
+  // GET_STUDENTS_FOR_LESSON_FAILURE,
   ASSIGN_LESSON_TO_STUDENTS,
   ASSIGN_LESSON_TO_STUDENTS_SUCCESS,
   ASSIGN_LESSON_TO_STUDENTS_FAILURE,
@@ -226,25 +226,25 @@ export const getLessonFailure = (error) => {
   }
 }
 
-export const getStudentsForLesson = () => {
-  return {
-    type: GET_STUDENTS_FOR_LESSON,
-  }
-}
+// export const getStudentsForLesson = () => {
+//   return {
+//     type: GET_STUDENTS_FOR_LESSON,
+//   }
+// }
 
-export const getStudentsForLessonSuccess = (data) => {
-  return {
-    type: GET_STUDENTS_FOR_LESSON_SUCCESS,
-    payload: data
-  }
-}
+// export const getStudentsForLessonSuccess = (data) => {
+//   return {
+//     type: GET_STUDENTS_FOR_LESSON_SUCCESS,
+//     payload: data
+//   }
+// }
 
-export const getStudentsForLessonFailure = (error) => {
-  return {
-    type: GET_STUDENTS_FOR_LESSON_FAILURE,
-    payload: error
-  }
-}
+// export const getStudentsForLessonFailure = (error) => {
+//   return {
+//     type: GET_STUDENTS_FOR_LESSON_FAILURE,
+//     payload: error
+//   }
+// }
 
 export const assignLessonToStudents = (data) => {
   return {

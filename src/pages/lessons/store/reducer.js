@@ -24,9 +24,9 @@ import {
   GET_LESSON,
   GET_LESSON_SUCCESS,
   GET_LESSON_FAILURE,
-  GET_STUDENTS_FOR_LESSON,
-  GET_STUDENTS_FOR_LESSON_FAILURE,
-  GET_STUDENTS_FOR_LESSON_SUCCESS,
+  // GET_STUDENTS_FOR_LESSON,
+  // GET_STUDENTS_FOR_LESSON_FAILURE,
+  // GET_STUDENTS_FOR_LESSON_SUCCESS,
   ASSIGN_LESSON_TO_STUDENTS,
   ASSIGN_LESSON_TO_STUDENTS_SUCCESS,
   ASSIGN_LESSON_TO_STUDENTS_FAILURE,
@@ -68,10 +68,12 @@ const initialState = {
   newLessonUploading: false,
   newLessonError: null,
   oneLessonLoading: false,
+
   oneLessonError: null,
-  students: [],
-  studentsError: null,
-  studentsLoading: false,
+  // students: [],
+  // studentsError: null,
+  // studentsLoading: false,
+
   studentsLessonAssignLoading: false,
   studentsLessonAssignError: null,
   studentsLessonUnassignLoading: false,
@@ -260,14 +262,14 @@ const teacherLessonReducer = (state = initialState, action) => {
     case GET_LESSON_FAILURE:
       return { ...state, oneLessonLoading: false, oneLessonError: action.payload }
 
-    case GET_STUDENTS_FOR_LESSON:
-      return { ...state, students: [], studentsLoading: true }
+    // case GET_STUDENTS_FOR_LESSON:
+    //   return { ...state, students: [], studentsLoading: true }
 
-    case GET_STUDENTS_FOR_LESSON_SUCCESS:
-      return { ...state, students: action.payload, studentsLoading: false, studentsError: null }
+    // case GET_STUDENTS_FOR_LESSON_SUCCESS:
+    //   return { ...state, students: action.payload, studentsLoading: false, studentsError: null }
 
-    case GET_STUDENTS_FOR_LESSON_FAILURE:
-      return { ...state, studentsLoading: false, studentsError: action.payload }
+    // case GET_STUDENTS_FOR_LESSON_FAILURE:
+    //   return { ...state, studentsLoading: false, studentsError: action.payload }
 
     case ASSIGN_LESSON_TO_STUDENTS:
       return { ...state, studentsLessonAssignLoading: true }
