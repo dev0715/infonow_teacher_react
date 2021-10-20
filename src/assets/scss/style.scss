@@ -96,6 +96,15 @@ WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BET
 	}
 }
 
+.secured-by-stripe{
+	display: flex;
+	justify-content: right;
+	margin-top: 24px;
+	img{
+		width: 150px; 
+	}
+}
+
 .subscription-page{
 	.pay-subscription-container{
 		position: absolute;

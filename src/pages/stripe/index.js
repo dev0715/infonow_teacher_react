@@ -4,8 +4,9 @@ import { withRouter } from "react-router";
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Card, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { getStripePublicKey ,postPaymentMethods } from '@store/actions'
+import { getStripePublicKey, postPaymentMethods } from '@store/actions'
 import UILoader from '../../@core/components/ui-loader';
+
 import {
     CardElement,
     Elements,
@@ -14,7 +15,8 @@ import {
 } from "@stripe/react-stripe-js";
 import "./style.scss";
 import { useTranslation } from "react-i18next";
-let cardIllustration = require("../../assets/images/credit-cards/card_illustration.png")
+let cardIllustration = require('../../assets/images/credit-cards/card_illustration.png')
+let securedByStripe = require('../../assets/images/credit-cards/powered-by-stripe.svg')
 
 const CARD_OPTIONS = {
     iconStyle: "solid",
@@ -85,7 +87,7 @@ const SubmitButton = ({ processing, error, children, disabled }) => (
 // );
 
 const CheckoutForm = (props) => {
-    const {t} =useTranslation()
+    const { t } = useTranslation()
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);
@@ -130,7 +132,7 @@ const CheckoutForm = (props) => {
 
     return (
         <>
-        <img src={cardIllustration} className="illustration-card "/>
+            <img src={cardIllustration} className="illustration-card " />
             {
                 stripeToken ?
                     <div className="Result">
@@ -156,7 +158,7 @@ const CheckoutForm = (props) => {
                         </fieldset>
                         {/* {error && <ErrorMessage>{error.message}</ErrorMessage>} */}
                         <SubmitButton processing={processing} error={error} disabled={!stripe}>
-                           {t('Add Card')}
+                            {t('Add Card')}
                         </SubmitButton>
                     </form>
             }
@@ -176,7 +178,7 @@ const ELEMENTS_OPTIONS = {
 
 const StripeApp = (props) => {
 
-    const {t} =useTranslation()
+    const { t } = useTranslation()
     const { isOpenModal, toggleModalState } = props
     const { stripePublicKey } = props
     const [stripe, setStripe] = useState(null);
@@ -199,28 +201,29 @@ const StripeApp = (props) => {
 
     return (
         <>
-          <UILoader blocking={props.stripePublickeyLoading || props.paymentMethodLoading}>
-            {
-                props.stripePublicKey &&
-                stripe &&
-                <Modal className="modal-lg" scrollable isOpen={isOpenModal} toggle={toggleModalState}>
-                    <ModalHeader toggle={toggleModalState}>{t('Add Card')} </ModalHeader>
-                    <ModalBody>
-                        <Card>
+            <UILoader blocking={props.stripePublickeyLoading || props.paymentMethodLoading}>
+                {
+                    props.stripePublicKey &&
+                    stripe &&
+                    <Modal className="modal-lg" scrollable isOpen={isOpenModal} toggle={toggleModalState}>
+                        <ModalHeader toggle={toggleModalState}>{t('Add Card')} </ModalHeader>
+                        <ModalBody>
                             {
                                 props.stripePublicKey &&
                                 stripe &&
                                 <div className="AppWrapper">
                                     <Elements stripe={stripe} options={ELEMENTS_OPTIONS}>
-                                        <CheckoutForm postPayments={postPayments}/>
+                                        <CheckoutForm postPayments={postPayments} />
                                     </Elements>
+                                    <div className='secured-by-stripe'>
+                                        <img src={securedByStripe} />
+                                    </div>
                                 </div>
                             }
-                        </Card>
-                    </ModalBody>
-                </Modal>
+                        </ModalBody>
+                    </Modal>
 
-            }
+                }
             </UILoader>
         </>
     );
