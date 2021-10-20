@@ -193,19 +193,19 @@ function* getTeacherRecentLessonsHttp() {
   }
 }
 
-function* getStudentsForLessonHttp() {
-  try {
-    const response = yield call(getAllStudents);
-    if (response) {
-      yield put(getStudentsForLessonSuccess(response))
-      return;
-    }
-    throw "Unknown response received from Server";
+// function* getStudentsForLessonHttp() {
+//   try {
+//     const response = yield call(getAllStudents);
+//     if (response) {
+//       yield put(getStudentsForLessonSuccess(response))
+//       return;
+//     }
+//     throw "Unknown response received from Server";
 
-  } catch (error) {
-    yield put(getStudentsForLessonFailure(error.message ? error.message : error))
-  }
-}
+//   } catch (error) {
+//     yield put(getStudentsForLessonFailure(error.message ? error.message : error))
+//   }
+// }
 
 function* assignLessonToStudentsHttp({ payload }) {
   try {
@@ -286,7 +286,7 @@ function* teacherLessonSaga() {
   yield takeEvery(ADD_NEW_LESSON, addNewLessonHttp)
   yield takeEvery(GET_LESSON, getLessonHttp)
   yield takeEvery(GET_TEACHER_RECENT_LESSONS, getTeacherRecentLessonsHttp)
-  yield takeEvery(GET_STUDENTS_FOR_LESSON, getStudentsForLessonHttp)
+  // yield takeEvery(GET_STUDENTS_FOR_LESSON, getStudentsForLessonHttp)
   yield takeEvery(ASSIGN_LESSON_TO_STUDENTS, assignLessonToStudentsHttp)
   yield takeEvery(UNASSIGN_LESSON_TO_STUDENTS, unassignLessonToStudentsHttp)
   yield takeEvery(DELETE_TOPIC, deleteTopicHttp)
