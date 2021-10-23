@@ -33,7 +33,8 @@ import {
   CardTitle,
   CardImg,
   Badge,
-  Media} from 'reactstrap'
+  Media
+} from 'reactstrap'
 
 import * as Icon from 'react-feather'
 
@@ -112,17 +113,26 @@ const BlogList = (props) => {
               </div>
               <CardText className='blog-content-truncate'>{item.description}</CardText>
               <Media>
-                <Avatar className='mr-50' img={GET_IMAGE_URL(item.infonowUser.profilePicture)} imgHeight='24' imgWidth='24' />
-                <Media body>
-                  <small className='text-muted mr-25'>by</small>
-                  <small>
-                    <a className='text-body' href='/' onClick={e => e.preventDefault()}>
-                      {item.infonowUser.name}
-                    </a>
-                  </small>
-                  <span className='text-muted ml-50 mr-25'>|</span>
-                  <small className='text-muted'>{moment(item.publishedDate).format('MMM DD, YYYY')}</small>
-                </Media>
+                <>
+                  <Avatar className='mr-50' img={GET_IMAGE_URL(item.infonowUser ? item.infonowUser.profilePicture : null)} imgHeight='24' imgWidth='24' />
+                  <Media body>
+                    <small className='text-muted mr-25'>by</small>
+                    <small>
+                      <a className='text-body' href='/' onClick={e => e.preventDefault()}>
+                        {item.infonowUser ? item.infonowUser.name : 'Admin'}
+                      </a>
+                    </small>
+                    {
+                      item.publishedDate &&
+                      <>
+                        <span className='text-muted ml-50 mr-25'>|</span>
+                        <small className='text-muted'>{moment(item.publishedDate).format('MMM DD, YYYY')}</small>
+                      </>
+                    }
+
+                  </Media>
+                </>
+
               </Media>
             </CardBody>
           </Card>
@@ -203,54 +213,6 @@ const BlogList = (props) => {
                   &&
                   <NoNetwork />
                 }
-                {/* <Row>
-                      <Col sm='12'>
-                        <Pagination className='d-flex justify-content-center mt-2'>
-                          <PaginationItem className='prev-item'>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}></PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem active>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              1
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              2
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              3
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem >
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              4
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              5
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              6
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}>
-                              7
-                            </PaginationLink>
-                          </PaginationItem>
-                          <PaginationItem className='next-item'>
-                            <PaginationLink href='#' onClick={e => e.preventDefault()}></PaginationLink>
-                          </PaginationItem>
-                        </Pagination>
-                      </Col>
-                    </Row>
-                     */}
               </div>
             </UILoader>
 
