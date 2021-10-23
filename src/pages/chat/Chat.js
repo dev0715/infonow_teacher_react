@@ -286,13 +286,11 @@ const ChatLog = props => {
                       ""
                       : <div className="msg-time" >
                         <DateTime type="time" dateTime={item.createdAt} />
-                        {/* {moment(item.createdAt).format("hh:mm a")} */}
                       </div>
                   }
                 </>
                 : <div className="msg-time" >
                   <DateTime type="time" dateTime={item.createdAt} />
-                  {/* {moment(item.createdAt).format("hh:mm a")} */}
                 </div>
             }
           </div>

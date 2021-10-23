@@ -6,7 +6,7 @@
 // export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
 // export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.infonow.ro/`;
+export const BASE_URL = `https://api.infonow.ro`;
 export const MEETING_API_URL = `https://meet.infonow.ro/api`;
 export const MEETING_APP_URL = `https://meet.infonow.ro`;
 export const CHAT_API_URL = `https://chat.infonow.ro/`;
@@ -40,6 +40,7 @@ export const SETUP_PASSWORD = `${BASE_URL}/setup-password`
 export const RESET_PASSWORD = `${BASE_URL}/reset-password`
 export const REGISTER = `${BASE_URL}/register`
 export const FORGOT_PASSWORD = `${BASE_URL}/forget-password`
+export const GET_USER_DATA = (userId) => `${BASE_URL}/api/v1/teachers/${userId}`
 
 
 //Tests

@@ -15,6 +15,7 @@ import {
   GET_COUNTIES,
   GET_COUNTIES_SUCCESS,
   GET_COUNTIES_FAILURE,
+  
 
 } from './actionTypes'
 
@@ -107,6 +108,8 @@ const profileSaga = (state = initialState, action) => {
 
     case GET_COUNTIES_FAILURE:
       return { ...state, countiesLoading: false, countiesError: action.payload }
+
+      
 
 
     default:

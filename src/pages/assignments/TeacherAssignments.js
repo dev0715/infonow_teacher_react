@@ -65,7 +65,6 @@ export const TeacherAssignments = (props) => {
         <div>
             {
                 teacherAssignmentsData &&
-                Object.keys(teacherAssignmentsData).length > 0 &&
                 <AssignmentList
                     assignments={teacherAssignmentsData}
                     count={teacherAssignments.count}

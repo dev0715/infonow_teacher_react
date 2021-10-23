@@ -152,6 +152,7 @@ export default (state = initialState, action) => {
         case GET_TEACHER_TESTS:
             state = {
                 ...state,
+                newTestSuccess:false,
                 teacherTestsLoading: true,
                 teacherTestsError: null
             }

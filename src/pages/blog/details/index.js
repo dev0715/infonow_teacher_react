@@ -53,6 +53,7 @@ import ReactMarkdown from 'react-markdown'
 import { render } from 'react-dom'
 import { getCategoryBadgeColor } from '../util'
 import { useTranslation } from 'react-i18next';
+import { DateTime } from '../../../components/date-time';
 
 
 const BlogDetails = (props) => {
@@ -88,7 +89,7 @@ const BlogDetails = (props) => {
         <Avatar className='mr-75' img={GET_IMAGE_URL(comment.infonowUser.profilePicture)} width='38' height='38' />
         <Media body>
           <h6 className='font-weight-bolder mb-25'>{comment.infonowUser.name}</h6>
-          <div className="pb-0 mb-0 text-muted">{moment(comment.created_at).format("MMM DD,YYYY hh:mm a")}</div>
+          <div className="pb-0 mb-0 text-muted"><DateTime dateTime={comment.created_at}/></div>
           <div>{comment.text}</div>
         </Media>
       </Media>)

@@ -16,7 +16,7 @@ const toTitleCase = (string) => {
 }
 
 
-const showAlertDialog = (msg, icon) => {
+const showAlertDialog = (msg, icon, onOK) => {
     const MySwal = withReactContent(Swal)
     return MySwal.fire({
         text: msg,
@@ -26,6 +26,9 @@ const showAlertDialog = (msg, icon) => {
             confirmButton: 'btn btn-primary'
         },
         buttonsStyling: false
+    }).then((value)=>{
+        if(value.isConfirmed && onOK)
+        onOK();
     })
 }
 
@@ -33,8 +36,8 @@ export const errorAlertDialog = (msg) => {
     showAlertDialog(msg, 'error')
 }
 
-export const successAlertDialog = (msg) => {
-    showAlertDialog(msg, 'success')
+export const successAlertDialog = (msg , onOK) => {
+    showAlertDialog(msg, 'success', onOK)
 }
 
 export const infoAlertDialog = (msg) => {

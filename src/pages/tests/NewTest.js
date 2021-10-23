@@ -78,8 +78,12 @@ const NewTest = (props) => {
 
 	useEffect(() => {
 		if (props.newTestError) errorAlertDialog(props.newTestError);
-		if (props.newTestSuccess) successAlertDialog(t('Test has been created successfully'));
+		if (props.newTestSuccess) {
+			successAlertDialog(t('Test has been created successfully'), ()=>props.history.goBack());
+		}
 	}, [props.newTestError, props.newTestSuccess]);
+
+	
 
 
 	const onTitleChange = (e) => {
@@ -88,11 +92,6 @@ const NewTest = (props) => {
 
 	const onTimeLimitChange = (e) => {
 		setNewTest({ ...newTest, timeLimit: e.target.value })
-	}
-
-
-	const onBack = () => {
-		props.history.push('/tests')
 	}
 
 

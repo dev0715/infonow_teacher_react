@@ -16,6 +16,8 @@ export const getAuthentication = () => {
   return tokenInfo ? JSON.parse(tokenInfo) : null;
 }
 
+export const getUserData = (userId) => get(url.GET_USER_DATA(userId))
+
 //is user is logged in
 export const isUserAuthenticated = () => {
   return getAuthentication() !== null
@@ -45,7 +47,7 @@ export const updateUser = (id, data) => put(url.UPDATE_USER(id), data)
 export const createChat = data => post(url.CHATS, data)
 
 // Student Actions
-export const postStudentLogin = data => post(url.POST_TEACHER_LOGIN, data);
+export const postTeacherLogin = data => post(url.POST_TEACHER_LOGIN, data);
 export const signInWithGoogle = data => post(url.SIGN_IN_WITH_GOOGLE, data);
 export const setupAccountPassword = data => post(url.SETUP_PASSWORD, data);
 export const registerUser = data => post(url.REGISTER, data);

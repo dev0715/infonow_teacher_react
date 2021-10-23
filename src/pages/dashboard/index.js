@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 
 import { withRouter } from 'react-router';
 import {
+    getUserData,
     getAllMeetings,
     getTeacherUpcomingAssignments,
     getTeacherTests,
@@ -40,6 +41,7 @@ const Dashboard = (props) => {
 
 
     useEffect(() => {
+        props.getUserData();
         props.getTeacherTests();
         props.getTeacherUpcomingAssignments();
         props.getAllMeetings();
@@ -396,6 +398,7 @@ const mapStateToProps = (state) => {
 
 export default withRouter(
     connect(mapStateToProps, {
+        getUserData,
         getAllMeetings,
         getTeacherUpcomingAssignments,
         getTeacherTests,

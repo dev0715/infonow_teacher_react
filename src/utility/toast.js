@@ -14,7 +14,7 @@ const notifyAlert = (title, message, hideProgress, color) => toast(
                 <Avatar size='sm' color={color} icon={<Bell size={12} />} />
                 <h6 className={`toast-title text-${color}`} >{title || "Notification"}</h6>
             </div>
-            <small className='text-muted'>{moment().format("hh:mm a")}</small>
+            <small className='text-muted'>{moment().format("HH:mm")}</small>
         </div>
         <div className='toastify-body'>
             <span role='img' aria-label='toast-text'>
