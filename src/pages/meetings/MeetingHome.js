@@ -6,6 +6,8 @@ import { Row, Col, } from 'reactstrap';
 import MeetingList from './MeetingList';
 import UpcomingMeeting from './UpcomingMeeting';
 import UpcomingMeetings from './UpcomingMeetings';
+import Select from 'react-select'
+import { selectThemeColors } from '@utils'
 import { getAllMeetings, getMeetingDates, newMeeting, getStudentsForMeeting } from '@store/actions';
 import moment from 'moment';
 
@@ -22,9 +24,9 @@ import NoNetwork from '../../components/no-network';
 import TimePicker from '@components/datepicker/TimePicker';
 import DatePicker from '@components/datepicker/DatePicker';
 import { useTranslation } from 'react-i18next';
+import { prop } from 'dom7';
 
 const newMeetingImg = require("../../assets/images/illustrations/new-meeting.svg")
-
 
 
 const close = (
@@ -48,16 +50,19 @@ function MeetingHome(props) {
 		return meetingList.filter(x => moment(x.scheduledAt).isSameOrAfter(moment()) && x.status === 'accepted');
 	}
 
+	useEffect(() => {
+		if (props.students && props.students.data && props.students.data[0]) {
+			setStudentId(props.students.data[0].user.userId)
+		}
+	}, [props.students.data])
+
 	const upcomingMeetings = getUpcomingMeetings();
 
 	useEffect(() => {
 		props.getAllMeetings()
 	}, [])
 
-	useEffect(() => {
-		if (!props.studentLoading && !props.studentsError && props.students.length > 0)
-			setStudentId(props.students[0].user.userId)
-	}, [props.students])
+	
 
 	useEffect(() => {
 		if (isNewMeeting && !props.newMeetingLoading && !props.newMeetingError) {
@@ -77,9 +82,6 @@ function MeetingHome(props) {
 		setMeetingDate(new Date())
 		setMeetingTime(new Date('1970-01-01 10:00:00'))
 		props.getStudentsForMeeting({page:1, limit:1000})
-		// if (user && user.student) {
-		// 	props.getMeetingDates(user.student.teacher.user.userId)
-		// }
 	}
 
 	const closeMeeting = () => {
@@ -104,6 +106,7 @@ function MeetingHome(props) {
 		if (!data.message) delete data.message
 		props.newMeeting(data)
 	}
+
 
 
 	return (
@@ -196,17 +199,16 @@ function MeetingHome(props) {
 											props.students &&
 											props.students.data &&
 											<Col lg='12'>
-											<FormGroup>
+												<FormGroup>
+													
 												<Label for='select-basic'>{t('Select Student')}</Label>
 												<Input type='select' name='select' id='select-basic'
 													value={studentId}
-													onChange={(e) => {
-														setStudentId(e.target.value)
-													}}
+													onChange={(e) => setStudentId(e.target.value)}
 												>
 													{
 														props.students.data.map((s, index) =>
-														 <option key={"select-student" + index} value={s.user.userId}>{s.user.name}</option>)
+															<option key={"select-student" + index} value={s.user.userId}>{s.user.name}</option>)
 													}
 												</Input>
 											</FormGroup>
@@ -259,7 +261,10 @@ function MeetingHome(props) {
 											</FormGroup>
 										</Col>
 									</Row>
-									<Button.Ripple type="submit" color='primary'>{t('Request Meeting')}</Button.Ripple>
+									<Button.Ripple
+										disabled={!studentId || !agenda || !meetingDate || !meetingTime}
+										type="submit"
+										color='primary'>{t('Request Meeting')}</Button.Ripple>
 								</Form>
 						}
 					</ModalBody>
