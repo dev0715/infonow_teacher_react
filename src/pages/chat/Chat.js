@@ -618,7 +618,7 @@ const ChatLog = props => {
                       </DropdownItem>
                     }
                     <DropdownItem href='/' onClick={clearChat}>
-                      {teacherStudentsLoading('Clear Chat')}
+                      {t('Clear Chat')}
                     </DropdownItem>
                     {
                       selectedChat.type == 'group' && selectedChat.user.userId == user.userId &&
