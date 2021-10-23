@@ -135,6 +135,9 @@ const Register = (props) => {
                                     />
                                 </InputGroup>
                             </FormGroup>
+                            <FormGroup>
+                                <p>By continuing you confirm that you have read and agree with the <a target="_blank" href="https://infonow.ro/terms-of-services">Terms of Services</a> and <a target="_blank" href="https://infonow.ro/privacy-policy">Privacy Policy</a>.</p>
+                            </FormGroup>
                             <Button.Ripple
                                 type="submit"
                                 color='primary'

@@ -112,25 +112,29 @@ const BlogDetails = (props) => {
                 (<Row>
                   <Col sm='12'>
                     <Card className='mb-3'>
-                      <div
-                        className="blog-detail-banner-container"
-                        style={
-                          {
-                            backgroundImage: `url(${GET_BLOG_IMAGE_URL(selectedBlog.mainImage.formats.large ? selectedBlog.mainImage.formats.large.url : selectedBlog.mainImage.formats.medium.url)})`,
+                      {
+                        selectedBlog.mainImage &&
+                        <div
+                          className="blog-detail-banner-container"
+                          style={
+                            {
+                              backgroundImage: `url(${GET_BLOG_IMAGE_URL(selectedBlog.mainImage.formats.large ? selectedBlog.mainImage.formats.large.url : selectedBlog.mainImage.formats.medium.url)})`,
+                            }
                           }
-                        }
-                      >
-                        <span className="pl-3 pr-3 pb-1">{selectedBlog.title}</span>
-                        <div className="blog-banner-gradient"></div>
-                      </div>
+                        >
+                          <span className="pl-3 pr-3 pb-1">{selectedBlog.title}</span>
+                          <div className="blog-banner-gradient"></div>
+                        </div>
+                      }
+
                       <CardBody className="p-3">
                         <Media className="mb-2">
-                          <Avatar className='mr-50' img={GET_IMAGE_URL(selectedBlog.infonowUser.profilePicture)} imgHeight='24' imgWidth='24' />
+                          <Avatar className='mr-50' img={GET_IMAGE_URL(selectedBlog.infonowUser ? selectedBlog.infonowUser.profilePicture : null)} imgHeight='24' imgWidth='24' />
                           <Media body>
                             <small className='text-muted mr-25'>by</small>
                             <small>
                               <a className='text-body' href='/' onClick={e => e.preventDefault()}>
-                                {selectedBlog.infonowUser.name}
+                                {selectedBlog.infonowUser ? selectedBlog.infonowUser.name : 'Admin'}
                               </a>
                             </small>
                             <span className='text-muted ml-50 mr-25'>|</span>
