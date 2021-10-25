@@ -121,6 +121,7 @@ export default (state = initialState, action) => {
         case GET_STUDENT_ASSIGNMENTS:
             state = {
                 ...state,
+                studentAssignments:{},
                 studentAssignmentsLoading: true,
             }
             break;
