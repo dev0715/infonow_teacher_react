@@ -8,8 +8,8 @@ import AssignmentList from './AssignmentList'
 
 const StudentAssignments = (props) => {
 
-    const [mapAssignments, setMapAssignments] = useState()
-    const [studentAssignmentData, setStudentAssignmentData] = useState()
+    const [mapAssignments, setMapAssignments] = useState([])
+    const [studentAssignmentData, setStudentAssignmentData] = useState([])
     const { studentId, studentAssignments, studentAssignmentsLoading ,studentAssignmentList} = props;
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -40,6 +40,7 @@ const StudentAssignments = (props) => {
    
 
     const filteredAssignmentsData = () => {
+        console.log("filteredAssignmentsData" ,studentAssignmentData);
         if(studentAssignmentData){
             let assignmentMap = new Map();
             for (let a of studentAssignmentData) {
@@ -48,6 +49,8 @@ const StudentAssignments = (props) => {
                 }
             }
             setMapAssignments(Array.from(assignmentMap.values()));
+        } else {
+            setMapAssignments([])
         }
     }
 

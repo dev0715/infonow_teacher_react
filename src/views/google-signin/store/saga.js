@@ -14,12 +14,12 @@ function* signInWithGoogleHttp({ payload: { data, history } }) {
         if (response) {
             localStorage.setItem("authTeacher", JSON.stringify(response.user))
             localStorage.setItem("authTeacherToken", JSON.stringify({ token: response.token, tokenType: response.tokenType }))
-            setTimeout(() => {
+            // setTimeout(() => {
                 response.user.isNotVerified ?
                     history.replace("/setup-password") :
                     window.location.reload()
-            }, 500)
-            yield put(signInWithGoogleSuccess(response))
+            // }, 500)
+            // yield put(signInWithGoogleSuccess(response))
             return;
         }
         throw "Unknown response received from Server";
