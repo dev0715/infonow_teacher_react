@@ -31,7 +31,7 @@ const StudentListModal = (props) => {
                     </thead>
                     <tbody>
                         {students && students.map((s, i) =>
-                            <tr key={`student-list-${s.userId}`} >
+                            <tr key={`student-list-${s.user.userId}`} >
                                 <td>{i + 1}</td>
                                 <td >
                                     <Avatar

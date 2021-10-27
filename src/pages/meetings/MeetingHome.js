@@ -96,6 +96,7 @@ function MeetingHome(props) {
 		e.preventDefault()
 		let date = moment(meetingDate)
 		let time = moment(meetingTime)
+	
 		date.set('hour', time.get('hour')).set('minute', time.get('minute'))
 		let data = {
 			guest: studentId,

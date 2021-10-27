@@ -20,7 +20,7 @@ const TestDetail = (props) => {
     const {t} = useTranslation()
     const { test, isEdit, onChangeView, isUpdateMarks, onUpdateMarks } = props;
 
-    const onAssignTest = () => {
+    const onSelectedTestDashboard = () => {
         props.history.push({
             pathname: `/test-dashboard/${test.testId}`,
             state: { test: test }
@@ -45,7 +45,7 @@ const TestDetail = (props) => {
                                         <span className='align-middle ml-25'>{t('Edit')}</span>
                                     </Button.Ripple>
 
-                                    <Button.Ripple color='primary' onClick={onAssignTest}  >
+                                    <Button.Ripple color='primary' onClick={onSelectedTestDashboard}  >
                                         <span className='align-middle ml-25'>{t('Test Dashboard')}</span>
                                     </Button.Ripple>
                                 </Col>

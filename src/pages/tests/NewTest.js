@@ -7,7 +7,7 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
 import Questions from "../testQuestions/Questions"
-import { postTest } from '@store/actions'
+import { postTest ,postTestFailure} from '@store/actions'
 import { ArrowLeft } from 'react-feather'
 import '../../assets/scss/custom/components/_question.scss'
 
@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 const NewTest = (props) => {
 
 	const {t} = useTranslation()
-	const { newTestLoading, newTestError } = props
+	const { newTestLoading, newTestError , newTestSuccess} = props
 	const loading = false;
 
 	const [newTest, setNewTest] = useState({
@@ -77,11 +77,19 @@ const NewTest = (props) => {
 	}
 
 	useEffect(() => {
-		if (props.newTestError) errorAlertDialog(props.newTestError);
-		if (props.newTestSuccess) {
-			successAlertDialog(t('Test has been created successfully'), ()=>props.history.goBack());
+		if (newTestError) errorAlertDialog(newTestError);
+		if (newTestSuccess) {
+			successAlertDialog(t('Test has been created successfully'), ()=>goToDashboard());
 		}
 	}, [props.newTestError, props.newTestSuccess]);
+
+	const goToDashboard = () =>{
+		props.postTestFailure(null)
+		props.history.push({
+			pathname: `/test-dashboard/${props.newTest.testId}`,
+            state: { test:  props.newTest }
+        })
+	}
 
 	
 
@@ -216,7 +224,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-	postTest
+	postTest,postTestFailure
 }
 
 export default withRouter(

@@ -72,9 +72,7 @@ const CalendarComponent = (props) => {
 
   const eventsList = () => {
     return [
-      ...props.meetings.filter(m => m.status == 'accepted'
-        && moment(m.scheduledAt).isSameOrAfter(moment()))
-        .map(mt => {
+      ...props.meetings.map(mt => {
           return {
             type: 'meeting',
             title: mt.agenda,
