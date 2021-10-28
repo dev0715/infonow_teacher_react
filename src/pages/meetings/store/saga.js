@@ -36,10 +36,11 @@ import {
 } from '@helpers/backend-helpers'
 
 
-function* getAllMeetingsHttp() {
+function* getAllMeetingsHttp({payload:data}) {
     try {
         let user = getLoggedInUser();
-        const response = yield call(getStudentAllMeetings, user.userId);
+        data.userId = user.userId
+        const response = yield call(getStudentAllMeetings, data);
         yield put(getAllMeetingsSuccess(response))
     } catch (error) {
         yield put(getAllMeetingsError(error.message ? error.message : error))

@@ -77,6 +77,6 @@ export default [
     id: 'feedback',
     title: 'Feedback',
     icon: <i className="la la-thumbs-up" />,
-    navLink: '/apps/calendar'
+    navLink: '/feedback'
   }
 ]

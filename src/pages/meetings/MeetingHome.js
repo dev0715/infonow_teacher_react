@@ -59,7 +59,7 @@ function MeetingHome(props) {
 	const upcomingMeetings = getUpcomingMeetings();
 
 	useEffect(() => {
-		props.getAllMeetings()
+		props.getAllMeetings({page:1,limit:10})
 	}, [])
 
 	
@@ -263,7 +263,7 @@ function MeetingHome(props) {
 										</Col>
 									</Row>
 									<Button.Ripple
-										disabled={!studentId || !agenda || !meetingDate || !meetingTime}
+										// disabled={!studentId || !agenda || !meetingDate || !meetingTime}
 										type="submit"
 										color='primary'>{t('Request Meeting')}</Button.Ripple>
 								</Form>

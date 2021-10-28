@@ -22,7 +22,7 @@ import ForgotPasswordSaga from "./../pages/auth/forgot-password/store/saga"
 import ResetPasswordSaga from "./../pages/auth/reset-password/store/saga"
 import StripeSaga from "./../pages/stripe/store/saga"
 import EbookSaga from "./../pages/ebook/store/saga"
-
+import Feedback from './../pages/feedback/store/saga'
 
 export default function* rootSaga() {
   yield all([
@@ -47,5 +47,6 @@ export default function* rootSaga() {
     ResetPasswordSaga(),
     StripeSaga(),
     EbookSaga(),
+    Feedback()
   ])
 }

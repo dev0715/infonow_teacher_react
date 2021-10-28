@@ -20,9 +20,10 @@ import {
 
 } from "./actionTypes"
 
-export const getAllMeetings = () => {
+export const getAllMeetings = (data) => {
     return {
         type: GET_ALL_MEETINGS,
+        payload:data
     }
 }
 

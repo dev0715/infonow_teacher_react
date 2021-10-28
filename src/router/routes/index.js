@@ -229,7 +229,14 @@ const Routes = [
     path: '/unauthorized',
     component: lazy(() => import('../../views/NotAuthorized')),
     layout: 'BlankLayout'
-  }
+  },
+  {
+    path: '/feedback',
+    component: lazy(() => import('../../pages/feedback')),
+    meta: {
+      newUserAccessible: true
+    }
+  },
 ]
 
 export { GetStartedRoute, DefaultRoute, TemplateTitle, Routes }

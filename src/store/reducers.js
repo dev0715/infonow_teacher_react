@@ -24,6 +24,7 @@ import ForgotPassword from './../pages/auth/forgot-password/store/reducer'
 import ResetPassword from './../pages/auth/reset-password/store/reducer'
 import Stripe from './../pages/stripe/store/reducer'
 import Ebook from './../pages/ebook/store/reducer'
+import Feedback from './../pages/feedback/store/reducer';
 
 const rootReducer = combineReducers({
   Register,
@@ -47,7 +48,8 @@ const rootReducer = combineReducers({
   ForgotPassword,
   ResetPassword,
   Stripe,
-  Ebook
+  Ebook,
+  Feedback
 })
 
 export default rootReducer

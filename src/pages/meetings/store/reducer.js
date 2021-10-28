@@ -2,18 +2,23 @@ import {
     GET_ALL_MEETINGS,
     GET_ALL_MEETINGS_SUCCESS,
     GET_ALL_MEETINGS_ERROR,
+    
     GET_MEETING_DATES,
     GET_MEETING_DATES_SUCCESS,
     GET_MEETING_DATES_FAILURE,
+
     NEW_MEETING,
     NEW_MEETING_FAILURE,
     NEW_MEETING_SUCCESS,
+
     UPDATE_MEETING,
     UPDATE_MEETING_SUCCESS,
     UPDATE_MEETING_FAILURE,
+
     GET_STUDENTS_FOR_MEETING,
     GET_STUDENTS_FOR_MEETING_SUCCESS,
     GET_STUDENTS_FOR_MEETING_FAILURE,
+
     GET_MEETING_TOKEN,
     GET_MEETING_TOKEN_SUCCESS,
     GET_MEETING_TOKEN_FAILURE,
@@ -21,6 +26,7 @@ import {
 } from './actionTypes'
 
 const initialState = {
+    meetingsCount:null,
     meetings: [],
     meetingsLoading: false,
     meetingsError: null,
@@ -96,7 +102,8 @@ export default (state = initialState, action) => {
         case GET_ALL_MEETINGS_SUCCESS:
             state = {
                 ...state,
-                meetings: action.payload,
+                meetings: action.payload.data,
+                meetingsCount: action.payload.count,
                 meetingsLoading: false,
                 meetingsError: null,
             }

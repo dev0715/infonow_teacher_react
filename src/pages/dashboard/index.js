@@ -41,7 +41,7 @@ const Dashboard = (props) => {
         props.getUserData();
         props.getTeacherTests();
         props.getTeacherUpcomingAssignments();
-        props.getAllMeetings();
+        props.getAllMeetings({page:1,limit:20});
         props.getRecentLessons();
         props.getPaymentPlan();
     }, []);
@@ -268,7 +268,7 @@ const Dashboard = (props) => {
                                         !props.newAssignmentsError &&
                                         upcomingAssignmentsData &&
                                         upcomingAssignmentsData.length == 0 && (
-                                            <div className="text-center p-1">
+                                            <div className="text-center pb-1">
                                                 {t("No assignment found")}
                                             </div>
                                         )}

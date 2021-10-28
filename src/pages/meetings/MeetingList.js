@@ -24,6 +24,7 @@ import {
 
 import { MoreVertical, X, AlertCircle } from "react-feather";
 
+import CustomPagination from '../pagination';
 import CardReload from "../../@core/components/card-reload";
 
 import { titleCase } from "@utils";
@@ -59,6 +60,7 @@ const MeetingList = (props) => {
 	const [meetingTime, setMeetingTime] = useState(
 		new Date("1970-01-01 10:00:00")
 	);
+	const [currentPage, setCurrentPage] = useState(1)
 
 	useEffect(() => {
 		if (updateMeetingId) {
@@ -70,13 +72,14 @@ const MeetingList = (props) => {
 		}
 	}, [updateMeetingId]);
 
-	const fetchMeetings = () => {
-		props.getAllMeetings();
-	};
+	const fetchMeetings = (page) => {
+		let data = { page, limit: 10 }
+		props.getAllMeetings(data);
+	}
 
 	useEffect(() => {
-		setUser(getLoggedInUser());
-		fetchMeetings();
+		setUser(getLoggedInUser())
+		fetchMeetings(currentPage);
 	}, []);
 
 	useEffect(() => {
@@ -136,8 +139,9 @@ const MeetingList = (props) => {
 		setMeetingTime(new Date("1970-01-01 10:00:00"));
 	};
 
-	const isMeetingAfterCurrentDate = (date) => {
-		return moment(date).isAfter(new Date())
+	const onSelectPage = (page) => {
+		setCurrentPage(page)
+		fetchMeetings(page)
 	}
 
 	const meetingDropDownItem = (meetingId, meetingAction, labelText) => {
@@ -548,7 +552,12 @@ const MeetingList = (props) => {
 									))}
 							</tbody>
 						</Table>
+						
 					)}
+					{
+						props.meetingsCount > 0 &&
+						<CustomPagination start={1} end={Math.ceil(props.meetingsCount / 10)} onSelect={onSelectPage} />
+					}
 				</CardBody>
 			</CardReload>
 			{rescheduleMeetingModel()}
@@ -558,8 +567,8 @@ const MeetingList = (props) => {
 };
 
 const mapStateToProps = (state) => {
-	const { meetings, meetingsError, meetingsLoading } = state.Meetings;
-	return { meetings, meetingsError, meetingsLoading };
+	const { meetingsCount, meetings, meetingsError, meetingsLoading } = state.Meetings;
+	return {meetingsCount, meetings, meetingsError, meetingsLoading };
 };
 
 export default withRouter(

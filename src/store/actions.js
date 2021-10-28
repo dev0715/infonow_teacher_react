@@ -66,3 +66,6 @@ export * from './../pages/ebook/store/actions'
 
 //Stripe
 export * from './../pages/stripe/store/actions'
+
+// Feedback
+export * from './../pages/feedback/store/actions'

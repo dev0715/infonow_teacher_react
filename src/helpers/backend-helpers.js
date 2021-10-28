@@ -34,7 +34,10 @@ export const getAllTeacherStudents = () => get(url.ALL_STUDENTS)
 //Meeting
 export const getMeetingToken = () => get(url.MEETING_TOKEN);
 export const newMeeting = data => post(url.NEW_MEETING, data);
-export const getStudentAllMeetings = userId => get(url.GET_ALL_MEETINGS(userId));
+export const getStudentAllMeetings = (params) => {
+  let endUrl = GetUrlWithPagingParams(url.GET_ALL_MEETINGS(params.userId),params)
+  return get(endUrl)
+}
 export const getMeetingDates = userId => get(url.GET_MEETING_DATES(userId));
 export const updateMeeting = (id, action, data) => put(url.UPDATE_MEETING(id, action), data);
 export const getMeetingWithAdmin = userId => get(url.GET_ADMIN_MEETING(userId));
@@ -156,3 +159,6 @@ export const getEbooks = () => get(url.GET_EBOOKS)
 
 //Counties
 export const getCounties = () => get(url.GET_COUNTIES)
+
+// Feedback
+export const postFeedback = (feedback) => post(url.POST_FEEDBACK, feedback);

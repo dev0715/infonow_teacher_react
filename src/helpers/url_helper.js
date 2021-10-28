@@ -148,3 +148,6 @@ export const GET_EBOOKS = `${BASE_URL}/api/v1/ebooks`
 
 //Counties
 export const GET_COUNTIES = `${BASE_URL}/counties`
+
+// Feedback
+export const POST_FEEDBACK = `${BASE_URL}/api/v1/osticket`
