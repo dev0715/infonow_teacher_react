@@ -18,11 +18,10 @@ import { notifyError, notifySuccess, notifyWarning } from '../../../utility/toas
 import { getLoggedInUser } from '../../../helpers/backend-helpers'
 import { useTranslation } from 'react-i18next';
 
-const Login = (props) => {
+const SetupPassword = (props) => {
     const [skin, setSkin] = useSkin()
-
     const { t } = useTranslation()
-    const illustration = skin === 'dark' ? 'login-v2-dark.svg' : 'login-v2.svg',
+    const illustration = skin === 'dark' ? 'reset-password-dark.svg' : 'reset-password.svg',
         source = require(`@src/assets/images/illustrations/${illustration}`)
 
     const [processing, setProcessing] = useState(false)
@@ -142,5 +141,5 @@ const mapStateToProps = (state) => {
 export default withRouter(
     connect(mapStateToProps, {
         setupAccountPassword
-    })(Login)
+    })(SetupPassword)
 )

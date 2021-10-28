@@ -76,7 +76,6 @@ const GetStartedPage = (props) => {
 
   useEffect(() => {
     setUser(getLoggedInUser());
-    // props.getAdminMeeting()
     props.getUserData();
     props.getStartedContent();
   }, []);

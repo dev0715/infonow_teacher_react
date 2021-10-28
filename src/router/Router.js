@@ -91,7 +91,6 @@ const Router = () => {
       return <Redirect to='/login' />
     }
     else if (isUserAuthenticated() && getLoggedInUser().teacher.status === 'new') {
-
       return route.meta && route.meta.newUserAccessible
         ? <route.component {...props} />
         : <Redirect to="/" />
@@ -156,7 +155,7 @@ const Router = () => {
                       })
                       let publicPaths = ['/unauthorized', '/register', '/login']
                       if (!isUserAuthenticated() && !publicPaths.find(p => p != route.path)) return <Redirect to='/unauthorized' />;
-
+                      
                       return (
                         <Suspense fallback={null}>
                           {/* Layout Wrapper to add classes based on route's layout, appLayout and className */}
