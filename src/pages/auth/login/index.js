@@ -12,9 +12,10 @@ import { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { useEffect, useState } from 'react';
 import PasswordToggle from '../../../components/password-toggle';
-
 import GoogleSignIn from '../../../views/google-signin';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from "react-google-recaptcha";
+import { GOOGLE_RECAPTCHA_KEY } from '../../../helpers/url_helper';
 
 const ToastContent = ({ name, role }) => (
     <Fragment>
@@ -31,7 +32,8 @@ const ToastContent = ({ name, role }) => (
 )
 
 const Login = (props) => {
-    const {t} = useTranslation()
+    const recaptchaRef = React.useRef();
+    const { t } = useTranslation()
     const [skin, setSkin] = useSkin()
     const history = useHistory()
 
@@ -52,6 +54,8 @@ const Login = (props) => {
 
 
     const handleValidSubmit = (event, data) => {
+        const token = recaptchaRef.current.getValue();
+        data.reCaptchaToken = token
         props.loginUser(data, history)
     }
 
@@ -108,7 +112,7 @@ const Login = (props) => {
                                     <small>{t('Forgot Password')}?</small>
                                 </Link>
                             </div>
-                            
+
                             <PasswordToggle
                                 name="password"
                                 label={t('Enter Password')}
@@ -144,6 +148,17 @@ const Login = (props) => {
                                 processingCallBack={() => setIsSigningIn(!isSigningIn)}
                             />
                         </div>
+
+                        <div className='d-flex justify-content-center mt-2' >
+                            <ReCAPTCHA
+                                theme={skin}
+                                ref={recaptchaRef}
+                                size="normal"
+                                type = "image"
+                                sitekey={GOOGLE_RECAPTCHA_KEY}
+                            />
+                        </div>
+                        
                     </Col>
                 </Col>
             </Row>

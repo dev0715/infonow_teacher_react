@@ -12,7 +12,6 @@ import {
 import '@styles/base/pages/page-auth.scss'
 import BrandLogo from '../../../components/brand-logo'
 import { connect } from 'react-redux'
-
 import { notifyError, notifySuccess, } from '../../../utility/toast'
 import { useTranslation } from 'react-i18next';
 

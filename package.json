@@ -75,6 +75,7 @@
     "react-flatpickr": "3.9.1",
     "react-google-calendar-api": "^1.4.0",
     "react-google-login": "^5.2.2",
+    "react-google-recaptcha": "^2.1.0",
     "react-h5-audio-player": "^3.7.1",
     "react-hook-form": "6.15.1",
     "react-i18next": "^11.12.0",
