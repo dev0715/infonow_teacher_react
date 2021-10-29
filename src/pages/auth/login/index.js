@@ -12,9 +12,10 @@ import { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { useEffect, useState } from 'react';
 import PasswordToggle from '../../../components/password-toggle';
-import ReCAPTCHA from "react-google-recaptcha";
 import GoogleSignIn from '../../../views/google-signin';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from "react-google-recaptcha";
+import { GOOGLE_RECAPTCHA_KEY } from '../../../helpers/url_helper';
 
 const ToastContent = ({ name, role }) => (
     <Fragment>
@@ -54,7 +55,7 @@ const Login = (props) => {
 
     const handleValidSubmit = (event, data) => {
         const token = recaptchaRef.current.getValue();
-        console.log("RECAPTCHA TOKEN ==>", token);
+        data.reCaptchaToken = token
         props.loginUser(data, history)
     }
 
@@ -148,11 +149,13 @@ const Login = (props) => {
                             />
                         </div>
 
-                        <div className='auth-footer-btn d-flex justify-content-center'>
+                        <div className='d-flex justify-content-center mt-2' >
                             <ReCAPTCHA
+                                theme={skin}
                                 ref={recaptchaRef}
-                                size="compact"
-                                sitekey="6LfalP8cAAAAAGlWBOExadLfe5033DQjpFmMCIDN"
+                                size="normal"
+                                type = "image"
+                                sitekey={GOOGLE_RECAPTCHA_KEY}
                             />
                         </div>
                         

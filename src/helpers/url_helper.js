@@ -17,7 +17,7 @@ export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
 export const DOCUMENT_BASE_URL = `${BASE_URL}/public`
 
-
+export const GOOGLE_RECAPTCHA_KEY = "6Le1reYUAAAAAHjngT35rOyqIlMXbTNAT0JjVP6y"
 export const GET_IMAGE_URL = url => url ? DOCUMENT_BASE_URL + url : DOCUMENT_BASE_URL + "/profile-pictures/default.png"
 export const GET_BLOG_IMAGE_URL = url => BLOG_API_URL + url
 export const GET_DOCUMENT_URL = url => DOCUMENT_BASE_URL + url

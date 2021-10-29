@@ -17,10 +17,13 @@ import InputPasswordToggle from '../../../@core/components/input-password-toggle
 import { notifyError, notifySuccess, notifyWarning } from '../../../utility/toast'
 import GoogleSignIn from '../../../views/google-signin';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from "react-google-recaptcha";
+import { GOOGLE_RECAPTCHA_KEY } from '../../../helpers/url_helper';
 
 
 const Register = (props) => {
     const [skin, setSkin] = useSkin()
+    const recaptchaRef = React.useRef();
     const { t } = useTranslation()
     const illustration = skin === 'dark' ? 'register-dark.svg' : 'register-light.svg',
         source = require(`@src/assets/images/illustrations/${illustration}`)
@@ -48,8 +51,10 @@ const Register = (props) => {
         if (password != confirmPassword)
             return notifyWarning(t("Register Account"), t("Confirm password is not same"))
         setProcessing(true)
+        const token = recaptchaRef.current.getValue();
         props.registerAccount({
             data: {
+                reCaptchaToken: token,
                 role: "teacher",
                 name,
                 email,
@@ -162,6 +167,15 @@ const Register = (props) => {
                             <GoogleSignIn
                                 processing={processing}
                                 processingCallBack={() => setProcessing(!processing)}
+                            />
+                        </div>
+                        <div className='d-flex justify-content-center mt-2' >
+                            <ReCAPTCHA
+                                theme={skin}
+                                ref={recaptchaRef}
+                                size="normal"
+                                type = "image"
+                                sitekey={GOOGLE_RECAPTCHA_KEY}
                             />
                         </div>
                     </Col>
