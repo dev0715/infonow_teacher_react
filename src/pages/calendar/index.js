@@ -44,7 +44,7 @@ const CalendarComponent = (props) => {
   const [upcomingAssignmentData, setUpcomingAssignmentData] = useState([])
 
   useEffect(() => {
-    props.getAllMeetings();
+    props.getAllMeetings({page:1,limit:10});
     props.getTeacherRecentLessons();
     props.getTeacherUpcomingTests();
     props.getTeacherUpcomingAssignments();
@@ -81,7 +81,7 @@ const CalendarComponent = (props) => {
           }
         }),
 
-      upcomingTestData && upcomingTestData.map(t => {
+      ...upcomingTestData.map(t => {
         return {
           type: 'test',
           title: t.test.title,
@@ -90,7 +90,7 @@ const CalendarComponent = (props) => {
         }
       }),
 
-      upcomingAssignmentData && upcomingAssignmentData.map(a => {
+      ...upcomingAssignmentData.map(a => {
         return {
           type: 'assignment',
           title: a.assignment.title,
