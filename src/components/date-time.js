@@ -29,7 +29,7 @@ export const getCurrentTimeZone = () => {
     return momentTimeZone.tz.guess()
 }
 
-export const getGoogleCalenderFormattedDate = (date = moment()) => {
+export const getGoogleCalendarFormattedDate = (date = moment()) => {
     return moment(date).format("YYYY-MM-DDTHH:mm:ssZ")
 }
 

@@ -4,7 +4,7 @@ import * as url from "../url_helper"
 import accessToken from "../jwt-token-access/accessToken"
 
 import {
-  calenderDefaultCategories,
+  calendarDefaultCategories,
   chats,
   contacts,
   comments,
@@ -227,9 +227,9 @@ const fakeBackend = () => {
   mock.onGet(url.GET_CATEGORIES).reply(() => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (calenderDefaultCategories) {
+        if (calendarDefaultCategories) {
           // Passing fake JSON data as response
-          resolve([200, calenderDefaultCategories])
+          resolve([200, calendarDefaultCategories])
         } else {
           reject([400, "Cannot get categories"])
         }

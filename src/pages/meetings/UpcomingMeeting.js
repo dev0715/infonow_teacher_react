@@ -22,7 +22,7 @@ import UILoader from '../../@core/components/ui-loader';
 
 import { MEETING_APP_URL } from '../../helpers/url_helper'
 
-import { AddMeetingToCalenderButton } from './addMeetingToCalender'
+import { AddMeetingToCalendarButton } from './addMeetingToCalendar'
 import { useTranslation } from 'react-i18next';
 
 const UpcomingMeeting = (props) => {
@@ -80,7 +80,7 @@ const UpcomingMeeting = (props) => {
 								</div>
 							</div>
 							<div className='mb-1 mb-md-0 mb-lg-0 float-md-right float-lg-right'>
-								<AddMeetingToCalenderButton
+								<AddMeetingToCalendarButton
 									className="mr-1"
 									type="button"
 									meeting={meeting}

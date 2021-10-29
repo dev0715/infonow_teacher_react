@@ -33,8 +33,8 @@ const Routes = [
     }
   },
   {
-    path: '/calender',
-    className: 'calender-application',
+    path: '/calendar',
+    className: 'calendar-application',
     component: lazy(() => import('../../pages/calendar')),
     meta: {
       newUserAccessible: true
