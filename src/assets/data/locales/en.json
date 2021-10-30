@@ -23,7 +23,7 @@
   "General": "General",
   "Info": "Info",
   "Change Password": "Change Password",
-  "Subscribtion": "Subscribtion",
+  "Subscribtion": "Subscription",
   "Calendar": "Calendar",
   "Upload": "Upload",
   "Allowed JPG, GIF or PNG. Max size of 800kB": "Allowed JPG, GIF or PNG. Max size of 800kB",
@@ -330,7 +330,8 @@
 "Buy Now":"Buy Now",
 "Crop":"Crop",
 "Add Card":"Add Card",
-"Are you sure you want to set this card as your default card":"Are you sure you want to set this card as your default card"
-
+"Are you sure you want to set this card as your default card":"Are you sure you want to set this card as your default card",
+"The address is required in order to send invoices": "The address is required in order to send invoices",
+  "The cards are stored only on the secured payment processor, Stripe.": "The cards are not stored on our platform, but on the secured payment processor Stripe."
 
 }
