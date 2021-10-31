@@ -119,7 +119,7 @@ const SavedCardsTabContent = (props) => {
         <CardContainer
           paymentMethodsList={props.paymentMethodsList}
         />
-
+        <p className="mt-1 mb-0">{t('The cards are stored only on the secured payment processor, Stripe.')}</p>
       </div>
     </UILoader>
   )

@@ -333,6 +333,7 @@ const GeneralTabs = (props) => {
               />
             </FormGroup>
           </Col>
+          <p>{t('The address is required in order to send invoices.')}</p>
           <Col className='mt-2' sm='12'>
             {
               isEditing &&
