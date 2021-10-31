@@ -51,7 +51,6 @@ const SavedCardsTabContent = (props) => {
       notifySuccess(t('Payment'), t('Card added Successfully'))
       getPaymentMethodsAndPlans()
     }
-    return ()=>props.postPaymentFailure(null)
   }, [props.paymentMethodSuccess])
   
 
