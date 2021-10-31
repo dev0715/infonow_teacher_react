@@ -181,6 +181,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 postPaymentLoading: false,
+                postPaymentError:null,
                 postPaymentSuccess: true
             }
             break;
@@ -189,6 +190,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 postPaymentLoading: false,
+                postPaymentSuccess:false,
                 postPaymentError: action.payload
             }
             break;

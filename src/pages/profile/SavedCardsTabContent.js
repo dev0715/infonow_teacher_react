@@ -6,7 +6,10 @@ import { DateTime } from '../../components/date-time'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
 import {
-  getPaymentMethods, getPaymentPlan,  postPayment,
+  getPaymentMethods,
+  getPaymentPlan,
+  postPayment,
+  postPaymentFailure
 } from '@store/actions'
 
 
@@ -40,6 +43,7 @@ const SavedCardsTabContent = (props) => {
       notifySuccess(t('Payment'), t('Payment was Successfully'))
       getPaymentMethodsAndPlans()
     }
+    return ()=>props.postPaymentFailure(null)
   }, [props.postPaymentSuccess])
 
   useEffect(() => {
@@ -47,6 +51,7 @@ const SavedCardsTabContent = (props) => {
       notifySuccess(t('Payment'), t('Card added Successfully'))
       getPaymentMethodsAndPlans()
     }
+    return ()=>props.postPaymentFailure(null)
   }, [props.paymentMethodSuccess])
   
 
@@ -182,6 +187,7 @@ export default withRouter(
   connect(mapStateToProps, {
     getPaymentMethods,
     getPaymentPlan,
-    postPayment
+    postPayment,
+    postPaymentFailure
   })(SavedCardsTabContent)
 )
