@@ -6,7 +6,7 @@
   "No assignment found": "No assignment found",
   "No test found": "No test found",
   "Recent Lessons": "Recent Lessons",
-  "COPYRIGHT © 2018-2021 InfoNow, All rights Reserved": "COPYRIGHT © 2018-2021 InfoNow, All rights Reserved",
+  "COPYRIGHT © 2019-2021 InfoNow, All rights Reserved": "COPYRIGHT © 2019-2021 InfoNow, All rights Reserved",
   "Made with by Efsol": "Made with by Efsol",
   "View All": "View All",
   "Dashobard": "Dashobard",
@@ -23,7 +23,7 @@
   "General": "General",
   "Info": "Info",
   "Change Password": "Change Password",
-  "Subscribtion": "Subscribtion",
+  "Subscribtion": "Subscription",
   "Calendar": "Calendar",
   "Upload": "Upload",
   "Allowed JPG, GIF or PNG. Max size of 800kB": "Allowed JPG, GIF or PNG. Max size of 800kB",
@@ -288,7 +288,7 @@
   "Select a student":"Select a student",
   "No Student Left":"No Student Left",
   "Apply":"Apply",
-  "Upcoming Tests":"Upcoming Tests",
+  "Upcoming Tests":"Upcoming Tests - Schedule Test",
   "Past Tests":"Past Tests",
   "Schedule Test":"Schedule Test",
   "Assign test to student":"Assign test to student",
@@ -310,7 +310,7 @@
 "Assignment Dashboard":"Assignment Dashboard",
 "type":"type",
 "Edit Assignment":"Edit Assignment",
-"Upcoming Assignments":"Upcoming Assignments",
+"Upcoming Assignments":"Upcoming Assignments - Schedule Assignment",
 "Enter assignment title":"Enter assignment title",
 "Assignment Content":"Assignment Content",
 "Create Assignment":"Create Assignment",
@@ -330,7 +330,8 @@
 "Buy Now":"Buy Now",
 "Crop":"Crop",
 "Add Card":"Add Card",
-"Are you sure you want to set this card as your default card":"Are you sure you want to set this card as your default card"
-
+"Are you sure you want to set this card as your default card":"Are you sure you want to set this card as your default card",
+"The address is required in order to send invoices": "The address is required in order to send invoices",
+  "The cards are stored only on the secured payment processor, Stripe.": "The cards are not stored on our platform, but on the secured payment processor Stripe."
 
 }
