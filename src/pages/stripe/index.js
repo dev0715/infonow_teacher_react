@@ -20,6 +20,7 @@ let securedByStripe = require('../../assets/images/credit-cards/powered-by-strip
 
 const CARD_OPTIONS = {
     iconStyle: "solid",
+    hidePostalCode: true,
     style: {
         base: {
             iconColor: "#9d0bba",
@@ -139,11 +140,6 @@ const CheckoutForm = (props) => {
                         <div className="ResultTitle" role="alert">
                             {t('Card added successfully')}
                         </div>
-                        {/* <div className="ResultMessage">
-                            Thanks for trying Stripe Elements. No money was charged, but we
-                            generated a PaymentMethod: {stripeToken.id}
-                        </div> */}
-                        {/* <ResetButton onClick={reset} /> */}
                     </div>
                     :
                     <form className="Form" onSubmit={handleSubmit}>
@@ -156,7 +152,6 @@ const CheckoutForm = (props) => {
                                 }}
                             />
                         </fieldset>
-                        {/* {error && <ErrorMessage>{error.message}</ErrorMessage>} */}
                         <SubmitButton processing={processing} error={error} disabled={!stripe}>
                             {t('Add Card')}
                         </SubmitButton>

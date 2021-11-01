@@ -55,11 +55,11 @@ const SavedCardsTabContent = (props) => {
   }, [props.postPaymentError])
 
   useEffect(() => {
-    if (props.defaultPaymentMethodSuccess) {
-      notifySuccess(t('Default Card'), t('Selected card has been set as your default card successfully'))
+    if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess) {
+      // notifySuccess(t('Default Card'), t('Selected card has been set as your default card successfully'))
       getPaymentMethodsAndPlans()
     }
-  }, [props.defaultPaymentMethodSuccess])
+  }, [props.defaultPaymentMethodSuccess, props.deletePaymentMethodSuccess])
 
   useEffect(() => {
     if (props.defaultPaymentMethodError) notifyError(t('Default Card'), props.defaultPaymentMethodError)
@@ -73,7 +73,7 @@ const SavedCardsTabContent = (props) => {
 
   return (
     <UILoader blocking={props.paymentMethodsListLoading || props.defaultPaymentMethodLoading ||
-      props.paymentPlanLoading || props.postPaymentLoading}>
+      props.paymentPlanLoading || props.postPaymentLoading || props.deletePaymentMethodLoading}>
       <div className="subscription-page">
         {
           props.paymentMethodsListError && <Alert className="p-1 w-75" color="danger">{props.paymentMethodsListError}</Alert>
@@ -142,9 +142,12 @@ const mapStateToProps = (state) => {
     postPaymentError,
 
     defaultPaymentMethod,
-    defaultPaymentMethodSuccess,
     defaultPaymentMethodLoading,
     defaultPaymentMethodError,
+    defaultPaymentMethodSuccess,
+
+    deletePaymentMethodSuccess,
+    deletePaymentMethodLoading,
 
     paymentMethod,
     paymentMethodSuccess,
@@ -169,6 +172,9 @@ const mapStateToProps = (state) => {
     defaultPaymentMethodSuccess,
     defaultPaymentMethodLoading,
     defaultPaymentMethodError,
+
+    deletePaymentMethodSuccess,
+    deletePaymentMethodLoading,
 
     paymentMethod,
     paymentMethodSuccess,

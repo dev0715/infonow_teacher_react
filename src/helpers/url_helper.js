@@ -2,7 +2,7 @@
 // export const BASE_URL = `http://192.168.10.102:3600`
 // export const MEETING_API_URL = `http://192.168.10.102:4200`
 // export const MEETING_APP_URL = `http://192.168.10.102:3001`
-// export const CHAT_API_URL = `http://192.168.10.104:3700`
+// export const CHAT_API_URL = `http://192.168.10.102:3700`
 // export const CHAT_SOCKET_API_URL = `http://192.168.10.104:3701`
 // export const BLOG_API_URL = `http://192.168.10.102:1337`
 
@@ -137,14 +137,16 @@ export const UPLOAD_PROFILE_PICTURE = id => `${BASE_URL}/api/v1/teachers/${id}/p
 export const UPDATE_PASSWORD = id => `${BASE_URL}/api/v1/teachers/${id}/password`
 
 //Stripe
-export const PAYMENT_METHODS =  `${BASE_URL}/api/v1/teachers/payment-methods`
-export const PAYMENT_PLAN = `${BASE_URL}/api/v1/teachers/payment-plan`
-export const GET_STRIPE_KEY =  `${BASE_URL}/api/v1/teachers/public-key`
-export const POST_PAYMENT =  `${BASE_URL}/api/v1/teachers/pay`
+export const PAYMENT_METHODS =  `${BASE_URL}/api/v1/stripe/payment-methods`
+export const PAYMENT_PLAN = `${BASE_URL}/api/v1/stripe/payment-plan`
+export const GET_STRIPE_KEY =  `${BASE_URL}/api/v1/stripe/public-key`
+export const POST_PAYMENT =  `${BASE_URL}/api/v1/stripe/pay`
 
 
 //Ebooks
 export const GET_EBOOKS = `${BASE_URL}/api/v1/ebooks`
+export const DOWNLOAD_EBOOK = ebookId => `${BASE_URL}/api/v1/ebooks/download/${ebookId}`
+export const BUY_EBOOK = (ebookId, token) => `${BASE_URL}/api/v1/ebooks/download/${ebookId}/${token}`
 
 //Counties
 export const GET_COUNTIES = `${BASE_URL}/counties`

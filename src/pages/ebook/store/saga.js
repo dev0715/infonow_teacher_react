@@ -1,10 +1,10 @@
 import { call, put, takeEvery } from "redux-saga/effects"
-import { GET_EBOOKS , POST_EBOOK , PUT_EBOOK} from './actionTypes'
+import { GET_EBOOKS ,DOWNLOAD_EBOOK , BUY_EBOOK} from './actionTypes'
 import  {getEbooksSuccess , getEbooksFailure,
-            postEbookSuccess,postEbookFailure ,
-          putEbookSuccess, putEbookFailure} from './actions'
+            downloadEbookSuccess, downloadEbookFailure,
+            buyEbookSuccess, buyEbookFailure} from './actions'
 
-import { getEbooks } from '../../../helpers/backend-helpers'
+import { getEbooks ,downloadEbook , buyEbook} from '../../../helpers/backend-helpers'
 
 function* getEbooksHttp(){
     try {
@@ -20,15 +20,40 @@ function* getEbooksHttp(){
       }
 }
 
+function* downloadEbookHttp({payload:data}){
+  try {
+      const response = yield call(downloadEbook, data);
+      if (response) {
+        yield put(downloadEbookSuccess(response))
+        return;
+      }
+      throw "Unknown response received from Server";
+  
+    } catch (error) {
+      yield put(downloadEbookFailure(error))
+    }
+}
 
-
-
-
-
+function* buyEbookHttp({payload:data}){
+  try {
+      const response = yield call(buyEbook, data.ebookId, data.token);
+  
+      if (response) {
+        yield put(buyEbookSuccess(response))
+        return;
+      }
+      throw "Unknown response received from Server";
+  
+    } catch (error) {
+      yield put(buyEbookFailure(error))
+    }
+}
 
 
 function* EbookSaga() {
     yield takeEvery(GET_EBOOKS, getEbooksHttp)
+    yield takeEvery(DOWNLOAD_EBOOK, downloadEbookHttp)
+    yield takeEvery(BUY_EBOOK, buyEbookHttp)
   }
   
   export default EbookSaga

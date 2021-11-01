@@ -5,19 +5,18 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
 
 import {
-    postPayment,
+    downloadEbook,
 } from '@store/actions'
 import { Modal, ModalBody, Button, ModalHeader } from "reactstrap"
 import CardContainer from "../stripe/card-container";
 import UILoader from "../../@core/components/ui-loader";
-
 import StripeApp from '../stripe'
 import { useTranslation } from "react-i18next";
 const imgPlaceholder = require(`@src/assets/images/custom-placeholder/img_preview_placeholder.jpeg`);
 
 const SavedCardModal = (props) => {
 
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const { isOpen, ebook, toggleModal, paymentMethodsList, fetchData } = props
 
     const [isOpenAddNewCard, setIsOpenAddNewCard] = useState(false)
@@ -32,17 +31,21 @@ const SavedCardModal = (props) => {
 
 
     const payToBuyBook = () => {
-        props.postPayment({ "ebookId": ebook.ebookId })
+        props.downloadEbook(ebook.ebookId)
     }
 
+
     useEffect(() => {
-        if (props.postPaymentSuccess) fetchData()
-    }, [props.postPaymentSuccess])
+        if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess || props.postPaymentSuccess) fetchData()
+    }, [props.defaultPaymentMethodSuccess, props.deletePaymentMethodSuccess ,props.postPaymentSuccess])
+
+    
 
     return (
 
         <>
-            <UILoader blocking={props.postPaymentLoading}>
+            <UILoader blocking={props.postPaymentLoading || props.downloadEbookLoading 
+            || props.defaultPaymentMethodLoading || props.deletePaymentMethodLoading}>
                 <Modal className='modal-lg' isOpen={isOpen} toggle={toggle}>
                     <ModalHeader>Saved cards </ModalHeader>
                     <ModalBody>
@@ -83,7 +86,14 @@ const SavedCardModal = (props) => {
 const mapStateToProps = (state) => {
 
     const {
+        downloadEbookLoading,
+        downloadEbookSuccess,
+        downloadEbookError,
+        downloadEbook,
 
+    } = state.Ebook
+
+    const {
         postPaymentSuccess,
         postPaymentLoading,
         postPaymentError,
@@ -91,11 +101,21 @@ const mapStateToProps = (state) => {
         paymentMethod,
         paymentMethodSuccess,
         paymentMethodError,
-        paymentMethodLoading
+        paymentMethodLoading,
+
+        defaultPaymentMethodSuccess,
+        deletePaymentMethodSuccess,
+        defaultPaymentMethodLoading,
+        deletePaymentMethodLoading,
 
     } = state.Stripe;
     return {
 
+        downloadEbookLoading,
+        downloadEbookSuccess,
+        downloadEbookError,
+        downloadEbook,
+
         postPaymentSuccess,
         postPaymentLoading,
         postPaymentError,
@@ -103,12 +123,17 @@ const mapStateToProps = (state) => {
         paymentMethod,
         paymentMethodSuccess,
         paymentMethodError,
-        paymentMethodLoading
+        paymentMethodLoading,
+
+        defaultPaymentMethodSuccess,
+        deletePaymentMethodSuccess,
+        defaultPaymentMethodLoading,
+        deletePaymentMethodLoading,
     }
 }
 
 export default withRouter(
     connect(mapStateToProps, {
-        postPayment
+        downloadEbook
     })(SavedCardModal)
 )

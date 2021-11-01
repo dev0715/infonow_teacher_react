@@ -22,6 +22,10 @@ import {
     POST_PAYMENT,
     POST_PAYMENT_SUCCESS,
     POST_PAYMENT_FAILURE,
+
+    DELETE_PAYMENT_METHOD,
+DELETE_PAYMENT_METHOD_SUCCESS,
+DELETE_PAYMENT_METHOD_FAILURE,
 } from './actionTypes'
 
 
@@ -147,4 +151,25 @@ export const postPaymentFailure = (error) => {
         type: POST_PAYMENT_FAILURE,
         payload: error
     }
+}
+
+export const deletePaymentMethod =(data) =>{
+ return {
+     type:DELETE_PAYMENT_METHOD,
+     payload:data
+ }
+}
+
+export const deletePaymentMethodSuccess =(data) =>{
+ return {
+     type:DELETE_PAYMENT_METHOD_SUCCESS,
+     payload:data
+ }
+}
+
+export const deletePaymentMethodFailure =(error) =>{
+ return {
+     type:DELETE_PAYMENT_METHOD_FAILURE,
+     payload:error
+ }
 }

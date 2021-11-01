@@ -25,6 +25,9 @@ axiosApi.defaults.headers.common['Authorization'] = authHeader()['Authorization'
 
 axiosApi.interceptors.response.use(
 	(response) => {
+		if(response.config.responseType === 'blob')
+		return response;
+		
 		DEBUG && console.log('HTTP_RESPONSE', response);
 
 		if (response.data.status) {
@@ -113,4 +116,13 @@ export function GetUrlWithPagingParams(url , params = {}){
 	values.push(`limit=${params.limit || 20}`);
 	endUrl += '?'+(values.join('&'));
 	return endUrl
+}
+
+export async function download(url) {
+	resetAPIAuthToken();
+	return await axiosApi
+		.get(url, { 
+			responseType: 'blob'
+		 })
+		.then((response) => response.data);
 }

@@ -8,7 +8,7 @@ import {
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { postAssignment } from '@store/actions'
+import { postAssignment, postAssignmentFailure } from '@store/actions'
 import { ArrowLeft } from 'react-feather'
 import { EditorState } from 'draft-js'
 import { Editor, } from 'react-draft-wysiwyg';
@@ -39,19 +39,28 @@ const NewAssignment = (props) => {
 
 	const handleValidSubmit = (events, values) => {
 		let content = stateToMarkdown(editorVal.getCurrentContent())
-		setNewAssignment(newAssignment => {
-			let assignment = { ...newAssignment, content: content }
-			props.postAssignment(assignment);
-			return assignment
-		})
+		let assignment = { ...newAssignment, content: content }
+		props.postAssignment(assignment);
+		// setNewAssignment(newAssignment => {
+		// 	let assignment = { ...newAssignment, content: content }
+		// 	props.postAssignment(assignment);
+		// 	return assignment
+		// })
 	}
 
 
 	useEffect(() => {
 		if (newAssignmentError) errorAlertDialog(newAssignmentError);
-		if (newAssignmentSuccess) successAlertDialog(t('Assignment has been created successfully'));
+		if (newAssignmentSuccess) successAlertDialog(t('Assignment has been created successfully'), () => goToAssignmentDashboard());
 	}, [newAssignmentError, newAssignmentSuccess]);
 
+	const goToAssignmentDashboard = () => {
+		props.postAssignmentFailure(null)
+		props.history.push({
+			pathname: `/assignment-dashboard/${props.newAssignment.assignmentId}`,
+			state: { assignment: props.newAssignment }
+		})
+	}
 
 	const onTitleChange = e => {
 		setNewAssignment({ ...newAssignment, title: e.target.value })
@@ -182,7 +191,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-	postAssignment
+	postAssignment,
+	postAssignmentFailure
 }
 
 export default withRouter(

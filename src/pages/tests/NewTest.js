@@ -79,11 +79,11 @@ const NewTest = (props) => {
 	useEffect(() => {
 		if (newTestError) errorAlertDialog(newTestError);
 		if (newTestSuccess) {
-			successAlertDialog(t('Test has been created successfully'), ()=>goToDashboard());
+			successAlertDialog(t('Test has been created successfully'), ()=>goToTestDashboard());
 		}
 	}, [props.newTestError, props.newTestSuccess]);
 
-	const goToDashboard = () =>{
+	const goToTestDashboard = () =>{
 		props.postTestFailure(null)
 		props.history.push({
 			pathname: `/test-dashboard/${props.newTest.testId}`,

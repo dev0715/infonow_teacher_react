@@ -7,6 +7,7 @@ import {
     GET_PAYMENT_PLAN,
     SET_DEFAULT_PAYMENT_METHOD,
     POST_PAYMENT,
+    DELETE_PAYMENT_METHOD,
 
 } from "./actionTypes"
 import {
@@ -15,11 +16,12 @@ import {
     postPaymentMethodsSuccess, postPaymentMethodsFailure,
     getPaymentPlanSuccess, getPaymentPlanFailure,
     setDefaultPaymentMethodSuccess, setDefaultPaymentMethodFailure,
-    postPaymentSuccess, postPaymentFailure
+    postPaymentSuccess, postPaymentFailure,
+    deletePaymentMethodSuccess, deletePaymentMethodFailure
 } from "./actions"
 import {
     getStripeKey, getPaymentMethods, postPaymentMethods,
-    getPaymentPlan, putPaymentMethods, postPayment
+    getPaymentPlan, putPaymentMethods, postPayment , deletePaymentMethod
 } from '@helpers/backend-helpers'
 
 
@@ -80,6 +82,15 @@ function* postPaymentHttp({payload:data}) {
     }
 }
 
+function* deletePaymentMethodHttp({payload:data}) {
+    try {
+        const response = yield call(deletePaymentMethod,data);
+        yield put(deletePaymentMethodSuccess(response))
+    } catch (error) {
+        yield put(deletePaymentMethodFailure(error))
+    }
+}
+
 
 function* StripeSaga() {
     yield takeEvery(GET_STRIPE_PUBLIC_KEY, getStripePublicKeyHttp)
@@ -88,6 +99,7 @@ function* StripeSaga() {
     yield takeEvery(GET_PAYMENT_PLAN, getPaymentPlanHttp)
     yield takeEvery(SET_DEFAULT_PAYMENT_METHOD, setDefaultPaymentMethodHttp)
     yield takeEvery(POST_PAYMENT, postPaymentHttp)
+    yield takeEvery(DELETE_PAYMENT_METHOD, deletePaymentMethodHttp)
 }
 
 export default StripeSaga

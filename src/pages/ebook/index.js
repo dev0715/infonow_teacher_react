@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 import UILoader from '../../@core/components/ui-loader';
 import {
     getEbooks,
-    getPaymentMethods
+    getPaymentMethods,
+    downloadEbook
 } from '@store/actions'
 import { DOCUMENT_BASE_URL } from '../../helpers/url_helper';
 import PreviewBookModal from './preview-book-modal';
@@ -14,10 +15,15 @@ import StripeApp from '../stripe'
 import SavedCardModal from './saved-cards-modal';
 import { useTranslation } from 'react-i18next';
 
+import { notifyError, notifySuccess, } from '../../utility/toast'
+import FileSaver from 'file-saver';
+
 const Ebook = (props) => {
 
-    const {t} = useTranslation()
-    const { ebooks, ebooksError, ebooksLoading } = props
+    const { t } = useTranslation()
+    const { ebooks, ebooksError, ebooksLoading,
+        downloadEbookData,  downloadEbookSuccess,
+        downloadEbookError, downloadEbookLoading } = props
 
     const [isOpenPreview, setIsOpenPreview] = useState(false)
     const [isOpenCardContainer, setIsOpenCardContainer] = useState(false)
@@ -25,7 +31,7 @@ const Ebook = (props) => {
     const [selectedBook, setSelectedBook] = useState()
     const [previewImage, setPreviewImage] = useState(null)
 
-    
+
     const fetchData = () => {
         props.getEbooks()
         props.getPaymentMethods()
@@ -47,15 +53,19 @@ const Ebook = (props) => {
     }
 
     const BuyBook = (ebook) => {
-       setSelectedBook(ebook)
+        setSelectedBook(ebook)
     }
 
-    useEffect(() =>{
-        if(selectedBook){
-            if(props.paymentMethodsList.length > 0) setIsOpenCardContainer(!!selectedBook)
+    const DownloadBook = (ebook) => {
+        props.downloadEbook(ebook.ebookId)
+    }
+
+    useEffect(() => {
+        if (selectedBook) {
+            if (props.paymentMethodsList.length > 0) setIsOpenCardContainer(!!selectedBook)
             else setIsOpenAddNewCard(true)
         }
-    },[selectedBook])
+    }, [selectedBook])
 
     useEffect(() => {
         if (previewImage)
@@ -67,13 +77,27 @@ const Ebook = (props) => {
     }, [])
 
     useEffect(() => {
-       if(props.paymentMethodSuccess) fetchData()
+        if (props.paymentMethodSuccess) fetchData()
     }, [props.paymentMethodSuccess])
+
+    useEffect(() => {
+        if (downloadEbookSuccess) notifySuccess(t("Ebook"), t("Ebook downloaded successfully"))
+    }, [downloadEbookSuccess])
+
+    useEffect(() => {
+        if (downloadEbookError) notifyError(t("Ebook"), t(downloadEbookError))
+    }, [downloadEbookError])
+
+    useEffect(() => {
+        if (downloadEbookSuccess && downloadEbookData) {
+            FileSaver.saveAs(downloadEbookData)
+        }
+    }, [downloadEbookSuccess, downloadEbook])
 
 
     return (
         <>
-            <UILoader blocking={ebooksLoading}>
+            <UILoader blocking={ebooksLoading || downloadEbookLoading}>
 
                 <Row className='match-height'>
                     {
@@ -83,15 +107,25 @@ const Ebook = (props) => {
                             (book, index) => (
                                 <Col lg='4' md='6' key={`ebooksList-${index}`} >
                                     <Card>
-                                        <CardImg top src={DOCUMENT_BASE_URL + book.coverImage} alt={book.title} />
+                                        <div className="ebook-card">
+                                            <CardImg top src={DOCUMENT_BASE_URL + book.coverImage} alt={book.title} />
+                                            <div className="ebook-price"> {book.price} RON</div>
+                                        </div>
                                         <CardBody>
                                             <CardTitle tag='h4'>{book.title}</CardTitle>
                                             <CardText>
                                                 {book.description}
                                             </CardText>
-                                            <Button.Ripple color='primary' onClick={() => BuyBook(book)} outline >
-                                               {t('Buy Now')}
-                                            </Button.Ripple>
+                                            {
+                                                book.isPurchased == false
+                                                    ? <Button.Ripple color='primary' onClick={() => BuyBook(book)} outline >
+                                                        {t('Buy Now')}
+                                                    </Button.Ripple>
+                                                    :
+                                                    <Button.Ripple color='primary' onClick={() => DownloadBook(book)} outline >
+                                                        {t('Download')}
+                                                    </Button.Ripple>
+                                            }
                                             <Button.Ripple onClick={() => setPreviewImage(book.previewImage)} className="ml-2" color='secondary' outline>
                                                 {t('Preview')}
                                             </Button.Ripple>
@@ -130,8 +164,12 @@ const mapStateToProps = (state) => {
     const {
         ebooks,
         ebooksError,
-        ebooksLoading
+        ebooksLoading,
 
+        downloadEbookData,
+        downloadEbookSuccess,
+        downloadEbookError,
+        downloadEbookLoading
     } = state.Ebook
 
     const {
@@ -150,6 +188,11 @@ const mapStateToProps = (state) => {
         ebooksError,
         ebooksLoading,
 
+        downloadEbookData,
+        downloadEbookSuccess,
+        downloadEbookError,
+        downloadEbookLoading,
+
         paymentMethodsList,
         paymentMethodsListError,
         paymentMethodsListLoading,
@@ -164,7 +207,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     getEbooks,
-    getPaymentMethods
+    getPaymentMethods,
+    downloadEbook
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Ebook))

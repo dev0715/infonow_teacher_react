@@ -23,6 +23,10 @@ import {
     POST_PAYMENT_SUCCESS,
     POST_PAYMENT_FAILURE,
 
+    DELETE_PAYMENT_METHOD,
+    DELETE_PAYMENT_METHOD_SUCCESS,
+    DELETE_PAYMENT_METHOD_FAILURE,
+
 } from './actionTypes'
 
 
@@ -36,7 +40,7 @@ const initialState = {
     paymentMethodsListLoading: false,
 
     paymentMethod: [],
-    paymentMethodSuccess:false,
+    paymentMethodSuccess: false,
     paymentMethodError: null,
     paymentMethodLoading: false,
 
@@ -51,7 +55,11 @@ const initialState = {
 
     postPaymentSuccess: false,
     postPaymentLoading: false,
-    postPaymentError: null
+    postPaymentError: null,
+
+    deletePaymentMethodSuccess: false,
+    deletePaymentMethodLoading: false,
+    deletePaymentMethodError: null
 }
 
 export default (state = initialState, action) => {
@@ -81,6 +89,9 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 paymentMethodsListLoading: true,
+                paymentMethodSuccess:false,
+                defaultPaymentMethodSuccess: false,
+                deletePaymentMethodSuccess: false
             }
             break;
         case GET_PAYMENT_METHODS_SUCCESS:
@@ -102,15 +113,15 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 paymentMethodLoading: true,
-                paymentMethodSuccess:false,
-                paymentMethodError:null
+                paymentMethodSuccess: false,
+                paymentMethodError: null
             }
             break;
         case POST_PAYMENT_METHODS_SUCCESS:
             state = {
                 ...state,
                 paymentMethodLoading: false,
-                paymentMethodSuccess:true,
+                paymentMethodSuccess: true,
                 paymentMethod: action.payload
             }
             break;
@@ -147,8 +158,8 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 defaultPaymentMethodLoading: true,
-                defaultPaymentMethodSuccess:false,
-                defaultPaymentMethodError:null,
+                defaultPaymentMethodSuccess: false,
+                defaultPaymentMethodError: null,
             }
             break;
         case SET_DEFAULT_PAYMENT_METHOD_SUCCESS:
@@ -172,8 +183,8 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 postPaymentLoading: true,
-                postPaymentSuccess:false,
-                postPaymentError:null,
+                postPaymentSuccess: false,
+                postPaymentError: null,
             }
             break;
 
@@ -190,6 +201,27 @@ export default (state = initialState, action) => {
                 ...state,
                 postPaymentLoading: false,
                 postPaymentError: action.payload
+            }
+            break;
+
+        case DELETE_PAYMENT_METHOD:
+            state = {
+                ...state,
+                deletePaymentMethodLoading: true
+            }
+            break;
+        case DELETE_PAYMENT_METHOD_SUCCESS:
+            state = {
+                ...state,
+                deletePaymentMethodLoading: false,
+                deletePaymentMethodSuccess: true
+            }
+            break;
+        case DELETE_PAYMENT_METHOD_FAILURE:
+            state = {
+                ...state,
+                deletePaymentMethodLoading: false,
+                deletePaymentMethodError: action.payload
             }
             break;
 

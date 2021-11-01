@@ -186,6 +186,7 @@ export default (state = initialState, action) => {
             state = {
                 ...state,
                 newAssignmentLoading: false,
+                newAssignmentSuccess: false,
                 newAssignmentError: action.payload,
             }
             break;

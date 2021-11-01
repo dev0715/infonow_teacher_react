@@ -40,7 +40,7 @@
     "draft-js-wysiwyg": "^1.2.0",
     "draftjs-to-html": "0.9.1",
     "emoji-picker-react": "^3.4.8",
-    "file-saver": "2.0.2",
+    "file-saver": "^2.0.5",
     "flatpickr": "4.6.3",
     "history": "5.0.0",
     "html-to-draftjs": "1.5.0",
