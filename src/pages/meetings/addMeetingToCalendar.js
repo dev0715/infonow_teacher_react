@@ -29,8 +29,9 @@ export const AddMeetingToCalendarButton = (props) => {
 
     const addMeetingToCalendar = () => {
         if (!meeting) return notifyWarning(t("Meeting"), t(`Could not add meeting to google calendar. Please try again`))
+        let participants = meeting.participants.map(participant => participant.user.name).join(' - ');
         const event = {
-            summary: meeting.agenda,
+            summary: `${meeting.agenda} ${participants}`,
             start: {
                 'dateTime': getGoogleCalendarFormattedDate(meeting.scheduledAt),
                 'timeZone': getCurrentTimeZone()
