@@ -47,7 +47,6 @@ const account = (state = initialState, action) => {
       }
       break
     case REGISTER_USER_FAILED:
-      console.log(" fail", action.payload)
       state = {
         ...state,
         user: null,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Button, CardBody, CardTitle, Card, Label, Alert } from 'reactstrap'
+import { Button, Alert } from 'reactstrap'
 import { DateTime } from '../../components/date-time'
 
 // ** Store & Actions
@@ -19,6 +19,7 @@ import StripeApp from '../stripe'
 import UILoader from '../../@core/components/ui-loader'
 import CardContainer from '../stripe/card-container'
 import { useTranslation } from 'react-i18next';
+import { infoAlertDialog } from '../../helpers/HelperFunctions';
 
 
 const SavedCardsTabContent = (props) => {
@@ -60,7 +61,6 @@ const SavedCardsTabContent = (props) => {
 
   useEffect(() => {
     if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess) {
-      // notifySuccess(t('Default Card'), t('Selected card has been set as your default card successfully'))
       getPaymentMethodsAndPlans()
     }
   }, [props.defaultPaymentMethodSuccess, props.deletePaymentMethodSuccess])

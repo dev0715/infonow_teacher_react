@@ -26,6 +26,7 @@ const GeneralTabs = (props) => {
   const { t } = useTranslation()
   const [isEditing, setIsEditing] = useState(false)
   const [avatar, setAvatar] = useState('')
+  const [zipCode, setZipcode] = useState(props.user.zipCode || "")
   const [name, setName] = useState(props.user.name || "")
   const [city, setCity] = useState(props.user.city || "")
   const [county, setCounty] = useState(props.user.county || "")
@@ -66,6 +67,7 @@ const GeneralTabs = (props) => {
       setCounty(props.user.county || "")
       setCountry(props.user.country || "")
       setAddress(props.user.address || "")
+      setZipcode(props.user.zipCode || "")
     } 
   }, [props.user])
 
@@ -124,7 +126,7 @@ const GeneralTabs = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     props.updateProfileData({
-      name, about, city, county, country, address
+      name, about, city, county, country, address ,zipCode
     })
   }
 
@@ -318,6 +320,22 @@ const GeneralTabs = (props) => {
                 />
               </InputGroup>
                } 
+            </FormGroup>
+          </Col>
+          <Col md='6'>
+            <FormGroup>
+              <Label className="ml-25">
+                {t('Zipcode')}
+              </Label>
+              <InputGroup className='input-group-merge'>
+                <Input
+                  type="text"
+                  placeholder={t('Enter Zipcode')}
+                  value={zipCode}
+                  onChange={e => setZipcode(e.target.value)}
+                  disabled={!isEditing}
+                  required />
+              </InputGroup>
             </FormGroup>
           </Col>
           <Col sm='12'>

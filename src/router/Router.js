@@ -210,7 +210,6 @@ const Router = () => {
             //  return isUserAuthenticated() ? <Redirect to={DefaultRoute} /> : <Redirect to='/login' />
 
             let user = getLoggedInUser()
-            console.log("Router ===>", isUserAuthenticated(), getLoggedInUser())
 
             if (isUserAuthenticated()) {
               return user.teacher.status != 'new' ? <Redirect to={DefaultRoute} /> : <Redirect to={GetStartedRoute} />
