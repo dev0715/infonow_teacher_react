@@ -10,7 +10,7 @@ import { connect } from 'react-redux'
 // import { getUserTopics, getUserTopicLessons, selectTopic, selectLesson, getLesson, completedLesson } from './store/actions'
 
 import { withRouter } from 'react-router';
-import { setProfileUser, getCounties } from './store/actions'
+import { setProfileUser, getCounties  } from '@store/actions'
 import UILoader from '../../@core/components/ui-loader';
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
@@ -19,6 +19,7 @@ import SavedCardsTabContent from './SavedCardsTabContent'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 
+import { loadStripe } from "@stripe/stripe-js";
 const AccountSettings = (props) => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState('1')
@@ -27,21 +28,25 @@ const AccountSettings = (props) => {
     setActiveTab(tab)
   }
 
+ 
   useEffect(() => {
     props.setProfileUser(getLoggedInUser() || {})
     props.getCounties()
   }, [])
+
+  useEffect(() => {
+
+    if(props.paymentPlan && (((!props.paymentPlan.startDate && !props.paymentPlan.endDate) || moment(props.paymentPlan.endDate).isBefore(new Date())) 
+    && props.paymentPlan  )) {
+      setActiveTab('4')
+    }
+  }, [props.paymentPlan])
 
   return (
     <Fragment>
       <h3 className="mb-2">
         {t('Account Settings')}
       </h3>
-      {/* <UILoader blocking={
-        props.updateProfileLoading ||
-        props.updateProfilePictureLoading ||
-        props.updatePasswordLoading}
-      > */}
       <Row>
         <Col className='mb-2 mb-md-0' md='3'>
           <Tabs activeTab={activeTab} toggleTab={toggleTab} />
@@ -75,6 +80,7 @@ const AccountSettings = (props) => {
       {/* </UILoader> */}
 
     </Fragment>
+
   )
 }
 
@@ -97,7 +103,6 @@ const mapStateToProps = (state) => {
     updateProfileLoading,
     updateProfilePictureLoading,
     updatePasswordLoading,
-
 
     paymentPlan,
     paymentPlanError,

@@ -78,7 +78,7 @@ const AppChat = (props) => {
 
   // ** States
   const [user, setUser] = useState({})
-  const [sidebar, setSidebar] = useState(false)
+  const [sidebar, setSidebar] = useState(true)
   const [userSidebarRight, setUserSidebarRight] = useState(false)
   const [userSidebarLeft, setUserSidebarLeft] = useState(false)
 

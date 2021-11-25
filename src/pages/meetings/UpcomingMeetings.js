@@ -73,7 +73,7 @@ const UpcomingMeetings = props => {
 						<CardBody>
 							<div className='upcoming-meeting-list'>
 								{props.meetings
-									.filter(m => m.status == 'accepted' && moment(m.scheduledAt).isSameOrAfter(moment()))
+									.filter(m => m.status == 'accepted' && moment.utc(m.scheduledAt).isSameOrAfter(moment.utc().subtract(30,'minutes')))
 									.map(meeting => <UpcomingMeetingItem key={meeting.meetingId} meeting={meeting} />)}
 							</div>
 							<Button.Ripple

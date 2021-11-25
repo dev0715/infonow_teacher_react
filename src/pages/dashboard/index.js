@@ -187,7 +187,7 @@ const Dashboard = (props) => {
                                         pendingMeetings &&
                                         pendingMeetings.length == 0 && (
                                             <div className="text-center p-1">
-                                                {t("No meetings found")}
+                                                {t("No pending meetings found")}
                                             </div>
                                         )}
                                     {!props.meetingsLoading &&

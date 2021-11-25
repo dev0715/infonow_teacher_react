@@ -75,7 +75,7 @@ const Login = (props) => {
                 <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
                     <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
                         <CardTitle tag='h2' className='font-weight-bold mb-1'>
-                            {t('LOGIN')}
+                            {t('Teacher')} {t('login')}
                         </CardTitle>
                         <CardText className='mb-2'>{t('Welcome back! Please sign-in to your account')}</CardText>
 

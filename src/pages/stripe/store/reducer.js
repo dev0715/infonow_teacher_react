@@ -53,6 +53,7 @@ const initialState = {
     defaultPaymentMethodLoading: false,
     defaultPaymentMethodError: null,
 
+    postPaymentData:null,
     postPaymentSuccess: false,
     postPaymentLoading: false,
     postPaymentError: null,
@@ -191,6 +192,7 @@ export default (state = initialState, action) => {
         case POST_PAYMENT_SUCCESS:
             state = {
                 ...state,
+                postPaymentData:action.payload,
                 postPaymentLoading: false,
                 postPaymentError:null,
                 postPaymentSuccess: true

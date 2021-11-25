@@ -137,7 +137,7 @@ function MeetingHome(props) {
 						{
 							props.meetings
 								.filter(m => m.status == 'accepted'
-									&& moment(m.scheduledAt).isSameOrAfter(moment())).length == 0 ?
+								&& moment.utc(m.scheduledAt).isSameOrAfter(moment.utc().subtract(30,'minutes'))).length == 0 ?
 								<Col lg={12} className="mb-1">
 									<div className="d-flex  align-items-center justify-content-between">
 										<h3>{t('Meetings')}</h3>

@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <p className='clearfix mb-0'>
       <span className='float-md-left d-block d-md-inline-block mt-25'>
-        COPYRIGHT © 2018-{new Date().getFullYear()}{' '}
+        COPYRIGHT © 2019-{new Date().getFullYear()}{' '}
         <a href='https://infonow.ro' target='_blank' rel='noopener noreferrer'>
           InfoNow
         </a>

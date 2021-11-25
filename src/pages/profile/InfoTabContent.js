@@ -113,7 +113,8 @@ const InfoTabContent = (props) => {
                   <IntlTelInput
                     containerClassName="intl-tel-input"
                     inputClassName="form-control"
-                    defaultValue={contactNo}
+                    preferredCountries={['ro']}
+                    defaultValue={contactNo}                    
                     onPhoneNumberChange={(...args) => {
                       setContactNo(args[3])
                     }}

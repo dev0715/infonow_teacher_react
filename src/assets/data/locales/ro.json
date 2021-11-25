@@ -125,7 +125,7 @@
   "Send Reset Link": "Send Reset Link",
   "Back to Login": "Back to Login",
   "Welcome back! Please sign-in to your account": "Welcome back! Please sign-in to your account",
-  "LOGIN": "LOGIN",
+  "login": "login",
   "Password": "Password",
   "Enter Password": "Enter Password",
   "Sign in": "Sign in",
@@ -330,5 +330,6 @@
 "Add Card":"Add Card",
 "Are you sure you want to set this card as your default card":"Are you sure you want to set this card as your default card",
   "The address is required in order to send invoices": "The address is required in order to send invoices",
-  "The cards are stored only on the secured payment processor, Stripe.": "Cardurile sunt stocate doar in procesatorul securizat de plati, Stripe."
+  "The cards are stored only on the secured payment processor, Stripe.": "Cardurile sunt stocate doar in procesatorul securizat de plati, Stripe.",
+  "Register as teacher":"Register as teacher"
 }
