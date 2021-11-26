@@ -110,6 +110,8 @@ const MeetingList = (props) => {
 		}
 	}, [props.meetings]);
 
+	
+
 	const onMeetingAction = (e, id, action, data = {}) => {
 		e.preventDefault();
 		setMeetingAction(action);
@@ -262,19 +264,7 @@ const MeetingList = (props) => {
 															MeetingActions.Reject,
 															"Reject"
 														)}
-														{/* <DropdownItem
-                            href="/"
-                            tag="a"
-                            onClick={(e) =>
-                              onMeetingAction(
-                                e,
-                                viewMeetingId,
-                                MeetingActions.Reject
-                              )
-                            }
-                          >
-                            {t("Reject")}
-                          </DropdownItem> */}
+													
 														<DropdownItem
 															href="/"
 															tag="a"
@@ -297,21 +287,6 @@ const MeetingList = (props) => {
 													MeetingActions.Cancel,
 													"Cancel"
 												)
-												// 	 (
-												//   <DropdownItem
-												//     href="/"
-												//     tag="a"
-												//     onClick={(e) =>
-												//       onMeetingAction(
-												//         e,
-												//         viewMeetingId,
-												//         MeetingActions.Cancel
-												//       )
-												//     }
-												//   >
-												//     {t("Cancel")}
-												//   </DropdownItem>
-												// )
 											}
 										</DropdownMenu>
 									</UncontrolledButtonDropdown>
@@ -346,7 +321,7 @@ const MeetingList = (props) => {
 				isReloading={props.meetingsLoading}
 			>
 				<CardBody className="meeting-table-body">
-					{props.meetings.filter((m) => m.status != "accepted").length == 0 ? (
+					{props.meetings.length == 0 ? (
 						<NotFound message="No meetings found" />
 					) : (
 						<Table responsive hover>
@@ -410,23 +385,6 @@ const MeetingList = (props) => {
 
 																	{m.status == "rescheduled" &&
 																		m.user.userId == user.userId &&
-																		//   <DropdownItem
-																		//     tag="a"
-																		//     href="/"
-																		//     className="w-100"
-																		//     onClick={(e) =>
-																		//       onMeetingAction(
-																		//         e,
-																		//         m.meetingId,
-																		//         MeetingActions.Accept
-																		//       )
-																		//     }
-																		//   >
-																		//     <span className="align-middle ml-50">
-																		//       {t("Accept")}
-																		//     </span>
-																		//   </DropdownItem>
-
 																		meetingDropDownItem(
 																			m.meetingId,
 																			MeetingActions.Accept,
@@ -435,22 +393,7 @@ const MeetingList = (props) => {
 																	{m.status == "pending" &&
 																		m.user.userId != user.userId && (
 																			<>
-																				{/* <DropdownItem
-                                          tag="a"
-                                          href="/"
-                                          className="w-100"
-                                          onClick={(e) =>
-                                            onMeetingAction(
-                                              e,
-                                              m.meetingId,
-                                              MeetingActions.Accept
-                                            )
-                                          }
-                                        >
-                                          <span className="align-middle ml-50">
-                                            {t("Accept")}
-                                          </span>
-                                        </DropdownItem> */}
+																			
 																				{
 																					moment(m.scheduledAt).isSameOrAfter(new Date()) &&
 																					meetingDropDownItem(
@@ -469,35 +412,7 @@ const MeetingList = (props) => {
 																					MeetingActions.Reschedule,
 																					"Reschedule"
 																				)}
-																				{/* <DropdownItem
-                                          tag="a"
-                                          href="/"
-                                          className="w-100"
-                                          onClick={(e) =>
-                                            onMeetingAction(
-                                              e,
-                                              m.meetingId,
-                                              MeetingActions.Reject
-                                            )
-                                          }
-                                        >
-                                          <span className="align-middle ml-50">
-                                            {t("Reject")}
-                                          </span>
-                                        </DropdownItem> */}
-																				{/* <DropdownItem
-                                          tag="a"
-                                          href="/"
-                                          className="w-100"
-                                          onClick={(e) => {
-                                            e.preventDefault();
-                                            setUpdateMeetingId(m.meetingId);
-                                          }}
-                                        >
-                                          <span className="align-middle ml-50">
-                                            {t("Reschedule")}
-                                          </span>
-                                        </DropdownItem> */}
+																			
 																			</>
 																		)}
 																	{
@@ -509,24 +424,7 @@ const MeetingList = (props) => {
 																			MeetingActions.Cancel,
 																			"Cancel"
 																		)
-																		// 	  (
-																		//     <DropdownItem
-																		//       tag="a"
-																		//       href="/"
-																		//       className="w-100"
-																		//       onClick={(e) =>
-																		//         onMeetingAction(
-																		//           e,
-																		//           m.meetingId,
-																		//           MeetingActions.Cancel
-																		//         )
-																		//       }
-																		//     >
-																		//       <span className="align-middle ml-50">
-																		//         {t("Cancel")}
-																		//       </span>
-																		//     </DropdownItem>
-																		//   )
+																	
 																	}
 																</DropdownMenu>
 															</UncontrolledDropdown>
