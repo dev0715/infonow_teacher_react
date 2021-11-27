@@ -22,8 +22,8 @@ import {
     Elements,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import ThreeDSecureAuthenticationComponent from '../stripe/three-d-secure-popup';
 import _ from 'lodash';
+import ThreeDSecureAuthenticationComponent from '../stripe/three-d-secure-popup';
 
 const Ebook = (props) => {
 
@@ -82,7 +82,7 @@ const Ebook = (props) => {
             if (props.paymentMethodsList.length > 0)
                 setIsOpenCardContainer(!!selectedBook)
             else
-                setIsOpenAddNewCard(true)
+                setIsOpenAddNewCard(!isOpenAddNewCard)
         }
     }, [selectedBook])
 
@@ -126,7 +126,7 @@ const Ebook = (props) => {
                  setIsOpenCardContainer(false)
             }
         }
-    }, [downloadEbookSuccess, downloadEbook])
+    }, [downloadEbookSuccess, downloadEbookData])
 
     return (
         <>
@@ -136,7 +136,7 @@ const Ebook = (props) => {
                     &&
                     (errorResponse && errorResponse.error == "authentication_required")
                     && <Elements stripe={stripePromise}>
-                        <ThreeDSecureAuthenticationComponent postPaymentData={errorResponse} />
+                        <ThreeDSecureAuthenticationComponent postPaymentData={errorResponse} fetchData={fetchData} />
                     </Elements>
                 }
                 <Row className='match-height'>
@@ -166,6 +166,7 @@ const Ebook = (props) => {
                                                         {t('Download')}
                                                     </Button.Ripple>
                                             }
+                                           
                                             <Button.Ripple onClick={() => setPreviewImage(book.previewImage)} className="ml-2" color='secondary' outline>
                                                 {t('Preview')}
                                             </Button.Ripple>
@@ -190,6 +191,7 @@ const Ebook = (props) => {
                     ebook={selectedBook}
                     fetchData={fetchData}
                     isOpen={isOpenCardContainer}
+                    toggleAddNewCardModal={toggleAddNewCardModal}
                     toggleModal={toggleCardContainerModal}
                     paymentMethodsList={props.paymentMethodsList}
                 />

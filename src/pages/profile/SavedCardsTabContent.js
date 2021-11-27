@@ -44,8 +44,8 @@ const SavedCardsTabContent = (props) => {
     }
   }, [stripePublicKey])
 
-  const toggleModalState = () => {
-    setIsOpenModal(!isOpenModal)
+  const toggleModalState = (toggle) => {
+    setIsOpenModal(toggle)
   }
 
   const getPaymentMethodsAndPlans = () => {
@@ -71,7 +71,6 @@ const SavedCardsTabContent = (props) => {
 
   useEffect(() => {
     if (props.paymentMethodSuccess) {
-      notifySuccess(t('Payment'), t('Card added Successfully'))
       getPaymentMethodsAndPlans()
     }
   }, [props.paymentMethodSuccess])
@@ -98,7 +97,7 @@ const SavedCardsTabContent = (props) => {
         getPaymentMethodsAndPlans()
       }
       else if (props.postPaymentSuccess && props.postPaymentData.code == "authentication_required") {
-        return 
+        return
       } else {
         return () => props.postPaymentFailure(null)
       }
@@ -149,13 +148,22 @@ const SavedCardsTabContent = (props) => {
                 <Button.Ripple
                   size="sm"
                   color='flat-primary'
-                  onClick={() => setIsOpenModal(true)}>
+                  onClick={() => toggleModalState(true)}>
                   {t('New Card')}
                 </Button.Ripple>
               </div>
 
+
+
             </div>
           }
+
+          <Button.Ripple
+            size="sm"
+            color='flat-primary'
+            onClick={() => toggleModalState(true)}>
+            {t('New Card')}
+          </Button.Ripple>
 
           <StripeApp
             isOpenModal={isOpenModal}

@@ -1,5 +1,5 @@
 import React from "react"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Row, Col, Button } from 'reactstrap'
 
 import { connect } from 'react-redux'
@@ -14,6 +14,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { X } from "react-feather";
 import { notifyError, notifySuccess, } from '../../utility/toast'
+import UILoader from "../../@core/components/ui-loader";
 
 let AmericanExpress = require("../../assets/images/credit-cards/american_express.png")
 let DinersClub = require("../../assets/images/credit-cards/diners_club.png")
@@ -28,6 +29,7 @@ const CardContainer = (props) => {
 
     const { t } = useTranslation()
     const { paymentMethodsList } = props
+    const [selectedCard, setSelectedCard] = useState(paymentMethodsList.map(p => p.default === true))
 
 
     const MySwal = withReactContent(Swal)
@@ -36,6 +38,7 @@ const CardContainer = (props) => {
     }
 
     const setDefaultCardPopup = (p) => {
+        setSelectedCard(p)
         return MySwal.fire({
             icon: 'question',
             title: t("Confirm"),
@@ -49,12 +52,14 @@ const CardContainer = (props) => {
             buttonsStyling: false
         }).then((result) => {
             if (result.isConfirmed) {
+
                 setDefaultCard(p)
             }
         })
     }
 
     const deleteCardPopup = (p) => {
+        setSelectedCard(p)
         return MySwal.fire({
             icon: 'question',
             title: t("Confirm"),
@@ -79,7 +84,7 @@ const CardContainer = (props) => {
 
     useEffect(() => {
         if (props.deletePaymentMethodSuccess) notifySuccess('Payment Card', 'Selected  card deleted successfully')
-    }, [ props.deletePaymentMethodSuccess])
+    }, [props.deletePaymentMethodSuccess])
 
     useEffect(() => {
         if (props.defaultPaymentMethodError) notifyError('Default Card', props.defaultPaymentMethodError)
@@ -87,7 +92,7 @@ const CardContainer = (props) => {
 
     useEffect(() => {
         if (props.deletePaymentMethodError) notifyError('Payment Card', props.deletePaymentMethodError)
-    }, [ props.deletePaymentMethodError])
+    }, [props.deletePaymentMethodError])
 
     const getCardImage = (type) => {
         switch (type) {
@@ -103,6 +108,7 @@ const CardContainer = (props) => {
     }
 
     return (
+
         <Row className="card-item-container">
             {
                 paymentMethodsList &&
@@ -121,6 +127,11 @@ const CardContainer = (props) => {
                                             <h5> {p.brand}</h5>
                                             <h6>{p.mask}</h6>
                                             <p className="m-0"><small>Expiry {p.exp_month}/{p.exp_year}</small></p>
+                                        </div>
+                                        <div className="ml-3">
+                                            {(props.deletePaymentMethodLoading || props.defaultPaymentMethodLoading) &&
+                                                (p.fingerprint == selectedCard.fingerprint) &&
+                                                <><i className="las la-spinner la-spin la-2x"></i>&nbsp;&nbsp;</>}
                                         </div>
                                     </Row>
                                 </div>

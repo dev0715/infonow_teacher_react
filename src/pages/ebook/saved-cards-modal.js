@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router';
-
+import {Loader} from 'react-feather'
 import {
     downloadEbook,
 } from '@store/actions'
@@ -17,35 +17,33 @@ const imgPlaceholder = require(`@src/assets/images/custom-placeholder/img_previe
 const SavedCardModal = (props) => {
 
     const { t } = useTranslation()
-    const { isOpen, ebook, toggleModal, paymentMethodsList, fetchData } = props
+    const { isOpen, ebook, toggleModal, paymentMethodsList, fetchData ,toggleAddNewCardModal} = props
 
-    const [isOpenAddNewCard, setIsOpenAddNewCard] = useState(false)
+    // const [isOpenAddNewCard, setIsOpenAddNewCard] = useState(false)
 
     const toggle = () => {
         toggleModal()
     }
 
-    const toggleAddNewCardModal = () => {
-        setIsOpenAddNewCard(!isOpenAddNewCard)
+    const toggleAddNewCard = () => {
+        toggleModal()
+        toggleAddNewCardModal()
+       
     }
-
 
     const payToBuyBook = () => {
         props.downloadEbook(ebook.ebookId)
     }
 
-
     useEffect(() => {
-        if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess || props.postPaymentSuccess) fetchData()
+        if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess || props.postPaymentSuccess ) fetchData()
     }, [props.defaultPaymentMethodSuccess, props.deletePaymentMethodSuccess ,props.postPaymentSuccess])
-
-    
 
     return (
 
         <>
-            <UILoader blocking={props.postPaymentLoading || props.downloadEbookLoading 
-            || props.defaultPaymentMethodLoading || props.deletePaymentMethodLoading}>
+            {/* <UILoader blocking={(props.postPaymentLoading || props.downloadEbookLoading 
+            || props.defaultPaymentMethodLoading || props.deletePaymentMethodLoading) && isOpen}> */}
                 <Modal className='modal-lg' isOpen={isOpen} toggle={toggle}>
                     <ModalHeader>Saved cards </ModalHeader>
                     <ModalBody>
@@ -54,30 +52,34 @@ const SavedCardModal = (props) => {
                             <div className="pay-subscription-container text-right">
                                 <Button.Ripple
                                     color='success'
-                                    onClick={() => payToBuyBook()}>
-                                    {t('Pay')}
+                                    onClick={() => payToBuyBook()}
+                                    disabled={props.downloadEbookLoading}>
+                                    {props.downloadEbookLoading && <><i className="las la-spinner la-spin"></i>&nbsp;&nbsp;</>}
+                                    {t('Pay')} 
                                 </Button.Ripple>
 
                                 <Button.Ripple
                                     className="m-2"
                                     color='flat-primary'
-                                    onClick={() => setIsOpenAddNewCard(true)}>
+                                    onClick={() => toggleAddNewCard()}>
                                     {t('New Card')}
                                 </Button.Ripple>
                             </div>
                         </div>
 
                         <CardContainer
+                            fetchData={fetchData}
                             paymentMethodsList={paymentMethodsList}
                         />
 
                     </ModalBody>
-                    <StripeApp
+
+                    {/* <StripeApp
                         isOpenModal={isOpenAddNewCard}
-                        toggleModalState={toggleAddNewCardModal} />
+                        toggleModalState={toggleAddNewCardModal} /> */}
                 </Modal>
 
-            </UILoader>
+            {/* </UILoader> */}
         </>
 
     )
@@ -105,6 +107,7 @@ const mapStateToProps = (state) => {
 
         defaultPaymentMethodSuccess,
         deletePaymentMethodSuccess,
+        
         defaultPaymentMethodLoading,
         deletePaymentMethodLoading,
 

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import {
     useStripe
   } from "@stripe/react-stripe-js";
-import { notifyError, notifySuccess } from '../../utility/toast';
+import { notifyError } from '../../utility/toast';
 
 const ThreeDSecureAuthenticationComponent = (props) => {
     const stripe = useStripe();
+    const {fetchData} = props
     const [paymentIntent, setPaymentIntent] = useState(null);
 
     useEffect(() => {
@@ -25,6 +26,9 @@ const ThreeDSecureAuthenticationComponent = (props) => {
     useEffect(() => {
       if(paymentIntent && paymentIntent.error && paymentIntent.error.code == "payment_intent_authentication_failure") {
         notifyError('Payment',paymentIntent.error.message)
+      }
+      else {
+        if(fetchData) fetchData()
       }
     },[paymentIntent])
   

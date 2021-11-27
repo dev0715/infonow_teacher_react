@@ -14,18 +14,14 @@ const PreviewBookModal = (props) => {
     }
 
     return (
-
         <>
             <Modal className='modal-lg' isOpen={isOpen} toggle={toggle}>
                 <ModalBody>
-
                     <CardImg top src={DOCUMENT_BASE_URL + Image} />
-
                 </ModalBody>
 
             </Modal>
         </>
-
     )
 }
 
