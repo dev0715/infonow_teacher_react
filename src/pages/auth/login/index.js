@@ -3,7 +3,7 @@ import { useSkin } from '@hooks/useSkin'
 import { Link, useHistory, withRouter } from 'react-router-dom'
 import { Facebook, Twitter, Mail, GitHub, Coffee } from 'react-feather'
 import Avatar from '@components/avatar'
-import { loginUser, loginError } from '@store/actions'
+import { loginUser, loginError ,getPaymentPlan} from '@store/actions'
 import { Row, Col, CardTitle, CardText, FormGroup, Label, CustomInput, Button, Alert } from 'reactstrap'
 import { AvForm, AvField } from 'availity-reactstrap-validation-safe';
 import '@styles/base/pages/page-auth.scss'
@@ -16,6 +16,8 @@ import GoogleSignIn from '../../../views/google-signin';
 import { useTranslation } from 'react-i18next';
 import ReCAPTCHA from "react-google-recaptcha";
 import { GOOGLE_RECAPTCHA_KEY } from '../../../helpers/url_helper';
+import { isUserAuthenticated } from '../../../helpers/backend-helpers';
+
 
 const ToastContent = ({ name, role }) => (
     <Fragment>
@@ -48,14 +50,20 @@ const Login = (props) => {
 
     useEffect(() => {
         if (props.success) {
-            window.location.reload();
+            props.getPaymentPlan()
         }
     }, [props.success])
 
+    useEffect(() => {
+        if(isUserAuthenticated()){
+            window.location.reload();
+        }
+    },[props.paymentPlan])
+
 
     const handleValidSubmit = (event, data) => {
-        const token = recaptchaRef.current.getValue();
-        data.reCaptchaToken = token
+        // const token = recaptchaRef.current.getValue();
+        // data.reCaptchaToken = token
         props.loginUser(data, history)
     }
 
@@ -127,7 +135,7 @@ const Login = (props) => {
                                 color='primary'
                                 block
                                 disabled={props.loading || isSigningIn}>
-                                {(props.loading || isSigningIn) && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}{t('Sign in')}
+                                {(props.loading || props.paymentPlanLoading || isSigningIn) && <><i className="fa fa-spinner fa-spin" />&nbsp;&nbsp;</>}{t('Sign in')}
                             </Button.Ripple>
 
                         </AvForm>
@@ -149,7 +157,7 @@ const Login = (props) => {
                             />
                         </div>
 
-                        <div className='d-flex justify-content-center mt-2' >
+                        {/* <div className='d-flex justify-content-center mt-2' >
                             <ReCAPTCHA
                                 theme={skin}
                                 ref={recaptchaRef}
@@ -157,7 +165,7 @@ const Login = (props) => {
                                 type = "image"
                                 sitekey={GOOGLE_RECAPTCHA_KEY}
                             />
-                        </div>
+                        </div> */}
                         
                     </Col>
                 </Col>
@@ -173,13 +181,24 @@ const mapStateToProps = (state) => {
         success,
         user
     } = state.Login
+
+    const  {
+        paymentPlan,
+        paymentPlanError,
+        paymentPlanLoading,
+
+    } = state.Stripe
     return {
         error,
         success,
-        user
+        user,
+
+        paymentPlan,
+        paymentPlanError,
+        paymentPlanLoading
     }
 }
 
 export default withRouter(
-    connect(mapStateToProps, { loginUser, loginError })(Login)
+    connect(mapStateToProps, { loginUser, loginError ,getPaymentPlan })(Login)
 )

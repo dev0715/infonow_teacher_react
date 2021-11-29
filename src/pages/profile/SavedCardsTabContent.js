@@ -152,18 +152,8 @@ const SavedCardsTabContent = (props) => {
                   {t('New Card')}
                 </Button.Ripple>
               </div>
-
-
-
             </div>
           }
-
-          <Button.Ripple
-            size="sm"
-            color='flat-primary'
-            onClick={() => toggleModalState(true)}>
-            {t('New Card')}
-          </Button.Ripple>
 
           <StripeApp
             isOpenModal={isOpenModal}

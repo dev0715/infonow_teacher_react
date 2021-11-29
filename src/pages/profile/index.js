@@ -10,11 +10,11 @@ import { connect } from 'react-redux'
 // import { getUserTopics, getUserTopicLessons, selectTopic, selectLesson, getLesson, completedLesson } from './store/actions'
 
 import { withRouter } from 'react-router';
-import { setProfileUser, getCounties  } from '@store/actions'
+import { setProfileUser, getCounties } from '@store/actions'
 import UILoader from '../../@core/components/ui-loader';
 import '@styles/react/libs/flatpickr/flatpickr.scss'
 import '@styles/react/pages/page-account-settings.scss'
-import { getLoggedInUser } from '../../helpers/backend-helpers'
+import { getLoggedInUser, isUserPlanExpired } from '../../helpers/backend-helpers'
 import SavedCardsTabContent from './SavedCardsTabContent'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
@@ -28,7 +28,7 @@ const AccountSettings = (props) => {
     setActiveTab(tab)
   }
 
- 
+
   useEffect(() => {
     props.setProfileUser(getLoggedInUser() || {})
     props.getCounties()
@@ -36,8 +36,8 @@ const AccountSettings = (props) => {
 
   useEffect(() => {
 
-    if(props.paymentPlan && (((!props.paymentPlan.startDate && !props.paymentPlan.endDate) || moment(props.paymentPlan.endDate).isBefore(new Date())) 
-    && props.paymentPlan  )) {
+    if (props.paymentPlan && (((!props.paymentPlan.startDate && !props.paymentPlan.endDate) || moment(props.paymentPlan.endDate).isBefore(new Date()))
+      && props.paymentPlan)) {
       setActiveTab('4')
     }
   }, [props.paymentPlan])
@@ -51,12 +51,19 @@ const AccountSettings = (props) => {
         <Col className='mb-2 mb-md-0' md='3'>
           <Tabs activeTab={activeTab} toggleTab={toggleTab} />
         </Col>
-        
+
         <Col md='9'>
+
+          {
+            !props.paymentPlan &&
+            <Alert className="p-1 w-100" color="info">{t(`Currently you have no subsciption plan`)}</Alert>
+          }
+
           {
             (props.paymentPlan && ((!props.paymentPlan.startDate && !props.paymentPlan.endDate) || moment(props.paymentPlan.endDate).isBefore(new Date()))) &&
             <Alert className="p-1 w-100" color="danger">{t(`Your subscribtion has expired`)}</Alert>
           }
+        
           <Card>
             <CardBody>
               <TabContent activeTab={activeTab}>
@@ -92,7 +99,7 @@ const mapStateToProps = (state) => {
     updatePasswordLoading,
   } = state.Profile;
 
-  const  {
+  const {
 
     paymentPlan,
     paymentPlanError,

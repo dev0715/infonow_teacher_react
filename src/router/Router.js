@@ -22,7 +22,7 @@ import { GetStartedRoute, DefaultRoute, Routes } from './routes'
 import BlankLayout from '@layouts/BlankLayout'
 import VerticalLayout from '@src/layouts/VerticalLayout'
 import HorizontalLayout from '@src/layouts/HorizontalLayout'
-import { getLoggedInUser } from '../helpers/backend-helpers';
+import { getLoggedInUser, isUserPlanExpired } from '../helpers/backend-helpers';
 
 const Router = () => {
   // ** Hooks
@@ -71,6 +71,7 @@ const Router = () => {
     const route = props.route
     let action, resource
 
+   
     // ** Assign vars based on route meta
     if (route.meta) {
       action = route.meta.action ? route.meta.action : null
@@ -90,7 +91,7 @@ const Router = () => {
 
       return <Redirect to='/login' />
     }
-    else if (isUserAuthenticated() && getLoggedInUser().teacher.status === 'new') {
+    else if (isUserAuthenticated() && (getLoggedInUser().teacher.status === 'new' || isUserPlanExpired())  ) {
       return route.meta && route.meta.newUserAccessible
         ? <route.component {...props} />
         : <Redirect to="/" />
@@ -212,7 +213,7 @@ const Router = () => {
             let user = getLoggedInUser()
 
             if (isUserAuthenticated()) {
-              return user.teacher.status != 'new' ? <Redirect to={DefaultRoute} /> : <Redirect to={GetStartedRoute} />
+              return (user.teacher.status == 'new' || isUserPlanExpired() ) ? <Redirect to={GetStartedRoute} /> : <Redirect to={DefaultRoute} /> 
             } else {
               return <Redirect to='/login' />
             }

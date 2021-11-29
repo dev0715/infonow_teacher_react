@@ -51,10 +51,10 @@ const Register = (props) => {
         if (password != confirmPassword)
             return notifyWarning(t("Register Account"), t("Confirm password is not same"))
         setProcessing(true)
-        const token = recaptchaRef.current.getValue();
+        // const token = recaptchaRef.current.getValue();
         props.registerAccount({
             data: {
-                reCaptchaToken: token,
+                // reCaptchaToken: token,
                 role: "teacher",
                 name,
                 email,
@@ -169,7 +169,7 @@ const Register = (props) => {
                                 processingCallBack={() => setProcessing(!processing)}
                             />
                         </div>
-                        <div className='d-flex justify-content-center mt-2' >
+                        {/* <div className='d-flex justify-content-center mt-2' >
                             <ReCAPTCHA
                                 theme={skin}
                                 ref={recaptchaRef}
@@ -177,7 +177,7 @@ const Register = (props) => {
                                 type = "image"
                                 sitekey={GOOGLE_RECAPTCHA_KEY}
                             />
-                        </div>
+                        </div> */}
                     </Col>
                 </Col>
             </Row>

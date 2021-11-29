@@ -8,14 +8,16 @@ export default [
     title: 'Dashboard',
     icon: <i className="la la-home" />,
     navLink: '/home',
-    newUserAccessible: true
+    newUserAccessible: true,
+    isPlanExpired: true
   },
   {
     id: 'Profile',
     title: 'Profile',
     icon: <i className="la la-user" />,
     navLink: '/profile',
-    newUserAccessible: true
+    newUserAccessible: true,
+    isPlanExpired: true
   },
   {
     id: 'students',
@@ -64,14 +66,16 @@ export default [
     title: 'Blog',
     icon: <i className="la la-newspaper" />,
     navLink: '/blog',
-    newUserAccessible: true
+    newUserAccessible: true,
+    isPlanExpired: true
   },
   {
     id: 'ebook',
     title: 'Ebook',
     icon: <i className="la la-book" />,
     navLink: '/ebooks',
-    newUserAccessible: true
+    newUserAccessible: true,
+    isPlanExpired: true
   },
   {
     id: 'feedback',

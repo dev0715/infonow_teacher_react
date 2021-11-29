@@ -6,7 +6,7 @@ import VerticalNavMenuSectionHeader from './VerticalNavMenuSectionHeader'
 
 // ** Utils
 import { resolveVerticalNavMenuItemComponent as resolveNavItemComponent } from '@layouts/utils'
-import { getLoggedInUser } from '../../../../../helpers/backend-helpers';
+import { getLoggedInUser, isUserPlanExpired } from '../../../../../helpers/backend-helpers';
 
 const VerticalMenuNavItems = props => {
   // ** Components Object
@@ -21,7 +21,7 @@ const VerticalMenuNavItems = props => {
   // ** Render Nav Menu Items
   let navItems = props.items;
 
-  if (loggedInUser && loggedInUser.teacher.status === 'new') {
+  if (loggedInUser && (loggedInUser.teacher.status === 'new' || isUserPlanExpired()) ) {
     navItems = navItems.filter(item => item.newUserAccessible);
   }
 

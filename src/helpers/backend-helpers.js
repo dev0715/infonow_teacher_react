@@ -1,6 +1,6 @@
 import { post, del, get, put, postForm, putForm, GetUrlWithPagingParams, download } from "./api_helper"
 import * as  url from "./url_helper"
-
+import moment from "moment"
 // Gets the logged in user data from local session
 export const getLoggedInUser = () => {
   const user = localStorage.getItem("authTeacher")
@@ -14,6 +14,27 @@ export const setLoggedInUser = (obj = {}) => {
 export const getAuthentication = () => {
   const tokenInfo = localStorage.getItem("authTeacherToken")
   return tokenInfo ? JSON.parse(tokenInfo) : null;
+}
+
+export const setUserPaymentPlan = (obj) => {
+  localStorage.setItem("plan", JSON.stringify(obj))
+}
+
+export const getUserPaymentPlan = () => {
+  let paymentPlan =  localStorage.getItem("plan")
+  return  paymentPlan ? JSON.parse(paymentPlan) : null;
+}
+
+export const isUserPlanExpired = () => {
+  let paymentPlan =  localStorage.getItem("plan")
+  let plan =  paymentPlan ? JSON.parse(paymentPlan) : null;
+  if(!plan || ((plan.startDate && plan.endDate) &&
+    moment(plan.endDate).isBefore(new Date()))) {
+      return true
+    }
+    else {
+      return false
+    }
 }
 
 export const getUserData = (userId) => get(url.GET_USER_DATA(userId))

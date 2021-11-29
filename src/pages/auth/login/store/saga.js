@@ -32,8 +32,6 @@ function* logoutUser({ payload: { history } }) {
     try {
         localStorage.removeItem("authTeacher")
         localStorage.removeItem("authTeacherToken")
-        localStorage.removeItem("adminUser")
-        // console.log("Token", getAuthentication())
         resetAPIAuthToken();
         history.push("/login");
         window.location.reload();

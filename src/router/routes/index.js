@@ -21,7 +21,8 @@ const Routes = [
     className: 'dashboard-application',
     component: lazy(() => import('../../pages/get-started')),
     meta: {
-      newUserAccessible: true
+      newUserAccessible: true,
+      isPlanExpired:true
     }
   },
   {
@@ -29,7 +30,8 @@ const Routes = [
     className: 'profile-application',
     component: lazy(() => import('../../pages/profile')),
     meta: {
-      newUserAccessible: true
+      newUserAccessible: true,
+      isPlanExpired:true
     }
   },
   {
@@ -136,7 +138,8 @@ const Routes = [
     exact: true,
     component: lazy(() => import('../../pages/blog/list')),
     meta: {
-      newUserAccessible: true
+      newUserAccessible: true,
+      isPlanExpired:true
     }
   },
   {
