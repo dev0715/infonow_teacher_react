@@ -56,7 +56,7 @@ const AccountSettings = (props) => {
 
           {
             !props.paymentPlan &&
-            <Alert className="p-1 w-100" color="info">{t(`Currently you have no subsciption plan`)}</Alert>
+            <Alert className="p-1 w-100" color="info">{t(`Currently you have no subscription plan`)}</Alert>
           }
 
           {
