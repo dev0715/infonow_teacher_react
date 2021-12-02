@@ -61,7 +61,7 @@ const AccountSettings = (props) => {
 
           {
             (props.paymentPlan && ((!props.paymentPlan.startDate && !props.paymentPlan.endDate) || moment(props.paymentPlan.endDate).isBefore(new Date()))) &&
-            <Alert className="p-1 w-100" color="danger">{t(`Your subscribtion has expired`)}</Alert>
+            <Alert className="p-1 w-100" color="danger">{t(`Your subscription has expired`)}</Alert>
           }
         
           <Card>
