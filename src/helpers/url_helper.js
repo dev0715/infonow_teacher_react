@@ -26,7 +26,7 @@ export const getProfileImageUrl = url => url ? IMAGES_BASE_URL + url : IMAGES_BA
 
 //Get Started
 
-export const GET_STARTED_CONTENT = `${BASE_URL}/api/v1/strapi/content/student_content`
+export const GET_STARTED_CONTENT = `${BASE_URL}/api/v1/strapi/content/teacher_content`
 
 //  All Students 
 export const ALL_STUDENTS = `${BASE_URL}/api/v1/students/all-students?limit=1000&page=1`;
