@@ -1,17 +1,17 @@
 
-// export const BASE_URL = `http://192.168.10.102:3600`
-// export const MEETING_API_URL = `http://192.168.10.102:4200`
-// export const MEETING_APP_URL = `http://192.168.10.102:3001`
-// export const CHAT_API_URL = `http://192.168.10.102:3700`
-// export const CHAT_SOCKET_API_URL = `http://192.168.10.102:3701`
-// export const BLOG_API_URL = `http://192.168.10.102:1337`
+export const BASE_URL = `http://192.168.10.102:3600`
+export const MEETING_API_URL = `http://192.168.10.102:4200`
+export const MEETING_APP_URL = `http://192.168.10.102:3001`
+export const CHAT_API_URL = `http://192.168.10.102:3700`
+export const CHAT_SOCKET_API_URL = `http://192.168.10.102:3701`
+export const BLOG_API_URL = `http://192.168.10.102:1337`
 
-export const BASE_URL = `https://api.infonow.ro`;
-export const MEETING_API_URL = `https://meet.infonow.ro/api`;
-export const MEETING_APP_URL = `https://meet.infonow.ro`;
-export const CHAT_API_URL = `https://chat.infonow.ro/`;
-export const CHAT_SOCKET_API_URL = `https://live-chat.infonow.ro/`;
-export const BLOG_API_URL = `https://cms.infonow.ro/`;
+// export const BASE_URL = `https://api.infonow.ro`;
+// export const MEETING_API_URL = `https://meet.infonow.ro/api`;
+// export const MEETING_APP_URL = `https://meet.infonow.ro`;
+// export const CHAT_API_URL = `https://chat.infonow.ro/`;
+// export const CHAT_SOCKET_API_URL = `https://live-chat.infonow.ro/`;
+// export const BLOG_API_URL = `https://cms.infonow.ro/`;
 
 export const BASE_API_URL = `${BASE_URL}/api/v1`
 export const IMAGES_BASE_URL = `${BASE_URL}/public`
@@ -26,7 +26,7 @@ export const getProfileImageUrl = url => url ? IMAGES_BASE_URL + url : IMAGES_BA
 
 //Get Started
 
-export const GET_STARTED_CONTENT = `${BASE_URL}/api/v1/strapi/content/student_content`
+export const GET_STARTED_CONTENT = `${BASE_URL}/api/v1/strapi/content/teacher_content`
 
 //  All Students 
 export const ALL_STUDENTS = `${BASE_URL}/api/v1/students/all-students?limit=1000&page=1`;
