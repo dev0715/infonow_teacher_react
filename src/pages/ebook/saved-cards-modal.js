@@ -12,6 +12,7 @@ import CardContainer from "../stripe/card-container";
 import UILoader from "../../@core/components/ui-loader";
 import StripeApp from '../stripe'
 import { useTranslation } from "react-i18next";
+import { notifyError, notifySuccess } from "../../utility/toast";
 const imgPlaceholder = require(`@src/assets/images/custom-placeholder/img_preview_placeholder.jpeg`);
 
 const SavedCardModal = (props) => {
@@ -36,8 +37,28 @@ const SavedCardModal = (props) => {
     }
 
     useEffect(() => {
-        if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess || props.postPaymentSuccess ) fetchData()
-    }, [props.defaultPaymentMethodSuccess, props.deletePaymentMethodSuccess ,props.postPaymentSuccess])
+        if (props.defaultPaymentMethodSuccess || props.deletePaymentMethodSuccess ) fetchData()
+    }, [props.defaultPaymentMethodSuccess, props.deletePaymentMethodSuccess])
+
+        
+    // useEffect(() => {
+    //     console.log("props.downloadEbookError" , props.downloadEbookError);
+    //     if( props.downloadEbookError){
+    //         fetchData()
+    //         notifyError(t('Ebook'),props.downloadEbookError)
+    //     }
+    // },[ props.downloadEbookError])
+
+    // useEffect(() => {
+    //     console.log("props.downloadEbookSuccess" , props.downloadEbookSuccess);
+    //     if( props.downloadEbookSuccess){
+    //         fetchData()
+    //         notifySuccess(t('Ebook'),'Ebook downloaded successfully')
+    //     }
+    // },[ props.downloadEbookSuccess])
+
+    
+
 
     return (
 

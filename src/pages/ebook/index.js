@@ -46,6 +46,7 @@ const Ebook = (props) => {
     const [isOpenCardContainer, setIsOpenCardContainer] = useState(false)
     const [isOpenAddNewCard, setIsOpenAddNewCard] = useState(false)
     const [selectedBook, setSelectedBook] = useState()
+    const [randStateChange, setRandStateChange] = useState(Math.random())
     const [previewImage, setPreviewImage] = useState(null)
     const [errorResponse, setErrorResponse] = useState(null)
 
@@ -60,16 +61,18 @@ const Ebook = (props) => {
     }
 
     const toggleAddNewCardModal = () => {
-        setSelectedBook(null)
+        // setSelectedBook(null)
         setIsOpenAddNewCard(!isOpenAddNewCard)
+        setIsOpenCardContainer(true)
     }
 
     const toggleCardContainerModal = () => {
-        setSelectedBook(null)
+       // setSelectedBook(null)
         setIsOpenCardContainer(!isOpenCardContainer)
     }
 
     const BuyBook = (ebook) => {
+        setRandStateChange(Math.random())
         setSelectedBook(ebook)
     }
 
@@ -84,7 +87,7 @@ const Ebook = (props) => {
             else
                 setIsOpenAddNewCard(!isOpenAddNewCard)
         }
-    }, [selectedBook])
+    }, [selectedBook, randStateChange])
 
     useEffect(() => {
         if (previewImage)
@@ -124,6 +127,8 @@ const Ebook = (props) => {
             else if (responseJson && responseJson.data) {
                 setErrorResponse(responseJson.data.data)
                  setIsOpenCardContainer(false)
+            } else if (responseJson && responseJson.status == 400){
+                notifyError('Ebook', responseJson.message || "Ebook download failed")
             }
         }
     }, [downloadEbookSuccess, downloadEbookData])

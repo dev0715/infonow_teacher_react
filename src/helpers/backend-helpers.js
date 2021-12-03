@@ -28,13 +28,11 @@ export const getUserPaymentPlan = () => {
 export const isUserPlanExpired = () => {
   let paymentPlan =  localStorage.getItem("plan")
   let plan =  paymentPlan ? JSON.parse(paymentPlan) : null;
-  if(!plan || ((plan.startDate && plan.endDate) &&
-    moment(plan.endDate).isBefore(new Date()))) {
-      return true
-    }
-    else {
-      return false
-    }
+  if(!plan || !plan.startDate || !plan.endDate || moment(plan.endDate).isBefore(new Date())){
+    return true
+  }
+
+  return false
 }
 
 export const getUserData = (userId) => get(url.GET_USER_DATA(userId))
