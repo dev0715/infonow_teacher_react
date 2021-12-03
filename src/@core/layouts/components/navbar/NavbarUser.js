@@ -8,7 +8,8 @@ import UserDropdown from './UserDropdown'
 import { Sun, Moon, Menu } from 'react-feather'
 import { NavItem, NavLink } from 'reactstrap'
 import LangDropdown from './LangDropdown';
-
+import {Youtube} from 'react-feather'
+import { Link } from 'react-router-dom';
 const NavbarUser = props => {
   // ** Props
   const { skin, setSkin, setMenuVisibility } = props
@@ -39,6 +40,9 @@ const NavbarUser = props => {
         </NavItem>
       </div>
       <ul className='nav navbar-nav align-items-center ml-auto'>
+        <a className="mr-2" href="https://youtu.be/TsnbDq_g5T8" target="_blank">
+          <Youtube />&nbsp;&nbsp;Tutorial
+        </a>
         <LangDropdown />
       </ul>
       <ul className='nav navbar-nav align-items-center'>
