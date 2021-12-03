@@ -1,3 +1,4 @@
+import { setUserPaymentPlan } from '../../../helpers/backend-helpers';
 import {
     GET_STRIPE_PUBLIC_KEY,
     GET_STRIPE_PUBLIC_KEY_SUCCESS,
@@ -141,6 +142,7 @@ export default (state = initialState, action) => {
             }
             break;
         case GET_PAYMENT_PLAN_SUCCESS:
+            setUserPaymentPlan(action.payload)
             state = {
                 ...state,
                 paymentPlanLoading: false,
