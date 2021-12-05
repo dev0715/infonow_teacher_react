@@ -325,12 +325,12 @@ const GeneralTabs = (props) => {
           <Col md='6'>
             <FormGroup>
               <Label className="ml-25">
-                {t('Zipcode')}
+                {t('Cod postal')}
               </Label>
               <InputGroup className='input-group-merge'>
                 <Input
                   type="text"
-                  placeholder={t('Enter Zipcode')}
+                  placeholder={t('Adauga Cod postal')}
                   value={zipCode}
                   onChange={e => setZipcode(e.target.value)}
                   disabled={!isEditing}
