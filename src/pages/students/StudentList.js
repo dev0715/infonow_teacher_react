@@ -19,13 +19,14 @@ const StudentList = (props) => {
   const { t } = useTranslation();
   const { students, studentList } = props;
   const [studentData, setStudentData] = useState();
-  const [currentPage, setCurrentPage] = useState(currentPage);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const onStudentSelect = (student) => {
     props.history.push(`/students/${student.user.userId}`);
   };
 
   const onPageChange = (page) => {
+    setCurrentPage(page-1)
     let data = {
       page: page,
       limit: 20,
@@ -117,6 +118,7 @@ const StudentList = (props) => {
           <CustomPagination
             pages={Math.ceil(students.count / 20)}
             onSelect={onPageChange}
+            selectedPage={currentPage}
           />
         )}
       </CardBody>

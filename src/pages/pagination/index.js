@@ -8,13 +8,10 @@ const CustomPagination = (props) => {
     const [currentPage, setCurrentPage] = useState(selectedPage || 0)
 
     const onSelect = (page) => {
-        props.onSelect(page.selected+1);
         setCurrentPage(page.selected);
+        props.onSelect(page.selected+1);
     }
-
-
     return (
-
         <ReactPaginate
             previousLabel=''
             nextLabel=''

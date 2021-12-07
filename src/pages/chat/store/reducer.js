@@ -80,7 +80,7 @@ const initialState = {
   aboutError: null,
   newChatLoading: false,
   newChatError: null,
-  teacherStudents: [],
+  teacherStudents: null,
   teacherStudentsLoading: false,
   teacherStudentsError: null,
   addParticipantLoading: false,

@@ -11,6 +11,12 @@
 	}
 }
 
+.student-list-modal-scroll {
+	overflow-x: hidden;
+	overflow-y:scroll;
+	height:320px
+}
+
 .unselect-group-user {
 	position: absolute;
 	right: 10px;

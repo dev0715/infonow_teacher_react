@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
         case GET_STUDENTS_SUCCESS:
             state = {
                 ...state,
-                studentList:{...state.studentList,[action.payload.page]:[action.payload.res.data]},
+                studentList:{...state.studentList,[action.payload.page]:action.payload.res.data},
                 students: action.payload.res,
                 studentsLoading: false,
                 studentsError: null,

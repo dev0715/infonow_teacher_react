@@ -76,6 +76,8 @@ const SidebarLeft = props => {
   const [participants, setParticipants] = useState([])
   const [userQuery, setUserQuery] = useState('')
 
+  const [studentList , setStudentList] = useState([])
+
   // ** Handles User Chat Click
   const handleUserClick = (chat, socket) => {
     handleSidebar()
@@ -94,6 +96,16 @@ const SidebarLeft = props => {
       notifySuccess(isNewChat ? t("New Chat") : t("New Group Chat"), t('Chat started Successfully'))
     }
   }, [newChatLoading])
+
+  useEffect(() => {
+    if(teacherStudents && teacherStudents.data.length > 0) {
+      let students = []
+      teacherStudents.data.forEach(std => {
+        students.push(std.user)
+      });
+      setStudentList(students)
+    }
+  },[teacherStudents])
 
 
   // ** Renders Chat
@@ -213,7 +225,7 @@ const SidebarLeft = props => {
   }
 
   const groupContacts = () => {
-    return teacherStudents
+    return studentList
       .filter(u => !participants.find(p => p.userId == u.userId)).filter(p => p.name.toLowerCase().includes(userQuery.toLowerCase()))
   }
 
@@ -424,10 +436,10 @@ const SidebarLeft = props => {
                 </InputGroupAddon>
               </InputGroup>
 
-              <div className="mt-2">
+              <div className="mt-2  student-list-modal-scroll" >
                 {
-                  teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
-                    teacherStudents
+                  studentList.length == 0 ? <NotFound message="No user Available for new chat" /> :
+                  studentList
                       .filter(u => u.name.toLowerCase().includes(userQuery.toLowerCase()))
                       .map((s, index) =>
                         <Row key={'non-connected' + index}>
@@ -483,7 +495,7 @@ const SidebarLeft = props => {
             <div className="mt-2">
               <div >
                 {
-                  teacherStudents.length == 0 ? <NotFound message={t("No user Available for new chat")} /> :
+                  studentList.length == 0 ? <NotFound message={t("No user Available for new chat")} /> :
                     <>
                       <FormGroup>
                         <Label className="ml-25">
@@ -546,6 +558,7 @@ const SidebarLeft = props => {
                       <Label className="ml-25 mb-1 mt-1">
                         {t('Contacts')}
                       </Label>
+                      <div className="student-list-modal-scroll">
                       {
                         groupContacts().length > 0 ?
                           groupContacts()
@@ -573,6 +586,7 @@ const SidebarLeft = props => {
                               </Row>)
                           : <NotFound message={t("No more contacts")} />
                       }
+                      </div>
                     </>
                 }
               </div>

@@ -127,7 +127,7 @@ const ChatLog = props => {
   const [participants, setParticipants] = useState([])
   const [participantsRemoveList, setParticipantsRemoveList] = useState([])
   const [userQuery, setUserQuery] = useState('')
-
+  const [studentList , setStudentList] = useState([])
 
   useEffect(() => {
     setQuery("")
@@ -369,8 +369,18 @@ const ChatLog = props => {
     }
   }, [removeParticipantLoading])
 
+  useEffect(() => {
+    if(teacherStudents && teacherStudents.data.length > 0) {
+      let students = []
+      teacherStudents.data.forEach(std => {
+        students.push(std.user)
+      });
+      setStudentList(students)
+    }
+  },[teacherStudents])
+
   const groupContacts = () => {
-    return teacherStudents
+    return studentList
       .filter(u => !selectedChat.chatParticipants.find(p => p.user.userId == u.userId && p.chatParticipantStatus == 1))
       .filter(u => !participants.find(p => p.userId == u.userId))
       .filter(p => p.name.toLowerCase().includes(userQuery.toLowerCase()))
@@ -783,7 +793,7 @@ const ChatLog = props => {
                 <div className="mt-2">
                   <div >
                     {
-                      teacherStudents.length == 0 ? <NotFound message="No user Available for new chat" /> :
+                      studentList.length == 0 ? <NotFound message="No user Available for new chat" /> :
                         <>
                           {
                             participants.length > 0 &&
