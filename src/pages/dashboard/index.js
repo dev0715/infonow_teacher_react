@@ -52,7 +52,7 @@ const Dashboard = (props) => {
                 m.status == "accepted" && moment(m.scheduledAt).isSameOrAfter(moment())
         );
         if (upcomingMeetings.length == 0) return null;
-        return upcomingMeetings[0];
+        return upcomingMeetings[upcomingMeetings.length - 1];
     };
 
     const handleLesson = (lesson) => {
